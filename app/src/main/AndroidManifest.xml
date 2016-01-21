@@ -96,12 +96,39 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <!-- 登录页面 -->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.LoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+
+        <!-- 忘记密码页面 -->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.ForgetPwdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+
+        <!-- 注册页面 -->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.RegisterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <!-- 完善个人信息 -->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.PerfectDataActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|keyboard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+
+        <activity android:name=".activity.MainActivity">
+
         </activity>
     </application>
 

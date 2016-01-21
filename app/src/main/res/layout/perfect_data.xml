@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/perfect_title"
+        layout="@layout/title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp" >
+
+                <cn.yunluosoft.tonglou.view.CircleImageView
+                    android:id="@+id/perfect_icon"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="15dp"
+                    android:clickable="true"
+                    android:src="@mipmap/perfect_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/text_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="昵称"
+                        android:textColor="#4C2829"
+                        android:textSize="@dimen/second_font" />
+
+                    <EditText
+                        android:id="@+id/perfect_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入昵称"
+                        android:maxLength="10"
+                        android:singleLine="true"
+                        android:textColor="#4c2829"
+                        android:textColorHint="#CECECE"
+                        android:textSize="@dimen/second_font" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/text_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="7dp" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="性别"
+                        android:textColor="#4C2829"
+                        android:textSize="@dimen/second_font" />
+
+                    <ToggleButton
+                        android:id="@+id/perfect_sex"
+                        android:layout_width="58dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="7dp"
+                        android:background="@drawable/switch_btn"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/perfect_birthlin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/text_btn_bg"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="生日"
+                        android:textColor="#4C2829"
+                        android:textSize="@dimen/second_font" />
+
+                    <TextView
+                        android:id="@+id/perfect_birth"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请选择"
+                        android:singleLine="true"
+                        android:textColor="#4c2829"
+                        android:textColorHint="#CECECE"
+                        android:textSize="@dimen/second_font" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/go" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/perfect_tradelin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/text_btn_bg"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="行业"
+                        android:textColor="#4C2829"
+                        android:textSize="@dimen/second_font" />
+
+                    <TextView
+                        android:id="@+id/perfect_trade"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请选择"
+                        android:singleLine="true"
+                        android:textColor="#4c2829"
+                        android:textColorHint="#CECECE"
+                        android:textSize="@dimen/second_font" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/go" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/text_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="职业"
+                        android:textColor="#4C2829"
+                        android:textSize="@dimen/second_font" />
+
+                    <EditText
+                        android:id="@+id/perfect_job"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入职业"
+                        android:singleLine="true"
+                        android:maxLength="5"
+                        android:textColor="#4c2829"
+                        android:textColorHint="#CECECE"
+                        android:textSize="@dimen/second_font" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/perfect_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/login_btn"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:text="下一步"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/first_font" />
+            </LinearLayout>
+        </ScrollView>
+
+        <include
+            android:id="@+id/perfect_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -88,7 +88,8 @@ public class WelcomeActivity extends BaseActivity {
 					startActivity(new Intent(WelcomeActivity.this,
 							MainActivity.class));
 					finish();
-				} else {
+				}
+				else {
 					try {
 						Thread.sleep(sleepTime);
 					} catch (InterruptedException e) {
