@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/activity_bg"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/update_name_title"
+        layout="@layout/title"/>
+
+
+    <TextView
+        android:id="@+id/update_name_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textColor="#000"
+        android:textSize="@dimen/second_font"
+        android:text="请输入新的昵称"/>
+
+    <EditText
+        android:id="@+id/update_name_name"
+        android:layout_width="match_parent"
+        android:textColor="#000"
+        android:padding="10dp"
+        android:textColorHint="#cccccc"
+        android:hint="好名字可以让楼友更容易记住你"
+        android:background="@color/white"
+        android:textSize="@dimen/second_font"
+        android:layout_height="wrap_content" />
+</LinearLayout>

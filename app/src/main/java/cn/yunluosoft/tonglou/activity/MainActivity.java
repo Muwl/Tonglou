@@ -27,6 +27,10 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.fragment.ConstactFragment;
+import cn.yunluosoft.tonglou.activity.fragment.FloorSpeechFragment;
+import cn.yunluosoft.tonglou.activity.fragment.PersonFragment;
+import cn.yunluosoft.tonglou.activity.fragment.WithFloorFragment;
 import cn.yunluosoft.tonglou.easemob.applib.controller.HXSDKHelper;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.Constant;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.DemoHXSDKHelper;
@@ -57,28 +61,26 @@ import com.umeng.update.UmengUpdateAgent;
  * @date 2015-8-2下午3:58:59
  * @description
  */
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
-//	protected static final String TAG = "MainActivity";
-//
-//	private static FragmentManager fMgr;
-//
-//	private RadioButton floorSpeech;
-//
-//	private RadioButton message;
-//
-//	private RadioButton withFloor;
-//
-//	private RadioButton constact;
-//
-//	private RadioButton person;
-//
-//	private RadioGroup group;
-//
-//	private boolean canExit = false;
-//
-//	private int pageIndex = 1;// 1代表楼语 2 代表消息 3 代表同楼 4 代表人脉 5代表我的
-//
+	protected static final String TAG = "MainActivity";
+
+	private static FragmentManager fMgr;
+
+	private RadioButton floorSpeech;
+
+	private RadioButton withFloor;
+
+	private RadioButton constact;
+
+	private RadioButton person;
+
+	private RadioGroup group;
+
+	private boolean canExit = false;
+	//
+	private int pageIndex = 1;// 1代表楼语 2 代表同楼 3 代表人脉 4代表我的
+	//
 //	private MyConnectionListener connectionListener = null;
 //
 //	// 账号在别处登录
@@ -87,13 +89,13 @@ public class MainActivity extends BaseActivity{
 //	// 账号被移除
 //	private boolean isCurrentAccountRemoved = false;
 //
-//	private TextView readNo;
-//
-//	private int width;
-//
+	private TextView readNo;
+	//
+	private int width;
+	//
 //	private int mFlag = 0;
 //
-//	private TextView floornum;
+	private TextView floornum;
 //
 //	private MyBroadCastReceiver broadCastReceiver;
 //
@@ -121,31 +123,31 @@ public class MainActivity extends BaseActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-//		UmengUpdateAgent.setUpdateOnlyWifi(false);
-//		UmengUpdateAgent.update(this);
-//
-//		if (savedInstanceState != null
-//				&& savedInstanceState.getBoolean(Constant.ACCOUNT_REMOVED,
-//						false)) {
-//			// 防止被移除后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
-//			// 三个fragment里加的判断同理
-//			DemoHXSDKHelper.getInstance().logout(true, null);
-//			finish();
-//			startActivity(new Intent(this, LoginActivity.class));
-//			return;
-//		} else if (savedInstanceState != null
-//				&& savedInstanceState.getBoolean("isConflict", false)) {
-//			// 防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
-//			// 三个fragment里加的判断同理
-//			finish();
-//			startActivity(new Intent(this, LoginActivity.class));
-//			return;
-//		}
-//		setContentView(R.layout.main);
-//		ToosUtils.deleteFile(new File(Environment.getExternalStorageDirectory()
-//				+ "/louyu/"));
+		super.onCreate(savedInstanceState);
+
+		UmengUpdateAgent.setUpdateOnlyWifi(false);
+		UmengUpdateAgent.update(this);
+
+		if (savedInstanceState != null
+				&& savedInstanceState.getBoolean(Constant.ACCOUNT_REMOVED,
+				false)) {
+			// 防止被移除后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
+			// 三个fragment里加的判断同理
+			DemoHXSDKHelper.getInstance().logout(true, null);
+			finish();
+			startActivity(new Intent(this, LoginActivity.class));
+			return;
+		} else if (savedInstanceState != null
+				&& savedInstanceState.getBoolean("isConflict", false)) {
+			// 防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
+			// 三个fragment里加的判断同理
+			finish();
+			startActivity(new Intent(this, LoginActivity.class));
+			return;
+		}
+		setContentView(R.layout.main);
+		ToosUtils.deleteFile(new File(Environment.getExternalStorageDirectory()
+				+ "/louyu/"));
 //
 //		if (getIntent().getBooleanExtra("conflict", false)
 //				&& !isConflictDialogShow) {
@@ -157,30 +159,29 @@ public class MainActivity extends BaseActivity{
 //		inviteMessgeDao = new InviteMessgeDao(this);
 //		userDao = new UserDao(this);
 //
-//		fMgr = getSupportFragmentManager();
-//		initFragment();
-//		group = (RadioGroup) findViewById(R.id.main_rg);
-//		floorSpeech = (RadioButton) findViewById(R.id.main_bottom_floorSpeech);
-//		message = (RadioButton) findViewById(R.id.main_bottom_message);
-//		withFloor = (RadioButton) findViewById(R.id.main_bottom_withfloor);
-//		constact = (RadioButton) findViewById(R.id.main_bottom_contact);
-//		person = (RadioButton) findViewById(R.id.main_bottom_person);
-//		readNo = (TextView) findViewById(R.id.main_bottom_number);
-//		floornum = (TextView) findViewById(R.id.main_bottom_floornum);
+		fMgr = getSupportFragmentManager();
+		initFragment();
+		group = (RadioGroup) findViewById(R.id.main_rg);
+		floorSpeech = (RadioButton) findViewById(R.id.main_bottom_floorSpeech);
+		withFloor = (RadioButton) findViewById(R.id.main_bottom_withfloor);
+		constact = (RadioButton) findViewById(R.id.main_bottom_contact);
+		person = (RadioButton) findViewById(R.id.main_bottom_person);
+		readNo = (TextView) findViewById(R.id.main_bottom_number);
+		floornum = (TextView) findViewById(R.id.main_bottom_floornum);
 
-//		width = DensityUtil.getScreenWidth(this);
-//		LayoutParams params = (LayoutParams) readNo.getLayoutParams();
-//		params.leftMargin = width * 2 / 5 - DensityUtil.dip2px(this, 34);
-//		params.topMargin = DensityUtil.dip2px(this, 3);
-//		readNo.setLayoutParams(params);
-//
-//		LayoutParams params2 = (LayoutParams) floornum.getLayoutParams();
-//		params2.leftMargin = width * 1 / 5 - DensityUtil.dip2px(this, 34);
-//		params2.topMargin = DensityUtil.dip2px(this, 3);
-//		floornum.setLayoutParams(params2);
-//
-//		// initFragment();
-//		group.check(R.id.main_bottom_floorSpeech);
+		width = DensityUtil.getScreenWidth(this);
+		LayoutParams params = (LayoutParams) readNo.getLayoutParams();
+		params.leftMargin = width * 2 / 5 - DensityUtil.dip2px(this, 34);
+		params.topMargin = DensityUtil.dip2px(this, 3);
+		readNo.setLayoutParams(params);
+
+		LayoutParams params2 = (LayoutParams) floornum.getLayoutParams();
+		params2.leftMargin = width * 1 / 5 - DensityUtil.dip2px(this, 34);
+		params2.topMargin = DensityUtil.dip2px(this, 3);
+		floornum.setLayoutParams(params2);
+
+		initFragment();
+		group.check(R.id.main_bottom_floorSpeech);
 //
 //		floorSpeech.setOnClickListener(new OnClickListener() {
 //
@@ -203,106 +204,91 @@ public class MainActivity extends BaseActivity{
 //				}
 //			}
 //		});
-//
-//		group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//			@Override
-//			public void onCheckedChanged(RadioGroup group, int checkedId) {
-//				LogManager.LogShow("aaa", checkedId + "", LogManager.VERBOSE);
-//				switch (checkedId) {
-//				case R.id.main_bottom_floorSpeech:
-//					// pageIndex = 1;
-//					try {
-//						if ((fMgr.findFragmentByTag("FloorSpeechFragment") != null && fMgr
-//								.findFragmentByTag("FloorSpeechFragment")
-//								.isVisible())) {
-//							return;
-//						}
-//						FloorSpeechFragment fragment = (FloorSpeechFragment) fMgr
-//								.findFragmentByTag("FloorSpeechFragment");
-//						// 当前页面如果为聊天历史页面，刷新此页面
-//						if (fragment != null) {
-//							fragment.onrefush();
-//						}
-//						popAllFragmentsExceptTheBottomOne();
-//					} catch (Exception e) {
-//					}
-//
-//					break;
-//				case R.id.main_bottom_message:
-//					pageIndex = 2;
-//					try {
-//						popAllFragmentsExceptTheBottomOne();
-//						FragmentTransaction ft1 = fMgr.beginTransaction();
-//						ft1.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
-//						MessageFragment messageFragment = new MessageFragment();
-//						ft1.add(R.id.main_fragment, messageFragment,
-//								"MessageFragment");
-//						ft1.addToBackStack("MessageFragment");
-//						ft1.commitAllowingStateLoss();
-//					} catch (Exception e) {
-//					}
-//
-//					break;
-//				case R.id.main_bottom_withfloor:
-//					pageIndex = 3;
-//					try {
-//						popAllFragmentsExceptTheBottomOne();
-//						FragmentTransaction ft = fMgr.beginTransaction();
-//						ft.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
-//						WithFloorFragment floorFragment = new WithFloorFragment();
-//						ft.add(R.id.main_fragment, floorFragment,
-//								"WithFloorFragment");
-//						ft.addToBackStack("WithFloorFragment");
-//						ft.commitAllowingStateLoss();
-//					} catch (Exception e) {
-//					}
-//
-//					break;
-//				case R.id.main_bottom_contact:
-//					pageIndex = 4;
-//					try {
-//						popAllFragmentsExceptTheBottomOne();
-//						FragmentTransaction ft2 = fMgr.beginTransaction();
-//						ft2.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
-//						ConstactFragment constactFragment = new ConstactFragment();
-//						ft2.add(R.id.main_fragment, constactFragment,
-//								"ConstactFragment");
-//						ft2.addToBackStack("ConstactFragment");
-//						ft2.commitAllowingStateLoss();
-//
-//					} catch (Exception e) {
-//					}
-//
-//					break;
-//				case R.id.main_bottom_person:
-//					pageIndex = 5;
-//					try {
-//						popAllFragmentsExceptTheBottomOne();
-//						FragmentTransaction ft3 = fMgr.beginTransaction();
-//						ft3.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
-//						PersonFragment personFragment = new PersonFragment();
-//						ft3.add(R.id.main_fragment, personFragment,
-//								"PersonFragment");
-//						ft3.addToBackStack("PersonFragment");
-//						ft3.commitAllowingStateLoss();
-//					} catch (Exception e) {
-//					}
-//
-//					break;
-//
-//				default:
-//					break;
-//				}
-//			}
-//		});
+
+		group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				LogManager.LogShow("aaa", checkedId + "", LogManager.VERBOSE);
+				switch (checkedId) {
+					case R.id.main_bottom_floorSpeech:
+						// pageIndex = 1;
+						try {
+							if ((fMgr.findFragmentByTag("FloorSpeechFragment") != null && fMgr
+									.findFragmentByTag("FloorSpeechFragment")
+									.isVisible())) {
+								return;
+							}
+							FloorSpeechFragment fragment = (FloorSpeechFragment) fMgr
+									.findFragmentByTag("FloorSpeechFragment");
+							// 当前页面如果为聊天历史页面，刷新此页面
+							if (fragment != null) {
+								//fragment.onrefush();
+							}
+							popAllFragmentsExceptTheBottomOne();
+						} catch (Exception e) {
+						}
+
+						break;
+					case R.id.main_bottom_withfloor:
+						pageIndex = 2;
+						try {
+							popAllFragmentsExceptTheBottomOne();
+							FragmentTransaction ft = fMgr.beginTransaction();
+							ft.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
+							WithFloorFragment floorFragment = new WithFloorFragment();
+							ft.add(R.id.main_fragment, floorFragment,
+									"WithFloorFragment");
+							ft.addToBackStack("WithFloorFragment");
+							ft.commitAllowingStateLoss();
+						} catch (Exception e) {
+						}
+
+						break;
+					case R.id.main_bottom_contact:
+						pageIndex = 3;
+						try {
+							popAllFragmentsExceptTheBottomOne();
+							FragmentTransaction ft2 = fMgr.beginTransaction();
+							ft2.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
+							ConstactFragment constactFragment = new ConstactFragment();
+							ft2.add(R.id.main_fragment, constactFragment,
+									"ConstactFragment");
+							ft2.addToBackStack("ConstactFragment");
+							ft2.commitAllowingStateLoss();
+
+						} catch (Exception e) {
+						}
+
+						break;
+					case R.id.main_bottom_person:
+						pageIndex = 4;
+						try {
+							popAllFragmentsExceptTheBottomOne();
+							FragmentTransaction ft3 = fMgr.beginTransaction();
+							ft3.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
+							PersonFragment personFragment = new PersonFragment();
+							ft3.add(R.id.main_fragment, personFragment,
+									"PersonFragment");
+							ft3.addToBackStack("PersonFragment");
+							ft3.commitAllowingStateLoss();
+						} catch (Exception e) {
+						}
+
+						break;
+
+					default:
+						break;
+				}
+			}
+		});
 //		broadCastReceiver = new MyBroadCastReceiver();
 //		IntentFilter intentFilter = new IntentFilter();
 //		intentFilter.addAction(BROADCAST_ACTION);
 //		registerReceiver(broadCastReceiver, intentFilter);
-//
-//		init();
-//
-//		pageIndex = getIntent().getIntExtra("index", 1);
+
+		//init();
+
+		pageIndex = getIntent().getIntExtra("index", 1);
 
 	}
 
@@ -361,45 +347,46 @@ public class MainActivity extends BaseActivity{
 //		EMChatManager.getInstance().addConnectionListener(connectionListener);
 //	}
 //
-//	/**
-//	 * 初始化首个Fragment
-//	 */
-//	private void initFragment() {
-//		try {
-//			FragmentTransaction ft = fMgr.beginTransaction();
-//			FloorSpeechFragment floorSpeechFragment = new FloorSpeechFragment();
-//			ft.add(R.id.main_fragment, floorSpeechFragment, "FloorSpeechFragment");
-//			ft.addToBackStack("FloorSpeechFragment");
-//			ft.commitAllowingStateLoss();
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//
-//	}
-//
-//	/**
-//	 * 从back stack弹出所有的fragment，保留首页的那个
-//	 */
-//	public static void popAllFragmentsExceptTheBottomOne() {
-//		for (int i = 0, count = fMgr.getBackStackEntryCount() - 1; i < count; i++) {
-//			fMgr.popBackStack();
-//
-//		}
-//
-//	}
-//
-//	// 点击返回按钮
-//	@Override
-//	public void onBackPressed() {
-//		// if (ToosUtils.isApplicationBroughtToBackground(MainActivity.this)) {
-//		// if (canExit) {
-//		// finish();
-//		// MyApplication.getInstance().exit();
-//		// } else {
-//		// ToastUtils.displayShortToast(this, "再按一次退出程序");
-//		// canExit = true;
-//		// handler.sendEmptyMessageDelayed(0, 2000);
-//		// }
+
+	/**
+	 * 初始化首个Fragment
+	 */
+	private void initFragment() {
+		try {
+			FragmentTransaction ft = fMgr.beginTransaction();
+			FloorSpeechFragment floorSpeechFragment = new FloorSpeechFragment();
+			ft.add(R.id.main_fragment, floorSpeechFragment, "FloorSpeechFragment");
+			ft.addToBackStack("FloorSpeechFragment");
+			ft.commitAllowingStateLoss();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+	/**
+	 * 从back stack弹出所有的fragment，保留首页的那个
+	 */
+	public static void popAllFragmentsExceptTheBottomOne() {
+		for (int i = 0, count = fMgr.getBackStackEntryCount() - 1; i < count; i++) {
+			fMgr.popBackStack();
+
+		}
+
+	}
+
+	// 点击返回按钮
+	@Override
+	public void onBackPressed() {
+		// if (ToosUtils.isApplicationBroughtToBackground(MainActivity.this)) {
+		// if (canExit) {
+		// finish();
+		// MyApplication.getInstance().exit();
+		// } else {
+		// ToastUtils.displayShortToast(this, "再按一次退出程序");
+		// canExit = true;
+		// handler.sendEmptyMessageDelayed(0, 2000);
+		// }
 //		boolean flag = false;
 //		for (int i = 0; i < MyApplication.getInstance().getActivities().size(); i++) {
 //			if (MyApplication.getInstance().getActivities().get(i) != null) {
@@ -414,14 +401,14 @@ public class MainActivity extends BaseActivity{
 //			}
 //
 //		}
-//		moveTaskToBack(true);
-//		// } else {
-//		// super.onBackPressed();
-//		// }
-//
-//	}
+		moveTaskToBack(true);
+//		 } else {
+//		 super.onBackPressed();
+//		 }
 
-//	public void onrefush() {
+	}
+
+	//	public void onrefush() {
 //		FloorSpeechFragment fragment = (FloorSpeechFragment) fMgr
 //				.findFragmentByTag("FloorSpeechFragment");
 //		// 当前页面如果为聊天历史页面，刷新此页面
@@ -914,11 +901,11 @@ public class MainActivity extends BaseActivity{
 //		}
 //	}
 //
-//	@Override
-//	public void onCreateContextMenu(ContextMenu menu, View v,
-//			ContextMenuInfo menuInfo) {
-//		super.onCreateContextMenu(menu, v, menuInfo);
-//		// getMenuInflater().inflate(R.menu.context_tab_contact, menu);
-//	}
-
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+									ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		// getMenuInflater().inflate(R.menu.context_tab_contact, menu);
+	}
+}
 

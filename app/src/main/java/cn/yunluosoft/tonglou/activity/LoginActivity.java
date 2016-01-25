@@ -157,13 +157,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			startActivity(intent2);
 			break;
 		case R.id.login_login:
-			// Intent intent6 = new Intent(LoginActivity.this,
-			// MainActivity.class);
-			// startActivity(intent6);
+			 Intent intent6 = new Intent(LoginActivity.this,
+			 MainActivity.class);
+			 startActivity(intent6);
 
-			if (checkInput()) {
-				//sendLogin();
-			}
+//			if (checkInput()) {
+//				//sendLogin();
+//			}
 			break;
 
 		case R.id.login_forgetpwd:
