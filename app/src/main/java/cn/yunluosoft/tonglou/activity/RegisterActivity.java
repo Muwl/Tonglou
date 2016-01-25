@@ -214,11 +214,15 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			break;
 
 		case R.id.register_ok:
-			if (checkInput()) {
-				pro.setVisibility(View.VISIBLE);
-				mLocationClient.start();
+//			if (checkInput()) {
+//				pro.setVisibility(View.VISIBLE);
+//				mLocationClient.start();
+//
+//			}
 
-			}
+			Intent intent3= new Intent(RegisterActivity.this,
+					PerfectDataActivity.class);
+			startActivity(intent3);
 
 			break;
 		case R.id.title_rig:

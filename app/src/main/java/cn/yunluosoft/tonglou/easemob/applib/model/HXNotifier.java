@@ -29,6 +29,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
+
 import cn.yunluosoft.tonglou.activity.MainActivity;
 import cn.yunluosoft.tonglou.easemob.applib.controller.HXSDKHelper;
 import cn.yunluosoft.tonglou.utils.LogManager;

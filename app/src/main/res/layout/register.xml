@@ -39,6 +39,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/second_font"
+                        android:textColor="#000"
                         android:text="手机号" />
                     <EditText
                         android:id="@+id/register_name"
@@ -50,8 +51,8 @@
                         android:hint="请输入手机号"
                         android:inputType="phone"
                         android:singleLine="true"
-                        android:textColor="#4c2829"
-                        android:textColorHint="#CECECE"
+                        android:textColor="#000"
+                        android:textColorHint="#cccccc"
                         android:textSize="@dimen/second_font" />
                 </LinearLayout>
 
@@ -70,6 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/second_font"
+                        android:textColor="#000"
                         android:layout_centerVertical="true"
                         android:text="验证码" />
 
@@ -97,8 +99,8 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="请输入验证码"
-                        android:textColor="#4c2829"
-                        android:textColorHint="#CECECE"
+                        android:textColor="#000"
+                        android:textColorHint="#cccccc"
                         android:textSize="@dimen/second_font" />
                 </RelativeLayout>
 
@@ -118,6 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:textSize="@dimen/second_font"
+                        android:textColor="#000"
                         android:text="密\u3000码"/>
 
                     <CheckBox
@@ -140,8 +143,8 @@
                         android:gravity="center_vertical"
                         android:hint="请输入密码"
                         android:inputType="textPassword"
-                        android:textColor="#4c2829"
-                        android:textColorHint="#CECECE"
+                        android:textColor="#000"
+                        android:textColorHint="#cccccc"
                         android:textSize="@dimen/second_font" />
                 </RelativeLayout>
 
@@ -172,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="点击注册表示已同意"
-                        android:textColor="#FFEDE2"
+                        android:textColor="#999999"
                         android:textSize="@dimen/second_font" />
 
                     <TextView
@@ -180,7 +183,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="《服务条款》"
-                        android:textColor="@color/title_text"
+                        android:textColor="@color/title_bg"
                         android:textSize="@dimen/second_font" />
                 </LinearLayout>
             </LinearLayout>

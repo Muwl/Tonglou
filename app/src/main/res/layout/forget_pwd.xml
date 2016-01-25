@@ -38,6 +38,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:textSize="@dimen/second_font"
+                        android:textColor="#000"
                         android:text="手机号"
                         android:layout_height="wrap_content" />
 
@@ -51,8 +52,8 @@
                         android:hint="请输入手机号"
                         android:inputType="phone"
                         android:singleLine="true"
-                        android:textColor="#4c2829"
-                        android:textColorHint="#CECECE"
+                        android:textColor="#000"
+                        android:textColorHint="#cccccc"
                         android:textSize="@dimen/second_font" />
                 </LinearLayout>
 
@@ -72,6 +73,7 @@
                         android:textSize="@dimen/second_font"
                         android:layout_centerVertical="true"
                         android:text="验证码"
+                        android:textColor="#000"
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/forgetpwd_getcode"
@@ -81,7 +83,7 @@
                         android:layout_centerVertical="true"
                         android:clickable="true"
                         android:enabled="true"
-                        android:text="验证码"
+                        android:text="发送验证码"
                         android:textColor="@color/code_text"
                         android:textSize="@dimen/second_font" />
 
@@ -96,8 +98,8 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="请输入验证码"
-                        android:textColor="#4c2829"
-                        android:textColorHint="#CECECE"
+                        android:textColor="#000"
+                        android:textColorHint="#cccccc"
                         android:textSize="@dimen/second_font" />
                 </RelativeLayout>
 
@@ -118,6 +120,7 @@
                         android:textSize="@dimen/second_font"
                         android:layout_centerVertical="true"
                         android:text="新密码"
+                        android:textColor="#000"
                         android:layout_height="wrap_content" />
 
                     <CheckBox
@@ -140,8 +143,8 @@
                         android:gravity="center_vertical"
                         android:hint="设置新密码"
                         android:inputType="textPassword"
-                        android:textColor="#4c2829"
-                        android:textColorHint="#CECECE"
+                        android:textColor="#000"
+                        android:textColorHint="#cccccc"
                         android:textSize="@dimen/second_font" />
                 </RelativeLayout>
 
