@@ -11,7 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.AboutActivity;
+import cn.yunluosoft.tonglou.activity.FreebackActivity;
+import cn.yunluosoft.tonglou.activity.LocationSelActivity;
 import cn.yunluosoft.tonglou.activity.PersonDataActivity;
+import cn.yunluosoft.tonglou.activity.SettingActivity;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 
 import com.lidroid.xutils.BitmapUtils;
@@ -102,10 +106,10 @@ public class PersonFragment extends Fragment implements OnClickListener {
                 startActivity(intent5);
                 break;
             case R.id.fperson_locateview:
-//                Intent intent3 = new Intent(getActivity(),
-//                        LocationSelActivity.class);
-//                intent3.putExtra("flag", 1);
-//                startActivity(intent3);
+                Intent intent3 = new Intent(getActivity(),
+                        LocationSelActivity.class);
+                intent3.putExtra("flag", 1);
+                startActivity(intent3);
 
                 break;
             case R.id.fperson_floorspeech:
@@ -114,18 +118,18 @@ public class PersonFragment extends Fragment implements OnClickListener {
 //                startActivity(intent);
                 break;
             case R.id.fperson_suggestview:
-//                Intent intent2 = new Intent(getActivity(), FreebackActivity.class);
-//                startActivity(intent2);
+                Intent intent2 = new Intent(getActivity(), FreebackActivity.class);
+                startActivity(intent2);
 
                 break;
             case R.id.fperson_settingview:
-//                Intent intent6 = new Intent(getActivity(), SettingActivity.class);
-//                startActivity(intent6);
+                Intent intent6 = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent6);
 
                 break;
             case R.id.fperson_about:
-//                Intent intent4 = new Intent(getActivity(), AboutActivity.class);
-//                startActivity(intent4);
+                Intent intent4 = new Intent(getActivity(), AboutActivity.class);
+                startActivity(intent4);
 
                 break;
 

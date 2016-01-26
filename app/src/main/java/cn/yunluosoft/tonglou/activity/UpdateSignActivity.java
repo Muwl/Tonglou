@@ -42,7 +42,7 @@ public class UpdateSignActivity extends BaseActivity implements View.OnClickList
         com.setOnClickListener(this);
         com.setText("完成");
         name.setHint("个性的签名代表个性的你");
-        name.setText("请输入新的签名");
+        textView.setText("请输入新的签名");
 
 
     }

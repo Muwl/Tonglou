@@ -43,7 +43,7 @@ public class UpdateNameActivity extends BaseActivity implements View.OnClickList
         com.setOnClickListener(this);
         com.setText("完成");
         name.setHint("好名字可以让楼友更容易记住你");
-        name.setText("请输入新的昵称");
+        textView.setText("请输入新的昵称");
 
 
     }

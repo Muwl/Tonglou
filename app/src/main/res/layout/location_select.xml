@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/location_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/location_title"
+        layout="@layout/title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@mipmap/locate_bg"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp" >
+
+                <cn.yunluosoft.tonglou.view.CircleImageView
+                    android:id="@+id/location_icon"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="60dp"
+                    android:clickable="true"
+                    android:src="@mipmap/location_image" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:id="@+id/location_nameview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:background="@drawable/text_bg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp" >
+
+                        <EditText
+                            android:id="@+id/location_name"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:hint="请输入您所在楼宇"
+                            android:singleLine="true"
+                            android:textColor="#000"
+                            android:textColorHint="#cccccc"
+                            android:textSize="@dimen/second_font" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/location_ok"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/location_nameview"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/login_btn"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:paddingBottom="12dp"
+                        android:paddingTop="12dp"
+                        android:text="如果搜不到你所在的楼宇，请点击添加"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/thrid_font" />
+
+                    <ListView
+                        android:id="@+id/location_listview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/location_nameview"
+                        android:layout_marginTop="8dp"
+                        android:divider="@color/transparent"
+                        android:dividerHeight="0dp"
+                        android:scrollbars="none" >
+                    </ListView>
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <include
+            android:id="@+id/location_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
