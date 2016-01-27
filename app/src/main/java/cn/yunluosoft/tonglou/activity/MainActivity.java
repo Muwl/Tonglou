@@ -211,7 +211,7 @@ public class MainActivity extends BaseActivity {
 				LogManager.LogShow("aaa", checkedId + "", LogManager.VERBOSE);
 				switch (checkedId) {
 					case R.id.main_bottom_floorSpeech:
-						// pageIndex = 1;
+						pageIndex = 1;
 						try {
 							if ((fMgr.findFragmentByTag("FloorSpeechFragment") != null && fMgr
 									.findFragmentByTag("FloorSpeechFragment")
@@ -901,11 +901,6 @@ public class MainActivity extends BaseActivity {
 //		}
 //	}
 //
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-									ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		// getMenuInflater().inflate(R.menu.context_tab_contact, menu);
-	}
+
 }
 

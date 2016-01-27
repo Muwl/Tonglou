@@ -67,8 +67,8 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
          // create "open" item
          SwipeMenuItem openItem = new SwipeMenuItem(MyfloorspeekActivity.this);
          // set item background
-         openItem.setBackground(new ColorDrawable(Color.rgb(0xff, 0x00,
-         0x00)));
+         openItem.setBackground(new ColorDrawable(Color.rgb(0xf0, 0x5f,
+         0x4c)));
          // e8e9
          // 00c91c
          // set item width

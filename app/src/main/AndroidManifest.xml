@@ -214,7 +214,43 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
         </activity>
 
+        <!-- 自定义的alertdialog -->
+        <activity
+            android:name=".activity.AlertDialog"
+            android:configChanges="orientation|keyboardHidden|screenSize|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
 
+
+        <!-- 聊天页面 -->
+        <activity
+            android:name=".activity.ChatActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|keyboard"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.AlbumImageGridActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- 自定义的contextmenu -->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.ContextMenu"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle" >
+
+        </activity>
+
+        <!-- 显示下载大图页面 -->
+        <activity
+            android:name=".activity.ShowBigImage"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="yunluosoft#test" />
@@ -222,6 +258,35 @@
             android:name="UMENG_APPKEY"
             android:value="55e4011de0f55a8f02000a59" >
         </meta-data>
+
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+
+
+
+        <!-- 声明sdk所需的service SDK核心功能 -->
+        <service android:name="com.easemob.chat.EMChatService" />
+        <service android:name="com.easemob.chat.EMChatService" />
+        <!-- 声明sdk所需的receiver -->
+        <receiver android:name="com.easemob.chat.EMMonitorReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
