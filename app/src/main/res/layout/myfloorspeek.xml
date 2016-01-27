@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/activity_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/myfloorspeech_title"
+        layout="@layout/title"/>
+
+    <RadioGroup
+        android:id="@+id/myfloorspeech_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/myfloorspeech_atten"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#000"
+            android:textSize="@dimen/first_font"
+            android:text="我的关注"
+            android:background="@drawable/myfloorseppch_rb"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="12dp"/>
+
+        <RadioButton
+            android:id="@+id/myfloorspeech_pub"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#000"
+            android:textSize="@dimen/first_font"
+            android:text="我的发布"
+            android:background="@drawable/myfloorseppch_rb"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="12dp"/>
+    </RadioGroup>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <cn.yunluosoft.tonglou.view.swipelist.SwipeMenuListView
+            android:id="@+id/myfloorspeech_list"
+            android:layout_width="match_parent"
+            android:dividerHeight="10dp"
+            android:layout_marginTop="10dp"
+            android:divider="@color/activity_bg"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:id="@+id/myfloorspeech_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+</LinearLayout>

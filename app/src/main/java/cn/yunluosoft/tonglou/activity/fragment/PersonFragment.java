@@ -14,6 +14,7 @@ import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.AboutActivity;
 import cn.yunluosoft.tonglou.activity.FreebackActivity;
 import cn.yunluosoft.tonglou.activity.LocationSelActivity;
+import cn.yunluosoft.tonglou.activity.MyfloorspeekActivity;
 import cn.yunluosoft.tonglou.activity.PersonDataActivity;
 import cn.yunluosoft.tonglou.activity.SettingActivity;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
@@ -113,9 +114,9 @@ public class PersonFragment extends Fragment implements OnClickListener {
 
                 break;
             case R.id.fperson_floorspeech:
-//                Intent intent = new Intent(getActivity(),
-//                        MyFloorSpeechActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(),
+                        MyfloorspeekActivity.class);
+                startActivity(intent);
                 break;
             case R.id.fperson_suggestview:
                 Intent intent2 = new Intent(getActivity(), FreebackActivity.class);

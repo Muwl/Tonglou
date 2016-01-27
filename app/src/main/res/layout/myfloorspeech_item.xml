@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:padding="12dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <cn.yunluosoft.tonglou.view.CircleImageView
+            android:id="@+id/myfloorspeech_item_icon"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@mipmap/icon_default" />
+
+        <TextView
+            android:id="@+id/myfloorspeech_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/thrid_font"
+            android:layout_marginTop="8dp"
+            android:textColor="#000"
+            android:text="安安"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/myfloorspeech_item_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="@dimen/second_font"
+            android:text="一起游玩"/>
+
+        <TextView
+            android:id="@+id/myfloorspeech_item_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/thrid_font"
+            android:layout_marginTop="7dp"
+            android:textColor="#666666"
+            android:text="12月21阿瓦等哈看我打了"/>
+
+
+        <TextView
+            android:id="@+id/myfloorspeech_item_speak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/login_btn"
+            android:clickable="true"
+            android:gravity="center"
+            android:drawableLeft="@mipmap/myfloor_speak"
+            android:drawablePadding="4dp"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:text="进群聊"
+            android:textColor="@color/white"
+            android:textSize="@dimen/thrid_font" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

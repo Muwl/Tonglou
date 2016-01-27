@@ -207,6 +207,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
         </activity>
+        <!-- 附近楼宇 -->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.MyfloorspeekActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
 
 
         <meta-data
