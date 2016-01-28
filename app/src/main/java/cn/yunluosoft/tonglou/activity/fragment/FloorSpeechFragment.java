@@ -1,16 +1,19 @@
 package cn.yunluosoft.tonglou.activity.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ConsultActivity;
 import cn.yunluosoft.tonglou.adapter.FloorSpeechAdapter;
 
 /**
@@ -44,5 +47,13 @@ public class FloorSpeechFragment extends Fragment {
 
         adapter=new FloorSpeechAdapter(getActivity());
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(getActivity(), ConsultActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
