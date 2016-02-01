@@ -24,7 +24,7 @@
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
             android:text="拍照"
-            android:textColor="#2d2d2f"
+            android:textColor="#0076FF"
             android:textSize="@dimen/second_font" />
 
         <ImageView
@@ -42,7 +42,7 @@
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
             android:text="从相册中选择"
-            android:textColor="#2d2d2f"
+            android:textColor="#0076FF"
             android:textSize="@dimen/second_font" />
 
         <ImageView
@@ -61,7 +61,7 @@
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
             android:text="加入黑名单"
-            android:textColor="#2d2d2f"
+            android:textColor="#0076FF"
             android:textSize="@dimen/second_font"
             android:visibility="gone" />
     </LinearLayout>
@@ -82,7 +82,7 @@
         android:paddingRight="0dp"
         android:paddingTop="15dp"
         android:text="取消"
-        android:textColor="#2d2d2f"
+        android:textColor="#000"
         android:textSize="@dimen/second_font" />
 
 </LinearLayout>

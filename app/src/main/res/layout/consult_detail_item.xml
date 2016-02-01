@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@color/activity_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <cn.yunluosoft.tonglou.view.CircleImageView
+        android:id="@+id/consult_detail_item_icon"
+        android:layout_width="50dp"
+        android:layout_margin="12dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/icon_default" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp">
+
+            <TextView
+                android:id="@+id/consult_detail_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:layout_weight="1"
+                android:textSize="@dimen/second_font"
+                android:text="安吉拉"/>
+            <TextView
+                android:id="@+id/consult_detail_item_atten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#B3B3B3"
+                android:drawablePadding="5dp"
+                android:clickable="true"
+                android:drawableLeft="@mipmap/consult_atten"
+                android:textSize="@dimen/second_font"
+                android:text="56"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/consult_detail_item_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:singleLine="true"
+            android:textColor="#666666"
+            android:textSize="@dimen/second_font"
+            android:layout_marginTop="8dp"
+            android:text="二手美利坚，公爵600山地车一辆，8层新转"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="12dp">
+            <TextView
+                android:id="@+id/consult_detail_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/second_font"
+                android:textColor="#B3B3B3"
+                android:text="昨天"/>
+
+            <TextView
+                android:id="@+id/consult_detail_item_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/report_text"
+                android:textSize="@dimen/second_font"
+                android:text="回复"
+                android:clickable="true"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="12dp"
+            android:background="@color/dicider_col"/>
+
+    </LinearLayout>
+
+</LinearLayout>

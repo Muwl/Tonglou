@@ -225,6 +225,34 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
         </activity>
+        <!-- 添加好友 -->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.ConstactsAddActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+
+        <!-- 好友详情页面 -->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.ConstactActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+
+        <!-- 举报页面-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.ReportActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+
+
+        <!-- 咨询详情页面-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.ConsultDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
 
         <!-- 自定义的alertdialog -->
         <activity

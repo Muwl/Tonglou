@@ -1,7 +1,9 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,6 +42,14 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
         title.setText("咨询推送");
         adapter=new ConsultAdapter(this);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(ConsultActivity.this,ConsultDetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

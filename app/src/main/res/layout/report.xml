@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/report_title"
+        layout="@layout/title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="@dimen/second_font"
+                android:layout_margin="12dp"
+                android:text="选择举报原因"/>
+
+            <RelativeLayout
+                android:id="@+id/report_item1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:clickable="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="色情低俗"
+                    android:textColor="#000"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/reportimage_item1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:button="@null"
+                    android:background="@drawable/report_cb"
+                    android:checked="false" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/dicider_col" />
+
+            <RelativeLayout
+                android:id="@+id/report_item2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:clickable="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="赌博"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/reportimage_item2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:button="@null"
+                    android:background="@drawable/report_cb" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/divider_list" />
+
+
+            <RelativeLayout
+                android:id="@+id/report_item3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:clickable="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="政治敏感"
+                    android:textColor="#000"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/reportimage_item3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:button="@null"
+                    android:background="@drawable/report_cb" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/divider_list" />
+
+
+            <RelativeLayout
+                android:id="@+id/report_item4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:clickable="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="欺诈骗钱"
+                    android:textColor="#000"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/reportimage_item4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:button="@null"
+                    android:background="@drawable/report_cb"/>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/divider_list" />
+
+            <RelativeLayout
+                android:id="@+id/report_item5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="违法（暴力恐怖、违禁品等）"
+                    android:textColor="#000"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/second_font" />
+
+                <CheckBox
+                    android:id="@+id/reportimage_item5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:enabled="false"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:button="@null"
+                    android:background="@drawable/report_cb"/>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_list" />
+
+
+
+            <TextView
+                android:id="@+id/report_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/login_btn"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/first_font" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/report_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

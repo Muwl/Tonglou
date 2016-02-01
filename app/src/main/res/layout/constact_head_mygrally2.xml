@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/constact_head_root2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/constact_head_birth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="生日：1991-12-11"
+                android:textColor="@color/white"
+                android:textSize="@dimen/second_font" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="爱好："
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/second_font" />
+
+                <TextView
+                    android:id="@+id/constact_head_interect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/second_font" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/constact_head_emotion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="情感：保密"
+                android:textColor="@color/white"
+                android:textSize="@dimen/second_font" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="公司："
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/second_font" />
+
+                <TextView
+                    android:id="@+id/constact_head_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="保密"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/second_font" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

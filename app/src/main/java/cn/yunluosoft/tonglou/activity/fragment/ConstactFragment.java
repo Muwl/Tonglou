@@ -21,6 +21,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.ChatActivity;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
+import cn.yunluosoft.tonglou.activity.ConstactsAddActivity;
 import cn.yunluosoft.tonglou.activity.ConstantWithfloorActivity;
 import cn.yunluosoft.tonglou.adapter.FconstactsAdaper;
 import cn.yunluosoft.tonglou.dialog.CustomeDialog;
@@ -165,25 +167,25 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-//        listView.setOnItemClickListener(new OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//
-//                Intent intent = new Intent(getActivity(),
-//                        ConstactActivity.class);
+        listView.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Intent intent = new Intent(getActivity(),
+                        ConstactActivity.class);
 //                intent.putExtra("id", entities.get(position).userId);
 //                if (!ToosUtils.isStringEmpty(entities.get(position).remarkName)) {
 //                    intent.putExtra("name", entities.get(position).remarkName);
 //                } else {
 //                    intent.putExtra("name", entities.get(position).userName);
 //                }
-//                startActivity(intent);
-//
-//
-//            }
-//        });
+                startActivity(intent);
+
+
+            }
+        });
 //
 //        getInfo();
     }
@@ -197,6 +199,8 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.fconstacts_add:
+                Intent intent2=new Intent(getActivity(), ConstactsAddActivity.class);
+                startActivity(intent2);
                 break;
 
         }

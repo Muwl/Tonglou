@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/activity_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/consult_detail_title"
+        layout="@layout/title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+             android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/consult_detail_tip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="12dp"
+                        android:textSize="@dimen/first_font"
+                        android:text="动画模拟1957年至今太空垃圾增长三点多数量惊人"/>
+
+                    <TextView
+                        android:id="@+id/consult_detail_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="#999999"
+                        android:textSize="@dimen/second_font"
+                        android:text="2015-12-27"/>
+
+                    <TextView
+                        android:id="@+id/consult_detail_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/second_font"
+                        android:textColor="#000"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="8dp"
+                        android:text="文本信息文本信息文本信息文本信息，文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信息文本信，息文本信息文本信息文。"/>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="17dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:paddingBottom="14dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/consult_detail_read"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#B3B3B3"
+                            android:drawablePadding="5dp"
+                            android:clickable="true"
+                            android:drawableLeft="@mipmap/consult_read"
+                            android:textSize="@dimen/second_font"
+                            android:text="100000+"/>
+                        <TextView
+                            android:id="@+id/consult_detail_atten"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#B3B3B3"
+                            android:drawablePadding="5dp"
+                            android:layout_marginLeft="20dp"
+                            android:clickable="true"
+                            android:drawableLeft="@mipmap/consult_atten"
+                            android:textSize="@dimen/second_font"
+                            android:text="343"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/consult_detail_report"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/report_text"
+                            android:textSize="@dimen/second_font"
+                            android:text="举报"
+                            android:clickable="true"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/dicider_col"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="1px"
+                        android:layout_weight="1"
+                        android:background="@color/dicider_col"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#CCCCCC"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:textSize="@dimen/second_font"
+                        android:text="精选留言"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="1px"
+                        android:layout_weight="1"
+                        android:background="@color/dicider_col"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/consult_detail_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#499EB8"
+                        android:layout_marginRight="12dp"
+                        android:text="写留言"
+                        android:drawablePadding="3dp"
+                        android:clickable="true"
+                        android:textSize="@dimen/second_font"
+                        android:drawableRight="@mipmap/consult_edit"/>
+                </LinearLayout>
+
+
+                <ListView
+                    android:id="@+id/consult_detail_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginTop="8dp"
+                    android:divider="@color/transparent"
+                    android:dividerHeight="0dp"/>
+            </LinearLayout>
+
+        </ScrollView>
+
+        <include
+            android:id="@+id/consult_detail_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>

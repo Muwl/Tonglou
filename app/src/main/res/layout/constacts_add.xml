@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/constacts_add_title"
+        layout="@layout/title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:background="@drawable/constancts_add_text"
+        android:layout_margin="10dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/constacts_add_serch"/>
+
+        <EditText
+            android:id="@+id/constacts_add_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textColorHint="#B3B3B3"
+            android:layout_marginLeft="12dp"
+            android:background="@color/transparent"
+            android:textSize="@dimen/second_font"
+            android:hint="搜索"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/constacts_add_list"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
