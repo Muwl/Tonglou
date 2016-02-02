@@ -1975,7 +1975,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 
 				public void run() {
 					if (toChatUsername.equals(groupId)) {
-						Toast.makeText(ChatActivity.this, st13, 1).show();
+						Toast.makeText(ChatActivity.this, st13, Toast.LENGTH_SHORT).show();
 						// if (GroupDetailsActivity.instance != null)
 						// GroupDetailsActivity.instance.finish();
 						// finish();
@@ -1993,7 +1993,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 
 				public void run() {
 					if (toChatUsername.equals(groupId)) {
-						Toast.makeText(ChatActivity.this, st14, 1).show();
+						Toast.makeText(ChatActivity.this, st14, Toast.LENGTH_SHORT).show();
 						// if (GroupDetailsActivity.instance != null)
 						// GroupDetailsActivity.instance.finish();
 						// finish();

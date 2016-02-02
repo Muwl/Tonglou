@@ -1,5 +1,6 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -91,6 +92,8 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.consult_detail_report:
                 break;
             case R.id.consult_detail_message:
+                Intent intent=new Intent(ConsultDetailActivity.this,WriteMessageActivity.class);
+                startActivity(intent);
                 break;
         }
     }
