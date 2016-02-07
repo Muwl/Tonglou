@@ -1,7 +1,9 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -52,6 +54,14 @@ public class HiGroupActivity extends BaseActivity implements View.OnClickListene
         adapter=new HiGroupAdapter(this);
         listView.setAdapter(adapter);
         rig.setText("发布");
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(HiGroupActivity.this,GroupDetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

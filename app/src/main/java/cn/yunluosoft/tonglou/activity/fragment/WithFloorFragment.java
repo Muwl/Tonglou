@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
-import cn.yunluosoft.tonglou.activity.HelpActivity;
+import cn.yunluosoft.tonglou.activity.AssistActivity;
 import cn.yunluosoft.tonglou.activity.HiGroupActivity;
 import cn.yunluosoft.tonglou.activity.PPActivity;
 import cn.yunluosoft.tonglou.activity.UsedActivity;
@@ -101,7 +101,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.fwithfloor_help:
-                Intent intent3=new Intent(getActivity(), HelpActivity.class);
+                Intent intent3=new Intent(getActivity(), AssistActivity.class);
                 startActivity(intent3);
 
                 break;

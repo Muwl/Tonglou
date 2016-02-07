@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="cn.yunluosoft.tonglou">
-
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -280,7 +279,31 @@
         </activity>
         <!-- 帮帮-->
         <activity
-            android:name="cn.yunluosoft.tonglou.activity.HelpActivity"
+            android:name="cn.yunluosoft.tonglou.activity.AssistActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <!-- 活动详情-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.GroupDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <!-- 拼拼详情-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.PPDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <!-- 帮帮详情-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.HelpDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <!-- 二手详情-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.UsedDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
         </activity>

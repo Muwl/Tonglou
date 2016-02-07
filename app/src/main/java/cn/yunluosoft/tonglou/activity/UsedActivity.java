@@ -1,7 +1,9 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -65,6 +67,14 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
         listView.setAdapter(adapter);
 
         group.check(R.id.title_rb_lef);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(UsedActivity.this,UsedDetailActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override

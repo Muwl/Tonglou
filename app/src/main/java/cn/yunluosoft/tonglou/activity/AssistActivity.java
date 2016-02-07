@@ -16,7 +16,7 @@ import cn.yunluosoft.tonglou.adapter.UsedAdapter;
 /**
  * Created by Administrator on 2016/2/7.
  */
-public class PPActivity extends BaseActivity implements View.OnClickListener {
+public class AssistActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView back;
 
@@ -39,7 +39,7 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pp);
+        setContentView(R.layout.help);
         initView();
     }
 
@@ -49,9 +49,9 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
         group= (RadioGroup) findViewById(R.id.title_group);
         assign= (RadioButton) findViewById(R.id.title_rb_lef);
         buy= (RadioButton) findViewById(R.id.title_rb_rig);
-        serch=findViewById(R.id.pp_serch);
-        listView= (ListView) findViewById(R.id.pp_list);
-        pro=findViewById(R.id.pp_pro);
+        serch=findViewById(R.id.help_serch);
+        listView= (ListView) findViewById(R.id.help_list);
+        pro=findViewById(R.id.help_pro);
         adapter=new UsedAdapter(this);
 
         back.setOnClickListener(this);
@@ -59,8 +59,8 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
         rig.setVisibility(View.VISIBLE);
         rig.setOnClickListener(this);
         rig.setText("发布");
-        assign.setText("拼车");
-        buy.setText("求带");
+        assign.setText("求帮");
+        buy.setText("自荐");
         group.setVisibility(View.VISIBLE);
         serch.setOnClickListener(this);
         adapter=new UsedAdapter(this);
@@ -71,7 +71,7 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(PPActivity.this,PPDetailActivity.class);
+                Intent intent=new Intent(AssistActivity.this,HelpDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -87,7 +87,7 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
             case R.id.title_rig:
 
                 break;
-            case R.id.pp_serch:
+            case R.id.help_serch:
 
                 break;
 
