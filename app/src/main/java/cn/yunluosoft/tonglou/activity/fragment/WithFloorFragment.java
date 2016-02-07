@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.activity.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.HelpActivity;
+import cn.yunluosoft.tonglou.activity.HiGroupActivity;
+import cn.yunluosoft.tonglou.activity.PPActivity;
+import cn.yunluosoft.tonglou.activity.UsedActivity;
 import cn.yunluosoft.tonglou.adapter.WithFloorAdapter;
 
 /**
@@ -79,18 +84,25 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.fwithfloor_group:
-
+                Intent intent=new Intent(getActivity(), HiGroupActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.fwithfloor_used:
+                Intent intent1=new Intent(getActivity(), UsedActivity.class);
+                startActivity(intent1);
 
                 break;
 
             case R.id.fwithfloor_pp:
+                Intent intent2=new Intent(getActivity(), PPActivity.class);
+                startActivity(intent2);
 
                 break;
 
             case R.id.fwithfloor_help:
+                Intent intent3=new Intent(getActivity(), HelpActivity.class);
+                startActivity(intent3);
 
                 break;
 

@@ -27,6 +27,43 @@
             android:textColor="@color/white"
             android:textSize="@dimen/title_font" />
 
+
+        <RadioGroup
+            android:id="@+id/title_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:layout_centerInParent="true">
+
+            <RadioButton
+                android:id="@+id/title_rb_lef"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:background="@drawable/title_cb_lef"
+                android:textColor="@color/title_cb_text"
+                android:textSize="@dimen/second_font"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="15dp"
+                android:text="转让"
+                android:paddingRight="15dp"/>
+            <RadioButton
+                android:id="@+id/title_rb_rig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:background="@drawable/title_cb_rig"
+                android:textColor="@color/title_cb_text"
+                android:textSize="@dimen/second_font"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="15dp"
+                android:text="求购"
+                android:paddingRight="15dp"/>
+        </RadioGroup>
+
         <TextView
             android:id="@+id/title_rig"
             android:layout_width="wrap_content"
