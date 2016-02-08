@@ -18,6 +18,7 @@ import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.AssistActivity;
 import cn.yunluosoft.tonglou.activity.HiGroupActivity;
 import cn.yunluosoft.tonglou.activity.PPActivity;
+import cn.yunluosoft.tonglou.activity.PublishActivity;
 import cn.yunluosoft.tonglou.activity.UsedActivity;
 import cn.yunluosoft.tonglou.adapter.WithFloorAdapter;
 
@@ -29,6 +30,8 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener{
     private TextView title;
 
     private View serch;
+
+    private TextView rig;
 
     private TextView group;
 
@@ -51,12 +54,16 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener{
         title= (TextView) view.findViewById(R.id.title_title);
         view.findViewById(R.id.title_back).setVisibility(View.GONE);
         serch=view.findViewById(R.id.fwithfloor_serch);
+        rig= (TextView) view.findViewById(R.id.title_rig);
         group= (TextView) view.findViewById(R.id.fwithfloor_group);
         used= (TextView) view.findViewById(R.id.fwithfloor_used);
         pp= (TextView) view.findViewById(R.id.fwithfloor_pp);
         help= (TextView) view.findViewById(R.id.fwithfloor_help);
         listView= (ListView) view.findViewById(R.id.fwithfloor_list);
         pro=view.findViewById(R.id.fwithfloor_pro);
+
+        rig.setText("发布");
+        rig.setVisibility(View.VISIBLE);
 
         title.setText("同楼");
         return view;
@@ -70,6 +77,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener{
         group.setOnClickListener(this);
         used.setOnClickListener(this);
         pp.setOnClickListener(this);
+        rig.setOnClickListener(this);
         help.setOnClickListener(this);
         adapter=new WithFloorAdapter(getActivity());
         listView.setAdapter(adapter);
@@ -82,7 +90,10 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener{
             case R.id.fwithfloor_serch:
 
                 break;
-
+            case R.id.title_rig:
+                Intent intent4=new Intent(getActivity(), PublishActivity.class);
+                startActivity(intent4);
+                break;
             case R.id.fwithfloor_group:
                 Intent intent=new Intent(getActivity(), HiGroupActivity.class);
                 startActivity(intent);

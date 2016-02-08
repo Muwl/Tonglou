@@ -34,8 +34,6 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
 
     private TextView content;
 
-    private TextView join;
-
     private TextView atten;
 
     private TextView comment;
@@ -85,7 +83,6 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
         title.setText("二手详情");
         share.setOnClickListener(this);
         replay.setOnClickListener(this);
-        join.setOnClickListener(this);
         atten.setOnClickListener(this);
         comment.setOnClickListener(this);
         send.setOnClickListener(this);
