@@ -94,9 +94,9 @@ public class WelcomeActivity extends BaseActivity {
 						Thread.sleep(sleepTime);
 					} catch (InterruptedException e) {
 					}
-//					startActivity(new Intent(WelcomeActivity.this,
-//							LoginActivity.class));
-//					finish();
+					startActivity(new Intent(WelcomeActivity.this,
+							LoginActivity.class));
+					finish();
 				}
 			}
 		}).start();
@@ -125,10 +125,10 @@ public class WelcomeActivity extends BaseActivity {
 		}
 
 		if (0 == ShareDataTool.getFlag(this)) {
-//			Intent intent = new Intent(WelcomeActivity.this,
-//					PerfectDataActivity.class);
-//			startActivity(intent);
-//			finish();
+			Intent intent = new Intent(WelcomeActivity.this,
+					PerfectDataActivity.class);
+			startActivity(intent);
+			finish();
 		} else {
 			Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
 			startActivity(intent);

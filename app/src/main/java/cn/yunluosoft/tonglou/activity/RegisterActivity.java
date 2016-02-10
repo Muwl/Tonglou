@@ -16,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.model.RegisterEntity;
+import cn.yunluosoft.tonglou.model.RegisterSubEntity;
+import cn.yunluosoft.tonglou.model.RegisterSubLocate;
+import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.BPUtil;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
@@ -128,7 +132,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		public void onReceiveLocation(BDLocation location) {
 			if (location != null) {
 				bdLocation = location;
-//				sendSub();
+				sendSub();
 				mLocationClient.stop();
 
 			}
@@ -209,21 +213,16 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.register_getcode:
 			if (checkPhoneInput()) {
-			//	sendMessage();
+				sendMessage();
 			}
 			break;
 
 		case R.id.register_ok:
-//			if (checkInput()) {
-//				pro.setVisibility(View.VISIBLE);
-//				mLocationClient.start();
-//
-//			}
+			if (checkInput()) {
+				pro.setVisibility(View.VISIBLE);
+				mLocationClient.start();
 
-			Intent intent3= new Intent(RegisterActivity.this,
-					PerfectDataActivity.class);
-			startActivity(intent3);
-
+			}
 			break;
 		case R.id.title_rig:
 			Intent intent = new Intent(RegisterActivity.this,
@@ -296,146 +295,134 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-//	// 发送短信
-//	private void sendMessage() {
-//
-//		RequestParams rp = new RequestParams();
-//		JsonObject jsonObject = new JsonObject();
-//		jsonObject.addProperty("phone", ToosUtils.getTextContent(phone));
-//		jsonObject.addProperty("content", BPUtil.createCode());
-//		LogManager.LogShow("----", BPUtil.getCode(), LogManager.ERROR);
-//		jsonObject.addProperty("type", "0");
-//		rp.addBodyParameter("info", ToosUtils.getEncrypt(jsonObject.toString()));
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/sms/sendSms", rp,
-//				new RequestCallBack<String>() {
-//					@Override
-//					public void onStart() {
-//						pro.setVisibility(View.VISIBLE);
-//						super.onStart();
-//					}
-//
-//					@Override
-//					public void onFailure(HttpException arg0, String arg1) {
-//						pro.setVisibility(View.GONE);
-//						ToastUtils.displayFailureToast(RegisterActivity.this);
-//					}
-//
-//					@Override
-//					public void onSuccess(ResponseInfo<String> arg0) {
-//						pro.setVisibility(View.GONE);
-//						Gson gson = new Gson();
-//						try {
-//							ReturnState state = gson.fromJson(arg0.result,
-//									ReturnState.class);
-//							LogManager.LogShow("----", arg0.result,
-//									LogManager.ERROR);
-//							if (Constant.RETURN_OK.equals(state.msg)) {
-//								ToastUtils.displayShortToast(
-//										RegisterActivity.this, "发送成功！");
-//								sphone = ToosUtils.getTextContent(phone);
-//								time.start();
-//							} else {
-//								ToastUtils.displayShortToast(
-//										RegisterActivity.this,
-//										(String) state.result);
-//							}
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//							ToastUtils
-//									.displaySendFailureToast(RegisterActivity.this);
-//						}
-//
-//					}
-//
-//				});
-//
-//	}
+	// 发送短信
+	private void sendMessage() {
 
-//	/**
-//	 * 联网注册
-//	 */
-//	private void sendSub() {
-//		RequestParams rp = new RequestParams();
-//		JsonObject jsonObject = new JsonObject();
-//		RegisterSubEntity registerEntity = new RegisterSubEntity();
-//		RegisterSubLocate locate = new RegisterSubLocate();
-//		locate.x = bdLocation.getLongitude();
-//		locate.y = bdLocation.getLatitude();
-//		registerEntity.username = ToosUtils.getTextContent(phone);
-//		registerEntity.password = MD5Util.MD5(ToosUtils.getTextContent(pwd));
-//		registerEntity.coordinates = locate;
-//		Gson gson = new Gson();
-//		// jsonObject.addProperty("username", ToosUtils.getTextContent(phone));
-//		// jsonObject.addProperty("password",
-//		// MD5Util.MD5(ToosUtils.getTextContent(pwd)));
-//		// JsonObject object = new JsonObject();
-//		// object.addProperty("x", bdLocation.getLongitude());
-//		// object.addProperty("y", bdLocation.getLatitude());
-//		// jsonObject.addProperty("coordinates", object.toString());
-//		// //
-//		// jsonObject.addProperty("coordinates","{\"x\":"+bdLocation.getLongitude()+",\"y\":"+bdLocation.getLatitude()+"}");
-//		// LogManager.LogShow("------------", jsonObject.toString(),
-//		// LogManager.ERROR);
-//
-//		rp.addBodyParameter("info",
-//				ToosUtils.getEncrypt(gson.toJson(registerEntity)));
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/user/register",
-//				rp, new RequestCallBack<String>() {
-//					@Override
-//					public void onStart() {
-//						// pro.setVisibility(View.VISIBLE);
-//						super.onStart();
-//					}
-//
-//					@Override
-//					public void onFailure(HttpException arg0, String arg1) {
-//						pro.setVisibility(View.GONE);
-//						ToastUtils.displayFailureToast(RegisterActivity.this);
-//					}
-//
-//					@Override
-//					public void onSuccess(ResponseInfo<String> arg0) {
-//						pro.setVisibility(View.GONE);
-//						try {
-//							Gson gson = new Gson();
-//							LogManager.LogShow("----", arg0.result,
-//									LogManager.ERROR);
-//							ReturnState state = gson.fromJson(arg0.result,
-//									ReturnState.class);
-//							if (Constant.RETURN_OK.equals(state.msg)) {
-//								String temp = ToosUtils
-//										.getEncryptto((String) state.result);
-//								RegisterEntity entity = gson.fromJson(temp,
-//										RegisterEntity.class);
-//								ShareDataTool.SaveInfo(RegisterActivity.this,
-//										entity.token, entity.userId,
-//										entity.imUsername, entity.imPassword);
-//								ShareDataTool
-//										.SaveFlag(RegisterActivity.this, 0);
-//								ToastUtils.displayShortToast(
-//										RegisterActivity.this, "注册成功，请完善信息");
-//								Intent intent = new Intent(
-//										RegisterActivity.this,
-//										PerfectDataActivity.class);
-//								startActivity(intent);
-//
-//							} else {
-//								ToastUtils.displayShortToast(
-//										RegisterActivity.this,
-//										(String) state.result);
-//							}
-//						} catch (Exception e) {
-//							ToastUtils
-//									.displaySendFailureToast(RegisterActivity.this);
-//						}
-//
-//					}
-//				});
-//
-//	}
+		RequestParams rp = new RequestParams();
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("phone", ToosUtils.getTextContent(phone));
+		jsonObject.addProperty("content", BPUtil.createCode());
+		LogManager.LogShow("----", BPUtil.getCode(), LogManager.ERROR);
+		jsonObject.addProperty("type", "0");
+		rp.addBodyParameter("info", ToosUtils.getEncrypt(jsonObject.toString()));
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/sms/sendSms", rp,
+				new RequestCallBack<String>() {
+					@Override
+					public void onStart() {
+						pro.setVisibility(View.VISIBLE);
+						super.onStart();
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						pro.setVisibility(View.GONE);
+						ToastUtils.displayFailureToast(RegisterActivity.this);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						pro.setVisibility(View.GONE);
+						Gson gson = new Gson();
+						try {
+							ReturnState state = gson.fromJson(arg0.result,
+									ReturnState.class);
+							LogManager.LogShow("----", arg0.result,
+									LogManager.ERROR);
+							if (Constant.RETURN_OK.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										RegisterActivity.this, "发送成功！");
+								sphone = ToosUtils.getTextContent(phone);
+								time.start();
+							} else {
+								ToastUtils.displayShortToast(
+										RegisterActivity.this,
+										(String) state.result);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							ToastUtils
+									.displaySendFailureToast(RegisterActivity.this);
+						}
+
+					}
+
+				});
+
+	}
+
+	/**
+	 * 联网注册
+	 */
+	private void sendSub() {
+		RequestParams rp = new RequestParams();
+		JsonObject jsonObject = new JsonObject();
+		RegisterSubEntity registerEntity = new RegisterSubEntity();
+		RegisterSubLocate locate = new RegisterSubLocate();
+		locate.x = bdLocation.getLongitude();
+		locate.y = bdLocation.getLatitude();
+		registerEntity.username = ToosUtils.getTextContent(phone);
+		registerEntity.password = MD5Util.MD5(ToosUtils.getTextContent(pwd));
+		registerEntity.coordinates = locate;
+		Gson gson = new Gson();
+		rp.addBodyParameter("info",
+				ToosUtils.getEncrypt(gson.toJson(registerEntity)));
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/user/register",
+				rp, new RequestCallBack<String>() {
+					@Override
+					public void onStart() {
+						// pro.setVisibility(View.VISIBLE);
+						super.onStart();
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						pro.setVisibility(View.GONE);
+						ToastUtils.displayFailureToast(RegisterActivity.this);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						pro.setVisibility(View.GONE);
+						try {
+							Gson gson = new Gson();
+							LogManager.LogShow("----", arg0.result,
+									LogManager.ERROR);
+							ReturnState state = gson.fromJson(arg0.result,
+									ReturnState.class);
+							if (Constant.RETURN_OK.equals(state.msg)) {
+								String temp = ToosUtils
+										.getEncryptto((String) state.result);
+								RegisterEntity entity = gson.fromJson(temp,
+										RegisterEntity.class);
+								ShareDataTool.SaveInfo(RegisterActivity.this,
+										entity.token, entity.userId,
+										entity.imUsername, entity.imPassword);
+								ShareDataTool
+										.SaveFlag(RegisterActivity.this, 0);
+								ToastUtils.displayShortToast(
+										RegisterActivity.this, "注册成功，请完善信息");
+								Intent intent = new Intent(
+										RegisterActivity.this,
+										PerfectDataActivity.class);
+								startActivity(intent);
+
+							} else {
+								ToastUtils.displayShortToast(
+										RegisterActivity.this,
+										(String) state.result);
+							}
+						} catch (Exception e) {
+							ToastUtils
+									.displaySendFailureToast(RegisterActivity.this);
+						}
+
+					}
+				});
+
+	}
 
 }

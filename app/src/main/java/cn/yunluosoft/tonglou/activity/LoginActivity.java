@@ -16,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.model.LoginEntity;
+import cn.yunluosoft.tonglou.model.RegisterEntity;
+import cn.yunluosoft.tonglou.model.ReturnState;
+import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.MD5Util;
 import cn.yunluosoft.tonglou.utils.MyApplication;
@@ -157,13 +161,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			startActivity(intent2);
 			break;
 		case R.id.login_login:
-			 Intent intent6 = new Intent(LoginActivity.this,
-			 MainActivity.class);
-			 startActivity(intent6);
-
-//			if (checkInput()) {
-//				//sendLogin();
-//			}
+			if (checkInput()) {
+				sendLogin();
+			}
 			break;
 
 		case R.id.login_forgetpwd:
@@ -177,92 +177,92 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-//	/**
-//	 * 联网登陆
-//	 */
-//	private void sendLogin() {
-//		JsonObject jsonObject = new JsonObject();
-//		jsonObject.addProperty("username", ToosUtils.getTextContent(name));
-//		jsonObject.addProperty("password",
-//				MD5Util.MD5(ToosUtils.getTextContent(pwd)));
-//		RequestParams rp = new RequestParams();
-//		rp.addBodyParameter("info", ToosUtils.getEncrypt(jsonObject.toString()));
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/user/login", rp,
-//				new RequestCallBack<String>() {
-//					@Override
-//					public void onStart() {
-//						pro.setVisibility(View.VISIBLE);
-//						super.onStart();
-//					}
-//
-//					@Override
-//					public void onFailure(HttpException arg0, String arg1) {
-//						pro.setVisibility(View.GONE);
-//						ToastUtils.displayFailureToast(LoginActivity.this);
-//					}
-//
-//					@Override
-//					public void onSuccess(ResponseInfo<String> arg0) {
-//						pro.setVisibility(View.GONE);
-//						try {
-//							Gson gson = new Gson();
-//							ReturnState state = gson.fromJson(arg0.result,
-//									ReturnState.class);
-//							if (Constant.RETURN_OK.equals(state.msg)) {
-//								LogManager
-//										.LogShow("------",
-//												(String) state.result,
-//												LogManager.ERROR);
-//								String temp = ToosUtils
-//										.getEncryptto((String) state.result);
-//								LogManager.LogShow("------", temp,
-//										LogManager.ERROR);
-//								LoginEntity entity = gson.fromJson(temp,
-//										LoginEntity.class);
-//								ShareDataTool.SaveInfo(LoginActivity.this,
-//										entity.token, entity.userId,
-//										entity.imUsername, entity.imPassword);
-//								ShareDataTool.SaveInfoDetail(
-//										LoginActivity.this, entity.nickname,
-//										entity.icon, entity.location);
-//								ShareDataTool.SaveFlag(LoginActivity.this, 1);
-//								// ToastUtils.displayShortToast(
-//								// LoginActivity.this, "登陆成功");
-//								// Intent intent = new
-//								// Intent(LoginActivity.this,
-//								// MainActivity.class);
-//								// startActivity(intent);
-//								loginHX(entity.imUsername, entity.imPassword);
-//							} else if (Constant.USER_NOCOM.equals(state.msg)) {
-//								String temp = ToosUtils
-//										.getEncryptto((String) state.result);
-//								RegisterEntity entity = gson.fromJson(temp,
-//										RegisterEntity.class);
-//								ShareDataTool.SaveInfo(LoginActivity.this,
-//										entity.token, entity.userId,
-//										entity.imUsername, entity.imPassword);
-//								ShareDataTool.SaveFlag(LoginActivity.this, 0);
-//								ToastUtils.displayShortToast(
-//										LoginActivity.this, "登陆成功，请完善信息");
-//								Intent intent = new Intent(LoginActivity.this,
-//										PerfectDataActivity.class);
-//								startActivity(intent);
-//							} else {
-//								ToastUtils.displayShortToast(
-//										LoginActivity.this,
-//										(String) state.result);
-//							}
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//							ToastUtils
-//									.displaySendFailureToast(LoginActivity.this);
-//						}
-//
-//					}
-//				});
-//	}
+	/**
+	 * 联网登陆
+	 */
+	private void sendLogin() {
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("username", ToosUtils.getTextContent(name));
+		jsonObject.addProperty("password",
+				MD5Util.MD5(ToosUtils.getTextContent(pwd)));
+		RequestParams rp = new RequestParams();
+		rp.addBodyParameter("info", ToosUtils.getEncrypt(jsonObject.toString()));
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/user/login", rp,
+				new RequestCallBack<String>() {
+					@Override
+					public void onStart() {
+						pro.setVisibility(View.VISIBLE);
+						super.onStart();
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						pro.setVisibility(View.GONE);
+						ToastUtils.displayFailureToast(LoginActivity.this);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						pro.setVisibility(View.GONE);
+						try {
+							Gson gson = new Gson();
+							ReturnState state = gson.fromJson(arg0.result,
+									ReturnState.class);
+							if (Constant.RETURN_OK.equals(state.msg)) {
+								LogManager
+										.LogShow("------",
+												(String) state.result,
+												LogManager.ERROR);
+								String temp = ToosUtils
+										.getEncryptto((String) state.result);
+								LogManager.LogShow("------", temp,
+										LogManager.ERROR);
+								LoginEntity entity = gson.fromJson(temp,
+										LoginEntity.class);
+								ShareDataTool.SaveInfo(LoginActivity.this,
+										entity.token, entity.userId,
+										entity.imUsername, entity.imPassword);
+								ShareDataTool.SaveInfoDetail(
+										LoginActivity.this, entity.nickname,
+										entity.icon, entity.location);
+								ShareDataTool.SaveFlag(LoginActivity.this, 1);
+								// ToastUtils.displayShortToast(
+								// LoginActivity.this, "登陆成功");
+								// Intent intent = new
+								// Intent(LoginActivity.this,
+								// MainActivity.class);
+								// startActivity(intent);
+								loginHX(entity.imUsername, entity.imPassword);
+							} else if (Constant.USER_NOCOM.equals(state.msg)) {
+								String temp = ToosUtils
+										.getEncryptto((String) state.result);
+								RegisterEntity entity = gson.fromJson(temp,
+										RegisterEntity.class);
+								ShareDataTool.SaveInfo(LoginActivity.this,
+										entity.token, entity.userId,
+										entity.imUsername, entity.imPassword);
+								ShareDataTool.SaveFlag(LoginActivity.this, 0);
+								ToastUtils.displayShortToast(
+										LoginActivity.this, "登陆成功，请完善信息");
+								Intent intent = new Intent(LoginActivity.this,
+										PerfectDataActivity.class);
+								startActivity(intent);
+							} else {
+								ToastUtils.displayShortToast(
+										LoginActivity.this,
+										(String) state.result);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							ToastUtils
+									.displaySendFailureToast(LoginActivity.this);
+						}
+
+					}
+				});
+	}
 
 	// 点击返回按钮
 	@Override
