@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/publish_used_title"
+        layout="@layout/title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:text="活动名称"
+                    android:textColor="#000"
+                    android:textSize="@dimen/second_font" />
+
+
+                <EditText
+                    android:id="@+id/publish_used_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/groupdetail_edit"
+                    android:hint="10字以内"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="#000"
+                    android:textColorHint="#CCCCCC"
+                    android:textSize="@dimen/second_font" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:text="活动详情"
+                    android:textColor="#000"
+                    android:textSize="@dimen/second_font" />
+
+
+                <EditText
+                    android:id="@+id/publish_used_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/groupdetail_edit"
+                    android:gravity="top"
+                    android:hint="100字以内概述活动"
+                    android:lines="5"
+                    android:padding="10dp"
+                    android:textColor="#000"
+                    android:textColorHint="#CCCCCC"
+                    android:textSize="@dimen/second_font" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="5dp"
+                        android:text="上传照片"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(最多4张)"
+                        android:textColor="#666666"
+                        android:textSize="@dimen/thrid_font" />
+                </LinearLayout>
+
+                <cn.yunluosoft.tonglou.view.MyGridView
+                    android:id="@+id/publish_used_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="16dp"
+                    android:horizontalSpacing="8dp"
+                    android:numColumns="4" />
+
+                <TextView
+                    android:id="@+id/publish_used_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/login_btn"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:text="发布"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/first_font" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <include
+            android:id="@+id/publish_used_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

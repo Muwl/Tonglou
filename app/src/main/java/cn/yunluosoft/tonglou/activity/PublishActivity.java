@@ -1,5 +1,6 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -57,15 +58,24 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
                 break;
 
             case R.id.publish_group:
+                Intent intent = new Intent(PublishActivity.this, PublishGroupActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.publish_used:
+                Intent intent2 = new Intent(PublishActivity.this, PublishUsedActivity.class);
+                startActivity(intent2);
                 break;
 
             case R.id.publish_pp:
+                Intent intent3 = new Intent(PublishActivity.this, PublishPPActivity.class);
+                startActivity(intent3);
                 break;
 
             case R.id.publish_help:
+                Intent intent4 = new Intent(PublishActivity.this, PublishHelpActivity.class);
+                startActivity(intent4);
+
                 break;
         }
     }

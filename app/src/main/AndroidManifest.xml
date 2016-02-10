@@ -315,6 +315,27 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
         </activity>
 
+        <!-- 发布活动-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.PublishGroupActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
+
+        <!-- 发布二手-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.PublishUsedActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>    <!-- 发布二手-->
+        <activity
+        android:name="cn.yunluosoft.tonglou.activity.PublishPPActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.PublishHelpActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
+
         <!-- 自定义的alertdialog -->
         <activity
             android:name=".activity.AlertDialog"

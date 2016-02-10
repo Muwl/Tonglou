@@ -3,4 +3,5 @@
     <solid
         android:color="@color/white"/>
     <stroke android:color="@color/dicider_col"/>
+    <corners android:radius="2dp" />
 </shape>

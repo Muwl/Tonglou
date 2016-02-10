@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/publish_help_title"
+        layout="@layout/title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:text="标题"
+                    android:textColor="#000"
+                    android:textSize="@dimen/second_font" />
+
+
+                <EditText
+                    android:id="@+id/publish_help_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/groupdetail_edit"
+                    android:hint="10字以内"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="#000"
+                    android:textColorHint="#CCCCCC"
+                    android:textSize="@dimen/second_font" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:text="任务概述"
+                    android:textColor="#000"
+                    android:textSize="@dimen/second_font" />
+
+
+                <EditText
+                    android:id="@+id/publish_help_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/groupdetail_edit"
+                    android:gravity="top"
+                    android:hint="100字以内概述物品成色、价格"
+                    android:lines="5"
+                    android:padding="10dp"
+                    android:textColor="#000"
+                    android:textColorHint="#CCCCCC"
+                    android:textSize="@dimen/second_font" />
+
+                <LinearLayout
+                    android:id="@+id/publish_help_timeview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/item_bg"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="截止日期"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                    <TextView
+                        android:id="@+id/publish_help_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:text="1990-01-01"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/go" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/publish_help_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/login_btn"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:text="发布"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/first_font" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <include
+            android:id="@+id/publish_help_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
