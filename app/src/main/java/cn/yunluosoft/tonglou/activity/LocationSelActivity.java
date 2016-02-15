@@ -422,7 +422,7 @@ public class LocationSelActivity extends BaseActivity implements
     private void updateLocation() {
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-        rp.addBodyParameter("location", locationEntity.id);
+        rp.addBodyParameter("buildingId", locationEntity.id);
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         utils.send(HttpMethod.POST, Constant.ROOT_PATH
