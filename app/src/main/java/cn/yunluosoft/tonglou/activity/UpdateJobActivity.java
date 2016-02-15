@@ -31,7 +31,7 @@ import cn.yunluosoft.tonglou.utils.ToosUtils;
 /**
  * Created by Mu on 2016/1/25.
  */
-public class UpdateSignActivity extends BaseActivity implements View.OnClickListener {
+public class UpdateJobActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView title;
 
@@ -59,13 +59,13 @@ public class UpdateSignActivity extends BaseActivity implements View.OnClickList
         name= (EditText) findViewById(R.id.update_name_name);
         pro=findViewById(R.id.update_name_pro);
 
-        title.setText("个性签名");
+        title.setText("职位");
         back.setOnClickListener(this);
         com.setVisibility(View.VISIBLE);
         com.setOnClickListener(this);
         com.setText("完成");
-        name.setHint("个性的签名代表个性的你");
-        textView.setText("请输入新的签名");
+        name.setHint("职位名称");
+        textView.setText("请输入新的职位");
 
 
     }
@@ -78,11 +78,11 @@ public class UpdateSignActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.title_rig:
                 if (ToosUtils.isTextEmpty(name)){
-                    ToastUtils.displayShortToast(UpdateSignActivity.this, "签名不能为空！");
+                    ToastUtils.displayShortToast(UpdateJobActivity.this,"职位不能为空！");
                     return;
                 }
                 PersonInfo info=new PersonInfo();
-                info.signature=ToosUtils.getTextContent(name);
+                info.job=ToosUtils.getTextContent(name);
                 sendUpdate(info, null);
                 break;
         }
@@ -114,7 +114,7 @@ public class UpdateSignActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
                         pro.setVisibility(View.GONE);
-                        ToastUtils.displayFailureToast(UpdateSignActivity.this);
+                        ToastUtils.displayFailureToast(UpdateJobActivity.this);
                     }
 
                     @Override
@@ -128,35 +128,35 @@ public class UpdateSignActivity extends BaseActivity implements View.OnClickList
                                     ReturnState.class);
                             if (Constant.RETURN_OK.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
-                                        UpdateSignActivity.this, "修改成功");
+                                        UpdateJobActivity.this, "修改成功");
                                 PerfectDataState dataState = gson.fromJson(
                                         arg0.result, PerfectDataState.class);
                                 ShareDataTool.SaveInfoDetail(
-                                        UpdateSignActivity.this,
+                                        UpdateJobActivity.this,
                                         dataState.result.nickname,
                                         dataState.result.icon,
                                         dataState.result.location);
-                                ShareDataTool.SaveFlag(UpdateSignActivity.this,
+                                ShareDataTool.SaveFlag(UpdateJobActivity.this,
                                         1);
                                 EMChatManager.getInstance()
                                         .updateCurrentUserNick(
                                                 dataState.result.nickname);
-                                Intent intent=new Intent(UpdateSignActivity.this,PersonDataActivity.class);
-                                intent.putExtra("name",personInfo.signature);
+                                Intent intent=new Intent(UpdateJobActivity.this,PersonDataActivity.class);
+                                intent.putExtra("name",personInfo.job);
                                 setResult(RESULT_OK,intent);
                                 finish();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
-                                        UpdateSignActivity.this, "验证错误，请重新登录");
-                                ToosUtils.goReLogin(UpdateSignActivity.this);
+                                        UpdateJobActivity.this, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(UpdateJobActivity.this);
                             } else {
                                 ToastUtils.displayShortToast(
-                                        UpdateSignActivity.this,
+                                        UpdateJobActivity.this,
                                         String.valueOf(state.result));
                             }
                         } catch (Exception e) {
                             ToastUtils
-                                    .displaySendFailureToast(UpdateSignActivity.this);
+                                    .displaySendFailureToast(UpdateJobActivity.this);
                         }
 
                     }

@@ -368,6 +368,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		Gson gson = new Gson();
 		rp.addBodyParameter("info",
 				ToosUtils.getEncrypt(gson.toJson(registerEntity)));
+		LogManager.LogShow("---",ToosUtils.getEncrypt(gson.toJson(registerEntity)),LogManager.ERROR);
 		HttpUtils utils = new HttpUtils();
 		utils.configTimeout(20000);
 		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/user/register",

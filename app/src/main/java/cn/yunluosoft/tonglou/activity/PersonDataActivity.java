@@ -2,7 +2,15 @@ package cn.yunluosoft.tonglou.activity;
 
 import java.io.File;
 
+import com.easemob.chat.EMChatManager;
+import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,7 +28,15 @@ import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.dialog.DateSelectDialog;
 import cn.yunluosoft.tonglou.dialog.PhotoDialog;
+import cn.yunluosoft.tonglou.dialog.SexSelectDialog;
 import cn.yunluosoft.tonglou.dialog.TradeSelectDialog;
+import cn.yunluosoft.tonglou.model.PerfectDataState;
+import cn.yunluosoft.tonglou.model.PersonInfo;
+import cn.yunluosoft.tonglou.model.PersonInfoState;
+import cn.yunluosoft.tonglou.model.ReturnState;
+import cn.yunluosoft.tonglou.utils.Constant;
+import cn.yunluosoft.tonglou.utils.LogManager;
+import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.TimeUtils;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
@@ -87,9 +103,9 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
 
-    // private int tradIndex = 0;
+    private int tradIndex = 0;
 
-    //private PersonInfo info;
+    private PersonInfo info;
 
     private BitmapUtils bitmapUtils;
 
@@ -99,11 +115,24 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
             switch (msg.what) {
                 case 91:
                     // tradIndex = msg.arg1;
-                    trade.setText((String) msg.obj);
+                    // trade.setText((String) msg.obj);
+                    PersonInfo personInfo = new PersonInfo();
+                    personInfo.industry = (String) msg.obj;
+                    sendUpdate(personInfo, null, 5, (String) msg.obj);
+                    break;
+                case 94:
+                    // tradIndex = msg.arg1;
+                    // trade.setText((String) msg.obj);
+                    PersonInfo personInfo3 = new PersonInfo();
+                    personInfo3.sex = (String) msg.obj;
+                    sendUpdate(personInfo3, null, 4, (String) msg.obj);
                     break;
                 case 51:
                     sdate = (String) msg.obj;
-                    birth.setText(sdate);
+//                    birth.setText(sdate);
+                    PersonInfo personInfo2 = new PersonInfo();
+                    personInfo2.birthday = (String) msg.obj;
+                    sendUpdate(personInfo2, null, 3, sdate);
                     break;
 
                 case 82:
@@ -138,6 +167,7 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         sdate = TimeUtils.getDate();
         bitmapUtils = new BitmapUtils(this);
         initView();
+        getInfo();
     }
 
     @SuppressLint("CutPasteId")
@@ -202,20 +232,27 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                 break;
 
             case R.id.person_data_nameview:
-                Intent intent=new Intent(PersonDataActivity.this,UpdateNameActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(PersonDataActivity.this, UpdateNameActivity.class);
+                startActivityForResult(intent, 785);
+                // startActivity(intent);
                 break;
 
             case R.id.person_data_sexview:
+                SexSelectDialog selectDialog3 = new SexSelectDialog(
+                        PersonDataActivity.this, handler,
+                        ToosUtils.getTextContent(sex));
 
                 break;
 
             case R.id.person_data_jobview:
-
+                Intent intent5 = new Intent(PersonDataActivity.this, UpdateJobActivity.class);
+//                startActivity(intent5);
+                startActivityForResult(intent5, 786);
                 break;
             case R.id.person_data_signview:
-                Intent intent4=new Intent(PersonDataActivity.this,UpdateSignActivity.class);
-                startActivity(intent4);
+                Intent intent4 = new Intent(PersonDataActivity.this, UpdateSignActivity.class);
+//                startActivity(intent4);
+                startActivityForResult(intent4, 787);
                 break;
             default:
                 break;
@@ -229,6 +266,18 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         if (resultCode == RESULT_OK) {
 
             switch (requestCode) {
+                case 785:
+                    String temp=data.getStringExtra("name");
+                    name.setText(temp);
+                    break;
+                case 786:
+                    String temp1=data.getStringExtra("name");
+                    job.setText(temp1);
+                    break;
+                case 787:
+                    String temp2=data.getStringExtra("name");
+                    signature.setText(temp2);
+                    break;
                 case CONTENT_WITH_DATA:
                     if (data != null) {
                         // 得到图片的全路径
@@ -249,7 +298,26 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                     break;
                 case PHOTO_PICKED_WITH_DATA:
                     bitmap = data.getParcelableExtra("data");
-                    icon.setImageBitmap(bitmap);
+
+                    if (bitmap != null) {
+                        File file = null;
+                        if (Environment.getExternalStorageState().equals(
+                                Environment.MEDIA_MOUNTED)) {
+
+                            file = ToosUtils.saveImage2SD(
+                                    Environment.getExternalStorageDirectory() + "/louyu/"
+                                            + String.valueOf(System.currentTimeMillis())
+                                            + ".JPEG", bitmap);
+                            sendUpdate(null, file, 1, null);
+//                            rp.addBodyParameter("icon", file);
+                        } else {
+                            ToastUtils.displayShortToast(PersonDataActivity.this,
+                                    "无SD卡,无法上传图片");
+                            return;
+                        }
+
+                    }
+//                    icon.setImageBitmap(bitmap);
                     break;
             }
 
@@ -283,229 +351,203 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         startActivityForResult(intent, PHOTO_PICKED_WITH_DATA);
     }
 
-//    /**
-//     * 获取个人信息
-//     */
-//    private void getInfo() {
-//        RequestParams rp = new RequestParams();
-//        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//        HttpUtils utils = new HttpUtils();
-//        utils.configTimeout(20000);
-//        utils.send(HttpMethod.POST, Constant.ROOT_PATH
-//                + "/v1/user/findUserInfo", rp, new RequestCallBack<String>() {
-//            @Override
-//            public void onStart() {
-//                pro.setVisibility(View.VISIBLE);
-//                gv.setVisibility(View.GONE);
-//                super.onStart();
-//            }
-//
-//            @Override
-//            public void onFailure(HttpException arg0, String arg1) {
-//                pro.setVisibility(View.GONE);
-//                gv.setVisibility(View.GONE);
-//                ToastUtils.displayFailureToast(PersonDataActivity.this);
-//            }
-//
-//            @Override
-//            public void onSuccess(ResponseInfo<String> arg0) {
-//                pro.setVisibility(View.GONE);
-//                try {
-//                    Gson gson = new Gson();
-//                    ReturnState state = gson.fromJson(arg0.result,
-//                            ReturnState.class);
-//                    if (Constant.RETURN_OK.equals(state.msg)) {
-//                        gv.setVisibility(View.VISIBLE);
-//                        LogManager.LogShow("-----", arg0.result,
-//                                LogManager.ERROR);
-//                        PersonInfoState infoState = gson.fromJson(arg0.result,
-//                                PersonInfoState.class);
-//                        info = infoState.result;
-//                        setValue();
-//                        // setEnable(false);
-//                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//                        ToastUtils.displayShortToast(PersonDataActivity.this,
-//                                "验证错误，请重新登录");
-//                        ToosUtils.goReLogin(PersonDataActivity.this);
-//                    } else {
-//                        ToastUtils.displayShortToast(PersonDataActivity.this,
-//                                (String) state.result);
-//                    }
-//                } catch (Exception e) {
-//                    ToastUtils.displaySendFailureToast(PersonDataActivity.this);
-//                }
-//
-//            }
-//        });
-//    }
-//
-//    public void setValue() {
-//        bitmapUtils.display(icon, info.icon);
-//        name.setText(info.nickname);
-//        if (Constant.SEX_MAN.equals(info.sex)) {
-//            sex.setChecked(true);
-//        } else {
-//            sex.setChecked(false);
-//        }
-//        birth.setText(info.birthday);
-//        sdate = info.birthday;
-//        trade.setText(info.industry);
-//        job.setText(info.job);
-//        if (!ToosUtils.isStringEmpty(info.signature)) {
-//            signature.setText(info.signature);
-//        }
-//        if (!ToosUtils.isStringEmpty(info.affectiveState)) {
-//            emotionFlag = Integer.valueOf(info.affectiveState);
-//            if (String.valueOf(Constant.EMOTION_MARRIED).equals(
-//                    info.affectiveState)) {
-//                emotion.setText("已婚");
-//            } else if (String.valueOf(Constant.EMOTION_NOMARRIED).equals(
-//                    info.affectiveState)) {
-//                emotion.setText("未婚");
-//            } else {
-//                emotion.setText("保密");
-//            }
-//        }
-//
+    /**
+     * 获取个人信息
+     */
+    private void getInfo() {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "/v1/user/findUserInfo", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                pro.setVisibility(View.VISIBLE);
+                gv.setVisibility(View.GONE);
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+                gv.setVisibility(View.GONE);
+                ToastUtils.displayFailureToast(PersonDataActivity.this);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                try {
+                    Gson gson = new Gson();
+                    ReturnState state = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        gv.setVisibility(View.VISIBLE);
+                        LogManager.LogShow("-----", arg0.result,
+                                LogManager.ERROR);
+                        PersonInfoState infoState = gson.fromJson(arg0.result,
+                                PersonInfoState.class);
+                        info = infoState.result;
+                        setValue();
+                        // setEnable(false);
+                    } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                        ToastUtils.displayShortToast(PersonDataActivity.this,
+                                "验证错误，请重新登录");
+                        ToosUtils.goReLogin(PersonDataActivity.this);
+                    } else {
+                        ToastUtils.displayShortToast(PersonDataActivity.this,
+                                (String) state.result);
+                    }
+                } catch (Exception e) {
+                    ToastUtils.displaySendFailureToast(PersonDataActivity.this);
+                }
+
+            }
+        });
+    }
+
+    public void setValue() {
+        bitmapUtils.display(icon, info.icon);
+        name.setText(info.nickname);
+        if (Constant.SEX_MAN.equals(info.sex)) {
+            sex.setText("男");
+        } else {
+            sex.setText("女");
+        }
+        birth.setText(info.birthday);
+        sdate = info.birthday;
+        trade.setText(info.industry);
+        job.setText(info.job);
+        if (!ToosUtils.isStringEmpty(info.signature)) {
+            signature.setText(info.signature);
+        }
+
 //        if (!ToosUtils.isStringEmpty(info.hobby)) {
 //            interest.setText(info.hobby);
 //        }
 //        if (!ToosUtils.isStringEmpty(info.companyName)) {
 //            unit.setText(info.companyName);
 //        }
-//
-//    }
-//
-//    private void setEnable(boolean flag) {
-//        if (flag) {
-//            save.setText("保存");
-//        } else {
-//            save.setText("编辑");
-//        }
-//        iconView.setClickable(flag);
-//        name.setEnabled(flag);
-//        sex.setEnabled(flag);
-//        birthView.setClickable(flag);
-//        tradeView.setClickable(flag);
-//        job.setEnabled(flag);
-//        signature.setEnabled(flag);
+
+    }
+
+    private void setEnable(boolean flag) {
+        if (flag) {
+            save.setText("保存");
+        } else {
+            save.setText("编辑");
+        }
+        iconView.setClickable(flag);
+        name.setEnabled(flag);
+        sex.setEnabled(flag);
+        birthView.setClickable(flag);
+        tradeView.setClickable(flag);
+        job.setEnabled(flag);
+        signature.setEnabled(flag);
 //        emotionView.setClickable(flag);
 //        interest.setEnabled(flag);
 //        unit.setEnabled(flag);
-//    }
-//
-//    private boolean checkInput() {
-//        if (ToosUtils.isTextEmpty(name)) {
-//            ToastUtils.displayShortToast(this, "昵称不能为空");
-//            return false;
-//        }
-//        if (ToosUtils.isTextEmpty(job)) {
-//            ToastUtils.displayShortToast(this, "职位不能为空");
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    private void sendUpdate() {
-//        info.nickname = ToosUtils.getTextContent(name);
-//        if (sex.isChecked()) {
-//            info.sex = Constant.SEX_MAN;
-//        } else {
-//            info.sex = Constant.SEX_WOMEN;
-//        }
-//        info.birthday = ToosUtils.getTextContent(birth);
-//        info.industry = ToosUtils.getTextContent(trade);
-//        info.job = ToosUtils.getTextContent(job);
-//        info.signature = ToosUtils.getTextContent(signature);
-//        if (ToosUtils.isTextEmpty(emotion)) {
-//            info.affectiveState = "";
-//        } else {
-//            info.affectiveState = String.valueOf(emotionFlag);
-//        }
-//        info.hobby = ToosUtils.getTextContent(interest);
-//        info.companyName = ToosUtils.getTextContent(unit);
-//
-//        final Gson gson = new Gson();
-//        RequestParams rp = new RequestParams();
-//        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//        rp.addBodyParameter("info", gson.toJson(info));
-//        if (bitmap != null) {
-//            File file = null;
-//            if (Environment.getExternalStorageState().equals(
-//                    Environment.MEDIA_MOUNTED)) {
-//
-//                file = ToosUtils.saveImage2SD(
-//                        Environment.getExternalStorageDirectory() + "/louyu/"
-//                                + String.valueOf(System.currentTimeMillis())
-//                                + ".JPEG", bitmap);
-//                rp.addBodyParameter("icon", file);
-//            } else {
-//                ToastUtils.displayShortToast(PersonDataActivity.this,
-//                        "无SD卡,无法上传图片");
-//                return;
-//            }
-//
-//        }
-//        LogManager.LogShow("------", gson.toJson(info), LogManager.ERROR);
-//        HttpUtils utils = new HttpUtils();
-//        utils.configTimeout(20000);
-//        utils.send(HttpMethod.POST, Constant.ROOT_PATH
-//                        + "/v1/user/saveOrUpdateInfo", rp,
-//                new RequestCallBack<String>() {
-//                    @Override
-//                    public void onStart() {
-//                        pro.setVisibility(View.VISIBLE);
-//                        super.onStart();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(HttpException arg0, String arg1) {
-//                        pro.setVisibility(View.GONE);
-//                        ToastUtils.displayFailureToast(PersonDataActivity.this);
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(ResponseInfo<String> arg0) {
-//                        pro.setVisibility(View.GONE);
-//                        try {
-//                            // Gson gson = new Gson();
-//                            LogManager.LogShow("----", arg0.result,
-//                                    LogManager.ERROR);
-//                            ReturnState state = gson.fromJson(arg0.result,
-//                                    ReturnState.class);
-//                            if (Constant.RETURN_OK.equals(state.msg)) {
-//                                ToastUtils.displayShortToast(
-//                                        PersonDataActivity.this, "修改成功");
-//                                PerfectDataState dataState = gson.fromJson(
-//                                        arg0.result, PerfectDataState.class);
-//                                ShareDataTool.SaveInfoDetail(
-//                                        PersonDataActivity.this,
-//                                        dataState.result.nickname,
-//                                        dataState.result.icon,
-//                                        dataState.result.location);
-//                                ShareDataTool.SaveFlag(PersonDataActivity.this,
-//                                        1);
-//                                EMChatManager.getInstance()
-//                                        .updateCurrentUserNick(
-//                                                dataState.result.nickname);
-//                                finish();
-//                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//                                ToastUtils.displayShortToast(
-//                                        PersonDataActivity.this, "验证错误，请重新登录");
-//                                ToosUtils.goReLogin(PersonDataActivity.this);
-//                            } else {
-//                                ToastUtils.displayShortToast(
-//                                        PersonDataActivity.this,
-//                                        String.valueOf(state.result));
-//                            }
-//                        } catch (Exception e) {
-//                            ToastUtils
-//                                    .displaySendFailureToast(PersonDataActivity.this);
-//                        }
-//
-//                    }
-//                });
-//
-//    }
+    }
+
+    private boolean checkInput() {
+        if (ToosUtils.isTextEmpty(name)) {
+            ToastUtils.displayShortToast(this, "昵称不能为空");
+            return false;
+        }
+        if (ToosUtils.isTextEmpty(job)) {
+            ToastUtils.displayShortToast(this, "职位不能为空");
+            return false;
+        }
+        return true;
+    }
+
+    //flag 1修改头像 2 修改名称 3修改生日 4修改性别 5修改行业 6修改职位 7修改签名
+    private void sendUpdate(PersonInfo personInfo, File iconFile, final int flag, final String temp) {
+        RequestParams rp = new RequestParams();
+        final Gson gson = new Gson();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        if (personInfo != null) {
+            rp.addBodyParameter("info", gson.toJson(personInfo));
+        }
+        if (iconFile != null) {
+            rp.addBodyParameter("icon", iconFile);
+        }
+
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                        + "/v1/user/saveOrUpdateInfo", rp,
+                new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(PersonDataActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        PersonDataActivity.this, "修改成功");
+                                PerfectDataState dataState = gson.fromJson(
+                                        arg0.result, PerfectDataState.class);
+                                ShareDataTool.SaveInfoDetail(
+                                        PersonDataActivity.this,
+                                        dataState.result.nickname,
+                                        dataState.result.icon,
+                                        dataState.result.location);
+                                ShareDataTool.SaveFlag(PersonDataActivity.this,
+                                        1);
+                                if (flag == 1) {
+                                    bitmapUtils.display(icon, dataState.result.icon);
+                                } else if (flag == 2) {
+                                    name.setText(temp);
+                                } else if (flag == 3) {
+                                    birth.setText(temp);
+                                } else if (flag == 4) {
+                                    sex.setText(temp);
+                                } else if (flag == 5) {
+                                    trade.setText(temp);
+                                } else if (flag == 6) {
+                                    job.setText(temp);
+                                } else if (flag == 7) {
+                                    signature.setText(temp);
+                                }
+                                EMChatManager.getInstance()
+                                        .updateCurrentUserNick(
+                                                dataState.result.nickname);
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        PersonDataActivity.this, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(PersonDataActivity.this);
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        PersonDataActivity.this,
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(PersonDataActivity.this);
+                        }
+
+                    }
+                });
+
+    }
+
 
 }

@@ -4,5 +4,5 @@ public class ReturnState {
 	
 	public String msg;
 	
-	public String result;
+	public Object result;
 }

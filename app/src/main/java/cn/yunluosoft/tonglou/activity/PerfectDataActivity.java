@@ -19,6 +19,7 @@ import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.dialog.DateSelectDialog;
 import cn.yunluosoft.tonglou.dialog.PhotoDialog;
 import cn.yunluosoft.tonglou.dialog.TradeSelectDialog;
+import cn.yunluosoft.tonglou.model.PersonInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
@@ -216,44 +217,44 @@ public class PerfectDataActivity extends BaseActivity implements
 
 		case R.id.perfect_ok:
 			if (checkInput()) {
-//				File file = null;
-//				if (Environment.getExternalStorageState().equals(
-//						Environment.MEDIA_MOUNTED)) {
-//
-//					file = ToosUtils
-//							.saveImage2SD(
-//									Environment.getExternalStorageDirectory()
-//											+ "/louyu/"
-//											+ String.valueOf(System
-//													.currentTimeMillis())
-//											+ ".JPEG", bitmap);
-//				} else {
-//					ToastUtils.displayShortToast(PerfectDataActivity.this,
-//							"无SD卡,无法上传图片");
-//					return;
-//				}
-//
-//				PersonInfo info = new PersonInfo();
-//				info.nickname = ToosUtils.getTextContent(name);
-//				if (sex.isChecked()) {
-//					info.sex = "0";
-//				} else {
-//					info.sex = "1";
-//				}
-//				info.birthday = ToosUtils.getTextContent(birth);
-//				info.industry = ToosUtils.getTextContent(trade);
-//				info.job = ToosUtils.getTextContent(job);
-//				Intent intent = new Intent(PerfectDataActivity.this,
-//						LocationSelActivity.class);
-//				intent.putExtra("flag", 0);
-//				Gson gson = new Gson();
-//				intent.putExtra("info", info);
-//				// intent.putExtra("info", gson.toJson(info));
-//				if (file != null) {
-//					intent.putExtra("path", file.getAbsolutePath());
-//				}
-//
-//				startActivity(intent);
+				File file = null;
+				if (Environment.getExternalStorageState().equals(
+						Environment.MEDIA_MOUNTED)) {
+
+					file = ToosUtils
+							.saveImage2SD(
+									Environment.getExternalStorageDirectory()
+											+ "/louyu/"
+											+ String.valueOf(System
+													.currentTimeMillis())
+											+ ".JPEG", bitmap);
+				} else {
+					ToastUtils.displayShortToast(PerfectDataActivity.this,
+							"无SD卡,无法上传图片");
+					return;
+				}
+
+				PersonInfo info = new PersonInfo();
+				info.nickname = ToosUtils.getTextContent(name);
+				if (sex.isChecked()) {
+					info.sex = "0";
+				} else {
+					info.sex = "1";
+				}
+				info.birthday = ToosUtils.getTextContent(birth);
+				info.industry = ToosUtils.getTextContent(trade);
+				info.job = ToosUtils.getTextContent(job);
+				Intent intent = new Intent(PerfectDataActivity.this,
+						LocationSelActivity.class);
+				intent.putExtra("flag", 0);
+				Gson gson = new Gson();
+				intent.putExtra("info", info);
+				// intent.putExtra("info", gson.toJson(info));
+				if (file != null) {
+					intent.putExtra("path", file.getAbsolutePath());
+				}
+
+				startActivity(intent);
 			}
 
 			break;

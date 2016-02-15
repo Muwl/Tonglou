@@ -19,6 +19,10 @@ import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.LocationAdapter;
 import cn.yunluosoft.tonglou.model.LocationEntity;
+import cn.yunluosoft.tonglou.model.LocationState;
+import cn.yunluosoft.tonglou.model.PerfectDataState;
+import cn.yunluosoft.tonglou.model.PersonInfo;
+import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.MyApplication;
@@ -76,7 +80,7 @@ public class LocationSelActivity extends BaseActivity implements
 
 	private View root;
 
-//	private PersonInfo info;
+	private PersonInfo info;
 
 	private String path;
 
@@ -111,11 +115,11 @@ public class LocationSelActivity extends BaseActivity implements
 	}
 
 	private void initView() {
-//		flag = getIntent().getIntExtra("flag", 0);
-//		if (flag == 0) {
-//			info = (PersonInfo) getIntent().getSerializableExtra("info");
-//			path = (String) getIntent().getStringExtra("path");
-//		}
+		flag = getIntent().getIntExtra("flag", 0);
+		if (flag == 0) {
+			info = (PersonInfo) getIntent().getSerializableExtra("info");
+			path = (String) getIntent().getStringExtra("path");
+		}
 		locationEntities = new ArrayList<LocationEntity>();
 		adapter = new LocationAdapter(this, locationEntities);
 		root = findViewById(R.id.location_root);
@@ -167,7 +171,7 @@ public class LocationSelActivity extends BaseActivity implements
 				if (checkFlag) {
 					if (!ToosUtils.isStringEmpty(s.toString())) {
 						stag = String.valueOf(System.currentTimeMillis());
-						//getLocations(stag, 1);
+						getLocations(stag, 1);
 
 					} else {
 						locationEntities.clear();
@@ -216,7 +220,7 @@ public class LocationSelActivity extends BaseActivity implements
 			if (location != null) {
 				bdLocation = location;
 				stag = String.valueOf(System.currentTimeMillis());
-				//getLocations(stag, 0);
+				getLocations(stag, 0);
 				LogManager.LogShow("------", "++++++++++++++++++",
 						LogManager.ERROR);
 				mLocationClient.stop();
@@ -243,29 +247,26 @@ public class LocationSelActivity extends BaseActivity implements
 			finish();
 			break;
 		case R.id.location_ok:
-			Intent intent=new Intent(LocationSelActivity.this,LoactionAddActivity.class);
-			startActivity(intent);
+			if (flag == 0) {
+				if (locationEntity != null
+						&& locationEntity.name.equals(ToosUtils
+								.getTextContent(name))) {
+					sendSub();
+				} else {
+					ToastUtils.displayShortToast(LocationSelActivity.this,
+							"请选择您所在楼宇");
+				}
 
-//			if (flag == 0) {
-//				if (locationEntity != null
-//						&& locationEntity.name.equals(ToosUtils
-//								.getTextContent(name))) {
-//					sendSub();
-//				} else {
-//					ToastUtils.displayShortToast(LocationSelActivity.this,
-//							"请选择您所在楼宇");
-//				}
-//
-//			} else {
-//				if (locationEntity != null
-//						&& locationEntity.name.equals(ToosUtils
-//								.getTextContent(name))) {
-//					updateLocation();
-//				} else {
-//					ToastUtils.displayShortToast(LocationSelActivity.this,
-//							"请选择您所在楼宇");
-//				}
-//			}
+			} else {
+				if (locationEntity != null
+						&& locationEntity.name.equals(ToosUtils
+								.getTextContent(name))) {
+					updateLocation();
+				} else {
+					ToastUtils.displayShortToast(LocationSelActivity.this,
+							"请选择您所在楼宇");
+				}
+			}
 
 			break;
 
@@ -274,274 +275,275 @@ public class LocationSelActivity extends BaseActivity implements
 		}
 	}
 
-//	/**
-//	 * 查询楼
-//	 *
-//	 * @param tag
-//	 *            标示
-//	 * @param type
-//	 *            0代表经纬度 1代表名称
-//	 */
-//	private void getLocations(String tag, int type) {
-//		RequestParams rp = new RequestParams();
-//		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//		if (type == 0) {
-//			rp.addBodyParameter("longitude",
-//					String.valueOf(bdLocation.getLongitude()));
-//			rp.addBodyParameter("latitude",
-//					String.valueOf(bdLocation.getLatitude()));
-//		} else {
-//			rp.addBodyParameter("name", ToosUtils.getTextContent(name));
-//		}
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		RequestCallBack<String> requestCallBack = new RequestCallBack<String>() {
-//			@Override
-//			public void onStart() {
-//				super.onStart();
-//			}
-//
-//			@Override
-//			public void onFailure(HttpException arg0, String arg1) {
-//				LogManager.LogShow("------", "ccccccccccccccccccc",
-//						LogManager.ERROR);
-//			}
-//
-//			@Override
-//			public void onSuccess(ResponseInfo<String> arg0) {
-//				try {
-//					if (stag.equals(userTag)) {
-//						Gson gson = new Gson();
-//						ReturnState state = gson.fromJson(arg0.result,
-//								ReturnState.class);
-//						LogManager.LogShow("------", arg0.result,
-//								LogManager.ERROR);
-//						if (Constant.RETURN_OK.equals(state.msg)) {
-//							locationEntities.clear();
-//							adapter.notifyDataSetChanged();
-//							LocationState locationState = gson.fromJson(
-//									arg0.result, LocationState.class);
-//							for (int i = 0; i < locationState.result.size(); i++) {
-//								locationEntities.add(locationState.result
-//										.get(i));
-//							}
-//							adapter.notifyDataSetChanged();
-//						}
-//					}
-//
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//
-//			}
-//		};
-//		requestCallBack.setUserTag(tag);
-//		String url = "/v1/building/findByName";
-//		if (type == 0) {
-//			url = "/v1/building/findByLocation";
-//		} else {
-//			url = "/v1/building/findByName";
-//		}
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH + url, rp,
-//				requestCallBack);
-//	}
-//
-//	private void sendSub() {
-//		final Gson gson = new Gson();
-//		RequestParams rp = new RequestParams();
-//		info.location = locationEntity.name;
-//		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//		rp.addBodyParameter("info", gson.toJson(info));
-//		rp.addBodyParameter("icon", new File(path));
-//		LogManager.LogShow("------", gson.toJson(info), LogManager.ERROR);
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH
-//				+ "/v1/user/saveOrUpdateInfo", rp,
-//				new RequestCallBack<String>() {
-//					@Override
-//					public void onStart() {
-//						pro.setVisibility(View.VISIBLE);
-//						super.onStart();
-//					}
-//
-//					@Override
-//					public void onFailure(HttpException arg0, String arg1) {
-//						pro.setVisibility(View.GONE);
-//						ToastUtils
-//								.displayFailureToast(LocationSelActivity.this);
-//					}
-//
-//					@Override
-//					public void onSuccess(ResponseInfo<String> arg0) {
-//						pro.setVisibility(View.GONE);
-//						try {
-//							// Gson gson = new Gson();
-//							LogManager.LogShow("----", arg0.result,
-//									LogManager.ERROR);
-//							ReturnState state = gson.fromJson(arg0.result,
-//									ReturnState.class);
-//							if (Constant.RETURN_OK.equals(state.msg)) {
-//								PerfectDataState dataState = gson.fromJson(
-//										arg0.result, PerfectDataState.class);
-//								ShareDataTool.SaveInfoDetail(
-//										LocationSelActivity.this,
-//										dataState.result.nickname,
-//										dataState.result.icon,
-//										dataState.result.location);
-//								ShareDataTool.SaveFlag(
-//										LocationSelActivity.this, 1);
-//								loginHX(ShareDataTool
-//										.getImUsername(LocationSelActivity.this),
-//										ShareDataTool
-//												.getImPassword(LocationSelActivity.this));
-//								// Intent intent = new Intent(
-//								// LocationSelActivity.this,
-//								// MainActivity.class);
-//								// startActivity(intent);
-//							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//								ToastUtils.displayShortToast(
-//										LocationSelActivity.this, "验证错误，请重新登录");
-//								ToosUtils.goReLogin(LocationSelActivity.this);
-//							} else {
-//								ToastUtils.displayShortToast(
-//										LocationSelActivity.this,
-//										String.valueOf(state.result));
-//							}
-//						} catch (Exception e) {
-//							ToastUtils
-//									.displaySendFailureToast(LocationSelActivity.this);
-//						}
-//
-//					}
-//				});
-//
-//	}
-//
-//	private void updateLocation() {
-//		RequestParams rp = new RequestParams();
-//		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//		rp.addBodyParameter("location", locationEntity.name);
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH
-//				+ "/v1/user/updateLocation", rp, new RequestCallBack<String>() {
-//			@Override
-//			public void onStart() {
-//				pro.setVisibility(View.VISIBLE);
-//				super.onStart();
-//			}
-//
-//			@Override
-//			public void onFailure(HttpException arg0, String arg1) {
-//				pro.setVisibility(View.GONE);
-//				ToastUtils.displayFailureToast(LocationSelActivity.this);
-//			}
-//
-//			@Override
-//			public void onSuccess(ResponseInfo<String> arg0) {
-//				pro.setVisibility(View.GONE);
-//				try {
-//					// Gson gson = new Gson();
-//					LogManager.LogShow("----", arg0.result, LogManager.ERROR);
-//					Gson gson = new Gson();
-//					ReturnState state = gson.fromJson(arg0.result,
-//							ReturnState.class);
-//					if (Constant.RETURN_OK.equals(state.msg)) {
-//						ShareDataTool
-//								.SaveInfoDetail(
-//										LocationSelActivity.this,
-//										ShareDataTool
-//												.getNickname(LocationSelActivity.this),
-//										ShareDataTool
-//												.getIcon(LocationSelActivity.this),
-//										(String) state.result);
-//						ToastUtils.displayShortToast(LocationSelActivity.this,
-//								"修改成功");
-//						ShareDataTool.saveUpdateFlag(LocationSelActivity.this,
-//								1);
-//						finish();
-//					} else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//						ToastUtils.displayShortToast(LocationSelActivity.this,
-//								"验证错误，请重新登录");
-//						ToosUtils.goReLogin(LocationSelActivity.this);
-//					} else {
-//						ToastUtils.displayShortToast(LocationSelActivity.this,
-//								String.valueOf(state.result));
-//					}
-//				} catch (Exception e) {
-//					ToastUtils
-//							.displaySendFailureToast(LocationSelActivity.this);
-//				}
-//
-//			}
-//		});
-//
-//	}
-//
-//	private void loginHX(final String currentUsername,
-//			final String currentPassword) {
-//		pro.setVisibility(View.VISIBLE);
-//		EMChatManager.getInstance().login(currentUsername, currentPassword,
-//				new EMCallBack() {
-//					@Override
-//					public void onSuccess() {
-//
-//						// 登陆成功，保存用户名密码
-//						MyApplication.getInstance()
-//								.setUserName(currentUsername);
-//						MyApplication.getInstance()
-//								.setPassword(currentPassword);
-//
-//						try {
-//							// pro.setVisibility(View.GONE);
-//							// ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
-//							// ** manually load all local groups and
-//							// conversations in case we are auto login
-//							EMChatManager
-//									.getInstance()
-//									.updateCurrentUserNick(
-//											ShareDataTool
-//													.getNickname(LocationSelActivity.this));
-//							EMGroupManager.getInstance().loadAllGroups();
-//							EMChatManager.getInstance().loadAllConversations();
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//							// 取好友或者群聊失败，不让进入主页面
-//							runOnUiThread(new Runnable() {
-//								public void run() {
-//									MyApplication.getInstance().logout(null);
-//									ToastUtils.displayShortToast(
-//											LocationSelActivity.this, "登录失败");
-//								}
-//							});
-//							return;
-//						}
-//
-//						// 进入主页面
-//						LogManager.LogShow("-----", "登录成功", LogManager.ERROR);
-//
-//						startActivity(new Intent(LocationSelActivity.this,
-//								MainActivity.class));
-//						finish();
-//					}
-//
-//					@Override
-//					public void onProgress(int progress, String status) {
-//					}
-//
-//					@Override
-//					public void onError(final int code, final String message) {
-//
-//						runOnUiThread(new Runnable() {
-//							public void run() {
-//								// pro.setVisibility(View.GONE);
-//								ToastUtils.displayShortToast(
-//										LocationSelActivity.this, "登录失败");
-//							}
-//						});
-//					}
-//				});
-//
-//	}
+	/**
+	 * 查询楼
+	 *
+	 * @param tag
+	 *            标示
+	 * @param type
+	 *            0代表经纬度 1代表名称
+	 */
+	private void getLocations(String tag, int type) {
+		RequestParams rp = new RequestParams();
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		if (type == 0) {
+			rp.addBodyParameter("longitude",
+					String.valueOf(bdLocation.getLongitude()));
+			rp.addBodyParameter("latitude",
+					String.valueOf(bdLocation.getLatitude()));
+		} else {
+			rp.addBodyParameter("name", ToosUtils.getTextContent(name));
+		}
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		RequestCallBack<String> requestCallBack = new RequestCallBack<String>() {
+			@Override
+			public void onStart() {
+				super.onStart();
+			}
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				LogManager.LogShow("------", "ccccccccccccccccccc",
+						LogManager.ERROR);
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				try {
+					if (stag.equals(userTag)) {
+						Gson gson = new Gson();
+						ReturnState state = gson.fromJson(arg0.result,
+								ReturnState.class);
+						LogManager.LogShow("------", arg0.result,
+								LogManager.ERROR);
+						if (Constant.RETURN_OK.equals(state.msg)) {
+							locationEntities.clear();
+							adapter.notifyDataSetChanged();
+							LocationState locationState = gson.fromJson(
+									arg0.result, LocationState.class);
+							for (int i = 0; i < locationState.result.size(); i++) {
+								locationEntities.add(locationState.result
+										.get(i));
+							}
+							adapter.notifyDataSetChanged();
+						}
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		};
+		requestCallBack.setUserTag(tag);
+		String url = "/v1/building/findByName";
+		if (type == 0) {
+			url = "/v1/building/findByLocation";
+		} else {
+			url = "/v1/building/findByName";
+		}
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH + url, rp,
+				requestCallBack);
+	}
+
+	private void sendSub() {
+		final Gson gson = new Gson();
+		RequestParams rp = new RequestParams();
+		info.location = locationEntity.name;
+		info.buildingId=locationEntity.id;
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		rp.addBodyParameter("info", gson.toJson(info));
+		rp.addBodyParameter("icon", new File(path));
+		LogManager.LogShow("------", gson.toJson(info), LogManager.ERROR);
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH
+				+ "/v1/user/saveOrUpdateInfo", rp,
+				new RequestCallBack<String>() {
+					@Override
+					public void onStart() {
+						pro.setVisibility(View.VISIBLE);
+						super.onStart();
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						pro.setVisibility(View.GONE);
+						ToastUtils
+								.displayFailureToast(LocationSelActivity.this);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						pro.setVisibility(View.GONE);
+						try {
+							// Gson gson = new Gson();
+							LogManager.LogShow("----", arg0.result,
+									LogManager.ERROR);
+							ReturnState state = gson.fromJson(arg0.result,
+									ReturnState.class);
+							if (Constant.RETURN_OK.equals(state.msg)) {
+								PerfectDataState dataState = gson.fromJson(
+										arg0.result, PerfectDataState.class);
+								ShareDataTool.SaveInfoDetail(
+										LocationSelActivity.this,
+										dataState.result.nickname,
+										dataState.result.icon,
+										dataState.result.location);
+								ShareDataTool.SaveFlag(
+										LocationSelActivity.this, 1);
+								loginHX(ShareDataTool
+										.getImUsername(LocationSelActivity.this),
+										ShareDataTool
+												.getImPassword(LocationSelActivity.this));
+								// Intent intent = new Intent(
+								// LocationSelActivity.this,
+								// MainActivity.class);
+								// startActivity(intent);
+							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										LocationSelActivity.this, "验证错误，请重新登录");
+								ToosUtils.goReLogin(LocationSelActivity.this);
+							} else {
+								ToastUtils.displayShortToast(
+										LocationSelActivity.this,
+										String.valueOf(state.result));
+							}
+						} catch (Exception e) {
+							ToastUtils
+									.displaySendFailureToast(LocationSelActivity.this);
+						}
+
+					}
+				});
+
+	}
+
+	private void updateLocation() {
+		RequestParams rp = new RequestParams();
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		rp.addBodyParameter("location", locationEntity.id);
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH
+				+ "/v1/user/updateUserLocation", rp, new RequestCallBack<String>() {
+			@Override
+			public void onStart() {
+				pro.setVisibility(View.VISIBLE);
+				super.onStart();
+			}
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				pro.setVisibility(View.GONE);
+				ToastUtils.displayFailureToast(LocationSelActivity.this);
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				pro.setVisibility(View.GONE);
+				try {
+					// Gson gson = new Gson();
+					LogManager.LogShow("----", arg0.result, LogManager.ERROR);
+					Gson gson = new Gson();
+					ReturnState state = gson.fromJson(arg0.result,
+							ReturnState.class);
+					if (Constant.RETURN_OK.equals(state.msg)) {
+						ShareDataTool
+								.SaveInfoDetail(
+										LocationSelActivity.this,
+										ShareDataTool
+												.getNickname(LocationSelActivity.this),
+										ShareDataTool
+												.getIcon(LocationSelActivity.this),
+										(String) locationEntity.name);
+						ToastUtils.displayShortToast(LocationSelActivity.this,
+								"修改成功");
+						ShareDataTool.saveUpdateFlag(LocationSelActivity.this,
+								1);
+						finish();
+					} else if (Constant.TOKEN_ERR.equals(state.msg)) {
+						ToastUtils.displayShortToast(LocationSelActivity.this,
+								"验证错误，请重新登录");
+						ToosUtils.goReLogin(LocationSelActivity.this);
+					} else {
+						ToastUtils.displayShortToast(LocationSelActivity.this,
+								String.valueOf(state.result));
+					}
+				} catch (Exception e) {
+					ToastUtils
+							.displaySendFailureToast(LocationSelActivity.this);
+				}
+
+			}
+		});
+
+	}
+
+	private void loginHX(final String currentUsername,
+			final String currentPassword) {
+		pro.setVisibility(View.VISIBLE);
+		EMChatManager.getInstance().login(currentUsername, currentPassword,
+				new EMCallBack() {
+					@Override
+					public void onSuccess() {
+
+						// 登陆成功，保存用户名密码
+						MyApplication.getInstance()
+								.setUserName(currentUsername);
+						MyApplication.getInstance()
+								.setPassword(currentPassword);
+
+						try {
+							// pro.setVisibility(View.GONE);
+							// ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
+							// ** manually load all local groups and
+							// conversations in case we are auto login
+							EMChatManager
+									.getInstance()
+									.updateCurrentUserNick(
+											ShareDataTool
+													.getNickname(LocationSelActivity.this));
+							EMGroupManager.getInstance().loadAllGroups();
+							EMChatManager.getInstance().loadAllConversations();
+						} catch (Exception e) {
+							e.printStackTrace();
+							// 取好友或者群聊失败，不让进入主页面
+							runOnUiThread(new Runnable() {
+								public void run() {
+									MyApplication.getInstance().logout(null);
+									ToastUtils.displayShortToast(
+											LocationSelActivity.this, "登录失败");
+								}
+							});
+							return;
+						}
+
+						// 进入主页面
+						LogManager.LogShow("-----", "登录成功", LogManager.ERROR);
+
+						startActivity(new Intent(LocationSelActivity.this,
+								MainActivity.class));
+						finish();
+					}
+
+					@Override
+					public void onProgress(int progress, String status) {
+					}
+
+					@Override
+					public void onError(final int code, final String message) {
+
+						runOnUiThread(new Runnable() {
+							public void run() {
+								// pro.setVisibility(View.GONE);
+								ToastUtils.displayShortToast(
+										LocationSelActivity.this, "登录失败");
+							}
+						});
+					}
+				});
+
+	}
 }
