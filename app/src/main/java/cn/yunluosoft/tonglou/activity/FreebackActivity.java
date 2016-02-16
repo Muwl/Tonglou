@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
@@ -69,9 +70,9 @@ public class FreebackActivity extends BaseActivity implements OnClickListener {
                 break;
             case R.id.title_rig:
                 finish();
-//			if (checkInput()) {
-//				sendFreeback();
-//			}
+			if (checkInput()) {
+				sendFreeback();
+			}
                 break;
 
             default:
@@ -87,57 +88,57 @@ public class FreebackActivity extends BaseActivity implements OnClickListener {
         return true;
     }
 
-//	private void sendFreeback() {
-//		final Gson gson = new Gson();
-//		RequestParams rp = new RequestParams();
-//		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//		rp.addBodyParameter("content", ToosUtils.getTextContent(content));
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/feedback/save",
-//				rp, new RequestCallBack<String>() {
-//					@Override
-//					public void onStart() {
-//						pro.setVisibility(View.VISIBLE);
-//						super.onStart();
-//					}
-//
-//					@Override
-//					public void onFailure(HttpException arg0, String arg1) {
-//						pro.setVisibility(View.GONE);
-//						ToastUtils.displayFailureToast(FreebackActivity.this);
-//					}
-//
-//					@Override
-//					public void onSuccess(ResponseInfo<String> arg0) {
-//						pro.setVisibility(View.GONE);
-//						try {
-//							// Gson gson = new Gson();
-//							LogManager.LogShow("----", arg0.result,
-//									LogManager.ERROR);
-//							ReturnState state = gson.fromJson(arg0.result,
-//									ReturnState.class);
-//							if (Constant.RETURN_OK.equals(state.msg)) {
-//								ToastUtils.displayShortToast(
-//										FreebackActivity.this,
-//										String.valueOf(state.result));
-//								finish();
-//							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//								ToastUtils.displayShortToast(
-//										FreebackActivity.this, "验证错误，请重新登录");
-//								ToosUtils.goReLogin(FreebackActivity.this);
-//							} else {
-//								ToastUtils.displayShortToast(
-//										FreebackActivity.this,
-//										String.valueOf(state.result));
-//							}
-//						} catch (Exception e) {
-//							ToastUtils
-//									.displaySendFailureToast(FreebackActivity.this);
-//						}
-//
-//					}
-//				});
-//
-//	}
+	private void sendFreeback() {
+		final Gson gson = new Gson();
+		RequestParams rp = new RequestParams();
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		rp.addBodyParameter("content", ToosUtils.getTextContent(content));
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/feedback/save",
+				rp, new RequestCallBack<String>() {
+					@Override
+					public void onStart() {
+						pro.setVisibility(View.VISIBLE);
+						super.onStart();
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						pro.setVisibility(View.GONE);
+						ToastUtils.displayFailureToast(FreebackActivity.this);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						pro.setVisibility(View.GONE);
+						try {
+							// Gson gson = new Gson();
+							LogManager.LogShow("----", arg0.result,
+									LogManager.ERROR);
+							ReturnState state = gson.fromJson(arg0.result,
+									ReturnState.class);
+							if (Constant.RETURN_OK.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										FreebackActivity.this,
+										String.valueOf(state.result));
+								finish();
+							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										FreebackActivity.this, "验证错误，请重新登录");
+								ToosUtils.goReLogin(FreebackActivity.this);
+							} else {
+								ToastUtils.displayShortToast(
+										FreebackActivity.this,
+										String.valueOf(state.result));
+							}
+						} catch (Exception e) {
+							ToastUtils
+									.displaySendFailureToast(FreebackActivity.this);
+						}
+
+					}
+				});
+
+	}
 }

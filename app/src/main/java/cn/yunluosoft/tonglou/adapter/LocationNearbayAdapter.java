@@ -6,7 +6,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.model.LocationEntity;
 
 /**
  * Created by Mu on 2016/1/26.
@@ -14,14 +17,16 @@ import cn.yunluosoft.tonglou.R;
 public class LocationNearbayAdapter extends BaseAdapter {
 
     private Context context;
+    private List<LocationEntity> entities;
 
-    public LocationNearbayAdapter(Context context) {
+    public LocationNearbayAdapter(Context context,List<LocationEntity> entities) {
         this.context = context;
+        this.entities=entities;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return entities.size();
     }
 
     @Override
@@ -46,6 +51,8 @@ public class LocationNearbayAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        holder.name.setText(entities.get(position).name);
+        holder.address.setText(entities.get(position).addr);
         return convertView;
     }
     class ViewHolder{

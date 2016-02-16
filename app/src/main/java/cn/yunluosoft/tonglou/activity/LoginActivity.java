@@ -189,6 +189,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		rp.addBodyParameter("info", ToosUtils.getEncrypt(jsonObject.toString()));
 		HttpUtils utils = new HttpUtils();
 		utils.configTimeout(20000);
+		LogManager.LogShow("---",ToosUtils.getEncrypt(jsonObject.toString()),LogManager.ERROR);
 		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/user/login", rp,
 				new RequestCallBack<String>() {
 					@Override
@@ -206,6 +207,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					@Override
 					public void onSuccess(ResponseInfo<String> arg0) {
 						pro.setVisibility(View.GONE);
+						LogManager
+								.LogShow("------",
+										"ddddddddddddddddd",
+										LogManager.ERROR);
 						try {
 							Gson gson = new Gson();
 							ReturnState state = gson.fromJson(arg0.result,

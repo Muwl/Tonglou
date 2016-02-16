@@ -267,8 +267,8 @@ public class LocationSelActivity extends BaseActivity implements
                 }
                 break;
             case R.id.location_ok:
-
-
+                Intent intent=new Intent(LocationSelActivity.this,LoactionAddActivity.class);
+                startActivity(intent);
                 break;
 
             default:

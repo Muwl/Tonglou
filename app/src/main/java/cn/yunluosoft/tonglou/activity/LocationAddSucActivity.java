@@ -47,6 +47,7 @@ public class LocationAddSucActivity extends BaseActivity implements View.OnClick
             case R.id.location_addsuc_ok:
                 Intent intent=new Intent(LocationAddSucActivity.this,LocationNerbayActivity.class);
                 startActivity(intent);
+                finish();
                 break;
         }
     }

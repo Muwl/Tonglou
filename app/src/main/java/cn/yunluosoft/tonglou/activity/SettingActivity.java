@@ -37,6 +37,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 
 	private ToggleButton toggleButton;
 
+	private TextView exit;
+
 
 	DemoHXSDKModel model;
 
@@ -78,11 +80,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		title = (TextView) findViewById(R.id.title_title);
 		back = (ImageView) findViewById(R.id.title_back);
 		clearCash = (TextView) findViewById(R.id.setting_clearcash);
+		exit = (TextView) findViewById(R.id.setting_exit);
 		toggleButton = (ToggleButton) findViewById(R.id.setting_recmes_toggle);
 
 		title.setText("系统设置");
 		back.setOnClickListener(this);
 		clearCash.setOnClickListener(this);
+		exit.setOnClickListener(this);
 
 		chatOptions = EMChatManager.getInstance().getChatOptions();
 		model = (DemoHXSDKModel) HXSDKHelper.getInstance().getModel();
@@ -126,6 +130,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			CustomeDialog customeDialog = new CustomeDialog(
 					SettingActivity.this, handler, "确定清除缓存？", 0, -1);
 			break;
+			case R.id.setting_exit:
+				CustomeDialog customeDialog2 = new CustomeDialog(
+						SettingActivity.this, handler, "确定退出？", 0, -2);
+
+				break;
 		default:
 			break;
 		}

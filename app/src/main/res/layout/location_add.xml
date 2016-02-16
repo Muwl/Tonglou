@@ -66,18 +66,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="地区"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
 
 
-                    <TextView
+                    <EditText
                         android:id="@+id/location_add_area"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
-                        android:text="北京"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:background="@null"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
 
@@ -104,18 +105,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="省/市"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
 
 
-                    <TextView
+                    <EditText
                         android:id="@+id/location_add_province"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
-                        android:text="北京"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:background="@null"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
 
