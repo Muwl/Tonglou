@@ -389,7 +389,7 @@ public class LocationSelActivity extends BaseActivity implements
                                         LocationSelActivity.this,
                                         dataState.result.nickname,
                                         dataState.result.icon,
-                                        dataState.result.location);
+                                        dataState.result.location,locationEntity.id);
                                 ShareDataTool.SaveFlag(
                                         LocationSelActivity.this, 1);
                                 loginHX(ShareDataTool
@@ -456,7 +456,7 @@ public class LocationSelActivity extends BaseActivity implements
                                                 .getNickname(LocationSelActivity.this),
                                         ShareDataTool
                                                 .getIcon(LocationSelActivity.this),
-                                        (String) locationEntity.name);
+                                        (String) locationEntity.name,locationEntity.id);
                         ToastUtils.displayShortToast(LocationSelActivity.this,
                                 "修改成功");
                         ShareDataTool.saveUpdateFlag(LocationSelActivity.this,

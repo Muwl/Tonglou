@@ -136,7 +136,7 @@ public class UpdateNameActivity extends BaseActivity implements View.OnClickList
                                         UpdateNameActivity.this,
                                         dataState.result.nickname,
                                         dataState.result.icon,
-                                        dataState.result.location);
+                                        dataState.result.location,ShareDataTool.getBuildingId(UpdateNameActivity.this));
                                 ShareDataTool.SaveFlag(UpdateNameActivity.this,
                                         1);
                                 EMChatManager.getInstance()

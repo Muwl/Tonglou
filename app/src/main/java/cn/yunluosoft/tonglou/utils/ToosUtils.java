@@ -49,7 +49,7 @@ public class ToosUtils {
 //        ToastUtils.displayShortToast(context, "验证失败，请重新登录");
         Intent intent = new Intent(context, LoginActivity.class);
         ShareDataTool.SaveInfo(context, null, null, null, null);
-        ShareDataTool.SaveInfoDetail(context, null, null, null);
+        ShareDataTool.SaveInfoDetail(context, null, null, null,null);
         MyApplication.getInstance().logout(null);
         context.startActivity(intent);
         MyApplication.getInstance().logout(null);

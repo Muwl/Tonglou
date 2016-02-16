@@ -231,7 +231,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 										entity.imUsername, entity.imPassword);
 								ShareDataTool.SaveInfoDetail(
 										LoginActivity.this, entity.nickname,
-										entity.icon, entity.location);
+										entity.icon, entity.buildingName,entity.buildingId);
 								ShareDataTool.SaveFlag(LoginActivity.this, 1);
 								// ToastUtils.displayShortToast(
 								// LoginActivity.this, "登陆成功");

@@ -17,13 +17,14 @@ public class ShareDataTool {
 		return e.commit();
 	}
 	public static boolean SaveInfoDetail(Context context, String nickname,
-			String icon, String location) {
+			String icon, String location,String buildingId) {
 		SharedPreferences sp = context.getSharedPreferences("sp",
 				Context.MODE_PRIVATE);
 		Editor e = sp.edit();
 		e.putString("nickname", nickname);
 		e.putString("icon", icon);
 		e.putString("location", location);
+		e.putString("buildingId", buildingId);
 		return e.commit();
 	}
 
@@ -43,6 +44,11 @@ public class ShareDataTool {
 
 		return context.getSharedPreferences("sp", Context.MODE_PRIVATE)
 				.getString("icon", "");
+	}
+
+	public static String getBuildingId(Context context) {
+		return context.getSharedPreferences("sp", Context.MODE_PRIVATE)
+				.getString("buildingId", "");
 	}
 
 	public static String getLocation(Context context) {

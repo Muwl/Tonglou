@@ -36,10 +36,23 @@
             android:hint="搜索"/>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/constacts_add_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:scrollbars="none"
-        android:layout_marginLeft="10dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+
+        <cn.yunluosoft.tonglou.view.CustomListView
+            android:id="@+id/constacts_add_list"
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"/>
+
+        <include
+            android:id="@+id/constacts_add_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+
 </LinearLayout>

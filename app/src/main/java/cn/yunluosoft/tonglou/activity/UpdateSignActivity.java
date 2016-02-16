@@ -135,7 +135,7 @@ public class UpdateSignActivity extends BaseActivity implements View.OnClickList
                                         UpdateSignActivity.this,
                                         dataState.result.nickname,
                                         dataState.result.icon,
-                                        dataState.result.location);
+                                        dataState.result.location,ShareDataTool.getBuildingId(UpdateSignActivity.this));
                                 ShareDataTool.SaveFlag(UpdateSignActivity.this,
                                         1);
                                 EMChatManager.getInstance()

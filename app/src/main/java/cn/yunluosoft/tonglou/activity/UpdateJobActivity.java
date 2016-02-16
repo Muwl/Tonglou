@@ -135,7 +135,7 @@ public class UpdateJobActivity extends BaseActivity implements View.OnClickListe
                                         UpdateJobActivity.this,
                                         dataState.result.nickname,
                                         dataState.result.icon,
-                                        dataState.result.location);
+                                        dataState.result.location,ShareDataTool.getBuildingId(UpdateJobActivity.this));
                                 ShareDataTool.SaveFlag(UpdateJobActivity.this,
                                         1);
                                 EMChatManager.getInstance()

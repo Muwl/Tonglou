@@ -15,6 +15,7 @@ public class LoginEntity implements Serializable {
 	public String imPassword;
 	public String nickname;
 	public String icon;
-	public String location;
+	public String buildingId;
+	public String buildingName;
 
 }

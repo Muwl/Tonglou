@@ -13,16 +13,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
+        <cn.yunluosoft.tonglou.view.CustomListView
             android:id="@+id/constant_withfloor_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none" />
 
         <include
+            android:id="@+id/constant_withfloor_empty"
+            layout="@layout/empty"
+            android:visibility="gone" />
+
+
+        <include
             android:id="@+id/constant_withfloor_pro"
             layout="@layout/pro"
             android:visibility="gone" />
+
+
 
 
     </RelativeLayout>

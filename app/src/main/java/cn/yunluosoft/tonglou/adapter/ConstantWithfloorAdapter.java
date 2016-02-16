@@ -7,7 +7,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
+
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.model.ConstantWithfloorEntity;
+import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -16,14 +22,18 @@ import cn.yunluosoft.tonglou.view.CircleImageView;
 public class ConstantWithfloorAdapter extends BaseAdapter {
 
     private Context context;
+    private List<ConstantWithfloorEntity> entities;
+    private BitmapUtils bitmapUtils;
 
-    public ConstantWithfloorAdapter(Context context) {
+    public ConstantWithfloorAdapter(Context context,List<ConstantWithfloorEntity> entities) {
         this.context = context;
+        this.entities=entities;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return entities.size();
     }
 
     @Override
@@ -52,6 +62,17 @@ public class ConstantWithfloorAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        bitmapUtils.display(holder.icon,entities.get(position).icon);
+        if (Constant.SEX_MAN.endsWith(entities.get(position).sex)){
+            holder.sex.setImageResource(R.mipmap.icon_sex_male);
+        }else{
+            holder.sex.setImageResource(R.mipmap.icon_sex_female);
+        }
+
+        holder.name.setText(entities.get(position).nickname);
+        holder.job.setText(entities.get(position).job);
+        holder.trade.setText(entities.get(position).industry);
+        holder.content.setText(entities.get(position).signature);
         return convertView;
     }
     class ViewHolder{

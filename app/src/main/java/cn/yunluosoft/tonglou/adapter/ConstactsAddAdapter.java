@@ -7,7 +7,13 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
+
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.model.ConstantWithfloorEntity;
+import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -16,14 +22,18 @@ import cn.yunluosoft.tonglou.view.CircleImageView;
 public class ConstactsAddAdapter extends BaseAdapter {
 
     private Context context;
+    private List<ConstantWithfloorEntity> entities;
+    private BitmapUtils bitmapUtils;
 
-    public ConstactsAddAdapter(Context context) {
+    public ConstactsAddAdapter(Context context,List<ConstantWithfloorEntity> entities) {
         this.context = context;
+        this.entities=entities;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return entities.size();
     }
 
     @Override
@@ -48,6 +58,8 @@ public class ConstactsAddAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        bitmapUtils.display(holder.icon,entities.get(position).icon);
+        holder.name.setText(entities.get(position).nickname);
         return convertView;
     }
 

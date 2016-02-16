@@ -509,7 +509,7 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                                         PersonDataActivity.this,
                                         dataState.result.nickname,
                                         dataState.result.icon,
-                                        dataState.result.location);
+                                        dataState.result.location,ShareDataTool.getBuildingId(PersonDataActivity.this));
                                 ShareDataTool.SaveFlag(PersonDataActivity.this,
                                         1);
                                 if (flag == 1) {

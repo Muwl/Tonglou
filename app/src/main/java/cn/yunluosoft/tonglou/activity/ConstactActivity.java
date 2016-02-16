@@ -25,6 +25,7 @@ import cn.yunluosoft.tonglou.adapter.ConstactAdapter;
 import cn.yunluosoft.tonglou.dialog.AddMarkDialog;
 import cn.yunluosoft.tonglou.dialog.CustomeDialog;
 import cn.yunluosoft.tonglou.dialog.RigDialog;
+import cn.yunluosoft.tonglou.model.ConstactDetailReEntity;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.LogManager;
@@ -78,12 +79,12 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
     private View pro;
 
     private View gv;
-//
-//    private String id;
-//
-//    private String titleString;
-//
-//    private ConstactDetailReEntity constactDetailReEntity;
+
+    private String id;
+
+    private String titleString;
+
+    private ConstactDetailReEntity constactDetailReEntity;
 //
 //    private WithFloorEntity infoEntity = null;
 //
@@ -97,7 +98,7 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
 
     private BitmapUtils bitmapUtils;
 
-//    private int flag;
+    private int flag;
 
     private String sname = "";
 
@@ -153,9 +154,9 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
     }
 
     private void initView() {
-//        id = getIntent().getStringExtra("id");
-//        titleString = getIntent().getStringExtra("name");
-//        flag = getIntent().getIntExtra("flag", 0);
+        id = getIntent().getStringExtra("id");
+        titleString = getIntent().getStringExtra("name");
+        flag = getIntent().getIntExtra("flag", 0);
         customListView = (CustomListView) findViewById(R.id.constact_detail_listview);
         back = (ImageView) findViewById(R.id.constact_detail_back);
         title = (TextView) findViewById(R.id.constact_detail_title);
@@ -167,7 +168,7 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
         bomView = findViewById(R.id.constact_detail_bom);
 
         customListView.setTitle(title);
-//        title.setText(titleString);
+        title.setText(titleString);
         // customListView.setOnScrollListener(this);
         back.setOnClickListener(this);
         conversate.setOnClickListener(this);
