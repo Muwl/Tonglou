@@ -1,9 +1,11 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -88,7 +90,7 @@ public class ConstactsAddActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onLoadMore() {
                 closePro();
-                getInfo(pageNo + 1,stag);
+                getInfo(pageNo + 1, stag);
             }
         });
 
@@ -115,7 +117,7 @@ public class ConstactsAddActivity extends BaseActivity implements View.OnClickLi
                 if (checkFlag) {
                     if (!ToosUtils.isStringEmpty(s.toString())) {
                         stag = String.valueOf(System.currentTimeMillis());
-                        getInfo(1,stag);
+                        getInfo(1, stag);
                     } else {
                         entities.clear();
                         adapter.notifyDataSetChanged();
@@ -127,6 +129,21 @@ public class ConstactsAddActivity extends BaseActivity implements View.OnClickLi
 
             }
         });
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(ConstactsAddActivity.this,
+                        ConstactActivity.class);
+                intent.putExtra("id", entities.get(position-1).id);
+                intent.putExtra("name", entities.get(position-1).nickname);
+                startActivity(intent);
+
+            }
+        });
+
+
     }
 
     public void closePro() {

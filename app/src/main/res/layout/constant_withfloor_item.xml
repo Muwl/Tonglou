@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+<LinearLayout
     android:orientation="horizontal"
     android:background="@drawable/item_bg"
     android:gravity="center_vertical"
@@ -10,8 +17,6 @@
     <RelativeLayout
         android:layout_width="67dp"
         android:layout_height="67dp">
-
-
         <cn.yunluosoft.tonglou.view.CircleImageView
             android:id="@+id/constant_withfloor_item_icon"
             android:layout_width="65dp"
@@ -96,5 +101,9 @@
 
     </LinearLayout>
 
-
+</LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dicider_col"/>
 </LinearLayout>

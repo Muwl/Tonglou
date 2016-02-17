@@ -1,7 +1,9 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -80,6 +82,19 @@ public class ConstantWithfloorActivity extends BaseActivity implements View.OnCl
         adapter=new ConstantWithfloorAdapter(this,entities);
         listView.setAdapter(adapter);
         getInfo(pageNo);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(ConstantWithfloorActivity.this,
+                        ConstactActivity.class);
+                intent.putExtra("id", entities.get(position - 1).id);
+                intent.putExtra("name", entities.get(position - 1).nickname);
+                startActivity(intent);
+
+            }
+        });
+
         listView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -231,7 +246,7 @@ public class ConstantWithfloorActivity extends BaseActivity implements View.OnCl
                                 if (Constant.TOKEN_ERR.equals(state.msg)) {
                                     ToastUtils.displayShortToast(ConstantWithfloorActivity.this,
                                             "验证错误，请重新登录");
-                                    // ToosUtils.goReLogin(getActivity());
+                                    ToosUtils.goReLogin(ConstantWithfloorActivity.this);
                                 } else {
                                     ToastUtils.displayShortToast(ConstantWithfloorActivity.this,
                                             (String) state.result);

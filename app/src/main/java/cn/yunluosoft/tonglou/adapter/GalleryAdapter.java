@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.PhotoShowActivity;
+import cn.yunluosoft.tonglou.model.ConstantWithfloorEntity;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
@@ -31,11 +33,13 @@ import com.lidroid.xutils.BitmapUtils;
  */
 public class GalleryAdapter extends BaseAdapter {
 	private Context context;
+	private ConstantWithfloorEntity floorEntity;
 	private BitmapUtils bitmapUtils;
 
-	public GalleryAdapter(Context context,
+	public GalleryAdapter(Context context,ConstantWithfloorEntity floorEntity,
 			BitmapUtils bitmapUtils) {
 		this.context = context;
+		this.floorEntity = floorEntity;
 		this.bitmapUtils = bitmapUtils;
 		// bitmapUtils = new BitmapUtils(context);
 	}
@@ -79,28 +83,27 @@ public class GalleryAdapter extends BaseAdapter {
 			params.height = DensityUtil.dip2px(context, 253);
 			view.setLayoutParams(params);
 
-//			icon.setOnClickListener(new OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v) {
-//					Intent intent = new Intent(context, PhotoShowActivity.class);
-//					List<String> photos = new ArrayList<String>();
-//					photos.add(floorEntity.icon);
-//					intent.putExtra("photo", (Serializable) photos);
-//					context.startActivity(intent);
-//				}
-//			});
-//			bitmapUtils.display(icon, floorEntity.icon);
-//			name.setText(floorEntity.nickname);
-//
-//			age.setText(floorEntity.age);
-//			job.setText(floorEntity.job);
-//			tarde.setText(floorEntity.industry);
-//			if (!ToosUtils.isStringEmpty(floorEntity.signature)) {
-//				content.setText(floorEntity.signature);
-//			} else {
-//				content.setText("让整栋楼听到你的声音");
-//			}
+			icon.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(context, PhotoShowActivity.class);
+					List<String> photos = new ArrayList<String>();
+					photos.add(floorEntity.icon);
+					intent.putExtra("photo", (Serializable) photos);
+					context.startActivity(intent);
+				}
+			});
+			bitmapUtils.display(icon, floorEntity.icon);
+			name.setText(floorEntity.nickname);
+
+			job.setText(floorEntity.job);
+			tarde.setText(floorEntity.industry);
+			if (!ToosUtils.isStringEmpty(floorEntity.signature)) {
+				content.setText(floorEntity.signature);
+			} else {
+				content.setText("让整栋楼听到你的声音");
+			}
 
 		} else if (position == 1) {
 			convertView = View.inflate(context,
@@ -121,31 +124,31 @@ public class GalleryAdapter extends BaseAdapter {
 			params.height = DensityUtil.dip2px(context, 253);
 			view.setLayoutParams(params);
 
-//			if (!ToosUtils.isStringEmpty(floorEntity.companyName)) {
-//				unit.setText(floorEntity.companyName);
-//			} else {
-//				unit.setText("未填写");
-//			}
-//			if (!ToosUtils.isStringEmpty(floorEntity.affectiveState)) {
-//				if (String.valueOf(Constant.EMOTION_MARRIED).equals(
-//						floorEntity.affectiveState)) {
-//					emotion.setText("情感：已婚");
-//				} else if (String.valueOf(Constant.EMOTION_NOMARRIED).equals(
-//						floorEntity.affectiveState)) {
-//					emotion.setText("情感：未婚");
-//				} else {
-//					emotion.setText("情感：保密");
-//				}
-//			} else {
-//				emotion.setText("情感：保密");
-//			}
-//
-//			birth.setText("星座：" + floorEntity.constellation);
-//			if (!ToosUtils.isStringEmpty(floorEntity.hobby)) {
-//				interect.setText(floorEntity.hobby);
-//			} else {
-//				interect.setText("未填写");
-//			}
+			if (!ToosUtils.isStringEmpty(floorEntity.companyName)) {
+				unit.setText(floorEntity.companyName);
+			} else {
+				unit.setText("未填写");
+			}
+			if (!ToosUtils.isStringEmpty(floorEntity.affectiveState)) {
+				if (String.valueOf(Constant.EMOTION_MARRIED).equals(
+						floorEntity.affectiveState)) {
+					emotion.setText("情感：已婚");
+				} else if (String.valueOf(Constant.EMOTION_NOMARRIED).equals(
+						floorEntity.affectiveState)) {
+					emotion.setText("情感：未婚");
+				} else {
+					emotion.setText("情感：保密");
+				}
+			} else {
+				emotion.setText("情感：保密");
+			}
+
+			birth.setText("生日：" + floorEntity.birthday);
+			if (!ToosUtils.isStringEmpty(floorEntity.hobby)) {
+				interect.setText(floorEntity.hobby);
+			} else {
+				interect.setText("未填写");
+			}
 		}
 
 		return convertView;

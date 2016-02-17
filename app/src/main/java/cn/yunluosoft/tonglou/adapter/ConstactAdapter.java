@@ -18,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
+import cn.yunluosoft.tonglou.activity.PhotoShowActivity;
+import cn.yunluosoft.tonglou.model.ConstantWithfloorEntity;
+import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
@@ -40,14 +44,18 @@ public class ConstactAdapter extends BaseAdapter {
 	Context context;
 	private BitmapUtils bitmapUtils;
 	CustomListView listView;
+	private ConstantWithfloorEntity floorEntity;
+	private List<FloorSpeechEntity> entities;
 
 	private int flag;
 
-	public ConstactAdapter(Context context, int width,
+	public ConstactAdapter(Context context,ConstantWithfloorEntity floorEntity,List<FloorSpeechEntity> entities, int width,
 			CustomListView listView, int flag, BitmapUtils bitmapUtils) {
 		super();
 		this.context = context;
 		this.width = width;
+		this.floorEntity=floorEntity;
+		this.entities=entities;
 		this.listView = listView;
 		this.flag = flag;
 		inflater = LayoutInflater.from(context);
@@ -57,7 +65,7 @@ public class ConstactAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return 5;
+		return entities.size()+1;
 	}
 
 	@Override
@@ -128,9 +136,9 @@ public class ConstactAdapter extends BaseAdapter {
 		}
 
 		if (type == type0) {
-//			bitmapUtils.display(holder.imageBg, floorEntity.background);
+			bitmapUtils.display(holder.imageBg, floorEntity.background);
 			holder.lllayout.removeAllViews();
-//			holder.locate.setText(floorEntity.location);
+			holder.locate.setText(floorEntity.location);
 			int m = DensityUtil.dip2px(context, 3);
 			for (int i = 0; i < 2; i++) {
 				ImageView image = (ImageView) LayoutInflater.from(context)
@@ -138,7 +146,7 @@ public class ConstactAdapter extends BaseAdapter {
 				image.setPadding(m, 0, m, 0);
 				holder.lllayout.addView(image);
 			}
-			GalleryAdapter adapter = new GalleryAdapter(context,
+			GalleryAdapter adapter = new GalleryAdapter(context,floorEntity,
 					bitmapUtils);
 			holder.gallery.setAdapter(adapter);
 			holder.lllayout.setTag("aaaaaaaaaackefklk");
@@ -169,64 +177,41 @@ public class ConstactAdapter extends BaseAdapter {
 						}
 					});
 
-//			if ((entities == null || entities.size() == 0) && flag == 1) {
-//				holder.empty.setVisibility(View.VISIBLE);
-//				holder.empty_image.setImageDrawable(context.getResources()
-//						.getDrawable(R.mipmap.empty_mes));
-//				holder.empty_text.setText("什么都没有呢！");
-//			} else {
-//				holder.empty.setVisibility(View.GONE);
-//			}
+			if ((entities == null || entities.size() == 0) && flag == 1) {
+				holder.empty.setVisibility(View.VISIBLE);
+				holder.empty_image.setImageDrawable(context.getResources()
+						.getDrawable(R.mipmap.empty_mes));
+				holder.empty_text.setText("什么都没有呢！");
+			} else {
+				holder.empty.setVisibility(View.GONE);
+			}
 		} else if (type == type1) {
 
-//			bitmapUtils.display(holder1.icon, entities.get(position - 1).Icon);
-//			holder1.name.setText(entities.get(position - 1).userName);
-//			if (ToosUtils.isStringEmpty(entities.get(position - 1).content)) {
-//				holder1.content.setVisibility(View.GONE);
-//			} else if (entities.get(position - 1).content.length() <= 96) {
-//				holder1.content.setText(entities.get(position - 1).content);
-//			} else {
-//				String s = entities.get(position - 1).content.substring(0, 96);
-//				holder1.content.setText(s + "...");
-//			}
-//
-//			holder1.content.setOnClickListener(new OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v) {
+			bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
+			holder1.name.setText(entities.get(position - 1).publishUserNickname);
+			if (ToosUtils.isStringEmpty(entities.get(position - 1).detail)) {
+				holder1.content.setVisibility(View.GONE);
+			} else if (entities.get(position - 1).detail.length() <= 96) {
+				holder1.content.setText(entities.get(position - 1).detail);
+			} else {
+				String s = entities.get(position - 1).detail.substring(0, 96);
+				holder1.content.setText(s + "...");
+			}
+
+			holder1.content.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
 //					Intent intent = new Intent(context,
 //							FloorSpeechDetailActivity.class);
 //					intent.putExtra("flag", 1);
 //					intent.putExtra("id", entities.get(position - 1).id);
 //					((ConstactActivity) context).startActivityForResult(intent,
 //							1005);
-//				}
-//			});
-//
-//			// holder1.content.setText(entities.get(position - 1).content);
-//			if (ToosUtils.isStringEmpty(entities.get(position - 1).image)) {
-//				holder1.imageView.setVisibility(View.GONE);
-//			} else {
-//				holder1.imageView.setVisibility(View.VISIBLE);
-//				bitmapUtils.display(holder1.imageView,
-//						entities.get(position - 1).thumbImage);
-//			}
-//			holder1.time.setText(entities.get(position - 1).createDate);
-//			holder1.discuss
-//					.setText(String.valueOf(entities.get(position - 1).commentAmount));
-//
-//			holder1.imageView.setOnClickListener(new OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v) {
-//					Intent intent = new Intent(context, PhotoShowActivity.class);
-//					List<String> photos = new ArrayList<String>();
-//					photos.add(entities.get(position - 1).image);
-//					intent.putExtra("photo", (Serializable) photos);
-//					context.startActivity(intent);
-//
-//				}
-//			});
+				}
+			});
+
+
 
 		}
 		return convertView;

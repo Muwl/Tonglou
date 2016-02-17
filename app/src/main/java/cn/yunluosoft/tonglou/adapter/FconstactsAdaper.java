@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.model.FriendEntity;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
@@ -25,23 +26,24 @@ import com.lidroid.xutils.BitmapUtils;
 public class FconstactsAdaper extends BaseAdapter implements SectionIndexer {
 
 	private Context context;
+	private List<FriendEntity> entities;
 	private BitmapUtils bitmapUtils;
 
-	public FconstactsAdaper(Context context) {
+	public FconstactsAdaper(Context context, List<FriendEntity> entities) {
 		super();
 		this.context = context;
+		this.entities = entities;
 		bitmapUtils = new BitmapUtils(context);
 	}
 
 	@Override
 	public int getCount() {
-		return 8;
+		return entities.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-//		return entities.get(position);
-		return null;
+		return entities.get(position);
 	}
 
 	@Override
@@ -69,21 +71,21 @@ public class FconstactsAdaper extends BaseAdapter implements SectionIndexer {
 		int section = getSectionForPosition(position);
 
 		// 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
-//		if (position == getPositionForSection(section)) {
-//			holder.tvLetter.setVisibility(View.VISIBLE);
-//			holder.lin.setVisibility(View.VISIBLE);
-//			holder.tvLetter.setText(entities.get(position).code);
-//		} else {
-//			holder.tvLetter.setVisibility(View.GONE);
-//			holder.lin.setVisibility(View.GONE);
-//		}
+		if (position == getPositionForSection(section)) {
+			holder.tvLetter.setVisibility(View.VISIBLE);
+			holder.lin.setVisibility(View.VISIBLE);
+			holder.tvLetter.setText(entities.get(position).code);
+		} else {
+			holder.tvLetter.setVisibility(View.GONE);
+			holder.lin.setVisibility(View.GONE);
+		}
 
-//		bitmapUtils.display(holder.icon, entities.get(position).icon);
-//		if (!ToosUtils.isStringEmpty(entities.get(position).remarkName)) {
-//			holder.name.setText(entities.get(position).remarkName);
-//		} else {
-//			holder.name.setText(entities.get(position).userName);
-//		}
+		bitmapUtils.display(holder.icon, entities.get(position).icon);
+		if (!ToosUtils.isStringEmpty(entities.get(position).remarkName)) {
+			holder.name.setText(entities.get(position).remarkName);
+		} else {
+			holder.name.setText(entities.get(position).userName);
+		}
 
 		return convertView;
 	}
@@ -99,8 +101,8 @@ public class FconstactsAdaper extends BaseAdapter implements SectionIndexer {
 	 * 根据ListView的当前位置获取分类的首字母的Char ascii值
 	 */
 	public int getSectionForPosition(int position) {
-//		return entities.get(position).code.charAt(0);
-		return 0;
+		return entities.get(position).code.charAt(0);
+
 	}
 
 	/**
@@ -108,11 +110,11 @@ public class FconstactsAdaper extends BaseAdapter implements SectionIndexer {
 	 */
 	public int getPositionForSection(int section) {
 		for (int i = 0; i < getCount(); i++) {
-//			String sortStr = entities.get(i).code;
-//			char firstChar = sortStr.toUpperCase().charAt(0);
-//			if (firstChar == section) {
-//				return i;
-//			}
+			String sortStr = entities.get(i).code;
+			char firstChar = sortStr.toUpperCase().charAt(0);
+			if (firstChar == section) {
+				return i;
+			}
 		}
 
 		return -1;

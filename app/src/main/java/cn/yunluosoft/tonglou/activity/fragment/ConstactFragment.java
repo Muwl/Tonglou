@@ -26,6 +26,12 @@ import cn.yunluosoft.tonglou.activity.ConstactsAddActivity;
 import cn.yunluosoft.tonglou.activity.ConstantWithfloorActivity;
 import cn.yunluosoft.tonglou.adapter.FconstactsAdaper;
 import cn.yunluosoft.tonglou.dialog.CustomeDialog;
+import cn.yunluosoft.tonglou.model.FriendComparator;
+import cn.yunluosoft.tonglou.model.FriendEntity;
+import cn.yunluosoft.tonglou.model.FriendState;
+import cn.yunluosoft.tonglou.model.ReturnState;
+import cn.yunluosoft.tonglou.utils.Constant;
+import cn.yunluosoft.tonglou.utils.FriendDBUtils;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
@@ -62,6 +68,10 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
 
     private FconstactsAdaper adaper;
 
+    private List<FriendEntity> entities;
+
+    private FriendDBUtils friendDBUtils;
+
     private View withfloorFriend;
 
     private View addFriend;
@@ -71,7 +81,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
             switch (msg.what) {
                 case 40:
                     int position = msg.arg1;
-                  //  delCon(position);
+                    delCon(position);
                     break;
 
                 default:
@@ -104,56 +114,14 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
         super.onActivityCreated(savedInstanceState);
         withfloorFriend.setOnClickListener(this);
         addFriend.setOnClickListener(this);
-
-        // SwipeMenuCreator creator = new SwipeMenuCreator() {
-        //
-        // @Override
-        // public void create(SwipeMenu menu) {
-        // // create "open" item
-        // SwipeMenuItem openItem = new SwipeMenuItem(getActivity());
-        // // set item background
-        // openItem.setBackground(new ColorDrawable(Color.rgb(0x87, 0x4C,
-        // 0x2A)));
-        // // e8e9
-        // // 00c91c
-        // // set item width
-        // openItem.setWidth(DensityUtil.dip2px(getActivity(), 70));
-        // // set item title
-        // openItem.setTitle("删除");
-        // // set item title fontsize
-        //
-        // openItem.setTitleSize(16);
-        // // set item title font color
-        // openItem.setTitleColor(Color.rgb(0xFF, 0xFF, 0xFF));
-        // // new
-        // //
-        // Color(getActivity().getResources().getColor(R.color.message_green)));
-        // // add to menu
-        // menu.addMenuItem(openItem);
-        //
-        // }
-        // };
-        // // set creator
-        // listView.setMenuCreator(creator);
-//        friendDBUtils = new FriendDBUtils(getActivity());
-//        entities = friendDBUtils.getAllFriends();
-//        if (entities == null) {
-//            entities = new ArrayList<FriendEntity>();
-//        }
-        adaper = new FconstactsAdaper(getActivity());
+        friendDBUtils = new FriendDBUtils(getActivity());
+        entities = friendDBUtils.getAllFriends();
+        if (entities == null) {
+            entities = new ArrayList<FriendEntity>();
+        }
+        adaper = new FconstactsAdaper(getActivity(),entities);
         listView.setAdapter(adaper);
 
-        // listView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-        // @Override
-        // public void onMenuItemClick(int position, SwipeMenu menu, int index)
-        // {
-        // switch (index) {
-        // case 0:
-        // delCon(position);
-        // break;
-        // }
-        // }
-        // });
 
         listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -175,19 +143,19 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
 
                 Intent intent = new Intent(getActivity(),
                         ConstactActivity.class);
-//                intent.putExtra("id", entities.get(position).userId);
-//                if (!ToosUtils.isStringEmpty(entities.get(position).remarkName)) {
-//                    intent.putExtra("name", entities.get(position).remarkName);
-//                } else {
-//                    intent.putExtra("name", entities.get(position).userName);
-//                }
+                intent.putExtra("id", entities.get(position).userId);
+                if (!ToosUtils.isStringEmpty(entities.get(position).remarkName)) {
+                    intent.putExtra("name", entities.get(position).remarkName);
+                } else {
+                    intent.putExtra("name", entities.get(position).userName);
+                }
                 startActivity(intent);
 
 
             }
         });
 //
-//        getInfo();
+        getInfo();
     }
 
     @Override
@@ -206,98 +174,98 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
         }
 
     }
-//
-//    private void getInfo() {
-//        RequestParams rp = new RequestParams();
-//        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
-//        HttpUtils utils = new HttpUtils();
-//        utils.configTimeout(20000);
-//        utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/contact/find",
-//                rp, new RequestCallBack<String>() {
-//                    @Override
-//                    public void onStart() {
-//                        // pro.setVisibility(View.VISIBLE);
-//                        super.onStart();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(HttpException arg0, String arg1) {
-//                        pro.setVisibility(View.GONE);
-//                        ToastUtils.displayFailureToast(getActivity());
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(ResponseInfo<String> arg0) {
-//                        pro.setVisibility(View.GONE);
-//                        try {
-//                            // Gson gson = new Gson();
-//                            LogManager.LogShow("----", arg0.result,
-//                                    LogManager.ERROR);
-//                            Gson gson = new Gson();
-//                            ReturnState state = gson.fromJson(arg0.result,
-//                                    ReturnState.class);
-//                            if (Constant.RETURN_OK.equals(state.msg)) {
-//                                entities.clear();
-//                                FriendState friendState = gson.fromJson(
-//                                        arg0.result, FriendState.class);
-//                                if (friendState.result == null) {
-//                                    return;
-//                                }
-//                                for (int i = 0; i < friendState.result.size(); i++) {
-//                                    for (int j = 0; j < friendState.result
-//                                            .get(i).contactListVos.size(); j++) {
-//                                        entities.add(friendState.result.get(i).contactListVos
-//                                                .get(j));
-//                                    }
-//
-//                                }
-//
-//                                LogManager.LogShow("----", entities.toString(),
-//                                        LogManager.ERROR);
-//                                sideBar.setTextView(dialog);
-//                                Collections.sort(entities,
-//                                        new FriendComparator());
-//                                friendDBUtils.saveAllFriends(entities);
-//                                adaper.notifyDataSetChanged();
-//
-//                                // adaper = new FconstactsAdaper(getActivity(),
-//                                // entities);
-//                                // listView.setAdapter(adaper);
-//                                // 设置右侧触摸监听
-//                                sideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
-//
-//                                    @Override
-//                                    public void onTouchingLetterChanged(String s) {
-//                                        // 该字母首次出现的位置
-//                                        int position = adaper
-//                                                .getPositionForSection(s
-//                                                        .charAt(0));
-//                                        if (position != -1) {
-//                                            listView.setSelection(position);
-//                                        }
-//
-//                                    }
-//                                });
-//                                reFushEmpty();
-//                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//                                ToastUtils.displayShortToast(getActivity(),
-//                                        "验证错误，请重新登录");
-//                                ToosUtils.goReLogin(getActivity());
-//                            } else {
-//                                ToastUtils.displayShortToast(getActivity(),
-//                                        String.valueOf(state.result));
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                            ToastUtils.displaySendFailureToast(getActivity());
-//                        }
-//
-//                    }
-//                });
-//
-//    }
-//
-//    public void reFushEmpty() {
+
+    private void getInfo() {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/contact/find",
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                         pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(getActivity());
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                entities.clear();
+                                FriendState friendState = gson.fromJson(
+                                        arg0.result, FriendState.class);
+                                if (friendState.result == null) {
+                                    return;
+                                }
+                                for (int i = 0; i < friendState.result.size(); i++) {
+                                    for (int j = 0; j < friendState.result
+                                            .get(i).contactListVos.size(); j++) {
+                                        entities.add(friendState.result.get(i).contactListVos
+                                                .get(j));
+                                    }
+
+                                }
+
+                                LogManager.LogShow("----", entities.toString(),
+                                        LogManager.ERROR);
+                                sideBar.setTextView(dialog);
+                                Collections.sort(entities,
+                                        new FriendComparator());
+                                friendDBUtils.saveAllFriends(entities);
+                                adaper.notifyDataSetChanged();
+
+                                // adaper = new FconstactsAdaper(getActivity(),
+                                // entities);
+                                // listView.setAdapter(adaper);
+                                // 设置右侧触摸监听
+                                sideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
+
+                                    @Override
+                                    public void onTouchingLetterChanged(String s) {
+                                        // 该字母首次出现的位置
+                                        int position = adaper
+                                                .getPositionForSection(s
+                                                        .charAt(0));
+                                        if (position != -1) {
+                                            listView.setSelection(position);
+                                        }
+
+                                    }
+                                });
+                                reFushEmpty();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(getActivity(),
+                                        "验证错误，请重新登录");
+                                ToosUtils.goReLogin(getActivity());
+                            } else {
+                                ToastUtils.displayShortToast(getActivity(),
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ToastUtils.displaySendFailureToast(getActivity());
+                        }
+
+                    }
+                });
+
+    }
+
+    public void reFushEmpty() {
 //        if (entities == null || entities.size() == 0) {
 //            empty.setVisibility(View.VISIBLE);
 //            empty_image.setImageDrawable(getResources().getDrawable(
@@ -306,60 +274,60 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
 //        } else {
 //            empty.setVisibility(View.GONE);
 //        }
-//    }
-//
-//    private void delCon(final int position) {
-//        RequestParams rp = new RequestParams();
-//        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
-//        rp.addBodyParameter("toUserId", entities.get(position).userId);
-//        HttpUtils utils = new HttpUtils();
-//        utils.configTimeout(20000);
-//        utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/contact/del", rp,
-//                new RequestCallBack<String>() {
-//                    @Override
-//                    public void onStart() {
-//                        pro.setVisibility(View.VISIBLE);
-//                        super.onStart();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(HttpException arg0, String arg1) {
-//                        pro.setVisibility(View.GONE);
-//                        ToastUtils.displayFailureToast(getActivity());
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(ResponseInfo<String> arg0) {
-//                        pro.setVisibility(View.GONE);
-//                        try {
-//                            // Gson gson = new Gson();
-//                            LogManager.LogShow("----", arg0.result,
-//                                    LogManager.ERROR);
-//                            Gson gson = new Gson();
-//                            ReturnState state = gson.fromJson(arg0.result,
-//                                    ReturnState.class);
-//                            if (Constant.RETURN_OK.equals(state.msg)) {
-//                                ToastUtils.displayShortToast(getActivity(),
-//                                        String.valueOf(state.result));
-//                                friendDBUtils.removeFriend(entities
-//                                        .get(position));
-//                                entities.remove(position);
-//                                adaper.notifyDataSetChanged();
-//                                reFushEmpty();
-//                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//                                ToastUtils.displayShortToast(getActivity(),
-//                                        "验证错误，请重新登录");
-//                                ToosUtils.goReLogin(getActivity());
-//                            } else {
-//                                ToastUtils.displayShortToast(getActivity(),
-//                                        String.valueOf(state.result));
-//                            }
-//                        } catch (Exception e) {
-//                            ToastUtils.displaySendFailureToast(getActivity());
-//                        }
-//
-//                    }
-//                });
-//
-//    }
+    }
+
+    private void delCon(final int position) {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        rp.addBodyParameter("toUserId", entities.get(position).userId);
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/contact/del", rp,
+                new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(getActivity());
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(getActivity(),
+                                        String.valueOf(state.result));
+                                friendDBUtils.removeFriend(entities
+                                        .get(position));
+                                entities.remove(position);
+                                adaper.notifyDataSetChanged();
+                                reFushEmpty();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(getActivity(),
+                                        "验证错误，请重新登录");
+                                ToosUtils.goReLogin(getActivity());
+                            } else {
+                                ToastUtils.displayShortToast(getActivity(),
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils.displaySendFailureToast(getActivity());
+                        }
+
+                    }
+                });
+
+    }
 }

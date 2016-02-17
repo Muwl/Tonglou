@@ -25,7 +25,14 @@ import cn.yunluosoft.tonglou.adapter.ConstactAdapter;
 import cn.yunluosoft.tonglou.dialog.AddMarkDialog;
 import cn.yunluosoft.tonglou.dialog.CustomeDialog;
 import cn.yunluosoft.tonglou.dialog.RigDialog;
+import cn.yunluosoft.tonglou.easemob.chatuidemo.db.InviteMessgeDao;
+import cn.yunluosoft.tonglou.model.ConstaceDetailState;
 import cn.yunluosoft.tonglou.model.ConstactDetailReEntity;
+import cn.yunluosoft.tonglou.model.ConstantWithfloorEntity;
+import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
+import cn.yunluosoft.tonglou.model.FloorSpeechState;
+import cn.yunluosoft.tonglou.model.MessageInfo;
+import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.LogManager;
@@ -85,10 +92,10 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
     private String titleString;
 
     private ConstactDetailReEntity constactDetailReEntity;
-//
-//    private WithFloorEntity infoEntity = null;
-//
-//    private List<FloorSpeechEntity> entities;
+
+    private ConstantWithfloorEntity infoEntity = null;
+
+    private List<FloorSpeechEntity> entities;
 
     private int pageNo = 1;
 
@@ -106,18 +113,18 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case 40:
-//                    int flag = msg.arg2;
-//                    if (flag == -1) {
-//                        addFriends();
-//                    }
-//                    if (flag == -100) {
-//                        addBlack();
-//                    }
+                    int flag = msg.arg2;
+                    if (flag == -1) {
+                        addFriends();
+                    }
+                    if (flag == -100) {
+                        addBlack();
+                    }
                     break;
 
                 case 104:
                     String temp = (String) msg.obj;
-//                    addRemark(temp);
+                    addRemark(temp);
                     break;
                 case 81:
                     AddMarkDialog markDialog = new AddMarkDialog(
@@ -126,8 +133,8 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
                 case 82:
                     Intent intent = new Intent(ConstactActivity.this,
                             ReportActivity.class);
-//                    intent.putExtra("flag", 0);
-//                    intent.putExtra("userId", infoEntity.id);
+                    intent.putExtra("flag", 0);
+                    intent.putExtra("userId", infoEntity.id);
                     startActivity(intent);
                     break;
 
@@ -169,20 +176,13 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
 
         customListView.setTitle(title);
         title.setText(titleString);
-        // customListView.setOnScrollListener(this);
         back.setOnClickListener(this);
         conversate.setOnClickListener(this);
         add.setOnClickListener(this);
         remark.setOnClickListener(this);
-//		entities = new ArrayList<FloorSpeechEntity>();
-//		remark.setVisibility(View.GONE);
-
-        adapter = new ConstactAdapter(ConstactActivity.this, DensityUtil
-                .getScreenWidth(ConstactActivity.this),
-                customListView, 0, bitmapUtils);
-        customListView.setAdapter(adapter);
-        customListView.setBitmapUtils(bitmapUtils);
-        //	getInfo();
+		entities = new ArrayList<FloorSpeechEntity>();
+		remark.setVisibility(View.GONE);
+        getInfo();
 
     }
 
@@ -212,14 +212,14 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
 
     @Override
     public void onBackPressed() {
-//        if (flag == 155) {
-//            Intent intent = new Intent(ConstactActivity.this,
-//                    ChatActivity.class);
-//            intent.putExtra("name", sname);
-//            setResult(RESULT_OK, intent);
-//            finish();
-//            return;
-//        }
+        if (flag == 155) {
+            Intent intent = new Intent(ConstactActivity.this,
+                    ChatActivity.class);
+            intent.putExtra("name", sname);
+            setResult(RESULT_OK, intent);
+            finish();
+            return;
+        }
         super.onBackPressed();
     }
 
@@ -227,64 +227,57 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.constact_detail_back:
-//                if (flag == 155) {
-//                    Intent intent = new Intent(ConstactActivity.this,
-//                            ChatActivity.class);
-//                    intent.putExtra("name", sname);
-//                    setResult(RESULT_OK, intent);
-//                }
+                if (flag == 155) {
+                    Intent intent = new Intent(ConstactActivity.this,
+                            ChatActivity.class);
+                    intent.putExtra("name", sname);
+                    setResult(RESULT_OK, intent);
+                }
                 finish();
                 break;
             case R.id.constact_detail_remark:
                 int flag = 0;
                 int backflag = 0;
 //
-//                if (Constant.RELATION_YES
-//                        .equals(constactDetailReEntity.relationship)) {
-//                    flag = 0;
-//                } else {
-//                    flag = 1;
-//                }
-//                if (Constant.BLACK_YES.equals(constactDetailReEntity.isBlack)) {
-//                    backflag = 0;
-//                } else {
-//                    backflag = 1;
-//                }
+                if (Constant.RELATION_YES
+                        .equals(constactDetailReEntity.relationship)) {
+                    flag = 0;
+                } else {
+                    flag = 1;
+                }
+                if (Constant.BLACK_YES.equals(constactDetailReEntity.isBlack)) {
+                    backflag = 0;
+                } else {
+                    backflag = 1;
+                }
 
                 RigDialog rigDialog = new RigDialog(ConstactActivity.this, handler,
                         flag, backflag);
-                // Intent intent = new Intent(ConstactActivity.this,
-                // ReportActivity.class);
-                // intent.putExtra("flag", 0);
-                // intent.putExtra("userId", infoEntity.id);
-                // startActivity(intent);
-                // }
-
                 break;
             case R.id.constact_detail_conversate:
-//                Intent intent = new Intent(ConstactActivity.this,
-//                        ChatActivity.class);
-//                String myname = ShareDataTool.getNickname(ConstactActivity.this);
-//                if (ToosUtils.isStringEmpty(constactDetailReEntity.friendsToMe)) {
-//                    myname = ShareDataTool.getNickname(ConstactActivity.this);
-//                } else {
-//                    myname = constactDetailReEntity.friendsToMe;
-//                }
-//
-//                String rename = infoEntity.nickname;
-//                if (ToosUtils.isStringEmpty(constactDetailReEntity.meToFriends)) {
-//                    rename = infoEntity.nickname;
-//                } else {
-//                    rename = constactDetailReEntity.meToFriends;
-//                }
-//
-//                MessageInfo info = new MessageInfo(
-//                        ShareDataTool.getUserId(ConstactActivity.this), id,
-//                        ShareDataTool.getUserId(ConstactActivity.this), id,
-//                        ShareDataTool.getIcon(ConstactActivity.this),
-//                        infoEntity.icon, myname, rename);
-//                intent.putExtra("info", (Serializable) info);
-//                startActivity(intent);
+                Intent intent = new Intent(ConstactActivity.this,
+                        ChatActivity.class);
+                String myname = ShareDataTool.getNickname(ConstactActivity.this);
+                if (ToosUtils.isStringEmpty(constactDetailReEntity.friendsToMe)) {
+                    myname = ShareDataTool.getNickname(ConstactActivity.this);
+                } else {
+                    myname = constactDetailReEntity.friendsToMe;
+                }
+
+                String rename = infoEntity.nickname;
+                if (ToosUtils.isStringEmpty(constactDetailReEntity.meToFriends)) {
+                    rename = infoEntity.nickname;
+                } else {
+                    rename = constactDetailReEntity.meToFriends;
+                }
+
+                MessageInfo info = new MessageInfo(
+                        ShareDataTool.getUserId(ConstactActivity.this), id,
+                        ShareDataTool.getUserId(ConstactActivity.this), id,
+                        ShareDataTool.getIcon(ConstactActivity.this),
+                        infoEntity.icon, myname, rename);
+                intent.putExtra("info", (Serializable) info);
+                startActivity(intent);
 
                 break;
             case R.id.constact_detail_add:
@@ -312,515 +305,498 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
         }
     }
 
-    // public int getScrollY(AbsListView view) {
-    // View c = view.getChildAt(0);
-    // if (c == null) {
-    // return 0;
-    // }
-    // int firstVisiblePosition = view.getFirstVisiblePosition();
-    // int top = c.getTop();
-    // return -top + firstVisiblePosition * c.getHeight();
-    // }
 
-//	/**
-//	 * 获取个人信息
-//	 */
-//	private void getInfo() {
-//		RequestParams rp = new RequestParams();
-//		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//		rp.addBodyParameter("userId", id);
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH
-//				+ "/v1/user/findUserDetail", rp, new RequestCallBack<String>() {
-//			@Override
-//			public void onStart() {
-//				pro.setVisibility(View.VISIBLE);
-//				gv.setVisibility(View.GONE);
-//				customListView.setCanLoadMore(false);
-//				customListView.setCanRefresh(false);
-//				super.onStart();
-//			}
-//
-//			@Override
-//			public void onFailure(HttpException arg0, String arg1) {
-//				pro.setVisibility(View.GONE);
-//				gv.setVisibility(View.GONE);
-//				ToastUtils.displayFailureToast(ConstactActivity.this);
-//			}
-//
-//			@Override
-//			public void onSuccess(ResponseInfo<String> arg0) {
-//
-//				try {
-//					Gson gson = new Gson();
-//					ReturnState state = gson.fromJson(arg0.result,
-//							ReturnState.class);
-//					if (Constant.RETURN_OK.equals(state.msg)) {
-//						gv.setVisibility(View.VISIBLE);
-//						LogManager.LogShow("-----", arg0.result,
-//								LogManager.ERROR);
-//						ConstaceDetailState floorState = gson.fromJson(
-//								arg0.result, ConstaceDetailState.class);
-//						constactDetailReEntity = floorState.result;
-//						infoEntity = constactDetailReEntity.userInfo;
-//						if (ShareDataTool.getUserId(ConstactActivity.this)
-//								.equals(id)) {
-//							bomView.setVisibility(View.GONE);
-//						} else {
-//							bomView.setVisibility(View.VISIBLE);
-//						}
-//						// if (ShareDataTool.getToken(context)) {
-//						//
-//						// }
-//						remark.setVisibility(View.VISIBLE);
-//						if (Constant.RELATION_YES
-//								.equals(constactDetailReEntity.relationship)) {
-//							add.setVisibility(View.GONE);
-//						} else {
-//
-//							add.setVisibility(View.VISIBLE);
-//						}
-//						if (Constant.BLACK_YES
-//								.equals(constactDetailReEntity.isBlack)) {
-//							remark.setVisibility(View.GONE);
-//							bomView.setVisibility(View.GONE);
-//						} else {
-//							remark.setVisibility(View.VISIBLE);
-//							bomView.setVisibility(View.VISIBLE);
-//						}
-//
-//						LogManager.LogShow("ffff", infoEntity.toString(),
-//								LogManager.ERROR);
-//						adapter = new ConstactAdapter(ConstactActivity.this,
-//								infoEntity, entities, DensityUtil
-//										.getScreenWidth(ConstactActivity.this),
-//								customListView, 0, bitmapUtils);
-//						customListView.setAdapter(adapter);
-//						customListView.setBitmapUtils(bitmapUtils);
-//						// customListView.setOnScrollListener(new
-//						// PauseOnScrollListener(bitmapUtils, false, true));
-//						customListView
-//								.setOnRefreshListener(new OnRefreshListener() {
-//									@Override
-//									public void onRefresh() {
-//										// pageNo = 0;
-//										// pageNo = 1;
-//										// entities.clear();
-//										// adapter.notifyDataSetChanged();
-//										customListView.setCanLoadMore(false);
-//										getInfoList(1);
-//									}
-//								});
-//						customListView
-//								.setOnLoadListener(new OnLoadMoreListener() {
-//									@Override
-//									public void onLoadMore() {
-//										getInfoList(pageNo + 1);
-//									}
-//								});
-//						getInfoList(1);
-//						customListView.setCanLoadMore(true);
-//						customListView.setCanRefresh(true);
-//
-//					} else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//						pro.setVisibility(View.GONE);
-//						ToastUtils.displayShortToast(ConstactActivity.this,
-//								"验证错误，请重新登录");
-//						ToosUtils.goReLogin(ConstactActivity.this);
-//					} else {
-//						pro.setVisibility(View.GONE);
-//						ToastUtils.displayShortToast(ConstactActivity.this,
-//								(String) state.result);
-//					}
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//					pro.setVisibility(View.GONE);
-//					ToastUtils.displaySendFailureToast(ConstactActivity.this);
-//				}
-//
-//			}
-//		});
-//	}
 
-//	/**
-//	 * 获取楼语列表
-//	 */
-//	private void getInfoList(final int page) {
-//		RequestParams rp = new RequestParams();
-//		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//		rp.addBodyParameter("userId", id);
-//		rp.addBodyParameter("pageNo", String.valueOf(page));
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH
-//				+ "/v1/info/findByUserId", rp, new RequestCallBack<String>() {
-//			@Override
-//			public void onStart() {
-//				super.onStart();
-//			}
-//
-//			@Override
-//			public void onFailure(HttpException arg0, String arg1) {
-//				pro.setVisibility(View.GONE);
-//				adapter.setFlag(1);
-//				ToastUtils.displayFailureToast(ConstactActivity.this);
-//				customListView.onRefreshComplete();
-//				customListView.onLoadMoreComplete();
-//				customListView.setCanLoadMore(false);
-//			}
-//
-//			@Override
-//			public void onSuccess(ResponseInfo<String> arg0) {
-//				adapter.setFlag(1);
-//				pro.setVisibility(View.GONE);
-//				gv.setVisibility(View.VISIBLE);
-//				try {
-//					Gson gson = new Gson();
-//					// LogManager.LogShow("----", arg0.result+"1111111111",
-//					// LogManager.ERROR);
-//					ReturnState allState = gson.fromJson(arg0.result,
-//							ReturnState.class);
-//					if (Constant.RETURN_OK.equals(allState.msg)) {
-//						pageNo = page;
-//						if (page == 1) {
-//							entities.clear();
-//							adapter.notifyDataSetChanged();
-//						}
-//						if (allState.result == null
-//								|| ToosUtils.isStringEmpty(String
-//										.valueOf(allState.result))) {
-//							customListView.onRefreshComplete();
-//							customListView.onLoadMoreComplete();
-//							customListView.setCanLoadMore(false);
-//							adapter.notifyDataSetChanged();
-//							// ToastUtils.displayShortToast(
-//							// MyFloorSpeechActivity.this, "无数据");
-//							return;
-//						}
-//						FloorSpeechState state = gson.fromJson(arg0.result,
-//								FloorSpeechState.class);
-//						if (state.result == null || state.result.size() == 0) {
-//							customListView.onRefreshComplete();
-//							customListView.onLoadMoreComplete();
-//							customListView.setCanLoadMore(false);
-//							adapter.notifyDataSetChanged();
-//							// ToastUtils.displayShortToast(
-//							// MyFloorSpeechActivity.this, "无数据");
-//						} else {
-//							for (int i = 0; i < state.result.size(); i++) {
-//								entities.add(state.result.get(i));
-//							}
-//							adapter.notifyDataSetChanged();
-//							if (pageNo == 1) {
-//								customListView.onRefreshComplete();
-//							} else {
-//								customListView.onRefreshComplete();
-//								customListView.onLoadMoreComplete();
-//							}
-//							customListView.setCanLoadMore(true);
-//						}
-//
-//					} else {
-//						ReturnState state = gson.fromJson(arg0.result,
-//								ReturnState.class);
-//						if (Constant.TOKEN_ERR.equals(state.msg)) {
-//							ToastUtils.displayShortToast(ConstactActivity.this,
-//									"验证错误，请重新登录");
-//							// ToosUtils.goReLogin(getActivity());
-//						} else {
-//							ToastUtils.displayShortToast(ConstactActivity.this,
-//									(String) state.result);
-//
-//						}
-//						customListView.onRefreshComplete();
-//						customListView.onLoadMoreComplete();
-//						customListView.setCanLoadMore(false);
-//					}
-//
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//					customListView.onRefreshComplete();
-//					customListView.onLoadMoreComplete();
-//					customListView.setCanLoadMore(false);
-//					ToastUtils.displaySendFailureToast(ConstactActivity.this);
-//				}
-//
-//			}
-//		});
-//
-//	}
-//
-//	/**
-//	 * 加人脉
-//	 */
-//	private void addFriends() {
-//		RequestParams rp = new RequestParams();
-//		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//		JsonObject jsonObject = new JsonObject();
-//		jsonObject.addProperty("toUserId", id);
-//		rp.addBodyParameter("contactVoStr", jsonObject.toString());
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/contact/save",
-//				rp, new RequestCallBack<String>() {
-//					@Override
-//					public void onStart() {
-//						pro.setVisibility(View.VISIBLE);
-//						super.onStart();
-//					}
-//
-//					@Override
-//					public void onFailure(HttpException arg0, String arg1) {
-//						pro.setVisibility(View.GONE);
-//						ToastUtils.displayFailureToast(ConstactActivity.this);
-//					}
-//
-//					@Override
-//					public void onSuccess(ResponseInfo<String> arg0) {
-//						pro.setVisibility(View.GONE);
-//						try {
-//							// Gson gson = new Gson();
-//							LogManager.LogShow("----", arg0.result,
-//									LogManager.ERROR);
-//							Gson gson = new Gson();
-//							ReturnState state = gson.fromJson(arg0.result,
-//									ReturnState.class);
-//							if (Constant.RETURN_OK.equals(state.msg)) {
-//								ToastUtils.displayShortToast(
-//										ConstactActivity.this,
-//										String.valueOf(state.result));
-//								constactDetailReEntity.relationship = Constant.RELATION_YES;
-//								// aremark.setVisibility(View.VISIBLE);
-//								add.setVisibility(View.GONE);
-//							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//								ToastUtils.displayShortToast(
-//										ConstactActivity.this, "验证错误，请重新登录");
-//								ToosUtils.goReLogin(ConstactActivity.this);
-//							} else {
-//								ToastUtils.displayShortToast(
-//										ConstactActivity.this,
-//										String.valueOf(state.result));
-//							}
-//						} catch (Exception e) {
-//							ToastUtils
-//									.displaySendFailureToast(ConstactActivity.this);
-//						}
-//
-//					}
-//				});
-//
-//	}
-//
-//	/**
-//	 * 加人脉
-//	 */
-//	private void addRemark(final String temp) {
-//		RequestParams rp = new RequestParams();
-//		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//		rp.addBodyParameter("toUserId", id);
-//		rp.addBodyParameter("remarkName", temp);
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH
-//				+ "/v1/contact/updateRemarkName", rp,
-//				new RequestCallBack<String>() {
-//					@Override
-//					public void onStart() {
-//						pro.setVisibility(View.VISIBLE);
-//						super.onStart();
-//					}
-//
-//					@Override
-//					public void onFailure(HttpException arg0, String arg1) {
-//						pro.setVisibility(View.GONE);
-//						ToastUtils.displayFailureToast(ConstactActivity.this);
-//					}
-//
-//					@Override
-//					public void onSuccess(ResponseInfo<String> arg0) {
-//						pro.setVisibility(View.GONE);
-//						try {
-//							// Gson gson = new Gson();
-//							LogManager.LogShow("----", arg0.result,
-//									LogManager.ERROR);
-//							Gson gson = new Gson();
-//							ReturnState state = gson.fromJson(arg0.result,
-//									ReturnState.class);
-//							if (Constant.RETURN_OK.equals(state.msg)) {
-//								ToastUtils.displayShortToast(
-//										ConstactActivity.this, "修改成功");
-//								title.setText(String.valueOf(state.result));
-//								infoEntity.nickname = String
-//										.valueOf(state.result);
-//								sname = String.valueOf(state.result);
-//								setCon(String.valueOf(state.result));
-//								adapter.notifyDataSetChanged();
-//							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//								ToastUtils.displayShortToast(
-//										ConstactActivity.this, "验证错误，请重新登录");
-//								ToosUtils.goReLogin(ConstactActivity.this);
-//							} else {
-//								ToastUtils.displayShortToast(
-//										ConstactActivity.this,
-//										String.valueOf(state.result));
-//							}
-//						} catch (Exception e) {
-//							ToastUtils
-//									.displaySendFailureToast(ConstactActivity.this);
-//						}
-//
-//					}
-//				});
-//
-//	}
-//
-//	private void setCon(String temp) {
-//		InviteMessgeDao dao = new InviteMessgeDao(this);
-//		List<EMConversation> conversations = loadConversationsWithRecentChat(temp);
-//	}
-//
-//	/**
-//	 * 获取所有会话
-//	 *
-//	 * @param context
-//	 * @return +
-//	 */
-//	private List<EMConversation> loadConversationsWithRecentChat(String name) {
-//		// 获取所有会话，包括陌生人
-//		Hashtable<String, EMConversation> conversations = EMChatManager
-//				.getInstance().getAllConversations();
-//		// 过滤掉messages size为0的conversation
-//		/**
-//		 * 如果在排序过程中有新消息收到，lastMsgTime会发生变化 影响排序过程，Collection.sort会产生异常
-//		 * 保证Conversation在Sort过程中最后一条消息的时间不变 避免并发问题
-//		 */
-//		List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
-//		synchronized (conversations) {
-//			for (EMConversation conversation : conversations.values()) {
-//				if (conversation.getAllMessages().size() != 0) {
-//					sortList.add(new Pair<Long, EMConversation>(conversation
-//							.getLastMessage().getMsgTime(), conversation));
-//				}
-//			}
-//		}
-//		try {
-//			// Internal is TimSort algorithm, has bug
-//			sortConversationByLastChatTime(sortList);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		List<EMConversation> list = new ArrayList<EMConversation>();
-//		for (Pair<Long, EMConversation> sortItem : sortList) {
-//			if (sortItem.second.getLastMessage().getFrom()
-//					.equals(Constant.SYS_NAME)
-//					|| sortItem.second.getLastMessage().getTo()
-//							.equals(Constant.SYS_NAME)
-//					|| sortItem.second.getLastMessage().getFrom()
-//							.equals(Constant.SYS_GETNAME)
-//					|| sortItem.second.getLastMessage().getFrom()
-//							.equals(Constant.SYS_GETNAME)) {
-//				EMChatManager.getInstance().deleteConversation(
-//						sortItem.second.getUserName(),
-//						sortItem.second.isGroup(), true);
-//				InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(this);
-//				inviteMessgeDao.deleteMessage(sortItem.second.getUserName());
-//				continue;
-//			} else {
-//				if (sortItem.second.getLastMessage().getFrom().equals(id)) {
-//					sortItem.second.getLastMessage().setAttribute(
-//							"senderNickName", name);
-//				} else if (sortItem.second.getLastMessage().getTo().equals(id)) {
-//					sortItem.second.getLastMessage().setAttribute(
-//							"receiverNickName", name);
-//				}
-//				EMChatManager.getInstance().updateMessageBody(
-//						sortItem.second.getLastMessage());
-//				list.add(sortItem.second);
-//			}
-//		}
-//		return list;
-//	}
-//
-//	/**
-//	 * 根据最后一条消息的时间排序
-//	 *
-//	 * @param usernames
-//	 */
-//	private void sortConversationByLastChatTime(
-//			List<Pair<Long, EMConversation>> conversationList) {
-//		Collections.sort(conversationList,
-//				new Comparator<Pair<Long, EMConversation>>() {
-//					@Override
-//					public int compare(final Pair<Long, EMConversation> con1,
-//							final Pair<Long, EMConversation> con2) {
-//
-//						if (con1.first == con2.first) {
-//							return 0;
-//						} else if (con2.first > con1.first) {
-//							return 1;
-//						} else {
-//							return -1;
-//						}
-//					}
-//
-//				});
-//	}
+	/**
+	 * 获取个人信息
+	 */
+	private void getInfo() {
+		RequestParams rp = new RequestParams();
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		rp.addBodyParameter("userId", id);
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH
+				+ "/v1/user/findUserDetail", rp, new RequestCallBack<String>() {
+			@Override
+			public void onStart() {
+				pro.setVisibility(View.VISIBLE);
+				gv.setVisibility(View.GONE);
+				customListView.setCanLoadMore(false);
+				customListView.setCanRefresh(false);
+				super.onStart();
+			}
 
-//	/**
-//	 * 加人脉
-//	 */
-//	private void addBlack() {
-//		RequestParams rp = new RequestParams();
-//		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//		rp.addBodyParameter("blackUserId", id);
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/userBlack/save",
-//				rp, new RequestCallBack<String>() {
-//					@Override
-//					public void onStart() {
-//						pro.setVisibility(View.VISIBLE);
-//						super.onStart();
-//					}
-//
-//					@Override
-//					public void onFailure(HttpException arg0, String arg1) {
-//						pro.setVisibility(View.GONE);
-//						ToastUtils.displayFailureToast(ConstactActivity.this);
-//					}
-//
-//					@Override
-//					public void onSuccess(ResponseInfo<String> arg0) {
-//						pro.setVisibility(View.GONE);
-//						try {
-//							// Gson gson = new Gson();
-//							LogManager.LogShow("----", arg0.result,
-//									LogManager.ERROR);
-//							Gson gson = new Gson();
-//							ReturnState state = gson.fromJson(arg0.result,
-//									ReturnState.class);
-//							if (Constant.RETURN_OK.equals(state.msg)) {
-//								ToastUtils.displayShortToast(
-//										ConstactActivity.this, "添加成功");
-//								finish();
-//							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//								ToastUtils.displayShortToast(
-//										ConstactActivity.this, "验证错误，请重新登录");
-//								ToosUtils.goReLogin(ConstactActivity.this);
-//							} else {
-//								ToastUtils.displayShortToast(
-//										ConstactActivity.this,
-//										String.valueOf(state.result));
-//							}
-//						} catch (Exception e) {
-//							ToastUtils
-//									.displaySendFailureToast(ConstactActivity.this);
-//						}
-//
-//					}
-//				});
-//
-//	}
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				pro.setVisibility(View.GONE);
+				gv.setVisibility(View.GONE);
+				ToastUtils.displayFailureToast(ConstactActivity.this);
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+
+				try {
+					Gson gson = new Gson();
+					ReturnState state = gson.fromJson(arg0.result,
+							ReturnState.class);
+					if (Constant.RETURN_OK.equals(state.msg)) {
+						gv.setVisibility(View.VISIBLE);
+						LogManager.LogShow("-----", arg0.result,
+								LogManager.ERROR);
+						ConstaceDetailState floorState = gson.fromJson(
+								arg0.result, ConstaceDetailState.class);
+						constactDetailReEntity = floorState.result;
+						infoEntity = constactDetailReEntity.userInfo;
+						if (ShareDataTool.getUserId(ConstactActivity.this)
+								.equals(id)) {
+							bomView.setVisibility(View.GONE);
+						} else {
+							bomView.setVisibility(View.VISIBLE);
+						}
+						remark.setVisibility(View.VISIBLE);
+						if (Constant.RELATION_YES
+								.equals(constactDetailReEntity.relationship)) {
+							add.setVisibility(View.GONE);
+						} else {
+
+							add.setVisibility(View.VISIBLE);
+						}
+						if (Constant.BLACK_YES
+								.equals(constactDetailReEntity.isBlack)) {
+							remark.setVisibility(View.GONE);
+							bomView.setVisibility(View.GONE);
+						} else {
+							remark.setVisibility(View.VISIBLE);
+							bomView.setVisibility(View.VISIBLE);
+						}
+
+						LogManager.LogShow("ffff", infoEntity.toString(),
+								LogManager.ERROR);
+						adapter = new ConstactAdapter(ConstactActivity.this,
+								infoEntity, entities, DensityUtil
+										.getScreenWidth(ConstactActivity.this),
+								customListView, 0, bitmapUtils);
+						customListView.setAdapter(adapter);
+						customListView.setBitmapUtils(bitmapUtils);
+						customListView
+								.setOnRefreshListener(new OnRefreshListener() {
+									@Override
+									public void onRefresh() {
+										customListView.setCanLoadMore(false);
+										getInfoList(1);
+									}
+								});
+						customListView
+								.setOnLoadListener(new OnLoadMoreListener() {
+									@Override
+									public void onLoadMore() {
+										getInfoList(pageNo + 1);
+									}
+								});
+						getInfoList(1);
+						customListView.setCanLoadMore(true);
+						customListView.setCanRefresh(true);
+
+					} else if (Constant.TOKEN_ERR.equals(state.msg)) {
+						pro.setVisibility(View.GONE);
+						ToastUtils.displayShortToast(ConstactActivity.this,
+								"验证错误，请重新登录");
+						ToosUtils.goReLogin(ConstactActivity.this);
+					} else {
+						pro.setVisibility(View.GONE);
+						ToastUtils.displayShortToast(ConstactActivity.this,
+								(String) state.result);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					pro.setVisibility(View.GONE);
+					ToastUtils.displaySendFailureToast(ConstactActivity.this);
+				}
+
+			}
+		});
+	}
+
+	/**
+	 * 获取楼语列表
+	 */
+	private void getInfoList(final int page) {
+		RequestParams rp = new RequestParams();
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		rp.addBodyParameter("userId", id);
+		rp.addBodyParameter("pageNo", String.valueOf(page));
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH
+				+ "/v1_1_0/dynamic/userDynamic", rp, new RequestCallBack<String>() {
+			@Override
+			public void onStart() {
+				super.onStart();
+			}
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				pro.setVisibility(View.GONE);
+				adapter.setFlag(1);
+				ToastUtils.displayFailureToast(ConstactActivity.this);
+				customListView.onRefreshComplete();
+				customListView.onLoadMoreComplete();
+				customListView.setCanLoadMore(false);
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				adapter.setFlag(1);
+				pro.setVisibility(View.GONE);
+				gv.setVisibility(View.VISIBLE);
+				try {
+					Gson gson = new Gson();
+					// LogManager.LogShow("----", arg0.result+"1111111111",
+					// LogManager.ERROR);
+					ReturnState allState = gson.fromJson(arg0.result,
+							ReturnState.class);
+					if (Constant.RETURN_OK.equals(allState.msg)) {
+						pageNo = page;
+						if (page == 1) {
+							entities.clear();
+							adapter.notifyDataSetChanged();
+						}
+						if (allState.result == null
+								|| ToosUtils.isStringEmpty(String
+										.valueOf(allState.result))) {
+							customListView.onRefreshComplete();
+							customListView.onLoadMoreComplete();
+							customListView.setCanLoadMore(false);
+							adapter.notifyDataSetChanged();
+							// ToastUtils.displayShortToast(
+							// MyFloorSpeechActivity.this, "无数据");
+							return;
+						}
+						FloorSpeechState state = gson.fromJson(arg0.result,
+								FloorSpeechState.class);
+						if (state.result == null || state.result.size() == 0) {
+							customListView.onRefreshComplete();
+							customListView.onLoadMoreComplete();
+							customListView.setCanLoadMore(false);
+							adapter.notifyDataSetChanged();
+							// ToastUtils.displayShortToast(
+							// MyFloorSpeechActivity.this, "无数据");
+						} else {
+							for (int i = 0; i < state.result.size(); i++) {
+								entities.add(state.result.get(i));
+							}
+							adapter.notifyDataSetChanged();
+							if (pageNo == 1) {
+								customListView.onRefreshComplete();
+							} else {
+								customListView.onRefreshComplete();
+								customListView.onLoadMoreComplete();
+							}
+							customListView.setCanLoadMore(true);
+						}
+
+					} else {
+						ReturnState state = gson.fromJson(arg0.result,
+								ReturnState.class);
+						if (Constant.TOKEN_ERR.equals(state.msg)) {
+							ToastUtils.displayShortToast(ConstactActivity.this,
+									"验证错误，请重新登录");
+							// ToosUtils.goReLogin(getActivity());
+						} else {
+							ToastUtils.displayShortToast(ConstactActivity.this,
+									(String) state.result);
+
+						}
+						customListView.onRefreshComplete();
+						customListView.onLoadMoreComplete();
+						customListView.setCanLoadMore(false);
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					customListView.onRefreshComplete();
+					customListView.onLoadMoreComplete();
+					customListView.setCanLoadMore(false);
+					ToastUtils.displaySendFailureToast(ConstactActivity.this);
+				}
+
+			}
+		});
+
+	}
+
+	/**
+	 * 加人脉
+	 */
+	private void addFriends() {
+		RequestParams rp = new RequestParams();
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("toUserId", id);
+		rp.addBodyParameter("contactVoStr", jsonObject.toString());
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/contact/save",
+				rp, new RequestCallBack<String>() {
+					@Override
+					public void onStart() {
+						pro.setVisibility(View.VISIBLE);
+						super.onStart();
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						pro.setVisibility(View.GONE);
+						ToastUtils.displayFailureToast(ConstactActivity.this);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						pro.setVisibility(View.GONE);
+						try {
+							// Gson gson = new Gson();
+							LogManager.LogShow("----", arg0.result,
+									LogManager.ERROR);
+							Gson gson = new Gson();
+							ReturnState state = gson.fromJson(arg0.result,
+									ReturnState.class);
+							if (Constant.RETURN_OK.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										ConstactActivity.this,
+										String.valueOf(state.result));
+								constactDetailReEntity.relationship = Constant.RELATION_YES;
+								// aremark.setVisibility(View.VISIBLE);
+								add.setVisibility(View.GONE);
+							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										ConstactActivity.this, "验证错误，请重新登录");
+								ToosUtils.goReLogin(ConstactActivity.this);
+							} else {
+								ToastUtils.displayShortToast(
+										ConstactActivity.this,
+										String.valueOf(state.result));
+							}
+						} catch (Exception e) {
+							ToastUtils
+									.displaySendFailureToast(ConstactActivity.this);
+						}
+
+					}
+				});
+
+	}
+
+	/**
+	 * 加人脉
+	 */
+	private void addRemark(final String temp) {
+		RequestParams rp = new RequestParams();
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		rp.addBodyParameter("toUserId", id);
+		rp.addBodyParameter("remarkName", temp);
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH
+				+ "/v1/contact/updateRemarkName", rp,
+				new RequestCallBack<String>() {
+					@Override
+					public void onStart() {
+						pro.setVisibility(View.VISIBLE);
+						super.onStart();
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						pro.setVisibility(View.GONE);
+						ToastUtils.displayFailureToast(ConstactActivity.this);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						pro.setVisibility(View.GONE);
+						try {
+							// Gson gson = new Gson();
+							LogManager.LogShow("----", arg0.result,
+									LogManager.ERROR);
+							Gson gson = new Gson();
+							ReturnState state = gson.fromJson(arg0.result,
+									ReturnState.class);
+							if (Constant.RETURN_OK.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										ConstactActivity.this, "修改成功");
+								title.setText(String.valueOf(state.result));
+								infoEntity.nickname = String
+										.valueOf(state.result);
+								sname = String.valueOf(state.result);
+								setCon(String.valueOf(state.result));
+								adapter.notifyDataSetChanged();
+							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										ConstactActivity.this, "验证错误，请重新登录");
+								ToosUtils.goReLogin(ConstactActivity.this);
+							} else {
+								ToastUtils.displayShortToast(
+										ConstactActivity.this,
+										String.valueOf(state.result));
+							}
+						} catch (Exception e) {
+							ToastUtils
+									.displaySendFailureToast(ConstactActivity.this);
+						}
+
+					}
+				});
+
+	}
+
+	private void setCon(String temp) {
+		InviteMessgeDao dao = new InviteMessgeDao(this);
+		List<EMConversation> conversations = loadConversationsWithRecentChat(temp);
+	}
+
+	/**
+	 * 获取所有会话
+	 *
+	 * @param
+	 * @return +
+	 */
+	private List<EMConversation> loadConversationsWithRecentChat(String name) {
+		// 获取所有会话，包括陌生人
+		Hashtable<String, EMConversation> conversations = EMChatManager
+				.getInstance().getAllConversations();
+		// 过滤掉messages size为0的conversation
+		/**
+		 * 如果在排序过程中有新消息收到，lastMsgTime会发生变化 影响排序过程，Collection.sort会产生异常
+		 * 保证Conversation在Sort过程中最后一条消息的时间不变 避免并发问题
+		 */
+		List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
+		synchronized (conversations) {
+			for (EMConversation conversation : conversations.values()) {
+				if (conversation.getAllMessages().size() != 0) {
+					sortList.add(new Pair<Long, EMConversation>(conversation
+							.getLastMessage().getMsgTime(), conversation));
+				}
+			}
+		}
+		try {
+			// Internal is TimSort algorithm, has bug
+			sortConversationByLastChatTime(sortList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		List<EMConversation> list = new ArrayList<EMConversation>();
+		for (Pair<Long, EMConversation> sortItem : sortList) {
+			if (sortItem.second.getLastMessage().getFrom()
+					.equals(Constant.SYS_NAME)
+					|| sortItem.second.getLastMessage().getTo()
+							.equals(Constant.SYS_NAME)
+					|| sortItem.second.getLastMessage().getFrom()
+							.equals(Constant.SYS_GETNAME)
+					|| sortItem.second.getLastMessage().getFrom()
+							.equals(Constant.SYS_GETNAME)) {
+				EMChatManager.getInstance().deleteConversation(
+						sortItem.second.getUserName(),
+						sortItem.second.isGroup(), true);
+				InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(this);
+				inviteMessgeDao.deleteMessage(sortItem.second.getUserName());
+				continue;
+			} else {
+				if (sortItem.second.getLastMessage().getFrom().equals(id)) {
+					sortItem.second.getLastMessage().setAttribute(
+							"senderNickName", name);
+				} else if (sortItem.second.getLastMessage().getTo().equals(id)) {
+					sortItem.second.getLastMessage().setAttribute(
+							"receiverNickName", name);
+				}
+				EMChatManager.getInstance().updateMessageBody(
+						sortItem.second.getLastMessage());
+				list.add(sortItem.second);
+			}
+		}
+		return list;
+	}
+
+	/**
+	 * 根据最后一条消息的时间排序
+	 *
+	 * @param
+	 */
+	private void sortConversationByLastChatTime(
+			List<Pair<Long, EMConversation>> conversationList) {
+		Collections.sort(conversationList,
+				new Comparator<Pair<Long, EMConversation>>() {
+					@Override
+					public int compare(final Pair<Long, EMConversation> con1,
+							final Pair<Long, EMConversation> con2) {
+
+						if (con1.first == con2.first) {
+							return 0;
+						} else if (con2.first > con1.first) {
+							return 1;
+						} else {
+							return -1;
+						}
+					}
+
+				});
+	}
+
+	/**
+	 * 加人脉
+	 */
+	private void addBlack() {
+		RequestParams rp = new RequestParams();
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		rp.addBodyParameter("blackUserId", id);
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/userBlack/save",
+				rp, new RequestCallBack<String>() {
+					@Override
+					public void onStart() {
+						pro.setVisibility(View.VISIBLE);
+						super.onStart();
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						pro.setVisibility(View.GONE);
+						ToastUtils.displayFailureToast(ConstactActivity.this);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						pro.setVisibility(View.GONE);
+						try {
+							// Gson gson = new Gson();
+							LogManager.LogShow("----", arg0.result,
+									LogManager.ERROR);
+							Gson gson = new Gson();
+							ReturnState state = gson.fromJson(arg0.result,
+									ReturnState.class);
+							if (Constant.RETURN_OK.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										ConstactActivity.this, "添加成功");
+								finish();
+							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										ConstactActivity.this, "验证错误，请重新登录");
+								ToosUtils.goReLogin(ConstactActivity.this);
+							} else {
+								ToastUtils.displayShortToast(
+										ConstactActivity.this,
+										String.valueOf(state.result));
+							}
+						} catch (Exception e) {
+							ToastUtils
+									.displaySendFailureToast(ConstactActivity.this);
+						}
+
+					}
+				});
+
+	}
 
 }

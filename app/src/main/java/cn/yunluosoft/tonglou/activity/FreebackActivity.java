@@ -68,8 +68,7 @@ public class FreebackActivity extends BaseActivity implements OnClickListener {
             case R.id.title_back:
                 finish();
                 break;
-            case R.id.title_rig:
-                finish();
+            case R.id.freeback_ok:
 			if (checkInput()) {
 				sendFreeback();
 			}
