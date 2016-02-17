@@ -26,12 +26,13 @@ public class SubmitDialog extends Dialog implements
 	private TextView content;
 	private TextView close;
 	private String msg;
-	private int position;
-	private int flag;
-	public SubmitDialog(Context context) {
+	private int flag;//1嗨团发布成功
+	public SubmitDialog(Context context,int flag,Handler handler) {
 		super(context, R.style.dialog2);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.context = context;
+		this.flag = flag;
+		this.handler = handler;
 		setContentView(R.layout.submit_dialog);
 		getWindow().setBackgroundDrawable(new BitmapDrawable());
 		show();
@@ -46,12 +47,20 @@ public class SubmitDialog extends Dialog implements
 		close= (TextView) findViewById(R.id.submit_close);
 		close.setOnClickListener(this);
 
+		if (flag==1){
+			tip.setText("发布成功");
+			content.setText("请等待人员进入");
+			close.setText("进入活动群");
+		}
+
+
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.submit_close:
+			handler.sendEmptyMessage(552);
 			dismiss();
 			break;
 		default:

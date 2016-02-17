@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.dialog.SubmitDialog;
+import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
@@ -114,8 +115,8 @@ public class ReportActivity extends BaseActivity implements OnClickListener {
 			finish();
 			break;
 		case R.id.report_ok:
-			SubmitDialog dialog=new SubmitDialog(ReportActivity.this);
-//			sendFreeback();
+
+			sendFreeback();
 			break;
 		case R.id.report_item1:
 			reson = "色情低俗";
@@ -162,59 +163,59 @@ public class ReportActivity extends BaseActivity implements OnClickListener {
 			break;
 		}
 	}
-//
-//	private void sendFreeback() {
-//		final Gson gson = new Gson();
-//		RequestParams rp = new RequestParams();
-//		String url = Constant.ROOT_PATH + "/v1/reportUser/save";
-//		if (flag == 1) {
-//			rp.addBodyParameter("contactId", contactId);
-//			url = Constant.ROOT_PATH + "/v1/reportContact/save";
-//		}
-//		rp.addBodyParameter("byReportUserId", userId);
-//		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//		rp.addBodyParameter("reason", reson);
-//		HttpUtils utils = new HttpUtils();
-//		utils.configTimeout(20000);
-//		utils.send(HttpMethod.POST, url, rp, new RequestCallBack<String>() {
-//			@Override
-//			public void onStart() {
-//				pro.setVisibility(View.VISIBLE);
-//				super.onStart();
-//			}
-//
-//			@Override
-//			public void onFailure(HttpException arg0, String arg1) {
-//				pro.setVisibility(View.GONE);
-//				ToastUtils.displayFailureToast(ReportActivity.this);
-//			}
-//
-//			@Override
-//			public void onSuccess(ResponseInfo<String> arg0) {
-//				pro.setVisibility(View.GONE);
-//				try {
-//					// Gson gson = new Gson();
-//					LogManager.LogShow("----", arg0.result, LogManager.ERROR);
-//					ReturnState state = gson.fromJson(arg0.result,
-//							ReturnState.class);
-//					if (Constant.RETURN_OK.equals(state.msg)) {
-//						ToastUtils.displayShortToast(ReportActivity.this,
-//								String.valueOf(state.result));
-//						finish();
-//					} else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//						ToastUtils.displayShortToast(ReportActivity.this,
-//								"验证错误，请重新登录");
-//						ToosUtils.goReLogin(ReportActivity.this);
-//					} else {
-//						ToastUtils.displayShortToast(ReportActivity.this,
-//								String.valueOf(state.result));
-//					}
-//				} catch (Exception e) {
-//					ToastUtils.displaySendFailureToast(ReportActivity.this);
-//				}
-//
-//			}
-//		});
-//
-//	}
+
+	private void sendFreeback() {
+		final Gson gson = new Gson();
+		RequestParams rp = new RequestParams();
+		String url = Constant.ROOT_PATH + "/v1/reportUser/save";
+		if (flag == 1) {
+			rp.addBodyParameter("contactId", contactId);
+			url = Constant.ROOT_PATH + "/v1/reportContact/save";
+		}
+		rp.addBodyParameter("byReportUserId", userId);
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		rp.addBodyParameter("reason", reson);
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, url, rp, new RequestCallBack<String>() {
+			@Override
+			public void onStart() {
+				pro.setVisibility(View.VISIBLE);
+				super.onStart();
+			}
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				pro.setVisibility(View.GONE);
+				ToastUtils.displayFailureToast(ReportActivity.this);
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				pro.setVisibility(View.GONE);
+				try {
+					// Gson gson = new Gson();
+					LogManager.LogShow("----", arg0.result, LogManager.ERROR);
+					ReturnState state = gson.fromJson(arg0.result,
+							ReturnState.class);
+					if (Constant.RETURN_OK.equals(state.msg)) {
+						ToastUtils.displayShortToast(ReportActivity.this,
+								String.valueOf(state.result));
+						finish();
+					} else if (Constant.TOKEN_ERR.equals(state.msg)) {
+						ToastUtils.displayShortToast(ReportActivity.this,
+								"验证错误，请重新登录");
+						ToosUtils.goReLogin(ReportActivity.this);
+					} else {
+						ToastUtils.displayShortToast(ReportActivity.this,
+								String.valueOf(state.result));
+					}
+				} catch (Exception e) {
+					ToastUtils.displaySendFailureToast(ReportActivity.this);
+				}
+
+			}
+		});
+
+	}
 }

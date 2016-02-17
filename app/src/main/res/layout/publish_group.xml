@@ -7,203 +7,204 @@
 
     <include
         android:id="@+id/publish_group_title"
-        layout="@layout/title"/>
+        layout="@layout/title" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="15dp"
-            android:text="活动名称"
-            android:textColor="#000"
-            android:textSize="@dimen/second_font" />
-
-
-        <EditText
-            android:id="@+id/publish_group_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:background="@drawable/groupdetail_edit"
-            android:hint="10字以内"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="#000"
-            android:textColorHint="#CCCCCC"
-            android:textSize="@dimen/second_font" />
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:text="活动名称"
+                    android:textColor="#000"
+                    android:textSize="@dimen/second_font" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="15dp"
-            android:text="活动详情"
-            android:textColor="#000"
-            android:textSize="@dimen/second_font" />
+                <EditText
+                    android:id="@+id/publish_group_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/groupdetail_edit"
+                    android:hint="10字以内"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="#000"
+                    android:textColorHint="#CCCCCC"
+                    android:textSize="@dimen/second_font" />
 
 
-        <EditText
-            android:id="@+id/publish_group_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:background="@drawable/groupdetail_edit"
-            android:gravity="top"
-            android:hint="100字以内概述活动"
-            android:lines="5"
-            android:padding="10dp"
-            android:textColor="#000"
-            android:textColorHint="#CCCCCC"
-            android:textSize="@dimen/second_font" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:text="活动详情"
+                    android:textColor="#000"
+                    android:textSize="@dimen/second_font" />
 
 
-        <LinearLayout
-            android:id="@+id/publish_group_timeview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/item_bg"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="10dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="截止日期"
-                android:textColor="#000"
-                android:textSize="@dimen/second_font" />
-
-            <TextView
-                android:id="@+id/publish_group_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="10dp"
-                android:text="1990-01-01"
-                android:textColor="#000"
-                android:textSize="@dimen/second_font" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/go" />
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/publish_group_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/groupdetail_edit"
+                    android:gravity="top"
+                    android:hint="100字以内概述活动"
+                    android:lines="5"
+                    android:padding="10dp"
+                    android:textColor="#000"
+                    android:textColorHint="#CCCCCC"
+                    android:textSize="@dimen/second_font" />
 
 
-        <LinearLayout
-            android:id="@+id/publish_group_numview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/item_bg"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="10dp">
+                <LinearLayout
+                    android:id="@+id/publish_group_timeview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/item_bg"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="10dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="计划人数"
-                android:textColor="#000"
-                android:textSize="@dimen/second_font" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="截止日期"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
 
-            <TextView
-                android:id="@+id/publish_group_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="10dp"
-                android:text="10"
-                android:textColor="#000"
-                android:textSize="@dimen/second_font" />
+                    <TextView
+                        android:id="@+id/publish_group_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/item_bg"
-            android:gravity="center_vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="10dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="人数达成自动关闭报名"
-                android:textColor="#000"
-                android:textSize="@dimen/second_font" />
-
-            <ToggleButton
-                android:id="@+id/publish_group_toggle"
-                android:layout_width="48dp"
-                android:layout_height="27dp"
-                android:background="@drawable/toggle_bn"
-                android:gravity="center"
-                android:text=""
-                android:textOff=""
-                android:textOn="" />
-        </LinearLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/go" />
+                </LinearLayout>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:text="(加入活动的人，直接加入聊天群，方便联络)"
-            android:textColor="#666666"
-            android:textSize="@dimen/thrid_font" />
+                <LinearLayout
+                    android:id="@+id/publish_group_numview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="计划人数"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                    <EditText
+                        android:id="@+id/publish_group_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:gravity="right"
+                        android:background="@null"
+                        android:inputType="number"
+                        android:layout_weight="1"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/publish_group_ok"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/login_btn"
-            android:clickable="true"
-            android:gravity="center"
-            android:paddingBottom="12dp"
-            android:paddingTop="12dp"
-            android:text="发布"
-            android:textColor="@color/white"
-            android:textSize="@dimen/first_font" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/item_bg"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="10dp">
 
-    </LinearLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="人数达成自动关闭报名"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
 
-    </ScrollView>
+                    <ToggleButton
+                        android:id="@+id/publish_group_toggle"
+                        android:layout_width="48dp"
+                        android:layout_height="27dp"
+                        android:background="@drawable/toggle_bn"
+                        android:gravity="center"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:text="(加入活动的人，直接加入聊天群，方便联络)"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/thrid_font" />
+
+
+                <TextView
+                    android:id="@+id/publish_group_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/login_btn"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:text="发布"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/first_font" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <include
             android:id="@+id/publish_group_pro"
