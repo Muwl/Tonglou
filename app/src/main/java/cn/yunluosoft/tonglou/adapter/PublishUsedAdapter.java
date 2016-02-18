@@ -53,6 +53,7 @@ public class PublishUsedAdapter extends BaseAdapter {
         params.width = (width - DensityUtil.dip2px(context, 48)) / 4;
         params.height = (width - DensityUtil.dip2px(context, 48)) / 4;
         holder.imageView.setLayoutParams(params);
+
         return convertView;
     }
 

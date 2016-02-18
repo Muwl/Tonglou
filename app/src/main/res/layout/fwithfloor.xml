@@ -116,7 +116,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@color/dicider_col" />
 
-            <ListView
+            <cn.yunluosoft.tonglou.view.CustomListView
                 android:id="@+id/fwithfloor_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

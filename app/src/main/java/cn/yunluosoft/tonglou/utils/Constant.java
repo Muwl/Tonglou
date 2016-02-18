@@ -41,4 +41,12 @@ public class Constant {
 
 	public static final String USER_NOCOM = "206";
 
+	public static final String PRAISE_OK = "0";//已点赞
+
+	public static final String PRAISE_NO = "1";//未点赞
+
+	public static final String ATTEN_OK = "0";//已关注
+
+	public static final String ATTEN_NO = "1";//未关注
+
 }

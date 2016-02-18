@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 

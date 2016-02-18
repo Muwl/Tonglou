@@ -59,13 +59,14 @@
 
             <TextView
                 android:id="@+id/fwithfloor_item_bluebtn"
-                android:layout_width="wrap_content"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thrid_font"
                 android:text="聊聊"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:gravity="center"
                 android:paddingLeft="12dp"
                 android:clickable="true"
                 android:paddingRight="12dp"
@@ -75,7 +76,7 @@
                 />
             <TextView
                 android:id="@+id/fwithfloor_item_graybtn"
-                android:layout_width="wrap_content"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/thrid_font"
@@ -83,11 +84,12 @@
                 android:layout_marginLeft="20dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:gravity="center"
                 android:clickable="true"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
                 android:drawablePadding="4dp"
-                android:background="@drawable/login_btn"
+                android:background="@drawable/gray_atten"
                 android:drawableLeft="@mipmap/myfloor_speak"
                 />
 
