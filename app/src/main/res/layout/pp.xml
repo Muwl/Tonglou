@@ -47,7 +47,7 @@
             </LinearLayout>
 
 
-            <ListView
+            <cn.yunluosoft.tonglou.view.CustomListView
                 android:id="@+id/pp_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

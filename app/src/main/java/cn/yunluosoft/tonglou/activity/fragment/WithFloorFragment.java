@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -87,8 +88,20 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case ATTEN:
+                    int position= (int) msg.obj;
+                    if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)){
+                        AddAtten(1,position);
+                    }else{
+                        AddAtten(0,position);
+                    }
                     break;
                 case PRAISE:
+                    int position2= (int) msg.obj;
+                    if (Constant.PRAISE_OK.equals(entities.get(position2).isPraise)){
+                        AddPraise(1, position2);
+                    }else{
+                        AddPraise(0, position2);
+                    }
                     break;
             }
         }
@@ -210,7 +223,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         }
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
-        rp.addBodyParameter("modelType","4");
+        rp.addBodyParameter("modelType", "4");
         rp.addBodyParameter("pageNo", String.valueOf(page));
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
@@ -250,7 +263,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                             ReturnState.class);
                     if (Constant.RETURN_OK.equals(allState.msg)) {
                         pageNo = page;
-                        ShareDataTool.savePageNo(getActivity(), page);
+//                        ShareDataTool.savePageNo(getActivity(), page);
                         if (page == 1) {
                             entities.clear();
                             adapter.notifyDataSetChanged();
@@ -296,9 +309,9 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                             adapter.notifyDataSetChanged();
                             if (pageNo == 1) {
                                 customListView.onRefreshComplete();
-                                ShareDataTool.saveGetNum(getActivity(), 0);
-                                ShareDataTool.saveGetNumTime(getActivity(), 0);
-                                ((MainActivity) getActivity()).onrefush();
+//                                ShareDataTool.saveGetNum(getActivity(), 0);
+//                                ShareDataTool.saveGetNumTime(getActivity(), 0);
+//                                ((MainActivity) getActivity()).onrefush();
                                 customListView.setSelection(0);
                             } else {
                                 customListView.onRefreshComplete();
@@ -351,6 +364,147 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
 
             }
         });
+
+    }
+
+
+    /**
+     * 添加或者取消关注
+     * flag 0 代表添加关注 1代表取消关注
+     */
+    private void AddAtten(final int flag, final int position) {
+        if (getActivity() == null) {
+            return;
+        }
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        rp.addBodyParameter("dynamicId", entities.get(position).id);
+        String url="/v1_1_0/dynamic/addAttention";
+        if (flag==0){
+            url="/v1_1_0/dynamic/addAttention";
+        }else{
+            url="/v1_1_0/dynamic/delAttention";
+        }
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(getActivity());
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(getActivity(),
+                                        String.valueOf(state.result));
+                                entities.get(position).isAttention=flag+"";
+                                adapter.notifyDataSetChanged();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        getActivity(), "验证错误，请重新登录");
+                                ToosUtils.goReLogin(getActivity());
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        getActivity(),
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(getActivity());
+                        }
+
+                    }
+                });
+
+    }
+
+    /**
+     * 添加或者取消点赞
+     * flag 0 代表添加点赞 1代表取消点赞
+     */
+    private void AddPraise(final int flag, final int position) {
+        if (getActivity() == null) {
+            return;
+        }
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        rp.addBodyParameter("dynamicId", entities.get(position).id);
+        String url="/v1_1_0/dynamic/praise";
+        if (flag==0){
+            url="/v1_1_0/dynamic/praise";
+        }else{
+            url="/v1_1_0/dynamic/cancelPraise";
+        }
+        LogManager.LogShow("----",Constant.ROOT_PATH + url+"?sign="+ ShareDataTool.getToken(getActivity())+"&dynamicId="+entities.get(position).id,LogManager.ERROR);
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(getActivity());
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(getActivity(),
+                                        "操作成功");
+                                entities.get(position).isPraise=flag+"";
+                                if (flag==0){
+                                    entities.get(position).praiseNum=String.valueOf((Integer.valueOf(entities.get(position).praiseNum)+1));
+                                }else{
+                                    entities.get(position).praiseNum=String.valueOf((Integer.valueOf(entities.get(position).praiseNum)-1));
+                                }
+                                adapter.notifyDataSetChanged();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        getActivity(), "验证错误，请重新登录");
+                                ToosUtils.goReLogin(getActivity());
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        getActivity(),
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(getActivity());
+                        }
+
+                    }
+                });
 
     }
 
