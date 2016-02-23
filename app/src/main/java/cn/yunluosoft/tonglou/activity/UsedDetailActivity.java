@@ -76,7 +76,7 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
         send= (TextView) findViewById(R.id.useddetail_send);
         pro=findViewById(R.id.useddetail_pro);
 
-        adapter=new GroupDetailAdapter(this,null,null);
+        adapter=new GroupDetailAdapter(this,null,null,null);
         listView.setAdapter(adapter);
         share.setVisibility(View.VISIBLE);
         back.setOnClickListener(this);

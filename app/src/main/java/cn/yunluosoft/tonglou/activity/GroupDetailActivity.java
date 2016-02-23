@@ -49,28 +49,6 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
 
     private ImageView share;
 
-    private CircleImageView icon;
-
-    private TextView name;
-
-    private TextView address;
-
-    private TextView num;
-
-    private TextView time;
-
-    private TextView content;
-
-    private TextView join;
-
-    private TextView atten;
-
-    private TextView comment;
-
-    private ImageView replay;
-
-    private MyGridView gridView;
-
     private GroupDetailGridViewAdapter gridAdapter;
 
     private CustomListView customListView;
@@ -89,7 +67,6 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
 
     private BitmapUtils bitmapUtils;
 
-    private List<User> userList;
 
     private int pageNo = 1;
 
@@ -118,17 +95,6 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_title);
         share= (ImageView) findViewById(R.id.title_share);
-        icon= (CircleImageView) findViewById(R.id.groupdetail_icon);
-        name= (TextView) findViewById(R.id.groupdetail_name);
-        address= (TextView) findViewById(R.id.groupdetail_address);
-        num= (TextView) findViewById(R.id.groupdetail_num);
-        time= (TextView) findViewById(R.id.groupdetail_time);
-        content= (TextView) findViewById(R.id.groupdetail_content);
-        join= (TextView) findViewById(R.id.groupdetail_join);
-        atten= (TextView) findViewById(R.id.groupdetail_atten);
-        replay= (ImageView) findViewById(R.id.groupdetail_replay);
-        comment= (TextView) findViewById(R.id.groupdetail_comment);
-        gridView= (MyGridView) findViewById(R.id.groupdetail_grid);
         customListView= (CustomListView) findViewById(R.id.groupdetail_list);
         edit= (EditText) findViewById(R.id.groupdetail_edit);
         send= (TextView) findViewById(R.id.groupdetail_send);
@@ -139,10 +105,6 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
         back.setOnClickListener(this);
         title.setText("活动详情");
         share.setOnClickListener(this);
-        replay.setOnClickListener(this);
-        join.setOnClickListener(this);
-        atten.setOnClickListener(this);
-        comment.setOnClickListener(this);
         send.setOnClickListener(this);
 
         customListView.setOnLoadListener(new CustomListView.OnLoadMoreListener() {
@@ -154,8 +116,8 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
             }
         });
         entities=new ArrayList<>();
-        adapter=new GroupDetailAdapter(this,entities,handler);
-        customListView.setAdapter(adapter);
+
+
         getInfo();
 
     }
@@ -227,9 +189,10 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                             LogManager.LogShow("----", arg0.result,
                                     LogManager.ERROR);
                             if (Constant.RETURN_OK.equals(state.msg)) {
-                                GroupDetailState state1=gson.fromJson(arg0.result,GroupDetailState.class);
-                                entity=state1.result;
-                                setValue(entity);
+                                GroupDetailState state1 = gson.fromJson(arg0.result, GroupDetailState.class);
+                                entity = state1.result;
+                                adapter = new GroupDetailAdapter(GroupDetailActivity.this, entities,entity, handler);
+                                customListView.setAdapter(adapter);
                                 getDynamic(1);
                             } else {
                                 ToastUtils.displayShortToast(
@@ -247,23 +210,6 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                 });
 
     }
-
-    private void setValue(FloorSpeechEntity entity){
-        bitmapUtils.display(icon, entity.publishUserIcon);
-        name.setText(entity.publishUserNickname);
-        address.setText(entity.locationName);
-        num.setText("参团人数：" + entity.planPeopleNum + "/" + entity.groupNum);
-        time.setText("截止日期："+entity.endDate);
-        content.setText(entity.detail);
-        join.setText("参加");
-        userList=entity.praiseUser;
-        if(userList==null){
-            userList=new ArrayList<>();
-        }
-        gridAdapter=new GroupDetailGridViewAdapter(this,userList);
-        gridView.setAdapter(gridAdapter);
-    }
-
 
     /**
      * 查询动态评论或回复
