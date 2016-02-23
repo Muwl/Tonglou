@@ -121,6 +121,7 @@ public class HiGroupActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(HiGroupActivity.this, GroupDetailActivity.class);
+                intent.putExtra("id",entities.get(position-1).id);
                 startActivity(intent);
             }
         });

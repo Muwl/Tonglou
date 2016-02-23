@@ -143,6 +143,26 @@ public class AssistActivity extends BaseActivity implements View.OnClickListener
                 }
             }
         });
+        customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // pageNo = 0;
+                closePro();
+                // pageNo = 1;
+                // entities.clear();
+                // adapter.notifyDataSetChanged();
+                customListView.setCanLoadMore(false);
+                getInfo(1, flag);
+            }
+        });
+        customListView.setOnLoadListener(new CustomListView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                // pageNo++;
+                closePro();
+                getInfo(pageNo + 1, flag);
+            }
+        });
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

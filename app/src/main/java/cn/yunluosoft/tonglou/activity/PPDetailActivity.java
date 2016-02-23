@@ -66,7 +66,7 @@ public class PPDetailActivity extends BaseActivity implements View.OnClickListen
         send= (TextView) findViewById(R.id.ppdetail_send);
         pro=findViewById(R.id.ppdetail_pro);
 
-        adapter=new GroupDetailAdapter(this);
+        adapter=new GroupDetailAdapter(this,null,null);
         listView.setAdapter(adapter);
         share.setVisibility(View.VISIBLE);
         back.setOnClickListener(this);

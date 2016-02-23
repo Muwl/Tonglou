@@ -1,12 +1,19 @@
 package cn.yunluosoft.tonglou.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
+
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
+import cn.yunluosoft.tonglou.model.ReplayEntity;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -15,14 +22,20 @@ import cn.yunluosoft.tonglou.view.CircleImageView;
 public class GroupDetailAdapter extends BaseAdapter {
 
     private Context context;
+    private List<ReplayEntity> entities;
+    private BitmapUtils bitmapUtils;
+    private Handler handler;
 
-    public GroupDetailAdapter(Context context) {
+    public GroupDetailAdapter(Context context,List<ReplayEntity> entities,Handler handler) {
         this.context = context;
+        this.entities=entities;
+        this.handler=handler;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return entities.size();
     }
 
     @Override
@@ -50,7 +63,10 @@ public class GroupDetailAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-
+        bitmapUtils.display(holder.icon,entities.get(position).publishUserIcon);
+        holder.name.setText(entities.get(position).publishUserNickname);
+        holder.content.setText(entities.get(position).content);
+        holder.time.setText(entities.get(position).createDate);
         return convertView;
     }
 

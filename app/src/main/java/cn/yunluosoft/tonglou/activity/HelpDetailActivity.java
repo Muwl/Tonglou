@@ -72,7 +72,7 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
         send= (TextView) findViewById(R.id.helpdetail_send);
         pro=findViewById(R.id.helpdetail_pro);
 
-        adapter=new GroupDetailAdapter(this);
+        adapter=new GroupDetailAdapter(this,null,null);
         listView.setAdapter(adapter);
         share.setVisibility(View.VISIBLE);
         back.setOnClickListener(this);

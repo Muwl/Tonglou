@@ -45,13 +45,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <cn.yunluosoft.tonglou.view.swipelist.SwipeMenuListView
+        <!--<cn.yunluosoft.tonglou.view.swipelist.SwipeMenuListView-->
+            <!--android:id="@+id/myfloorspeech_list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:dividerHeight="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:divider="@color/activity_bg"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <cn.yunluosoft.tonglou.view.CustomListView
             android:id="@+id/myfloorspeech_list"
             android:layout_width="match_parent"
-            android:dividerHeight="10dp"
-            android:layout_marginTop="10dp"
-            android:divider="@color/activity_bg"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
 
         <include
             android:id="@+id/myfloorspeech_pro"

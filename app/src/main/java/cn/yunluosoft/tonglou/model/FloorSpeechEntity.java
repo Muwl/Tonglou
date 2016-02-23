@@ -20,6 +20,8 @@ public class FloorSpeechEntity implements Serializable {
     public String publishUserIcon;//发布人头像
     public String groupName;//团队名称
     public String publishUserNickname;//发布人昵称
+    public List<User> praiseUser;//点赞的人
+    public List<String> images;//帮帮模块，详情中的图片
     public String publishUserImUsername;//发布人usename
     public String supplyType;//供给类型（0：转，1：求）
     public String isPraise;//是否已点赞（0：是，1：否）

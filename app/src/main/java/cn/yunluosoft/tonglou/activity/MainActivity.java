@@ -292,50 +292,50 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		LogManager.LogShow("-------", "}}}}}}}}}}}}}}}", LogManager.ERROR);
-
-		mFlag = 1;
-		if (!isConflict && !isCurrentAccountRemoved) {
-			updateUnreadLabel();
-			// updateUnreadAddressLable();
-			EMChatManager.getInstance().activityResumed();
-		}
-
-		// unregister this event listener when this activity enters the
-		// background
-		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
-				.getInstance();
-		sdkHelper.getNotifier().reset();
-		sdkHelper.pushActivity(this);
-		// register the event listener when enter the foreground
-		EMChatManager.getInstance().registerEventListener(
-				this,
-				new EMNotifierEvent.Event[] {
-						EMNotifierEvent.Event.EventNewMessage,
-						EMNotifierEvent.Event.EventOfflineMessage,
-						EMNotifierEvent.Event.EventConversationListChanged });
-
-		mFlag = 1;
-
-		if (pageIndex == 2) {
-			group.check(R.id.main_bottom_withfloor);
-			try {
-				popAllFragmentsExceptTheBottomOne();
-				FragmentTransaction ft1 = fMgr.beginTransaction();
-				ft1.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
-				WithFloorFragment withFloorFragment = new WithFloorFragment();
-				ft1.add(R.id.main_fragment, withFloorFragment, "WithFloorFragment");
-				ft1.addToBackStack("WithFloorFragment");
-				ft1.commitAllowingStateLoss();
-			} catch (Exception e) {
-			}
-		}
-
-		onrefush();
-	}
+//	@Override
+//	protected void onResume() {
+//		super.onResume();
+//		LogManager.LogShow("-------", "}}}}}}}}}}}}}}}", LogManager.ERROR);
+//
+//		mFlag = 1;
+//		if (!isConflict && !isCurrentAccountRemoved) {
+//			updateUnreadLabel();
+//			// updateUnreadAddressLable();
+//			EMChatManager.getInstance().activityResumed();
+//		}
+//
+//		// unregister this event listener when this activity enters the
+//		// background
+//		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
+//				.getInstance();
+//		sdkHelper.getNotifier().reset();
+//		sdkHelper.pushActivity(this);
+//		// register the event listener when enter the foreground
+//		EMChatManager.getInstance().registerEventListener(
+//				this,
+//				new EMNotifierEvent.Event[] {
+//						EMNotifierEvent.Event.EventNewMessage,
+//						EMNotifierEvent.Event.EventOfflineMessage,
+//						EMNotifierEvent.Event.EventConversationListChanged });
+//
+//		mFlag = 1;
+//
+//		if (pageIndex == 2) {
+//			group.check(R.id.main_bottom_withfloor);
+//			try {
+//				popAllFragmentsExceptTheBottomOne();
+//				FragmentTransaction ft1 = fMgr.beginTransaction();
+//				ft1.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
+//				WithFloorFragment withFloorFragment = new WithFloorFragment();
+//				ft1.add(R.id.main_fragment, withFloorFragment, "WithFloorFragment");
+//				ft1.addToBackStack("WithFloorFragment");
+//				ft1.commitAllowingStateLoss();
+//			} catch (Exception e) {
+//			}
+//		}
+//
+//		onrefush();
+//	}
 
 	private void init() {
 		// setContactListener监听联系人的变化等

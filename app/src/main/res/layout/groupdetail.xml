@@ -200,34 +200,22 @@
                     android:layout_height="wrap_content"
                     android:src="@mipmap/consult_atten" />
 
-                <cn.yunluosoft.tonglou.view.CircleImageView
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_marginLeft="8dp"
-                    android:src="@mipmap/icon_default" />
+                <cn.yunluosoft.tonglou.view.MyGridView
+                    android:id="@+id/groupdetail_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="8"/>
 
-                <cn.yunluosoft.tonglou.view.CircleImageView
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_marginLeft="12dp"
-                    android:src="@mipmap/icon_default" />
-
-
-                <cn.yunluosoft.tonglou.view.CircleImageView
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_marginLeft="12dp"
-                    android:src="@mipmap/icon_default" />
             </LinearLayout>
 
-            <cn.yunluosoft.tonglou.view.MyListView
+            <cn.yunluosoft.tonglou.view.CustomListView
                 android:id="@+id/groupdetail_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:divider="@color/transparent"
                 android:dividerHeight="0dp"
-                android:scrollbars="none"></cn.yunluosoft.tonglou.view.MyListView>
+                android:scrollbars="none"></cn.yunluosoft.tonglou.view.CustomListView>
         </LinearLayout>
 
 

@@ -1,77 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:padding="12dp"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <cn.yunluosoft.tonglou.view.CircleImageView
-            android:id="@+id/myfloorspeech_item_icon"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:src="@mipmap/icon_default" />
-
-        <TextView
-            android:id="@+id/myfloorspeech_item_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/thrid_font"
-            android:layout_marginTop="8dp"
-            android:textColor="#000"
-            android:text="安安"/>
-    </LinearLayout>
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/myfloorspeech_item_tip"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="@dimen/second_font"
-            android:text="一起游玩"/>
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/myfloorspeech_item_content"
-            android:layout_width="wrap_content"
+            <cn.yunluosoft.tonglou.view.CircleImageView
+                android:id="@+id/myfloorspeech_item_icon"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@mipmap/icon_default" />
+
+            <TextView
+                android:id="@+id/myfloorspeech_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="安安"
+                android:textColor="#000"
+                android:textSize="@dimen/thrid_font" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/thrid_font"
-            android:layout_marginTop="7dp"
-            android:textColor="#666666"
-            android:text="12月21阿瓦等哈看我打了"/>
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/myfloorspeech_item_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="一起游玩"
+                android:textColor="#000"
+                android:textSize="@dimen/second_font" />
+
+            <TextView
+                android:id="@+id/myfloorspeech_item_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="12月21阿瓦等哈看我打了"
+                android:textColor="#666666"
+                android:textSize="@dimen/thrid_font" />
 
 
-        <TextView
-            android:id="@+id/myfloorspeech_item_speak"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:layout_marginTop="7dp"
-            android:background="@drawable/login_btn"
-            android:clickable="true"
-            android:gravity="center"
-            android:drawableLeft="@mipmap/myfloor_speak"
-            android:drawablePadding="4dp"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp"
-            android:text="进群聊"
-            android:textColor="@color/white"
-            android:textSize="@dimen/thrid_font" />
+            <LinearLayout
+                android:id="@+id/myfloorspeech_item_bluebtn"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/blue_chat"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/myfloorspeech_item_blueimage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:src="@mipmap/myfloor_speak" />
+
+                <TextView
+                    android:id="@+id/myfloorspeech_item_bluetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="聊聊"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/thrid_font" />
+            </LinearLayout>
+
+        </LinearLayout>
+
 
     </LinearLayout>
-
-
-
-
 </LinearLayout>
