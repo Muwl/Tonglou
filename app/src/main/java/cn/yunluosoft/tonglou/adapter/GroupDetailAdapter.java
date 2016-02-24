@@ -55,7 +55,7 @@ public class GroupDetailAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class GroupDetailAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder = null;
-        ViewHolder1 holder1 = null;
+        ViewHolder1 holder1=null;
         int type = getItemViewType(position);
         if (type == type0) {
             if (convertView == null
@@ -98,8 +98,8 @@ public class GroupDetailAdapter extends BaseAdapter {
             if (convertView == null
                     || !convertView.getTag().getClass()
                     .equals(ViewHolder1.class)) {
-                holder1 = new ViewHolder1();
                 convertView = View.inflate(context, R.layout.groupdetail_item, null);
+                holder1 = new ViewHolder1();
                 holder1.icon = (CircleImageView) convertView.findViewById(R.id.groupdetail_item_icon);
                 holder1.name = (TextView) convertView.findViewById(R.id.groupdetail_item_name);
                 holder1.content = (TextView) convertView.findViewById(R.id.groupdetail_item_content);
@@ -133,6 +133,7 @@ public class GroupDetailAdapter extends BaseAdapter {
         }
         return convertView;
     }
+    
 
     class ViewHolder {
         private CircleImageView icon;
