@@ -167,6 +167,7 @@ public class AssistActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(AssistActivity.this,HelpDetailActivity.class);
+                intent.putExtra("id",entities.get(position-1).id);
                 startActivity(intent);
             }
         });
@@ -194,6 +195,9 @@ public class AssistActivity extends BaseActivity implements View.OnClickListener
 
                 break;
             case R.id.help_serch:
+                Intent intent5=new Intent(AssistActivity.this, SerchSpeechActivity.class);
+                intent5.putExtra("modelFlag",3);
+                startActivity(intent5);
 
                 break;
 

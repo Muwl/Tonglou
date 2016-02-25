@@ -13,201 +13,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fillViewport="true"
-        android:scrollbars="none">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
 
-                <cn.yunluosoft.tonglou.view.CircleImageView
-                    android:id="@+id/ppdetail_icon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_default" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginTop="12dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/ppdetail_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="安吉拉"
-                        android:textColor="#000"
-                        android:textSize="@dimen/first_font" />
-
-                    <TextView
-                        android:id="@+id/ppdetail_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:drawableLeft="@mipmap/pp_stop"
-                        android:drawablePadding="4dp"
-                        android:text="玲珑大厦"
-                        android:textColor="#666666"
-                        android:textSize="@dimen/second_font" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/dicider_col" />
-
-            <TextView
-                android:id="@+id/ppdetail_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:text="12月12日，去香山，奋勇AA爱的伟大了空间的考拉的"
-                android:textColor="#000"
-                android:textSize="@dimen/first_font" />
-
-            <TextView
-                android:id="@+id/ppdetail_join"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/login_btn"
-                android:clickable="true"
-                android:paddingBottom="12dp"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
-                android:paddingTop="12dp"
-                android:text="勾搭"
-                android:textColor="@color/white"
-                android:textSize="@dimen/first_font" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="center_vertical|right"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/ppdetail_replay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="12dp"
-                    android:clickable="true"
-                    android:src="@mipmap/groupdetail_comment" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/consult_atten" />
-
-                <cn.yunluosoft.tonglou.view.CircleImageView
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_marginLeft="8dp"
-                    android:src="@mipmap/icon_default" />
-
-                <cn.yunluosoft.tonglou.view.CircleImageView
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_marginLeft="12dp"
-                    android:src="@mipmap/icon_default" />
-
-
-                <cn.yunluosoft.tonglou.view.CircleImageView
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_marginLeft="12dp"
-                    android:src="@mipmap/icon_default" />
-            </LinearLayout>
-
-            <cn.yunluosoft.tonglou.view.MyListView
+            <cn.yunluosoft.tonglou.view.CustomListView
                 android:id="@+id/ppdetail_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginTop="8dp"
                 android:divider="@color/transparent"
                 android:dividerHeight="0dp"
-                android:scrollbars="none"></cn.yunluosoft.tonglou.view.MyListView>
+                android:scrollbars="none"></cn.yunluosoft.tonglou.view.CustomListView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/activity_bg"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/ppdetail_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/groupdetail_send"
+                    android:padding="5dp"
+                    android:text="发送"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/second_font" />
+
+                <EditText
+                    android:id="@+id/ppdetail_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@id/ppdetail_send"
+                    android:background="@drawable/groupdetail_edit"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="8dp"
+                    android:textColor="#000"
+                    android:textSize="@dimen/second_font"
+
+                    />
+            </RelativeLayout>
         </LinearLayout>
 
-
-    </ScrollView>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/activity_bg"
-        android:gravity="center_vertical"
-        android:paddingBottom="10dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:id="@+id/ppdetail_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/groupdetail_send"
-            android:padding="5dp"
-            android:text="发送"
-            android:textColor="#666666"
-            android:textSize="@dimen/second_font" />
-
-        <EditText
-            android:id="@+id/ppdetail_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@id/ppdetail_send"
-            android:background="@drawable/groupdetail_edit"
-            android:paddingBottom="8dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="8dp"
-            android:textColor="#000"
-            android:textSize="@dimen/second_font"
-
-            />
-    </RelativeLayout>
-    </LinearLayout>
         <include
             android:id="@+id/ppdetail_pro"
             layout="@layout/pro"

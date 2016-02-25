@@ -168,6 +168,7 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(PPActivity.this,PPDetailActivity.class);
+                intent.putExtra("id",entities.get(position-1).id);
                 startActivity(intent);
             }
         });
@@ -193,6 +194,9 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.pp_serch:
+                Intent intent5=new Intent(PPActivity.this, SerchSpeechActivity.class);
+                intent5.putExtra("modelFlag",2);
+                startActivity(intent5);
 
                 break;
 

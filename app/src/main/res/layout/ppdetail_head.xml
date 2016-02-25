@@ -26,7 +26,7 @@
                 android:orientation="horizontal">
 
                 <cn.yunluosoft.tonglou.view.CircleImageView
-                    android:id="@+id/groupdetail_icon"
+                    android:id="@+id/ppdetail_icon"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:scaleType="centerCrop"
@@ -40,7 +40,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/groupdetail_name"
+                        android:id="@+id/ppdetail_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="安吉拉"
@@ -48,7 +48,7 @@
                         android:textSize="@dimen/first_font" />
 
                     <TextView
-                        android:id="@+id/groupdetail_address"
+                        android:id="@+id/ppdetail_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
@@ -57,41 +57,6 @@
                         android:text="玲珑大厦"
                         android:textColor="#666666"
                         android:textSize="@dimen/second_font" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="2dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/groupdetail_num"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/higroup_item_num"
-                            android:drawablePadding="7dp"
-                            android:text="参团人数：44"
-                            android:textColor="#999999"
-                            android:textSize="@dimen/thrid_font" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/groupdetail_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/higroup_item_time"
-                            android:drawablePadding="7dp"
-                            android:text="截止日期：2016-01-02"
-                            android:textColor="#999999"
-                            android:textSize="@dimen/thrid_font" />
-
-                    </LinearLayout>
-
 
                 </LinearLayout>
             </LinearLayout>
@@ -104,7 +69,7 @@
                 android:background="@color/dicider_col" />
 
             <TextView
-                android:id="@+id/groupdetail_content"
+                android:id="@+id/ppdetail_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
@@ -113,7 +78,7 @@
                 android:textSize="@dimen/first_font" />
 
             <TextView
-                android:id="@+id/groupdetail_join"
+                android:id="@+id/ppdetail_join"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/login_btn"
@@ -127,16 +92,15 @@
                 android:textSize="@dimen/first_font" />
 
             <LinearLayout
-                android:id="@+id/groupdetail_menu_lin"
+                android:id="@+id/ppdetail_menu_lin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center_vertical|right"
                 android:orientation="horizontal">
 
-
                 <ImageView
-                    android:id="@+id/groupdetail_replay"
+                    android:id="@+id/ppdetail_replay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -160,7 +124,7 @@
                     android:src="@mipmap/consult_atten" />
 
                 <cn.yunluosoft.tonglou.view.MyGridView
-                    android:id="@+id/groupdetail_grid"
+                    android:id="@+id/ppdetail_grid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:numColumns="8" />

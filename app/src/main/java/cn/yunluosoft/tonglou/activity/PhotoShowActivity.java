@@ -1,7 +1,5 @@
 package cn.yunluosoft.tonglou.activity;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,25 +8,35 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import cn.yunluosoft.tonglou.R;
-import cn.yunluosoft.tonglou.utils.ToastUtils;
-import cn.yunluosoft.tonglou.view.CirclePageIndicator;
-import cn.yunluosoft.tonglou.view.HackyViewPager;
-import cn.yunluosoft.tonglou.view.photo.PhotoView;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.lidroid.xutils.bitmap.callback.BitmapLoadCallBack;
 import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
 
+import java.util.List;
+
+import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.BaseActivity;
+import cn.yunluosoft.tonglou.utils.LogManager;
+import cn.yunluosoft.tonglou.utils.ToastUtils;
+import cn.yunluosoft.tonglou.view.CirclePageIndicator;
+import cn.yunluosoft.tonglou.view.HackyViewPager;
+import cn.yunluosoft.tonglou.view.photo.PhotoView;
+
 /**
  * @author Mu
- * @date 2015-4-15
- * @description
+ * @date 2015-6-1 上午11:00:53
+ * @Description 图片查看页面
  */
 public class PhotoShowActivity extends BaseActivity {
 
@@ -40,6 +48,10 @@ public class PhotoShowActivity extends BaseActivity {
 
 	private int position;
 
+	private TextView title;
+
+	private ImageView back;
+
 	// private ImageLoaderUtil2 loaderUtil2;
 
 	private static final String STATE_POSITION = "STATE_POSITION";
@@ -50,14 +62,45 @@ public class PhotoShowActivity extends BaseActivity {
 		setContentView(R.layout.ac_image_pager);
 		Intent intent = getIntent();
 		position = intent.getIntExtra("position", 0);
-		photoEntities = (List<String>) intent.getSerializableExtra("photo");
+		photoEntities = (List<String>) intent
+				.getSerializableExtra("photo");
+		LogManager.LogShow("-------", new Gson().toJson(photoEntities), LogManager.ERROR);
 		initView();
 		if (savedInstanceState != null) {
 			position = savedInstanceState.getInt(STATE_POSITION);
 		}
+		back = (ImageView) findViewById(R.id.image_page_back);
+		title = (TextView) findViewById(R.id.image_page_title);
 		pager.setAdapter(new ImagePagerAdapter(photoEntities, this));
 		pager.setCurrentItem(position);
 		mIndicator.setViewPager(pager);
+
+		pager.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				title.setText((arg0 + 1) + "/" + photoEntities.size());
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+
+			}
+		});
+
+		back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				finish();
+			}
+		});
 	}
 
 	private void initView() {
@@ -107,27 +150,29 @@ public class PhotoShowActivity extends BaseActivity {
 					.findViewById(R.id.image);
 			final ProgressBar spinner = (ProgressBar) imageLayout
 					.findViewById(R.id.loading);
+			// title.setText((photoEntities.size()-position) + "/" +
+			// photoEntities.size());
 			utils.display(imageView, paths.get(position),
 					new BitmapLoadCallBack<View>() {
 
 						@Override
 						public void onLoadStarted(View container, String uri,
-								BitmapDisplayConfig config) {
-							// super.onLoadStarted(container, uri, config);
+												  BitmapDisplayConfig config) {
+							super.onLoadStarted(container, uri, config);
 							spinner.setVisibility(View.VISIBLE);
 						}
 
 						@Override
 						public void onLoadCompleted(View arg0, String arg1,
-								Bitmap arg2, BitmapDisplayConfig arg3,
-								BitmapLoadFrom arg4) {
+													Bitmap arg2, BitmapDisplayConfig arg3,
+													BitmapLoadFrom arg4) {
 							spinner.setVisibility(View.GONE);
 							imageView.setImageBitmap(arg2);
 						}
 
 						@Override
 						public void onLoadFailed(View arg0, String arg1,
-								Drawable arg2) {
+												 Drawable arg2) {
 							ToastUtils.displayShortToast(
 									PhotoShowActivity.this, "加载失败");
 							spinner.setVisibility(View.GONE);

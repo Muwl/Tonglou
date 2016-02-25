@@ -266,6 +266,19 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
         </activity>
+
+        <!-- 写留言-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.PhotoShowActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
+        <!-- 写留言-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.SerchSpeechActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize" >
+        </activity>
         <!-- 团购-->
         <activity
             android:name="cn.yunluosoft.tonglou.activity.HiGroupActivity"

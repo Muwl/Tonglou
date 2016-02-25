@@ -167,6 +167,9 @@ public class HiGroupActivity extends BaseActivity implements View.OnClickListene
                 startActivity(intent);
                 break;
             case  R.id.higroup_serch:
+                Intent intent5=new Intent(HiGroupActivity.this, SerchSpeechActivity.class);
+                intent5.putExtra("modelFlag",0);
+                startActivity(intent5);
                 break;
 
 

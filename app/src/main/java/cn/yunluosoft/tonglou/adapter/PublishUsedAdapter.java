@@ -7,6 +7,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.lidroid.xutils.BitmapUtils;
+
+import java.io.File;
+import java.util.List;
+
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 
@@ -17,15 +22,23 @@ public class PublishUsedAdapter extends BaseAdapter {
 
     private Context context;
     private int width;
+    private List<File> files;
+    private BitmapUtils bitmapUtils;
 
-    public PublishUsedAdapter(Context context, int width) {
+    public PublishUsedAdapter(Context context, int width, List<File> files) {
         this.context = context;
         this.width = width;
+        this.files=files;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 1;
+        if (files.size()<4){
+            return files.size()+1;
+        }else{
+            return 4;
+        }
     }
 
     @Override
@@ -53,7 +66,15 @@ public class PublishUsedAdapter extends BaseAdapter {
         params.width = (width - DensityUtil.dip2px(context, 48)) / 4;
         params.height = (width - DensityUtil.dip2px(context, 48)) / 4;
         holder.imageView.setLayoutParams(params);
-
+        if (files.size()!=4){
+            if (position<files.size()){
+                bitmapUtils.display(holder.imageView,files.get(position).getAbsolutePath());
+            }else{
+                holder.imageView.setImageResource(R.mipmap.image_add);
+            }
+        }else{
+            bitmapUtils.display(holder.imageView,files.get(position).getAbsolutePath());
+        }
         return convertView;
     }
 

@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,11 +29,16 @@ import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.AssistActivity;
+import cn.yunluosoft.tonglou.activity.GroupDetailActivity;
+import cn.yunluosoft.tonglou.activity.HelpDetailActivity;
 import cn.yunluosoft.tonglou.activity.HiGroupActivity;
 import cn.yunluosoft.tonglou.activity.MainActivity;
 import cn.yunluosoft.tonglou.activity.PPActivity;
+import cn.yunluosoft.tonglou.activity.PPDetailActivity;
 import cn.yunluosoft.tonglou.activity.PublishActivity;
+import cn.yunluosoft.tonglou.activity.SerchSpeechActivity;
 import cn.yunluosoft.tonglou.activity.UsedActivity;
+import cn.yunluosoft.tonglou.activity.UsedDetailActivity;
 import cn.yunluosoft.tonglou.adapter.WithFloorAdapter;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.FloorSpeechState;
@@ -143,6 +149,24 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         adapter = new WithFloorAdapter(getActivity(), entities, handler);
         customListView.setAdapter(adapter);
 
+        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = null;
+                if ("0".equals(entities.get(position).modelType)) {
+                    intent = new Intent(getActivity(), GroupDetailActivity.class);
+                } else if ("1".equals(entities.get(position).modelType)) {
+                    intent = new Intent(getActivity(), UsedDetailActivity.class);
+                }else if ("2".equals(entities.get(position).modelType)) {
+                    intent = new Intent(getActivity(), PPDetailActivity.class);
+                }else if ("3".equals(entities.get(position).modelType)) {
+                    intent = new Intent(getActivity(), HelpDetailActivity.class);
+                }
+                intent.putExtra("id", entities.get(position - 1).id);
+                startActivity(intent);
+            }
+        });
+
         getInfo(1);
         customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
             @Override
@@ -179,7 +203,9 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fwithfloor_serch:
-
+                Intent intent5=new Intent(getActivity(), SerchSpeechActivity.class);
+                intent5.putExtra("modelFlag",4);
+                startActivity(intent5);
                 break;
             case R.id.title_rig:
                 Intent intent4 = new Intent(getActivity(), PublishActivity.class);

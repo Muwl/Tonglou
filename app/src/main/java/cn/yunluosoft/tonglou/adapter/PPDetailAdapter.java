@@ -11,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
@@ -20,19 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
-import cn.yunluosoft.tonglou.activity.GroupDetailActivity;
+import cn.yunluosoft.tonglou.activity.HelpDetailActivity;
+import cn.yunluosoft.tonglou.activity.PPDetailActivity;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.ReplayEntity;
 import cn.yunluosoft.tonglou.model.User;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.view.CircleImageView;
-import cn.yunluosoft.tonglou.view.MyGallery;
 import cn.yunluosoft.tonglou.view.MyGridView;
 
 /**
  * Created by Mu on 2016/2/1.
  */
-public class GroupDetailAdapter extends BaseAdapter {
+public class PPDetailAdapter extends BaseAdapter {
 
     private Context context;
     private List<ReplayEntity> entities;
@@ -45,7 +44,7 @@ public class GroupDetailAdapter extends BaseAdapter {
     private LinearLayout linearLayout;
     private ImageView rep;
 
-    public GroupDetailAdapter(Context context, List<ReplayEntity> entities, FloorSpeechEntity entity, Handler handler) {
+    public PPDetailAdapter(Context context, List<ReplayEntity> entities, FloorSpeechEntity entity, Handler handler) {
         this.context = context;
         this.entities = entities;
         this.handler = handler;
@@ -86,19 +85,17 @@ public class GroupDetailAdapter extends BaseAdapter {
             if (convertView == null
                     || !convertView.getTag().getClass()
                     .equals(ViewHolder.class)) {
-                convertView = View.inflate(context, R.layout.groupdetail_head,
+                convertView = View.inflate(context, R.layout.ppdetail_head,
                         null);
                 holder = new ViewHolder();
-                holder.icon = (CircleImageView) convertView.findViewById(R.id.groupdetail_icon);
-                holder.name = (TextView) convertView.findViewById(R.id.groupdetail_name);
-                holder.address = (TextView) convertView.findViewById(R.id.groupdetail_address);
-                holder.num = (TextView) convertView.findViewById(R.id.groupdetail_num);
-                holder.time = (TextView) convertView.findViewById(R.id.groupdetail_time);
-                holder.content = (TextView) convertView.findViewById(R.id.groupdetail_content);
-                holder.join = (TextView) convertView.findViewById(R.id.groupdetail_join);
-                holder.menu_lin = (LinearLayout) convertView.findViewById(R.id.groupdetail_menu_lin);
-                holder.replay = (ImageView) convertView.findViewById(R.id.groupdetail_replay);
-                holder.gridView = (MyGridView) convertView.findViewById(R.id.groupdetail_grid);
+                holder.icon = (CircleImageView) convertView.findViewById(R.id.ppdetail_icon);
+                holder.name = (TextView) convertView.findViewById(R.id.ppdetail_name);
+                holder.address = (TextView) convertView.findViewById(R.id.ppdetail_address);
+                holder.content = (TextView) convertView.findViewById(R.id.ppdetail_content);
+                holder.replay = (ImageView) convertView.findViewById(R.id.ppdetail_replay);
+                holder.join = (TextView) convertView.findViewById(R.id.ppdetail_join);
+                holder.menu_lin = (LinearLayout) convertView.findViewById(R.id.ppdetail_menu_lin);
+                holder.gridView = (MyGridView) convertView.findViewById(R.id.ppdetail_grid);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -123,16 +120,14 @@ public class GroupDetailAdapter extends BaseAdapter {
             bitmapUtils.display(holder.icon, entity.publishUserIcon);
             holder.name.setText(entity.publishUserNickname);
             holder.address.setText(entity.locationName);
-            holder.num.setText("参团人数：" + entity.planPeopleNum + "/" + entity.groupNum);
-            holder.time.setText("截止日期："+entity.endDate);
             holder.content.setText(entity.detail);
-            holder.join.setText("参加");
             List<User> userList=entity.praiseUser;
             if(userList==null){
                 userList=new ArrayList<>();
             }
             GroupDetailGridViewAdapter gridAdapter=new GroupDetailGridViewAdapter(context,userList);
             holder.gridView.setAdapter(gridAdapter);
+
             linearLayout=holder.menu_lin;
             rep=holder.replay;
 
@@ -158,6 +153,26 @@ public class GroupDetailAdapter extends BaseAdapter {
         }
         return convertView;
     }
+    
+
+    class ViewHolder {
+        public CircleImageView icon;
+        public TextView name;
+        public TextView address;
+        public TextView content;
+        public TextView join;
+        public ImageView replay;
+        public LinearLayout menu_lin;
+        public MyGridView gridView;
+    }
+
+    class ViewHolder1 {
+        public CircleImageView icon;
+        public TextView name;
+        public TextView content;
+        public TextView time;
+        public TextView reply;
+    }
 
     /**
      * 弹出menu菜单
@@ -175,7 +190,7 @@ public class GroupDetailAdapter extends BaseAdapter {
         View comment = layout
                 .findViewById(R.id.groupdetail_comment);
 
-        int screenWidth = ((GroupDetailActivity)context).getWindowManager().getDefaultDisplay()
+        int screenWidth = ((PPDetailActivity)context).getWindowManager().getDefaultDisplay()
                 .getWidth();
         // 下面我们要考虑了，我怎样将我的layout加入到PopupWindow中呢？？？很简单
         menuWindow = new PopupWindow(layout, LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -191,30 +206,9 @@ public class GroupDetailAdapter extends BaseAdapter {
         menuWindow.showAsDropDown(linearLayout,DensityUtil.dip2px(context, 170),DensityUtil.dip2px(context, -25));
 //        menuWindow.showAtLocation(linearLayout,  Gravity.RIGHT,
 //                DensityUtil.dip2px(context, 45),
-//                (int) (rep.getY()-DensityUtil.dip2px(context, 20))); // 设置layout在PopupWindow中显示的位置
+//                (int) (rep.getY()-DensityUtil.dip2px(context,20))); // 设置layout在PopupWindow中显示的位置
         // 如何获取我们main中的控件呢？也很简单
         // }
-    }
-
-    class ViewHolder {
-        public CircleImageView icon;
-        public TextView name;
-        public TextView address;
-        public TextView num;
-        public TextView time;
-        public TextView content;
-        public TextView join;
-        public LinearLayout menu_lin;
-        public ImageView replay;
-        public MyGridView gridView;
-    }
-
-    class ViewHolder1 {
-        public CircleImageView icon;
-        public TextView name;
-        public TextView content;
-        public TextView time;
-        public TextView reply;
     }
 
 

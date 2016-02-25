@@ -134,26 +134,17 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId==R.id.title_rb_lef){
-                    pageNo=1;
-                    flag=0;
-                    getInfo(pageNo,flag);
-                }else{
-                    pageNo=1;
-                    flag=1;
-                    getInfo(pageNo,flag);
+                if (checkedId == R.id.title_rb_lef) {
+                    pageNo = 1;
+                    flag = 0;
+                    getInfo(pageNo, flag);
+                } else {
+                    pageNo = 1;
+                    flag = 1;
+                    getInfo(pageNo, flag);
                 }
             }
         });
-
-        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(UsedActivity.this, GroupDetailActivity.class);
-                startActivity(intent);
-            }
-        });
-
         customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -178,6 +169,7 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(UsedActivity.this,UsedDetailActivity.class);
+                intent.putExtra("id",entities.get(position-1).id);
                 startActivity(intent);
 
             }
@@ -204,7 +196,9 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.used_serch:
-
+                Intent intent5=new Intent(UsedActivity.this, SerchSpeechActivity.class);
+                intent5.putExtra("modelFlag",1);
+                startActivity(intent5);
                 break;
 
         }
@@ -213,7 +207,7 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
 
 
     /**
-     * 获取楼语列表
+     *
      */
     private void getInfo(final int page,int flag) {
         RequestParams rp = new RequestParams();
