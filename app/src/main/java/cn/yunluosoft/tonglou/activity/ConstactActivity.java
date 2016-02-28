@@ -107,6 +107,8 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
 
     private int flag;
 
+    private View head;
+
     private String sname = "";
 
     private Handler handler = new Handler() {
@@ -167,6 +169,7 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
         customListView = (CustomListView) findViewById(R.id.constact_detail_listview);
         back = (ImageView) findViewById(R.id.constact_detail_back);
         title = (TextView) findViewById(R.id.constact_detail_title);
+        head = findViewById(R.id.constact_detail_head);
         remark = (ImageView) findViewById(R.id.constact_detail_remark);
         pro = findViewById(R.id.constact_detail_pro);
         gv = findViewById(R.id.constact_detail_gv);

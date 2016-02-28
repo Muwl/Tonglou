@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 	private int mFlag = 0;
 
-	private TextView floornum;
+//	private TextView floornum;
 
 	private MyBroadCastReceiver broadCastReceiver;
 
@@ -166,18 +166,18 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 		constact = (RadioButton) findViewById(R.id.main_bottom_contact);
 		person = (RadioButton) findViewById(R.id.main_bottom_person);
 		readNo = (TextView) findViewById(R.id.main_bottom_number);
-		floornum = (TextView) findViewById(R.id.main_bottom_floornum);
+//		floornum = (TextView) findViewById(R.id.main_bottom_floornum);
 
 		width = DensityUtil.getScreenWidth(this);
 		LayoutParams params = (LayoutParams) readNo.getLayoutParams();
-		params.leftMargin = width * 2 / 5 - DensityUtil.dip2px(this, 34);
+		params.leftMargin = width * 1 / 4- DensityUtil.dip2px(this, 38);
 		params.topMargin = DensityUtil.dip2px(this, 3);
 		readNo.setLayoutParams(params);
 
-		LayoutParams params2 = (LayoutParams) floornum.getLayoutParams();
-		params2.leftMargin = width * 1 / 5 - DensityUtil.dip2px(this, 34);
-		params2.topMargin = DensityUtil.dip2px(this, 3);
-		floornum.setLayoutParams(params2);
+//		LayoutParams params2 = (LayoutParams) floornum.getLayoutParams();
+//		params2.leftMargin = width * 1 / 5 - DensityUtil.dip2px(this, 34);
+//		params2.topMargin = DensityUtil.dip2px(this, 3);
+//		floornum.setLayoutParams(params2);
 
 		// initFragment();
 		group.check(R.id.main_bottom_floorSpeech);
@@ -292,50 +292,44 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 	}
 
-//	@Override
-//	protected void onResume() {
-//		super.onResume();
-//		LogManager.LogShow("-------", "}}}}}}}}}}}}}}}", LogManager.ERROR);
-//
-//		mFlag = 1;
-//		if (!isConflict && !isCurrentAccountRemoved) {
-//			updateUnreadLabel();
-//			// updateUnreadAddressLable();
-//			EMChatManager.getInstance().activityResumed();
-//		}
-//
-//		// unregister this event listener when this activity enters the
-//		// background
-//		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
-//				.getInstance();
-//		sdkHelper.getNotifier().reset();
-//		sdkHelper.pushActivity(this);
-//		// register the event listener when enter the foreground
-//		EMChatManager.getInstance().registerEventListener(
-//				this,
-//				new EMNotifierEvent.Event[] {
-//						EMNotifierEvent.Event.EventNewMessage,
-//						EMNotifierEvent.Event.EventOfflineMessage,
-//						EMNotifierEvent.Event.EventConversationListChanged });
-//
-//		mFlag = 1;
-//
-//		if (pageIndex == 2) {
-//			group.check(R.id.main_bottom_withfloor);
-//			try {
-//				popAllFragmentsExceptTheBottomOne();
-//				FragmentTransaction ft1 = fMgr.beginTransaction();
-//				ft1.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
-//				WithFloorFragment withFloorFragment = new WithFloorFragment();
-//				ft1.add(R.id.main_fragment, withFloorFragment, "WithFloorFragment");
-//				ft1.addToBackStack("WithFloorFragment");
-//				ft1.commitAllowingStateLoss();
-//			} catch (Exception e) {
-//			}
-//		}
-//
-//		onrefush();
-//	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		LogManager.LogShow("-------", "}}}}}}}}}}}}}}}", LogManager.ERROR);
+
+		mFlag = 1;
+		if (!isConflict && !isCurrentAccountRemoved) {
+			updateUnreadLabel();
+			// updateUnreadAddressLable();
+			EMChatManager.getInstance().activityResumed();
+		}
+
+		// unregister this event listener when this activity enters the
+		// background
+		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
+				.getInstance();
+		sdkHelper.getNotifier().reset();
+		sdkHelper.pushActivity(this);
+		// register the event listener when enter the foreground
+		EMChatManager.getInstance().registerEventListener(
+				this,
+				new EMNotifierEvent.Event[] {
+						EMNotifierEvent.Event.EventNewMessage,
+						EMNotifierEvent.Event.EventOfflineMessage,
+						EMNotifierEvent.Event.EventConversationListChanged });
+
+		mFlag = 1;
+
+		if (pageIndex == 1) {
+			group.check(R.id.main_bottom_floorSpeech);
+			try {
+				popAllFragmentsExceptTheBottomOne();
+			} catch (Exception e) {
+			}
+		}
+
+		onrefush();
+	}
 
 	private void init() {
 		// setContactListener监听联系人的变化等
@@ -408,38 +402,38 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	}
 
 	public void onrefush() {
-		FloorSpeechFragment fragment = (FloorSpeechFragment) fMgr
-				.findFragmentByTag("FloorSpeechFragment");
-		// 当前页面如果为聊天历史页面，刷新此页面
-		if (fragment != null) {
-			//fragment.onrefush();
-		}
-
-		if (ShareDataTool.getNum(this) > 0) {
-			floornum.setVisibility(View.VISIBLE);
-			floornum.setText(String.valueOf(ShareDataTool.getNum(this)));
-			LayoutParams params2 = (LayoutParams) floornum.getLayoutParams();
-			params2.leftMargin = width * 1 / 5 - DensityUtil.dip2px(this, 34);
-			params2.topMargin = DensityUtil.dip2px(this, 3);
-			params2.width = DensityUtil.dip2px(this, 16);
-			params2.height = DensityUtil.dip2px(this, 16);
-			floornum.setLayoutParams(params2);
-			return;
-		}
-
-		if (ShareDataTool.getGetNum(this) > 0) {
-			floornum.setVisibility(View.VISIBLE);
-			floornum.setText("");
-			LayoutParams params2 = (LayoutParams) floornum.getLayoutParams();
-			params2.leftMargin = width * 1 / 5 - DensityUtil.dip2px(this, 34);
-			params2.topMargin = DensityUtil.dip2px(this, 3);
-			params2.width = DensityUtil.dip2px(this, 10);
-			params2.height = DensityUtil.dip2px(this, 10);
-			floornum.setLayoutParams(params2);
-			return;
-
-		}
-		floornum.setVisibility(View.GONE);
+//		FloorSpeechFragment fragment = (FloorSpeechFragment) fMgr
+//				.findFragmentByTag("FloorSpeechFragment");
+//		// 当前页面如果为聊天历史页面，刷新此页面
+//		if (fragment != null) {
+//			fragment.onrefush();
+//		}
+//
+//		if (ShareDataTool.getNum(this) > 0) {
+//			floornum.setVisibility(View.VISIBLE);
+//			floornum.setText(String.valueOf(ShareDataTool.getNum(this)));
+//			LayoutParams params2 = (LayoutParams) floornum.getLayoutParams();
+//			params2.leftMargin = width * 1 / 5 - DensityUtil.dip2px(this, 34);
+//			params2.topMargin = DensityUtil.dip2px(this, 3);
+//			params2.width = DensityUtil.dip2px(this, 16);
+//			params2.height = DensityUtil.dip2px(this, 16);
+//			floornum.setLayoutParams(params2);
+//			return;
+//		}
+//
+//		if (ShareDataTool.getGetNum(this) > 0) {
+//			floornum.setVisibility(View.VISIBLE);
+//			floornum.setText("");
+//			LayoutParams params2 = (LayoutParams) floornum.getLayoutParams();
+//			params2.leftMargin = width * 1 / 5 - DensityUtil.dip2px(this, 34);
+//			params2.topMargin = DensityUtil.dip2px(this, 3);
+//			params2.width = DensityUtil.dip2px(this, 10);
+//			params2.height = DensityUtil.dip2px(this, 10);
+//			floornum.setLayoutParams(params2);
+//			return;
+//
+//		}
+//		floornum.setVisibility(View.GONE);
 
 		// if (pageIndex == 1) {
 		// FloorSpeechFragment fragment = (FloorSpeechFragment) fMgr
@@ -545,12 +539,14 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 			public void run() {
 				// 刷新bottom bar消息未读数
 				updateUnreadLabel();
-				if (pageIndex == 2) {
-					WithFloorFragment fragment = (WithFloorFragment) fMgr
-							.findFragmentByTag("WithFloorFragment");
+				if (pageIndex == 1) {
+					FloorSpeechFragment fragment = (FloorSpeechFragment) fMgr
+							.findFragmentByTag("FloorSpeechFragment");
+					LogManager.LogShow("-----------","dddddddddddddd",LogManager.ERROR);
 					// 当前页面如果为聊天历史页面，刷新此页面
 					if (fragment != null) {
-						//fragment.refush();
+						LogManager.LogShow("-----------","xxxxxxxxxxxxxxxxxxxxxxxxx",LogManager.ERROR);
+						fragment.refush();
 					}
 				}
 			}

@@ -21,6 +21,7 @@
             android:src="@mipmap/groupdetail_atten"/>
 
         <TextView
+            android:id="@+id/groupdetail_attentext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

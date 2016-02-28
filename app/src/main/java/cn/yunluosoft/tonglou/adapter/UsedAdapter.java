@@ -2,6 +2,7 @@ package cn.yunluosoft.tonglou.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -15,13 +16,17 @@ import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ChatActivity;
 import cn.yunluosoft.tonglou.activity.UsedActivity;
 import cn.yunluosoft.tonglou.activity.fragment.WithFloorFragment;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
+import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
+import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -84,7 +89,15 @@ public class UsedAdapter extends BaseAdapter {
         holder.bluebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context,
+                        ChatActivity.class);
+                MessageInfo info = new MessageInfo(
+                        ShareDataTool.getUserId(context), entities.get(position).publishUserId,
+                        ShareDataTool.getUserId(context), entities.get(position).publishUserImUsername,
+                        ShareDataTool.getIcon(context),
+                        entities.get(position).publishUserIcon,ShareDataTool.getNickname(context), entities.get(position).publishUserNickname);
+                intent.putExtra("info", (Serializable) info);
+                context.startActivity(intent);
             }
         });
         if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)){

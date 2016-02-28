@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,14 +27,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ChatActivity;
 import cn.yunluosoft.tonglou.activity.PPDetailActivity;
 import cn.yunluosoft.tonglou.activity.PhotoShowActivity;
 import cn.yunluosoft.tonglou.activity.UsedDetailActivity;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
+import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.model.ReplayEntity;
 import cn.yunluosoft.tonglou.model.User;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.LogManager;
+import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 import cn.yunluosoft.tonglou.view.MyGridView;
 import cn.yunluosoft.tonglou.view.MyListView;
@@ -176,11 +180,46 @@ public class UsedDetailAdapter extends BaseAdapter {
                 }
             });
 
+            holder.blue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context,
+                            ChatActivity.class);
+                    MessageInfo messageInfo=new MessageInfo();
+                    messageInfo.receiverHeadUrl=entity.publishUserIcon;
+                    messageInfo.receiverImUserName=entity.publishUserImUsername;
+                    messageInfo.receiverNickName=entity.publishUserNickname;
+                    messageInfo.receiverUserId=entity.publishUserId;
+                    messageInfo.senderHeadUrl= ShareDataTool.getIcon(context);
+                    messageInfo.senderImUserName=ShareDataTool.getImUsername(context);
+                    messageInfo.senderUserId= ShareDataTool.getUserId(context);
+                    messageInfo.senderNickName= ShareDataTool.getNickname(context);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("info", messageInfo);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
+
         } else if(type == type1) {
             bitmapUtils.display(holder1.icon, entities.get(position-1).publishUserIcon);
-            holder1.name.setText(entities.get(position-1).publishUserNickname);
+            holder1.name.setText(entities.get(position - 1).publishUserNickname);
             holder1.content.setText(entities.get(position-1).content);
             holder1.time.setText(entities.get(position-1).createDate);
+
+            holder1.reply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (menuWindow == null || menuWindow.isShowing() == false) {
+                        menu_press();
+                        // menu_display = true;
+                    } else {
+                        // menu_display = false;
+                        menuWindow.dismiss();
+
+                    }
+                }
+            });
         }
         return convertView;
     }
@@ -220,7 +259,29 @@ public class UsedDetailAdapter extends BaseAdapter {
                 .findViewById(R.id.groupdetail_atten);
         View comment = layout
                 .findViewById(R.id.groupdetail_comment);
-
+        TextView attentext= (TextView) layout.findViewById(R.id.groupdetail_attentext);
+        if ("0".equals(entity.isPraise)){
+            attentext.setText("已赞");
+        }else{
+            attentext.setText("赞");
+        }
+        atten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuWindow.dismiss();
+                handler.sendEmptyMessage(1002);
+            }
+        });
+        comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuWindow.dismiss();
+                Message message=new Message();
+                message.what=1005;
+                message.arg1=-1;
+                handler.sendMessage(message);
+            }
+        });
         int screenWidth = ((UsedDetailActivity)context).getWindowManager().getDefaultDisplay()
                 .getWidth();
         // 下面我们要考虑了，我怎样将我的layout加入到PopupWindow中呢？？？很简单
@@ -237,7 +298,9 @@ public class UsedDetailAdapter extends BaseAdapter {
 //        int[] location = new int[2];
 //        rep.getG(location);
 //        menuWindow.showAsDropDown(linearLayout,(DensityUtil.getScreenWidth(context)-DensityUtil.dip2px(context, 100)),DensityUtil.dip2px(context, -18));
-        menuWindow.showAsDropDown(linearLayout,DensityUtil.dip2px(context, 170),DensityUtil.dip2px(context, -25));
+        layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int xOffset = -(layout.getMeasuredWidth() + rep.getWidth());
+        menuWindow.showAsDropDown(rep,xOffset,DensityUtil.dip2px(context, -25));
 //        menuWindow.showAtLocation(linearLayout,  Gravity.RIGHT,
 //                DensityUtil.dip2px(context, 45),
 //                (int) (linearLayout.getTop()-DensityUtil.dip2px(context,20))); // 设置layout在PopupWindow中显示的位置

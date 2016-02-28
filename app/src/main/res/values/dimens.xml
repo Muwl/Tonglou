@@ -26,7 +26,7 @@
     <dimen name="image_thumbnail_spacing">1dp</dimen>
     
     
-    <dimen name="margin_chat_margin">18dp</dimen>
+    <dimen name="margin_chat_margin">12dp</dimen>
     
     
 

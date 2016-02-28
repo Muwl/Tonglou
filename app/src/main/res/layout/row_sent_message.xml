@@ -17,14 +17,25 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_chat_activity" >
 
+        <cn.yunluosoft.tonglou.view.CircleImageView
+            android:id="@+id/iv_userhead"
+            android:layout_width="@dimen/size_avatar"
+            android:layout_height="@dimen/size_avatar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/margin_chat_activity"
+            android:background="@mipmap/icon_default"
+            android:scaleType="fitXY" />
+
+
         <TextView
             android:id="@+id/tv_chatcontent"
             style="@style/chat_content_date_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/margin_chat_margin"
             android:autoLink="web"
+            android:layout_toLeftOf="@id/iv_userhead"
             android:background="@drawable/chatto_bg"
             android:gravity="left|center"
             android:lineSpacingExtra="2dp"

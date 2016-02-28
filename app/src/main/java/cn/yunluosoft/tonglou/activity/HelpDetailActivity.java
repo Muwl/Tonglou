@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,14 +26,17 @@ import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.GroupDetailAdapter;
 import cn.yunluosoft.tonglou.adapter.HelpDetailAdapter;
 import cn.yunluosoft.tonglou.adapter.PPDetailAdapter;
+import cn.yunluosoft.tonglou.model.CommentState;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.GroupDetailState;
 import cn.yunluosoft.tonglou.model.ReplayEntity;
 import cn.yunluosoft.tonglou.model.ReplayState;
 import cn.yunluosoft.tonglou.model.ReturnState;
+import cn.yunluosoft.tonglou.model.User;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
+import cn.yunluosoft.tonglou.utils.TimeUtils;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
@@ -55,7 +59,7 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
 
     private HelpDetailAdapter adapter;
 
-    private EditText edit;
+    private EditText sendEdit;
 
     private TextView send;
 
@@ -73,10 +77,30 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
 
     private List<ReplayEntity> entities;
 
+    private int flagIndex=-1;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1002:
+                    AddPraise();
+                    break;
 
+                case 1005:
+                    flagIndex=msg.arg1;
+                    if (flagIndex==-1){
+                        sendEdit.setHint("请输入评论内容");
+                    }else{
+                        sendEdit.setHint("回复"+entities.get(flagIndex).publishUserNickname);
+                    }
+                    imm.showSoftInput(sendEdit, InputMethodManager.SHOW_FORCED);
+//                    if (discussDialog==null){
+//                        discussDialog=new DiscussDialog(GroupDetailActivity.this,handler,-1,"");
+//                    }
+
+                    break;
+            }
         }
     };
 
@@ -93,7 +117,7 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
         title= (TextView) findViewById(R.id.title_title);
         share= (ImageView) findViewById(R.id.title_share);
         customListView= (CustomListView) findViewById(R.id.helpdetail_list);
-        edit= (EditText) findViewById(R.id.helpdetail_edit);
+        sendEdit= (EditText) findViewById(R.id.helpdetail_edit);
         send= (TextView) findViewById(R.id.helpdetail_send);
         pro=findViewById(R.id.helpdetail_pro);
 
@@ -142,6 +166,11 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
                 break;
 
             case R.id.helpdetail_send:
+                if (ToosUtils.isTextEmpty(sendEdit)){
+                    ToastUtils.displayShortToast(HelpDetailActivity.this,"内容不能为空！");
+                    return;
+                }
+                sendComment(flagIndex,ToosUtils.getTextContent(sendEdit));
 
                 break;
 
@@ -345,4 +374,178 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
         });
 
     }
+
+    /**
+     * 添加或者取消点赞
+     * flag 0 代表添加点赞 1代表取消点赞
+     */
+    private void AddPraise() {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("dynamicId", entity.id);
+        String url="/v1_1_0/dynamic/praise";
+        if ("0".equals(entity.isPraise)){
+            url="/v1_1_0/dynamic/cancelPraise";
+        }else{
+            url="/v1_1_0/dynamic/praise";
+        }
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(HelpDetailActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(HelpDetailActivity.this,
+                                        "操作成功");
+                                if ("0".equals(entity.isPraise)){
+                                    entity.isPraise=1+"";
+                                    for (int i=0;i<entity.praiseUser.size();i++){
+                                        if (entity.praiseUser.get(i).id.equals( ShareDataTool.getUserId(HelpDetailActivity.this))){
+                                            entity.praiseUser.remove(i);
+                                            break;
+                                        }
+                                    }
+                                }else{
+                                    entity.isPraise=0+"";
+                                    User user=new User();
+                                    user.id=ShareDataTool.getUserId(HelpDetailActivity.this);
+                                    user.icon=ShareDataTool.getIcon(HelpDetailActivity.this);
+                                    entity.praiseUser.add(user);
+                                }
+                                adapter.notifyDataSetChanged();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        HelpDetailActivity.this, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(HelpDetailActivity.this);
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        HelpDetailActivity.this,
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(HelpDetailActivity.this);
+                        }
+
+                    }
+                });
+
+    }
+
+    /**
+     *  动态评论/回复保存
+     */
+    private void sendComment(final int position, final String temp) {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        if (position==-1){
+            rp.addBodyParameter("parentId", entity.id);
+            rp.addBodyParameter("targetUserId",entity.publishUserId);
+        }else{
+            rp.addBodyParameter("parentId", entities.get(position).parentId);
+            rp.addBodyParameter("targetUserId",entities.get(position).publishUserId);
+
+        }
+        rp.addBodyParameter("dynamicId",entity.id);
+        rp.addBodyParameter("content",temp);
+        rp.addBodyParameter("dynamicId", entity.id);
+        String url="/v1_1_0/dynamicComment/save";
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(HelpDetailActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(HelpDetailActivity.this,
+                                        "操作成功");
+                                CommentState commentState=gson.fromJson(arg0.result,CommentState.class);
+                                if (position==-1){
+                                    ReplayEntity replayEntity=new ReplayEntity();
+                                    replayEntity.id=commentState.result.commentId;
+                                    replayEntity.content=temp;
+                                    replayEntity.parentId="-1";
+                                    replayEntity.publishUserIcon=ShareDataTool.getIcon(HelpDetailActivity.this);
+                                    replayEntity.publishUserId=ShareDataTool.getUserId(HelpDetailActivity.this);
+                                    replayEntity.publishUserNickname=ShareDataTool.getNickname(HelpDetailActivity.this);
+                                    replayEntity.createDate= TimeUtils.getDate();
+                                    entities.add(0, replayEntity);
+                                }else{
+                                    ReplayEntity replayEntity=new ReplayEntity();
+                                    replayEntity.id=commentState.result.commentId;
+                                    replayEntity.content=temp;
+                                    replayEntity.parentId="-1";
+                                    replayEntity.publishUserIcon=ShareDataTool.getIcon(HelpDetailActivity.this);
+                                    replayEntity.publishUserId = ShareDataTool.getUserId(HelpDetailActivity.this);
+                                    replayEntity.publishUserNickname = ShareDataTool.getNickname(HelpDetailActivity.this);
+                                    replayEntity.targetUserId=entities.get(position).publishUserId;
+                                    replayEntity.targetUserNickname=entities.get(position).publishUserNickname;
+                                    replayEntity.createDate= TimeUtils.getDate();
+                                    entities.add(position + 1, replayEntity);
+                                }
+                                flagIndex=-1;
+                                sendEdit.setHint("请输入评论内容");
+                                sendEdit.setText("");
+                                imm.hideSoftInputFromWindow(sendEdit.getWindowToken(), 0);
+                                adapter.notifyDataSetChanged();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        HelpDetailActivity.this, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(HelpDetailActivity.this);
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        HelpDetailActivity.this,
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(HelpDetailActivity.this);
+                        }
+
+                    }
+                });
+
+    }
+
 }

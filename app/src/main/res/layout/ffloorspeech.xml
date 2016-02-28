@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/activity_bg"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <include
@@ -14,13 +14,17 @@
         android:layout_height="match_parent">
 
 
-    <ListView
+    <cn.yunluosoft.tonglou.view.swipelist.SwipeMenuListView
         android:id="@+id/ffloorspeech_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@color/transparent"
+        android:scrollbars="none"
         android:dividerHeight="0dp"
-        android:scrollbars="none"/>
+        android:divider="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+        <include
+            android:id="@+id/ffloorspeech_empty"
+            layout="@layout/empty"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/ffloorspeech_pro"

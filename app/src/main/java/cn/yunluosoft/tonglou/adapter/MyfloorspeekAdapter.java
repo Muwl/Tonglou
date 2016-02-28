@@ -59,7 +59,7 @@ public class MyfloorspeekAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder=null;
         if (convertView==null){
             convertView=View.inflate(context, R.layout.myfloorspeech_item,null);
@@ -83,17 +83,19 @@ public class MyfloorspeekAdapter extends BaseAdapter {
         holder.bluebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Message message=new Message();
+                message.what=1112;
+                message.arg1=position;
+                handler.sendMessage(message);
             }
         });
-        if ("0".equals(entities.get(position).isInGroup)){
-            holder.bluetext.setText("聊聊");
-            holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
-        }else{
+        if ("0".equals(entities.get(position).modelType)&& "1".equals(entities.get(position).isInGroup)){
             holder.bluetext.setText("进群聊");
             holder.blueimage.setImageResource(R.mipmap.add_chat);
+        }else{
+            holder.bluetext.setText("聊聊");
+            holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
         }
-
         LogManager.LogShow("----",flag+"----------",LogManager.ERROR);
 
         if (flag==0){

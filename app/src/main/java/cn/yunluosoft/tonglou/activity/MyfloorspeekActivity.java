@@ -1,9 +1,11 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -22,8 +24,10 @@ import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.MyfloorspeekAdapter;
+import cn.yunluosoft.tonglou.dialog.CustomeDialog;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.FloorSpeechState;
+import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
@@ -66,7 +70,55 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 40:
+                    int position=msg.arg1;
+                    int flag=msg.arg2;
+                    if (flag==-1){
+                        CancelAtten(position);
+                    }else{
+                        DelPublish(position);
+                    }
 
+                    break;
+
+                case 1112:
+                    int position1=msg.arg1;
+                    if ("0".equals(entities.get(position1).modelType)&& "1".equals(entities.get(position1).isInGroup)){
+                        AddJoin(position1);
+                    }else if ("0".equals(entities.get(position1).modelType)){
+                        Intent intent = new Intent(MyfloorspeekActivity.this,
+                                ChatActivity.class);
+                        MessageInfo messageInfo=new MessageInfo();
+                        messageInfo.receiverHeadUrl=entities.get(position1).publishUserIcon;
+                        messageInfo.receiverImUserName=entities.get(position1).imGroupId;
+                        messageInfo.receiverNickName=entities.get(position1).groupName;
+                        messageInfo.receiverUserId=entities.get(position1).imGroupId;
+                        intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("info", messageInfo);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(MyfloorspeekActivity.this,
+                                ChatActivity.class);
+                        MessageInfo messageInfo=new MessageInfo();
+                        messageInfo.receiverHeadUrl=entities.get(position1).publishUserIcon;
+                        messageInfo.receiverImUserName=entities.get(position1).publishUserImUsername;
+                        messageInfo.receiverNickName=entities.get(position1).publishUserNickname;
+                        messageInfo.receiverUserId=entities.get(position1).publishUserId;
+                        messageInfo.senderNickName=ShareDataTool.getNickname(MyfloorspeekActivity.this);
+                        messageInfo.senderHeadUrl=ShareDataTool.getIcon(MyfloorspeekActivity.this);
+                        messageInfo.senderUserId=ShareDataTool.getUserId(MyfloorspeekActivity.this);
+                        messageInfo.senderImUserName=ShareDataTool.getImUsername(MyfloorspeekActivity.this);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("info", messageInfo);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+
+                    break;
+            }
         }
     };
 
@@ -105,6 +157,38 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
                     adapter.setFlag(flag);
                     getAtten(pageNo, flag);
                 }
+            }
+        });
+
+        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = null;
+                if ("0".equals(entities.get(position-1).modelType)) {
+                    intent = new Intent(MyfloorspeekActivity.this, GroupDetailActivity.class);
+                } else if ("1".equals(entities.get(position-1).modelType)) {
+                    intent = new Intent(MyfloorspeekActivity.this, UsedDetailActivity.class);
+                } else if ("2".equals(entities.get(position-1).modelType)) {
+                    intent = new Intent(MyfloorspeekActivity.this, PPDetailActivity.class);
+                } else if ("3".equals(entities.get(position-1).modelType)) {
+                    intent = new Intent(MyfloorspeekActivity.this, HelpDetailActivity.class);
+                }
+                intent.putExtra("id", entities.get(position-1).id);
+                startActivity(intent);
+            }
+        });
+
+        customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (flag==0){
+                    CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此关注？",position-1,-1);
+                }else{
+                    CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此发布？",position-1,-2);
+                }
+
+                return true;
             }
         });
 
@@ -303,7 +387,7 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
      * 添加或者取消关注
      *
      */
-    private void AddAtten(final int position) {
+    private void CancelAtten(final int position) {
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("dynamicId", entities.get(position).id);
@@ -338,6 +422,126 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
                                 ToastUtils.displayShortToast(MyfloorspeekActivity.this,
                                         String.valueOf(state.result));
                                 entities.remove(position);
+                                adapter.notifyDataSetChanged();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        MyfloorspeekActivity.this, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(MyfloorspeekActivity.this);
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        MyfloorspeekActivity.this,
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(MyfloorspeekActivity.this);
+                        }
+
+                    }
+                });
+
+    }
+
+
+    /**
+     * 删除发布
+     *
+     */
+    private void DelPublish(final int position) {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("dynamicId", entities.get(position).id);
+        String url="/v1_1_0/dynamic/delDynamic";
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(MyfloorspeekActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(MyfloorspeekActivity.this,
+                                        String.valueOf(state.result));
+                                entities.remove(position);
+                                adapter.notifyDataSetChanged();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        MyfloorspeekActivity.this, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(MyfloorspeekActivity.this);
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        MyfloorspeekActivity.this,
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(MyfloorspeekActivity.this);
+                        }
+
+                    }
+                });
+
+    }
+
+    /**
+     *参加活动
+
+     */
+    private void AddJoin(final int position) {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("dynamicId", entities.get(position).id);
+        String url="/v1_1_0/dynamic/joinActivity";
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(MyfloorspeekActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(MyfloorspeekActivity.this,
+                                        "操作成功");
+                                entities.get(position).isInGroup=0+"";
+                                entities.get(position).groupNum=String.valueOf(Integer.valueOf(entities.get(position).groupNum)+1);
                                 adapter.notifyDataSetChanged();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(

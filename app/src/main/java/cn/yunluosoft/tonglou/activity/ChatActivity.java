@@ -81,7 +81,9 @@ import cn.yunluosoft.tonglou.easemob.chatuidemo.widget.ExpandGridView;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.widget.PasteEditText;
 import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Bimp;
+import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.MyApplication;
+import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.utils.album.FileUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
@@ -162,7 +164,6 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 	private View buttonSetModeVoice;
 	private View buttonSend;
 	private View buttonPressToSpeak;
-	// private ViewPager expressionViewpager;
 	private LinearLayout emojiIconContainer;
 	private LinearLayout btnContainer;
 	private ImageView locationImgview;
@@ -196,7 +197,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 	private boolean haveMoreData = true;
 	private Button btnMore;
 	public String playMsgId;
-	private CircleImageView icon;
+//	private CircleImageView icon;
 	private BitmapUtils bitmapUtils;
 
 	private SwipeRefreshLayout swipeRefreshLayout;
@@ -219,7 +220,6 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 					for (int j = 0; j < filesList.size(); j++) {
 						sendPicture(filesList.get(j).getAbsolutePath());
 					}
-					// addphoto(filesList);
 				}
 
 				break;
@@ -234,8 +234,6 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 				Intent intent = new Intent(ChatActivity.this,
 						AlbumImageGridActivity.class);
 				startActivityForResult(intent, REQUEST_CODE_LOCAL);
-				// 相册
-				// selectPicFromLocal(); // 点击图片图标
 				break;
 
 			default:
@@ -277,7 +275,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 	protected void initView() {
 		recordingContainer = findViewById(R.id.recording_container);
 		back = (ImageView) findViewById(R.id.title_back);
-		icon = (CircleImageView) findViewById(R.id.title_image);
+//		icon = (CircleImageView) findViewById(R.id.title_image);
 		micImage = (ImageView) findViewById(R.id.mic_image);
 		recordingHint = (TextView) findViewById(R.id.recording_hint);
 		listView = (ListView) findViewById(R.id.list);
@@ -454,10 +452,9 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 			}
 		});
 
-		icon.setVisibility(View.VISIBLE);
+//		icon.setVisibility(View.VISIBLE);
 		iv_emoticons_normal.setOnClickListener(this);
 		iv_emoticons_checked.setOnClickListener(this);
-		// position = getIntent().getIntExtra("position", -1);
 		clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 		manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		getWindow().setSoftInputMode(
@@ -489,20 +486,20 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 				// toChatUsername = getIntent().getStringExtra("userId");
 				((TextView) findViewById(R.id.title_title))
 						.setText(messageInfo.receiverNickName);
-				bitmapUtils.display(icon, messageInfo.receiverHeadUrl);
-
-				icon.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
+//				bitmapUtils.display(icon, messageInfo.receiverHeadUrl);
+//
+//				icon.setOnClickListener(new OnClickListener() {
+//
+//					@Override
+//					public void onClick(View v) {
 //						Intent intent = new Intent(ChatActivity.this,
 //								ConstactActivity.class);
 //						intent.putExtra("id", messageInfo.receiverUserId);
 //						intent.putExtra("name", messageInfo.receiverNickName);
 //						intent.putExtra("flag", 155);
 //						startActivityForResult(intent, 8226);
-					}
-				});
+//					}
+//				});
 
 			}
 			// toChatUsername = getIntent().getStringExtra("userId");
@@ -522,6 +519,23 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 			// UserUtils.setUserNick(toChatUsername,
 			// (TextView) findViewById(R.id.title_title));
 			// }
+		}else{
+			// 群聊
+			messageInfo=(MessageInfo) getIntent().getSerializableExtra("info");
+			MessageInfo info=new MessageInfo(ShareDataTool.getUserId(this), messageInfo.receiverUserId, ShareDataTool.getImUsername(this), messageInfo.receiverImUserName,ShareDataTool.getIcon(this), messageInfo.receiverHeadUrl, ShareDataTool.getNickname(this), messageInfo.receiverNickName);
+			messageInfo=info;
+			toChatUsername = messageInfo.receiverImUserName;
+			LogManager.LogShow("222222", "----------", LogManager.ERROR);
+			group = EMGroupManager.getInstance().getGroup(toChatUsername);
+			((TextView) findViewById(R.id.title_title)).setText(messageInfo.receiverNickName);
+			ImageView groupchat= (ImageView) findViewById(R.id.title_groupchat);
+			groupchat.setVisibility(View.VISIBLE);
+			groupchat.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+
+				}
+			});
 		}
 
 		// for chatroom type, we only init conversation and create view adapter

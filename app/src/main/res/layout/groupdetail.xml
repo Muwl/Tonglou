@@ -29,8 +29,8 @@
                 android:dividerHeight="0dp"
                 android:scrollbars="none"></cn.yunluosoft.tonglou.view.CustomListView>
 
-
             <RelativeLayout
+                android:id="@+id/groupdetail_sendview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/activity_bg"
@@ -68,6 +68,8 @@
 
                     />
             </RelativeLayout>
+
+
         </LinearLayout>
 
         <include

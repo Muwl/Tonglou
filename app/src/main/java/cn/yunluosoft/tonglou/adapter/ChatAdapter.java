@@ -53,6 +53,7 @@ import android.widget.Toast;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.AlertDialog;
 import cn.yunluosoft.tonglou.activity.ChatActivity;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.activity.ContextMenu;
 import cn.yunluosoft.tonglou.activity.ShowBigImage;
 import cn.yunluosoft.tonglou.easemob.applib.controller.HXSDKHelper;
@@ -66,6 +67,9 @@ import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.ImageCache;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.ImageUtils;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.SmileUtils;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.UserUtils;
+import cn.yunluosoft.tonglou.model.MessageInfo;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
+import cn.yunluosoft.tonglou.view.CircleImageView;
 
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
@@ -88,6 +92,7 @@ import com.easemob.util.EMLog;
 import com.easemob.util.FileUtils;
 import com.easemob.util.LatLng;
 import com.easemob.util.TextFormater;
+import com.lidroid.xutils.BitmapUtils;
 
 public class ChatAdapter extends BaseAdapter {
 
@@ -130,6 +135,8 @@ public class ChatAdapter extends BaseAdapter {
 
 	private Context context;
 
+	private BitmapUtils bitmapUtils;
+
 	private Map<String, Timer> timers = new Hashtable<String, Timer>();
 
 	public ChatAdapter(Context context, String username, int chatType) {
@@ -137,6 +144,7 @@ public class ChatAdapter extends BaseAdapter {
 		this.context = context;
 		inflater = LayoutInflater.from(context);
 		activity = (Activity) context;
+		bitmapUtils = new BitmapUtils(context);
 		this.conversation = EMChatManager.getInstance().getConversation(
 				username);
 	}
@@ -339,6 +347,15 @@ public class ChatAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final EMMessage message = getItem(position);
 		ChatType chatType = message.getChatType();
+		MessageInfo messageInfo = null;
+		try {
+			messageInfo = ToosUtils.getMessageInfo(message);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		if (messageInfo == null) {
+			messageInfo = new MessageInfo();
+		}
 		final ViewHolder holder;
 		if (convertView == null) {
 			holder = new ViewHolder();
@@ -347,8 +364,8 @@ public class ChatAdapter extends BaseAdapter {
 				try {
 					holder.iv = ((ImageView) convertView
 							.findViewById(R.id.iv_sendPicture));
-					// holder.iv_avatar = (ImageView) convertView
-					// .findViewById(R.id.iv_userhead);
+					 holder.iv_avatar = (CircleImageView) convertView
+					 .findViewById(R.id.iv_userhead);
 					holder.tv = (TextView) convertView
 							.findViewById(R.id.percentage);
 					holder.pb = (ProgressBar) convertView
@@ -367,8 +384,8 @@ public class ChatAdapter extends BaseAdapter {
 							.findViewById(R.id.pb_sending);
 					holder.staus_iv = (ImageView) convertView
 							.findViewById(R.id.msg_status);
-					// holder.iv_avatar = (ImageView) convertView
-					// .findViewById(R.id.iv_userhead);
+					 holder.iv_avatar = (CircleImageView) convertView
+					 .findViewById(R.id.iv_userhead);
 					// 这里是文字内容
 					holder.tv = (TextView) convertView
 							.findViewById(R.id.tv_chatcontent);
@@ -397,8 +414,8 @@ public class ChatAdapter extends BaseAdapter {
 				try {
 					holder.iv = ((ImageView) convertView
 							.findViewById(R.id.iv_voice));
-					// holder.iv_avatar = (ImageView) convertView
-					// .findViewById(R.id.iv_userhead);
+					 holder.iv_avatar = (CircleImageView) convertView
+					 .findViewById(R.id.iv_userhead);
 					holder.tv = (TextView) convertView
 							.findViewById(R.id.tv_length);
 					holder.pb = (ProgressBar) convertView
@@ -659,6 +676,20 @@ public class ChatAdapter extends BaseAdapter {
 				timestamp.setVisibility(View.VISIBLE);
 			}
 		}
+
+		bitmapUtils.display(holder.iv_avatar, messageInfo.senderHeadUrl);
+		final String sname = messageInfo.senderNickName;
+		final String suid = messageInfo.senderUserId;
+		holder.iv_avatar.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(context, ConstactActivity.class);
+				intent.putExtra("id", suid);
+				intent.putExtra("name", sname);
+				context.startActivity(intent);
+			}
+		});
 		return convertView;
 	}
 
@@ -1720,7 +1751,7 @@ public class ChatAdapter extends BaseAdapter {
 		TextView tv;
 		ProgressBar pb;
 		ImageView staus_iv;
-		// ImageView iv_avatar;
+		CircleImageView iv_avatar;
 		TextView tv_usernick;
 		ImageView playBtn;
 		TextView timeLength;

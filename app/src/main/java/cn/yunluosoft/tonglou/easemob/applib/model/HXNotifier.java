@@ -258,11 +258,11 @@ public class HXNotifier {
 				// msgIntent =
 				// notificationInfoProvider.getLaunchIntent(message);
 				msgIntent = new Intent(appContext, MainActivity.class);
-				msgIntent.putExtra("index", 2);
+				msgIntent.putExtra("index", 1);
 			}
 //			reset();
 			msgIntent = new Intent(appContext, MainActivity.class);
-			msgIntent.putExtra("index", 2);
+			msgIntent.putExtra("index", 1);
 			LogManager.LogShow("---------", "*************", LogManager.ERROR);
 			// msgIntent = new Intent(appContext, MainActivity.class);
 			PendingIntent pendingIntent = PendingIntent.getActivity(appContext,

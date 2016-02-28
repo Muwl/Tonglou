@@ -2,6 +2,7 @@ package cn.yunluosoft.tonglou.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -15,13 +16,17 @@ import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.AssistActivity;
+import cn.yunluosoft.tonglou.activity.ChatActivity;
 import cn.yunluosoft.tonglou.activity.HiGroupActivity;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
+import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
+import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -105,13 +110,28 @@ public class HelpAdapter extends BaseAdapter {
             }
         });
 
-        if ("0".equals(entities.get(position).isInGroup)){
+        holder.bluebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,
+                        ChatActivity.class);
+                MessageInfo info = new MessageInfo(
+                        ShareDataTool.getUserId(context), entities.get(position).publishUserId,
+                        ShareDataTool.getUserId(context), entities.get(position).publishUserImUsername,
+                        ShareDataTool.getIcon(context),
+                        entities.get(position).publishUserIcon,ShareDataTool.getNickname(context), entities.get(position).publishUserNickname);
+                intent.putExtra("info", (Serializable) info);
+                context.startActivity(intent);
+            }
+        });
+
+//        if ("0".equals(entities.get(position).isInGroup)){
             holder.bluetext.setText("聊聊");
             holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
-        }else{
-            holder.bluetext.setText("进群聊");
-            holder.blueimage.setImageResource(R.mipmap.add_chat);
-        }
+//        }else{
+//            holder.bluetext.setText("进群聊");
+//            holder.blueimage.setImageResource(R.mipmap.add_chat);
+//        }
         holder.praise.setText(entities.get(position).praiseNum);
         if (Constant.PRAISE_OK.equals(entities.get(position).isPraise)){
             holder.praise.setTextColor(Color.parseColor("#499EB8"));

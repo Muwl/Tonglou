@@ -3,6 +3,7 @@ package cn.yunluosoft.tonglou.adapter;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.ReplayEntity;
 import cn.yunluosoft.tonglou.model.User;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 import cn.yunluosoft.tonglou.view.MyGallery;
 import cn.yunluosoft.tonglou.view.MyGridView;
@@ -78,7 +80,7 @@ public class GroupDetailAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder = null;
         ViewHolder1 holder1=null;
         int type = getItemViewType(position);
@@ -126,7 +128,18 @@ public class GroupDetailAdapter extends BaseAdapter {
             holder.num.setText("参团人数：" + entity.planPeopleNum + "/" + entity.groupNum);
             holder.time.setText("截止日期："+entity.endDate);
             holder.content.setText(entity.detail);
-            holder.join.setText("参加");
+            if ("0".equals(entity.isInGroup)){
+                holder.join.setText("已参加进群聊");
+            }else{
+                holder.join.setText("参加");
+            }
+
+            holder.join.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(1112);
+                }
+            });
             List<User> userList=entity.praiseUser;
             if(userList==null){
                 userList=new ArrayList<>();
@@ -151,10 +164,24 @@ public class GroupDetailAdapter extends BaseAdapter {
             });
 
         } else if(type == type1) {
-            bitmapUtils.display(holder1.icon, entities.get(position-1).publishUserIcon);
-            holder1.name.setText(entities.get(position-1).publishUserNickname);
+            bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
+            if (ToosUtils.isStringEmpty(entities.get(position-1).targetUserId)){
+                holder1.name.setText(entities.get(position - 1).publishUserNickname);
+            }else{
+                holder1.name.setText(entities.get(position - 1).publishUserNickname+"\u2000回复\u2000"+entities.get(position-1).targetUserNickname);
+            }
+
             holder1.content.setText(entities.get(position-1).content);
             holder1.time.setText(entities.get(position-1).createDate);
+            holder1.reply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Message message=new Message();
+                    message.what=1005;
+                    message.arg1=(position-1);
+                    handler.sendMessage(message);
+                }
+            });
         }
         return convertView;
     }
@@ -174,7 +201,29 @@ public class GroupDetailAdapter extends BaseAdapter {
                 .findViewById(R.id.groupdetail_atten);
         View comment = layout
                 .findViewById(R.id.groupdetail_comment);
-
+        TextView attentext= (TextView) layout.findViewById(R.id.groupdetail_attentext);
+        if ("0".equals(entity.isPraise)){
+            attentext.setText("已赞");
+        }else{
+            attentext.setText("赞");
+        }
+        atten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuWindow.dismiss();
+                handler.sendEmptyMessage(1002);
+            }
+        });
+        comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuWindow.dismiss();
+                Message message=new Message();
+                message.what=1005;
+                message.arg1=-1;
+                handler.sendMessage(message);
+            }
+        });
         int screenWidth = ((GroupDetailActivity)context).getWindowManager().getDefaultDisplay()
                 .getWidth();
         // 下面我们要考虑了，我怎样将我的layout加入到PopupWindow中呢？？？很简单
@@ -188,7 +237,9 @@ public class GroupDetailAdapter extends BaseAdapter {
         menuWindow.setOutsideTouchable(true);
         menuWindow.update();
 //        menuWindow.showAsDropDown(linearLayout,150,50);
-        menuWindow.showAsDropDown(linearLayout,DensityUtil.dip2px(context, 170),DensityUtil.dip2px(context, -25));
+        layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int xOffset = -(layout.getMeasuredWidth() + rep.getWidth());
+        menuWindow.showAsDropDown(rep,xOffset,DensityUtil.dip2px(context, -25));
 //        menuWindow.showAtLocation(linearLayout,  Gravity.RIGHT,
 //                DensityUtil.dip2px(context, 45),
 //                (int) (rep.getY()-DensityUtil.dip2px(context, 20))); // 设置layout在PopupWindow中显示的位置

@@ -153,16 +153,16 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = null;
-                if ("0".equals(entities.get(position).modelType)) {
+                if ("0".equals(entities.get(position-1).modelType)) {
                     intent = new Intent(getActivity(), GroupDetailActivity.class);
-                } else if ("1".equals(entities.get(position).modelType)) {
+                } else if ("1".equals(entities.get(position-1).modelType)) {
                     intent = new Intent(getActivity(), UsedDetailActivity.class);
-                }else if ("2".equals(entities.get(position).modelType)) {
+                }else if ("2".equals(entities.get(position-1).modelType)) {
                     intent = new Intent(getActivity(), PPDetailActivity.class);
-                }else if ("3".equals(entities.get(position).modelType)) {
+                }else if ("3".equals(entities.get(position-1).modelType)) {
                     intent = new Intent(getActivity(), HelpDetailActivity.class);
                 }
-                intent.putExtra("id", entities.get(position - 1).id);
+                intent.putExtra("id", entities.get(position-1).id);
                 startActivity(intent);
             }
         });

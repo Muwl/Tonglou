@@ -385,7 +385,7 @@ public class DemoHXSDKHelper extends HXSDKHelper {
 				Intent intent = new Intent(appContext, MainActivity.class);
 				LogManager.LogShow("-------------", "==============",
 						LogManager.ERROR);
-				intent.putExtra("index", 2);
+				intent.putExtra("index", 1);
 				// //有电话时优先跳转到通话页面
 				// if(isVideoCalling){
 				// intent = new Intent(appContext, VideoCallActivity.class);

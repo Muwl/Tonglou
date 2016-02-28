@@ -119,13 +119,13 @@ public class HiGroupAdapter extends BaseAdapter {
         holder.praise.setText(entities.get(position).praiseNum);
         if (Constant.PRAISE_OK.equals(entities.get(position).isPraise)){
             holder.praise.setTextColor(Color.parseColor("#499EB8"));
-            Drawable drawable=context.getDrawable(R.mipmap.consult_atten_checked);
+            Drawable drawable=context.getResources().getDrawable(R.mipmap.consult_atten_checked);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.praise.setCompoundDrawables(drawable, null, null, null);
 
         }else{
             holder.praise.setTextColor(Color.parseColor("#B3B3B3"));
-            Drawable drawable=context.getDrawable(R.mipmap.consult_atten);
+            Drawable drawable=context.getResources().getDrawable(R.mipmap.consult_atten);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.praise.setCompoundDrawables(drawable, null, null, null);
         }

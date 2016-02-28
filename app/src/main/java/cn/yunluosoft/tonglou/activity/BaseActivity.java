@@ -49,11 +49,11 @@ public class BaseActivity extends FragmentActivity {
 
 	}
 
-//	protected void onResume() {
-//		super.onResume();
-//		EMChatManager.getInstance().activityResumed();
-//		MobclickAgent.onResume(this);
-//	}
+	protected void onResume() {
+		super.onResume();
+		EMChatManager.getInstance().activityResumed();
+		MobclickAgent.onResume(this);
+	}
 
 	@Override
 	protected void onPause() {
