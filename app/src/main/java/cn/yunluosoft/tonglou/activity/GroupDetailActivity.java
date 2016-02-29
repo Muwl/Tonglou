@@ -109,6 +109,11 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
 
                     break;
 
+                case 1009:
+                    int position1=msg.arg1;
+                    delComment(position1);
+                    break;
+
                 case 1112:
                     if ("0".equals(entity.isInGroup)){
                         Intent intent = new Intent(GroupDetailActivity.this,
@@ -622,6 +627,65 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                                 sendEdit.setHint("请输入评论内容");
                                 sendEdit.setText("");
                                 imm.hideSoftInputFromWindow(sendEdit.getWindowToken(), 0);
+                                adapter.notifyDataSetChanged();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        GroupDetailActivity.this, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(GroupDetailActivity.this);
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        GroupDetailActivity.this,
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(GroupDetailActivity.this);
+                        }
+
+                    }
+                });
+
+    }
+
+
+    /**
+     *  删除评论
+     */
+    private void delComment(final int position) {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+            rp.addBodyParameter("commentId", entities.get(position).id);
+        String url="/v1_1_0/dynamicComment/delComment";
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(GroupDetailActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(GroupDetailActivity.this,
+                                        "操作成功");
+                               entities.remove(position);
                                 adapter.notifyDataSetChanged();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(

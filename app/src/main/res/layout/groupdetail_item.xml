@@ -32,6 +32,16 @@
                 android:textSize="@dimen/second_font"
                 android:text="安吉拉"/>
 
+            <TextView
+                android:id="@+id/groupdetail_item_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/report_text"
+                android:textSize="@dimen/second_font"
+                android:visibility="gone"
+                android:text="删除"
+                android:clickable="true"/>
+
 
         </LinearLayout>
 

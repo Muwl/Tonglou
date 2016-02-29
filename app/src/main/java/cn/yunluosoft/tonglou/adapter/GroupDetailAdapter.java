@@ -26,6 +26,7 @@ import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.ReplayEntity;
 import cn.yunluosoft.tonglou.model.User;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
+import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 import cn.yunluosoft.tonglou.view.MyGallery;
@@ -116,6 +117,7 @@ public class GroupDetailAdapter extends BaseAdapter {
                 holder1.content = (TextView) convertView.findViewById(R.id.groupdetail_item_content);
                 holder1.time = (TextView) convertView.findViewById(R.id.groupdetail_item_time);
                 holder1.reply = (TextView) convertView.findViewById(R.id.groupdetail_item_reply);
+                holder1.del = (TextView) convertView.findViewById(R.id.groupdetail_item_del);
                 convertView.setTag(holder1);
             } else {
                 holder1 = (ViewHolder1) convertView.getTag();
@@ -169,6 +171,20 @@ public class GroupDetailAdapter extends BaseAdapter {
                 holder1.name.setText(entities.get(position - 1).publishUserNickname);
             }else{
                 holder1.name.setText(entities.get(position - 1).publishUserNickname+"\u2000回复\u2000"+entities.get(position-1).targetUserNickname);
+            }
+            if (ShareDataTool.getUserId(context).equals(entities.get(position-1).publishUserId)){
+                holder1.del.setVisibility(View.VISIBLE);
+                holder1.del.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Message message=new Message();
+                        message.what=1009;
+                        message.arg1=(position-1);
+                        handler.sendMessage(message);
+                    }
+                });
+            }else{
+                holder1.del.setVisibility(View.GONE);
             }
 
             holder1.content.setText(entities.get(position-1).content);
@@ -266,6 +282,7 @@ public class GroupDetailAdapter extends BaseAdapter {
         public TextView content;
         public TextView time;
         public TextView reply;
+        public TextView del;
     }
 
 
