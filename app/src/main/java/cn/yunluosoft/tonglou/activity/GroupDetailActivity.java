@@ -568,7 +568,6 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
         }
         rp.addBodyParameter("dynamicId",entity.id);
         rp.addBodyParameter("content",temp);
-        rp.addBodyParameter("dynamicId", entity.id);
         String url="/v1_1_0/dynamicComment/save";
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);

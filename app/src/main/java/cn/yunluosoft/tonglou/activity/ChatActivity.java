@@ -533,6 +533,9 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 			groupchat.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					Intent intent=new Intent(ChatActivity.this,GroupInfoActivity.class);
+					intent.putExtra("id",messageInfo.receiverUserId);
+					startActivity(intent);
 
 				}
 			});

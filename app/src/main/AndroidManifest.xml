@@ -340,6 +340,11 @@
             android:name="cn.yunluosoft.tonglou.activity.PublishGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
+        <!-- 群详情-->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.GroupInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
 
         <!-- 发布二手-->
         <activity

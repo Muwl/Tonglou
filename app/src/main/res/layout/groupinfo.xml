@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/groupinfo_title"
+        layout="@layout/title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <cn.yunluosoft.tonglou.view.MyGridView
+                    android:id="@+id/groupinfo_gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:numColumns="4"
+                    android:horizontalSpacing="16dp"
+                    android:verticalSpacing="16dp"
+                    />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/dicider_col"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_bg"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="消息提醒"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                    <ToggleButton
+                        android:id="@+id/groupinfo_toggle"
+                        android:layout_width="48dp"
+                        android:layout_height="27dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/toggle_bn"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/dicider_col"/>
+
+
+                <LinearLayout
+                    android:id="@+id/groupinfo_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_bg"
+                    android:clickable="true"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:text="举报群"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/groupinfo_exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/first_font"
+                    android:text="删除并退出"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/group_exittext_bn"/>
+            </LinearLayout>
+
+        </ScrollView>
+
+        <include
+            android:id="@+id/groupinfo_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</LinearLayout>
