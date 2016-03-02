@@ -23,6 +23,7 @@ import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.ChatActivity;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.activity.GroupDetailActivity;
 import cn.yunluosoft.tonglou.activity.HelpDetailActivity;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
@@ -172,6 +173,16 @@ public class HelpDetailAdapter extends BaseAdapter {
                 }
             });
 
+            holder.icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ConstactActivity.class);
+                    intent.putExtra("id", entity.publishUserId);
+                    intent.putExtra("name", entity.publishUserNickname);
+                    context.startActivity(intent);
+                }
+            });
+
         } else if(type == type1) {
             bitmapUtils.display(holder1.icon, entities.get(position-1).publishUserIcon);
             holder1.name.setText(entities.get(position - 1).publishUserNickname);
@@ -184,6 +195,16 @@ public class HelpDetailAdapter extends BaseAdapter {
                     message.what = 1005;
                     message.arg1 = (position - 1);
                     handler.sendMessage(message);
+                }
+            });
+
+            holder1.icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ConstactActivity.class);
+                    intent.putExtra("id", entities.get(position-1).publishUserId);
+                    intent.putExtra("name", entities.get(position-1).publishUserNickname);
+                    context.startActivity(intent);
                 }
             });
 

@@ -2,9 +2,11 @@ package cn.yunluosoft.tonglou.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -18,9 +20,12 @@ import com.lidroid.xutils.BitmapUtils;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ChatActivity;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.activity.HiGroupActivity;
 import cn.yunluosoft.tonglou.activity.fragment.WithFloorFragment;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
+import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
@@ -86,10 +91,38 @@ public class HiGroupAdapter extends BaseAdapter {
 
         holder.num.setText("参团人数：" + entities.get(position).planPeopleNum + "/" + entities.get(position).groupNum);
         holder.time.setText("截止日期：" + entities.get(position).endDate);
+
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, ConstactActivity.class);
+                intent.putExtra("id",entities.get(position).publishUserId);
+                intent.putExtra("name",entities.get(position).publishUserNickname);
+                context.startActivity(intent);
+            }
+        });
         holder.bluebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if ("0".equals(entities.get(position).isInGroup)) {
+                    Intent intent = new Intent(context,
+                            ChatActivity.class);
+                    MessageInfo messageInfo=new MessageInfo();
+                    messageInfo.receiverHeadUrl=entities.get(position).publishUserIcon;
+                    messageInfo.receiverImUserName=entities.get(position).imGroupId;
+                    messageInfo.receiverNickName=entities.get(position).groupName;
+                    messageInfo.receiverUserId=entities.get(position).imGroupId;
+                    intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("info", messageInfo);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }else{
+                    Message message=new Message();
+                    message.what=HiGroupActivity.ADDGROUP;
+                    message.arg1=position;
+                    handler.sendMessage(message);
+                }
             }
         });
         if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)){

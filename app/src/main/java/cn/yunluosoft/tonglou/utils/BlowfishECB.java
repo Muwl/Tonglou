@@ -577,8 +577,8 @@ public class BlowfishECB {
 		System.arraycopy(buf, 0, b, 0, buf.length - nCount);
 		// System.out.println("[" + hexString(b) + "]");
 		try {
-			return new String(b, "GBK");
-//			return new String(b, "UTF-8");
+//			return new String(b, "GBK");
+			return new String(b, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}

@@ -203,6 +203,60 @@ public class FloorSpeechFragment extends Fragment {
         reFushEmpty();
     }
 
+//    /**
+//     * 获取所有会话
+//     *
+//     * @param context
+//     * @return +
+//     */
+//    private List<EMConversation> loadConversationsWithRecentChat() {
+//        // 获取所有会话，包括陌生人
+//        Hashtable<String, EMConversation> conversations = EMChatManager
+//                .getInstance().getAllConversations();
+//        // 过滤掉messages size为0的conversation
+//        /**
+//         * 如果在排序过程中有新消息收到，lastMsgTime会发生变化 影响排序过程，Collection.sort会产生异常
+//         * 保证Conversation在Sort过程中最后一条消息的时间不变 避免并发问题
+//         */
+//        List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
+//        synchronized (conversations) {
+//            for (EMConversation conversation : conversations.values()) {
+//                if (conversation.getAllMessages().size() != 0) {
+//                    sortList.add(new Pair<Long, EMConversation>(conversation
+//                            .getLastMessage().getMsgTime(), conversation));
+//                }
+//            }
+//        }
+//        try {
+//            // Internal is TimSort algorithm, has bug
+//            sortConversationByLastChatTime(sortList);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        List<EMConversation> list = new ArrayList<EMConversation>();
+//        for (Pair<Long, EMConversation> sortItem : sortList) {
+//            if (sortItem.second.getLastMessage().getFrom()
+//                    .equals(Constant.SYS_NAME)
+//                    || sortItem.second.getLastMessage().getTo()
+//                    .equals(Constant.SYS_NAME)
+//                    || sortItem.second.getLastMessage().getFrom()
+//                    .equals(Constant.SYS_GETNAME)
+//                    || sortItem.second.getLastMessage().getFrom()
+//                    .equals(Constant.SYS_GETNAME)) {
+//                EMChatManager.getInstance().deleteConversation(
+//                        sortItem.second.getUserName(),
+//                        sortItem.second.isGroup(), true);
+//                InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(
+//                        getActivity());
+//                inviteMessgeDao.deleteMessage(sortItem.second.getUserName());
+//                continue;
+//            } else {
+//                list.add(sortItem.second);
+//            }
+//        }
+//        return list;
+//    }
+
     /**
      * 获取所有会话
      *
@@ -235,27 +289,11 @@ public class FloorSpeechFragment extends Fragment {
         }
         List<EMConversation> list = new ArrayList<EMConversation>();
         for (Pair<Long, EMConversation> sortItem : sortList) {
-            if (sortItem.second.getLastMessage().getFrom()
-                    .equals(Constant.SYS_NAME)
-                    || sortItem.second.getLastMessage().getTo()
-                    .equals(Constant.SYS_NAME)
-                    || sortItem.second.getLastMessage().getFrom()
-                    .equals(Constant.SYS_GETNAME)
-                    || sortItem.second.getLastMessage().getFrom()
-                    .equals(Constant.SYS_GETNAME)) {
-                EMChatManager.getInstance().deleteConversation(
-                        sortItem.second.getUserName(),
-                        sortItem.second.isGroup(), true);
-                InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(
-                        getActivity());
-                inviteMessgeDao.deleteMessage(sortItem.second.getUserName());
-                continue;
-            } else {
-                list.add(sortItem.second);
-            }
+            list.add(sortItem.second);
         }
         return list;
     }
+
 
     /**
      * 根据最后一条消息的时间排序

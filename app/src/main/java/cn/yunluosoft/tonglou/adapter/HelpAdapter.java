@@ -22,6 +22,7 @@ import java.util.List;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.AssistActivity;
 import cn.yunluosoft.tonglou.activity.ChatActivity;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.activity.HiGroupActivity;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.MessageInfo;
@@ -153,6 +154,16 @@ public class HelpAdapter extends BaseAdapter {
                 message.what= AssistActivity.PRAISE;
                 message.obj=position;
                 handler.sendMessage(message);
+            }
+        });
+
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConstactActivity.class);
+                intent.putExtra("id", entities.get(position).publishUserId);
+                intent.putExtra("name", entities.get(position).publishUserNickname);
+                context.startActivity(intent);
             }
         });
         return convertView;

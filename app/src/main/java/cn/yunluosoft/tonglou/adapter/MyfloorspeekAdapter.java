@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.AssistActivity;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
@@ -96,6 +98,16 @@ public class MyfloorspeekAdapter extends BaseAdapter {
             holder.bluetext.setText("聊聊");
             holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
         }
+
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConstactActivity.class);
+                intent.putExtra("id", entities.get(position).publishUserId);
+                intent.putExtra("name", entities.get(position).publishUserNickname);
+                context.startActivity(intent);
+            }
+        });
         LogManager.LogShow("----",flag+"----------",LogManager.ERROR);
 
         if (flag==0){

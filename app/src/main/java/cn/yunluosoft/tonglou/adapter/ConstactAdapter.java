@@ -188,6 +188,15 @@ public class ConstactAdapter extends BaseAdapter {
 		} else if (type == type1) {
 
 			bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
+			holder1.icon.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(context, ConstactActivity.class);
+					intent.putExtra("id", entities.get(position-1).publishUserId);
+					intent.putExtra("name", entities.get(position-1).publishUserNickname);
+					context.startActivity(intent);
+				}
+			});
 			holder1.name.setText(entities.get(position - 1).publishUserNickname);
 			if (ToosUtils.isStringEmpty(entities.get(position - 1).detail)) {
 				holder1.content.setVisibility(View.GONE);

@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.activity.GroupDetailActivity;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.ReplayEntity;
@@ -142,6 +144,15 @@ public class GroupDetailAdapter extends BaseAdapter {
                     handler.sendEmptyMessage(1112);
                 }
             });
+            holder.icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ConstactActivity.class);
+                    intent.putExtra("id", entity.publishUserId);
+                    intent.putExtra("name", entity.publishUserNickname);
+                    context.startActivity(intent);
+                }
+            });
             List<User> userList=entity.praiseUser;
             if(userList==null){
                 userList=new ArrayList<>();
@@ -186,6 +197,16 @@ public class GroupDetailAdapter extends BaseAdapter {
             }else{
                 holder1.del.setVisibility(View.GONE);
             }
+
+            holder.icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ConstactActivity.class);
+                    intent.putExtra("id", entities.get(position-1).publishUserId);
+                    intent.putExtra("name", entities.get(position-1).publishUserNickname);
+                    context.startActivity(intent);
+                }
+            });
 
             holder1.content.setText(entities.get(position-1).content);
             holder1.time.setText(entities.get(position-1).createDate);

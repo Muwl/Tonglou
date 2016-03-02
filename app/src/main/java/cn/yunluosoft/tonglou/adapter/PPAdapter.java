@@ -21,6 +21,7 @@ import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.ChatActivity;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.activity.PPActivity;
 import cn.yunluosoft.tonglou.activity.UsedActivity;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
@@ -135,6 +136,15 @@ public class PPAdapter extends BaseAdapter {
             holder.praise.setCompoundDrawables(drawable, null, null, null);
         }
 
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConstactActivity.class);
+                intent.putExtra("id", entities.get(position).publishUserId);
+                intent.putExtra("name", entities.get(position).publishUserNickname);
+                context.startActivity(intent);
+            }
+        });
         holder.praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

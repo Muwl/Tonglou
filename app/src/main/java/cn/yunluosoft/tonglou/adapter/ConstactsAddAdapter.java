@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,6 +13,7 @@ import com.lidroid.xutils.BitmapUtils;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.model.ConstantWithfloorEntity;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.view.CircleImageView;
@@ -47,7 +49,7 @@ public class ConstactsAddAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder=null;
         if (convertView==null){
             convertView=View.inflate(context, R.layout.constacts_add_item,null);
@@ -59,6 +61,15 @@ public class ConstactsAddAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
         bitmapUtils.display(holder.icon,entities.get(position).icon);
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConstactActivity.class);
+                intent.putExtra("id", entities.get(position).id);
+                intent.putExtra("name", entities.get(position).nickname);
+                context.startActivity(intent);
+            }
+        });
         holder.name.setText(entities.get(position).nickname);
         return convertView;
     }

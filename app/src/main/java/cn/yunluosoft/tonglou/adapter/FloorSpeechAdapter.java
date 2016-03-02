@@ -24,6 +24,7 @@ import cn.yunluosoft.tonglou.easemob.chatuidemo.Constant;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.DateUtils;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.SmileUtils;
 import cn.yunluosoft.tonglou.model.MessageInfo;
+import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
@@ -144,7 +145,9 @@ public class FloorSpeechAdapter extends BaseAdapter {
         EMContact contact = null;
         EMMessage lastMessage = null;
         boolean isGroup = false;
+        LogManager.LogShow("-----",groups.size()+"----"+username,LogManager.ERROR);
         for (EMGroup group : groups) {
+            LogManager.LogShow("-----",groups.get(position).getGroupId()+"----"+username,LogManager.ERROR);
             if (group.getGroupId().equals(username)) {
                 isGroup = true;
                 contact = group;

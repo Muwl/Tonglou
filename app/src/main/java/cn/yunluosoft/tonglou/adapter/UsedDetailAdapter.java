@@ -28,6 +28,7 @@ import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.ChatActivity;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.activity.PPDetailActivity;
 import cn.yunluosoft.tonglou.activity.PhotoShowActivity;
 import cn.yunluosoft.tonglou.activity.UsedDetailActivity;
@@ -148,6 +149,16 @@ public class UsedDetailAdapter extends BaseAdapter {
             if (images==null){
                 images=new ArrayList<>();
             }
+
+            holder.icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ConstactActivity.class);
+                    intent.putExtra("id", entity.publishUserId);
+                    intent.putExtra("name", entity.publishUserNickname);
+                    context.startActivity(intent);
+                }
+            });
             UseddetailheadAdapter adapter=new UseddetailheadAdapter(context,images);
             holder.myListView.setAdapter(adapter);
             holder.myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -219,6 +230,16 @@ public class UsedDetailAdapter extends BaseAdapter {
                         menuWindow.dismiss();
 
                     }
+                }
+            });
+
+            holder1.icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ConstactActivity.class);
+                    intent.putExtra("id", entities.get(position-1).publishUserId);
+                    intent.putExtra("name", entities.get(position-1).publishUserNickname);
+                    context.startActivity(intent);
                 }
             });
 

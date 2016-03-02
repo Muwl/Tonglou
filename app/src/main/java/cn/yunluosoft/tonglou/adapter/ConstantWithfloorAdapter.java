@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,6 +13,7 @@ import com.lidroid.xutils.BitmapUtils;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.model.ConstantWithfloorEntity;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.view.CircleImageView;
@@ -47,7 +49,7 @@ public class ConstantWithfloorAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder=null;
         if (convertView==null){
             holder=new ViewHolder();
@@ -68,7 +70,15 @@ public class ConstantWithfloorAdapter extends BaseAdapter {
         }else{
             holder.sex.setImageResource(R.mipmap.icon_sex_female);
         }
-
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConstactActivity.class);
+                intent.putExtra("id", entities.get(position).id);
+                intent.putExtra("name", entities.get(position).nickname);
+                context.startActivity(intent);
+            }
+        });
         holder.name.setText(entities.get(position).nickname);
         holder.job.setText(entities.get(position).job);
         holder.trade.setText(entities.get(position).industry);

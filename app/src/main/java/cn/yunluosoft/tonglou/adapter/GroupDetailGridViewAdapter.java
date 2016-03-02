@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,6 +11,7 @@ import com.lidroid.xutils.BitmapUtils;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.model.User;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
@@ -43,7 +45,7 @@ public class GroupDetailGridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder=null;
         if (convertView==null){
             convertView=View.inflate(context, R.layout.groupdetail_grid_item,null);
@@ -54,6 +56,14 @@ public class GroupDetailGridViewAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
         bitmapUtils.display(holder.icon,entities.get(position).icon);
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConstactActivity.class);
+                intent.putExtra("id", entities.get(position).id);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
     class ViewHolder{
