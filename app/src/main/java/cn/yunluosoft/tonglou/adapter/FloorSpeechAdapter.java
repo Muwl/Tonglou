@@ -112,12 +112,16 @@ public class FloorSpeechAdapter extends BaseAdapter {
         }
 
         if (messageInfo != null) {
+            if (!getGroupFlag(conversation)){
             if (lastMessage.direct == EMMessage.Direct.SEND) {
                 holder.name.setText(messageInfo.receiverNickName);
                 bitmapUtils.display(holder.icon, messageInfo.receiverHeadUrl);
             } else {
                 holder.name.setText(messageInfo.senderNickName);
                 bitmapUtils.display(holder.icon, messageInfo.senderHeadUrl);
+            }}else{
+                holder.name.setText(messageInfo.receiverNickName);
+                holder.icon.setImageResource(R.mipmap.ic_launcher);
             }
         }
         return convertView;
@@ -147,7 +151,31 @@ public class FloorSpeechAdapter extends BaseAdapter {
         boolean isGroup = false;
         LogManager.LogShow("-----",groups.size()+"----"+username,LogManager.ERROR);
         for (EMGroup group : groups) {
-            LogManager.LogShow("-----",groups.get(position).getGroupId()+"----"+username,LogManager.ERROR);
+           // LogManager.LogShow("-----",groups.get(position).getGroupId()+"----"+username,LogManager.ERROR);
+            if (group.getGroupId().equals(username)) {
+                isGroup = true;
+                contact = group;
+                break;
+            }
+        }
+        return isGroup;
+    }
+
+    /**
+     * 判断某一行是否是群聊
+     *
+     * @param position
+     * @return
+     */
+    public boolean getGroupFlag(EMConversation conversation) {
+        // 获取用户username或者群组groupid
+        String username = conversation.getUserName();
+        List<EMGroup> groups = EMGroupManager.getInstance().getAllGroups();
+        EMContact contact = null;
+        EMMessage lastMessage = null;
+        boolean isGroup = false;
+        LogManager.LogShow("-----",groups.size()+"----"+username,LogManager.ERROR);
+        for (EMGroup group : groups) {
             if (group.getGroupId().equals(username)) {
                 isGroup = true;
                 contact = group;

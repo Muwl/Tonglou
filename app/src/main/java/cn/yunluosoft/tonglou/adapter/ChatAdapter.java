@@ -506,6 +506,7 @@ public class ChatAdapter extends BaseAdapter {
 				&& message.direct == Direct.RECEIVE) {
 			// demo里使用username代码nick
 			UserUtils.setUserNick(message.getFrom(), holder.tv_usernick);
+			holder.tv_usernick.setVisibility(View.GONE);
 		}
 		if (message.direct == Direct.SEND) {
 			UserUtils.setCurrentUserNick(holder.tv_usernick);

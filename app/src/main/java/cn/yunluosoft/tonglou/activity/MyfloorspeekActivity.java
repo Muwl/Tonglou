@@ -90,7 +90,7 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
                         Intent intent = new Intent(MyfloorspeekActivity.this,
                                 ChatActivity.class);
                         MessageInfo messageInfo=new MessageInfo();
-                        messageInfo.receiverHeadUrl=entities.get(position1).publishUserIcon;
+                        messageInfo.receiverHeadUrl=entities.get(position1).id;
                         messageInfo.receiverImUserName=entities.get(position1).imGroupId;
                         messageInfo.receiverNickName=entities.get(position1).groupName;
                         messageInfo.receiverUserId=entities.get(position1).imGroupId;

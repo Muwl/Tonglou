@@ -16,6 +16,7 @@ import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.model.GroupInfoEntity;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -75,7 +76,9 @@ public class GroupInfoAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-        holder.name.setText(entities.get(position).name);
+        if (!ToosUtils.isStringEmpty(entities.get(position).name)) {
+            holder.name.setText(entities.get(position).name);
+        }
         return convertView;
     }
     class ViewHolder{

@@ -119,7 +119,7 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                         Intent intent = new Intent(GroupDetailActivity.this,
                                 ChatActivity.class);
                         MessageInfo messageInfo=new MessageInfo();
-                        messageInfo.receiverHeadUrl=entity.publishUserIcon;
+                        messageInfo.receiverHeadUrl=entity.id;
                         messageInfo.receiverImUserName=entity.imGroupId;
                         messageInfo.receiverNickName=entity.groupName;
                         messageInfo.receiverUserId=entity.imGroupId;

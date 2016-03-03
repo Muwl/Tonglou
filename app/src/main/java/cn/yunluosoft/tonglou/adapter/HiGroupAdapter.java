@@ -108,7 +108,7 @@ public class HiGroupAdapter extends BaseAdapter {
                     Intent intent = new Intent(context,
                             ChatActivity.class);
                     MessageInfo messageInfo=new MessageInfo();
-                    messageInfo.receiverHeadUrl=entities.get(position).publishUserIcon;
+                    messageInfo.receiverHeadUrl=entities.get(position).id;
                     messageInfo.receiverImUserName=entities.get(position).imGroupId;
                     messageInfo.receiverNickName=entities.get(position).groupName;
                     messageInfo.receiverUserId=entities.get(position).imGroupId;
