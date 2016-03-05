@@ -8,5 +8,5 @@ import java.io.Serializable;
 public class GroupInfoEntity implements Serializable {
     public String id;
     public String icon;
-    public String name;
+    public String nickname;
 }

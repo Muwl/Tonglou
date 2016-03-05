@@ -57,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
+                    android:hint="请输入评论内容"
                     android:layout_toLeftOf="@id/ppdetail_send"
                     android:background="@drawable/groupdetail_edit"
                     android:paddingBottom="8dp"

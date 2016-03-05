@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/item_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp" >
+
+        <cn.yunluosoft.tonglou.view.CircleImageView
+            android:id="@+id/black_item_icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginBottom="13dp"
+            android:layout_marginTop="13dp"
+            android:src="@mipmap/icon_default" />
+
+        <TextView
+            android:id="@+id/black_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Emily delagdo"
+            android:textColor="#000"
+            android:textSize="@dimen/second_font" />
+    </LinearLayout>
+
+</LinearLayout>

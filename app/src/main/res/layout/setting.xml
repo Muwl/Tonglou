@@ -58,6 +58,37 @@
 
 
     <LinearLayout
+        android:id="@+id/setting_black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_bg"
+        android:clickable="true"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="黑名单"
+            android:textColor="#000"
+            android:textSize="@dimen/second_font" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/go"/>
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dicider_col" />
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/item_bg"

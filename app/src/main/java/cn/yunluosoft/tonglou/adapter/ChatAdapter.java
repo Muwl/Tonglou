@@ -68,6 +68,7 @@ import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.ImageUtils;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.SmileUtils;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.UserUtils;
 import cn.yunluosoft.tonglou.model.MessageInfo;
+import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
@@ -681,6 +682,7 @@ public class ChatAdapter extends BaseAdapter {
 		bitmapUtils.display(holder.iv_avatar, messageInfo.senderHeadUrl);
 		final String sname = messageInfo.senderNickName;
 		final String suid = messageInfo.senderUserId;
+		LogManager.LogShow("------",sname+"----",LogManager.ERROR);
 		holder.iv_avatar.setOnClickListener(new OnClickListener() {
 
 			@Override

@@ -55,6 +55,7 @@ public class GroupInfoAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder=null;
         if (convertView==null){
+            holder=new ViewHolder();
             convertView=View.inflate(context, R.layout.groupinfo_item,null);
             holder.icon= (CircleImageView) convertView.findViewById(R.id.groupinfo_item_icon);
             holder.name= (TextView) convertView.findViewById(R.id.groupinfo_item_name);
@@ -72,12 +73,12 @@ public class GroupInfoAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(context, ConstactActivity.class);
                 intent.putExtra("id", entities.get(position).id);
-                intent.putExtra("name", entities.get(position).name);
+                intent.putExtra("name", entities.get(position).nickname);
                 context.startActivity(intent);
             }
         });
-        if (!ToosUtils.isStringEmpty(entities.get(position).name)) {
-            holder.name.setText(entities.get(position).name);
+        if (!ToosUtils.isStringEmpty(entities.get(position).nickname)) {
+            holder.name.setText(entities.get(position).nickname);
         }
         return convertView;
     }

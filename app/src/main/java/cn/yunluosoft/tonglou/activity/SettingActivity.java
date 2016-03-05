@@ -39,6 +39,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 
 	private TextView exit;
 
+	private View black;
+
 
 	DemoHXSDKModel model;
 
@@ -81,10 +83,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		back = (ImageView) findViewById(R.id.title_back);
 		clearCash = (TextView) findViewById(R.id.setting_clearcash);
 		exit = (TextView) findViewById(R.id.setting_exit);
+		black = findViewById(R.id.setting_black);
 		toggleButton = (ToggleButton) findViewById(R.id.setting_recmes_toggle);
 
 		title.setText("系统设置");
 		back.setOnClickListener(this);
+		black.setOnClickListener(this);
 		clearCash.setOnClickListener(this);
 		exit.setOnClickListener(this);
 
@@ -125,6 +129,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.title_back:
 			finish();
+			break;case R.id.setting_black:
+				Intent intent=new Intent(SettingActivity.this,BlackActivity.class);
+				startActivity(intent);
 			break;
 		case R.id.setting_clearcash:
 			CustomeDialog customeDialog = new CustomeDialog(

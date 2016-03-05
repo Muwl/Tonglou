@@ -39,7 +39,7 @@ public class WelcomeActivity extends BaseActivity {
 //				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.welcome);
 		width = DensityUtil.getScreenWidth(this);
-//		MobclickAgent.updateOnlineConfig(this);
+		MobclickAgent.updateOnlineConfig(this);
 		 MobclickAgent.setDebugMode(true);
 		initView();
 

@@ -198,7 +198,7 @@ public class GroupDetailAdapter extends BaseAdapter {
                 holder1.del.setVisibility(View.GONE);
             }
 
-            holder.icon.setOnClickListener(new View.OnClickListener() {
+            holder1.icon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ConstactActivity.class);

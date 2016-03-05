@@ -55,6 +55,8 @@ import cn.yunluosoft.tonglou.view.CustomListView;
  */
 public class WithFloorFragment extends Fragment implements View.OnClickListener {
 
+    public static final int ADDGROUP = 1013;
+
     public static final int ATTEN = 1011;
 
     public static final int PRAISE = 1012;
@@ -93,6 +95,11 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+
+                case ADDGROUP:
+                    int position3=msg.arg1;
+                    AddJoin(position3);
+                    break;
                 case ATTEN:
                     int position= (int) msg.obj;
                     if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)){
@@ -236,6 +243,67 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
 
         }
     }
+
+    /**
+     *参加活动
+
+     */
+    private void AddJoin(final int position) {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        rp.addBodyParameter("dynamicId", entities.get(position).id);
+        String url="/v1_1_0/dynamic/joinActivity";
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(getActivity());
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(getActivity(),
+                                        "操作成功");
+                                entities.get(position).isInGroup=0+"";
+                                entities.get(position).groupNum=String.valueOf(Integer.valueOf(entities.get(position).groupNum)+1);
+                                adapter.notifyDataSetChanged();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        getActivity(), "验证错误，请重新登录");
+                                ToosUtils.goReLogin(getActivity());
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        getActivity(),
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(getActivity());
+                        }
+
+                    }
+                });
+
+    }
+
 
     /**
      * 获取楼语列表

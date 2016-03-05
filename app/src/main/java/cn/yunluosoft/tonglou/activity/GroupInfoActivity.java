@@ -104,6 +104,7 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
         report.setOnClickListener(this);
         exit.setOnClickListener(this);
         toggleButton.setOnClickListener(this);
+        myGridView.setAdapter(adapter);
         getInfo();
         updateGroup();
     }
@@ -222,6 +223,7 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
                                         entities.add(state1.result.get(i));
                                     }
                                 }
+                                LogManager.LogShow("--",gson.toJson(entities),LogManager.ERROR);
                                 adapter.notifyDataSetChanged();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(

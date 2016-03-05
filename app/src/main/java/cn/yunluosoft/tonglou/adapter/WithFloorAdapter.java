@@ -12,6 +12,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
@@ -21,6 +22,7 @@ import java.util.List;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.ChatActivity;
 import cn.yunluosoft.tonglou.activity.ConstactActivity;
+import cn.yunluosoft.tonglou.activity.HiGroupActivity;
 import cn.yunluosoft.tonglou.activity.fragment.WithFloorFragment;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.MessageInfo;
@@ -70,10 +72,11 @@ public class WithFloorAdapter extends BaseAdapter {
             holder.icon= (CircleImageView) convertView.findViewById(R.id.fwithfloor_item_icon);
             holder.name= (TextView) convertView.findViewById(R.id.fwithfloor_item_name);
             holder.tip= (TextView) convertView.findViewById(R.id.fwithfloor_item_tip);
-            holder.content= (TextView) convertView.findViewById(R.id.fwithfloor_item_tip);
+            holder.content= (TextView) convertView.findViewById(R.id.fwithfloor_item_content);
             holder.bluebtn= convertView.findViewById(R.id.fwithfloor_item_bluebtn);
             holder.graybtn= convertView.findViewById(R.id.fwithfloor_item_graybtn);
             holder.bluetext= (TextView) convertView.findViewById(R.id.fwithfloor_item_bluetext);
+            holder.blueimage= (ImageView) convertView.findViewById(R.id.fwithfloor_item_blueimage);
             holder.graytext= (TextView) convertView.findViewById(R.id.fwithfloor_item_graytext);
             holder.praise= (TextView) convertView.findViewById(R.id.fwithfloor_item_atten);
             convertView.setTag(holder);
@@ -88,23 +91,53 @@ public class WithFloorAdapter extends BaseAdapter {
         holder.bluebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,
-                        ChatActivity.class);
-                MessageInfo messageInfo=new MessageInfo();
-                messageInfo.receiverHeadUrl=entities.get(position).publishUserIcon;
-                messageInfo.receiverImUserName=entities.get(position).publishUserImUsername;
-                messageInfo.receiverNickName=entities.get(position).publishUserNickname;
-                messageInfo.receiverUserId=entities.get(position).publishUserId;
-                messageInfo.senderHeadUrl= ShareDataTool.getIcon(context);
-                messageInfo.senderImUserName=ShareDataTool.getImUsername(context);
-                messageInfo.senderUserId= ShareDataTool.getUserId(context);
-                messageInfo.senderNickName= ShareDataTool.getNickname(context);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("info", messageInfo);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                if ("0".equals(entities.get(position).modelType)){
+                if ("0".equals(entities.get(position).isInGroup)) {
+                    Intent intent = new Intent(context,
+                            ChatActivity.class);
+                    MessageInfo messageInfo=new MessageInfo();
+                    messageInfo.receiverHeadUrl=entities.get(position).id;
+                    messageInfo.receiverImUserName=entities.get(position).imGroupId;
+                    messageInfo.receiverNickName=entities.get(position).groupName;
+                    messageInfo.receiverUserId=entities.get(position).imGroupId;
+                    intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("info", messageInfo);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }else{
+                    Message message=new Message();
+                    message.what= HiGroupActivity.ADDGROUP;
+                    message.arg1=position;
+                    handler.sendMessage(message);
+                }}else {
+                    Intent intent = new Intent(context,
+                            ChatActivity.class);
+                    MessageInfo messageInfo = new MessageInfo();
+                    messageInfo.receiverHeadUrl = entities.get(position).publishUserIcon;
+                    messageInfo.receiverImUserName = entities.get(position).publishUserImUsername;
+                    messageInfo.receiverNickName = entities.get(position).publishUserNickname;
+                    messageInfo.receiverUserId = entities.get(position).publishUserId;
+                    messageInfo.senderHeadUrl = ShareDataTool.getIcon(context);
+                    messageInfo.senderImUserName = ShareDataTool.getImUsername(context);
+                    messageInfo.senderUserId = ShareDataTool.getUserId(context);
+                    messageInfo.senderNickName = ShareDataTool.getNickname(context);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("info", messageInfo);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
             }
         });
+
+        if ("1".equals(entities.get(position).isInGroup) && "0".equals(entities.get(position).modelType)){
+            holder.bluetext.setText("进群聊");
+            holder.blueimage.setImageResource(R.mipmap.add_chat);
+        }else{
+            holder.bluetext.setText("聊聊");
+            holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
+
+        }
         if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)){
             holder.graybtn.setBackgroundResource(R.drawable.gray_attened);
             holder.graytext.setText("已关注");
@@ -166,6 +199,7 @@ public class WithFloorAdapter extends BaseAdapter {
         public View bluebtn;
         public View graybtn;
         public TextView bluetext;
+        public ImageView blueimage;
         public TextView graytext;
         public TextView praise;
     }
