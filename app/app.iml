@@ -90,6 +90,7 @@
     <orderEntry type="library" exported="" name="SocialSDK_Sina" level="project" />
     <orderEntry type="library" exported="" name="umeng_social_sdk" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="wire-runtime-1.7.0" level="project" />
     <orderEntry type="library" exported="" name="xUtils-2.6.14" level="project" />
     <orderEntry type="library" exported="" name="weiboSDKCore_3.1.2" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_WeiXin_1" level="project" />
@@ -98,6 +99,7 @@
     <orderEntry type="library" exported="" name="BaiduLBS_Android" level="project" />
     <orderEntry type="library" exported="" name="Parse-1.9.4" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.2.0" level="project" />
+    <orderEntry type="library" exported="" name="okio-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="open_sdk_r5509" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.1.3" level="project" />
     <orderEntry type="library" exported="" name="easemobchat_2.2.2" level="project" />
@@ -108,5 +110,6 @@
     <orderEntry type="library" exported="" name="umeng-analytics-v5.6.4" level="project" />
     <orderEntry type="library" exported="" name="umeng-analytics-v5.5.3" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_sms" level="project" />
+    <orderEntry type="module" module-name="PushSDK" exported="" />
   </component>
 </module>

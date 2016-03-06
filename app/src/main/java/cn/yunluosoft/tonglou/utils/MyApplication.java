@@ -6,7 +6,14 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Notification;
 import android.content.Context;
+import android.os.Handler;
+import android.support.v7.app.NotificationCompat;
+import android.widget.RemoteViews;
+import android.widget.Toast;
+
+import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.DemoHXSDKHelper;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.domain.User;
 
@@ -41,7 +48,6 @@ public class MyApplication extends Application {
 	public List<Activity> getActivities() {
 		return list;
 	}
-
 	public void exit() {
 		for (Activity activity : list) {
 			if (activity != null) {
@@ -66,6 +72,8 @@ public class MyApplication extends Application {
 		PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
 		// QQ和Qzone appid appkey
 		PlatformConfig.setAlipay("2015111700822536");
+
+
 
 	}
 

@@ -25,6 +25,7 @@ import com.easemob.chat.EMMessage.Type;
 import com.easemob.chat.NotificationCompat;
 import com.easemob.util.EasyUtils;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 /**
  * @author Mu
@@ -44,6 +45,7 @@ public class BaseActivity extends FragmentActivity {
 		MyApplication.getInstance().addActivity(this);
 		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		super.onCreate(savedInstanceState);
+		PushAgent.getInstance(this).onAppStart();
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		chatOptions = EMChatManager.getInstance().getChatOptions();
 

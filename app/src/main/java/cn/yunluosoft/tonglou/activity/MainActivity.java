@@ -54,6 +54,7 @@ import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMConversation.EMConversationType;
 import com.easemob.chat.EMMessage;
 import com.easemob.util.EMLog;
+import com.umeng.message.PushAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 /**
@@ -145,6 +146,8 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 			return;
 		}
 		setContentView(R.layout.main);
+		PushAgent mPushAgent = PushAgent.getInstance(this);
+		mPushAgent.enable();
 		ToosUtils.deleteFile(new File(Environment.getExternalStorageDirectory()
 				+ "/louyu/"));
 
