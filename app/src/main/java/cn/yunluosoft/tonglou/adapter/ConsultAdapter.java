@@ -1,13 +1,22 @@
 package cn.yunluosoft.tonglou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.BitmapUtils;
+
+import java.util.List;
+
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ConsultDetailActivity;
+import cn.yunluosoft.tonglou.model.ConsultEntity;
+import cn.yunluosoft.tonglou.view.MyListView;
 
 /**
  * Created by Mu on 2016/1/28.
@@ -15,14 +24,18 @@ import cn.yunluosoft.tonglou.R;
 public class ConsultAdapter extends BaseAdapter {
 
     private Context context;
+    private List<ConsultEntity> entities;
+    private BitmapUtils bitmapUtils;
 
-    public ConsultAdapter(Context context) {
+    public ConsultAdapter(Context context,List<ConsultEntity> entities) {
         this.context = context;
+        this.entities=entities;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return entities.size();
     }
 
     @Override
@@ -36,36 +49,47 @@ public class ConsultAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder=null;
         if (convertView==null){
             convertView=View.inflate(context, R.layout.consult_item,null);
             holder=new ViewHolder();
             holder.imageView= (ImageView) convertView.findViewById(R.id.consult_item_image);
             holder.textView= (TextView) convertView.findViewById(R.id.consult_item_text);
-            holder.imageView1= (ImageView) convertView.findViewById(R.id.consult_item_image1);
-            holder.textView1= (TextView) convertView.findViewById(R.id.consult_item_text1);
-            holder.imageView2= (ImageView) convertView.findViewById(R.id.consult_item_image2);
-            holder.textView2= (TextView) convertView.findViewById(R.id.consult_item_text2);
-            holder.imageView3= (ImageView) convertView.findViewById(R.id.consult_item_image3);
-            holder.textView3= (TextView) convertView.findViewById(R.id.consult_item_text3);
+            holder.view= (TextView) convertView.findViewById(R.id.consult_item_view);
+            holder.listView= (MyListView) convertView.findViewById(R.id.consult_item_listview);
             convertView.setTag(holder);
-
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
+        bitmapUtils.display(holder.imageView, entities.get(position).news.get(0).coverImage);
+        holder.textView.setText(entities.get(position).news.get(0).topic);
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ConsultDetailActivity.class);
+                intent.putExtra("id", entities.get(position).news.get(0).id);
+                context.startActivity(intent);
+            }
+        });
+        CousultItemAdapter adapter=new CousultItemAdapter(context,bitmapUtils,entities.get(position).news);
+        holder.listView.setAdapter(adapter);
 
+        holder.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(context, ConsultDetailActivity.class);
+                intent.putExtra("id",entities.get(position).news.get(position+1).id);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
 
     class  ViewHolder{
         public ImageView imageView;
         public TextView textView;
-        public ImageView imageView1;
-        public TextView textView1;
-        public ImageView imageView2;
-        public TextView textView2;
-        public ImageView imageView3;
-        public TextView textView3;
+        public View view;
+        public MyListView listView;
     }
 }

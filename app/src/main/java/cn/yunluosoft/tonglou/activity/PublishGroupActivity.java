@@ -1,5 +1,6 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.dialog.DateSelectDialog;
 import cn.yunluosoft.tonglou.dialog.SubmitDialog;
+import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.model.PGroupEntity;
 import cn.yunluosoft.tonglou.model.PGroupState;
 import cn.yunluosoft.tonglou.model.PersonInfo;
@@ -74,6 +76,18 @@ public class PublishGroupActivity extends BaseActivity implements View.OnClickLi
                     break;
 
                 case 552:
+                    Intent intent = new Intent(PublishGroupActivity.this,
+                            ChatActivity.class);
+                    MessageInfo messageInfo=new MessageInfo();
+                    messageInfo.receiverHeadUrl=pGroupEntity.dynamicId;
+                    messageInfo.receiverImUserName=pGroupEntity.groupId;
+                    messageInfo.receiverNickName=pGroupEntity.groupName;
+                    messageInfo.receiverUserId=pGroupEntity.groupId;
+                    intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("info", messageInfo);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     finish();
                     break;
 
@@ -121,10 +135,6 @@ public class PublishGroupActivity extends BaseActivity implements View.OnClickLi
                 DateSelectDialog selectDialog = new DateSelectDialog(
                         PublishGroupActivity.this, handler, sdate);
                 break;
-
-//            case R.id.publish_group_numview:
-//
-//                break;
 
             case R.id.publish_group_ok:
                 if (checkInput()){

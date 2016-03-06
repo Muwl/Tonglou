@@ -60,22 +60,25 @@ public class PublishActivity extends BaseActivity implements View.OnClickListene
             case R.id.publish_group:
                 Intent intent = new Intent(PublishActivity.this, PublishGroupActivity.class);
                 startActivity(intent);
+                finish();
                 break;
 
             case R.id.publish_used:
                 Intent intent2 = new Intent(PublishActivity.this, PublishUsedActivity.class);
                 startActivity(intent2);
+                finish();
                 break;
 
             case R.id.publish_pp:
                 Intent intent3 = new Intent(PublishActivity.this, PublishPPActivity.class);
                 startActivity(intent3);
+                finish();
                 break;
 
             case R.id.publish_help:
                 Intent intent4 = new Intent(PublishActivity.this, PublishHelpActivity.class);
                 startActivity(intent4);
-
+                finish();
                 break;
         }
     }

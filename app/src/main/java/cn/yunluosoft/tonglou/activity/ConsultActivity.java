@@ -8,8 +8,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.ConsultAdapter;
+import cn.yunluosoft.tonglou.model.ConsultEntity;
+import cn.yunluosoft.tonglou.utils.NewsDBUtils;
 
 /**
  * Created by Mu on 2016/1/28.
@@ -25,6 +30,11 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
     private View pro;
 
     private ConsultAdapter adapter;
+
+   private List<ConsultEntity> entities;
+
+    private NewsDBUtils dbUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +43,7 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initView() {
+        entities=new ArrayList<>();
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_title);
         listView= (ListView) findViewById(R.id.consult_list);
@@ -40,16 +51,10 @@ public class ConsultActivity extends BaseActivity implements View.OnClickListene
 
         back.setOnClickListener(this);
         title.setText("咨询推送");
-        adapter=new ConsultAdapter(this);
+        dbUtils=new NewsDBUtils(this);
+        entities=dbUtils.getAllConsultEntities();
+        adapter=new ConsultAdapter(this,entities);
         listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(ConsultActivity.this,ConsultDetailActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

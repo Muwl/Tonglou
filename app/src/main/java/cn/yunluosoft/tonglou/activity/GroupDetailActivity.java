@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.activity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
@@ -18,6 +20,12 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.editorpage.ShareActivity;
+import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +34,7 @@ import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.GroupDetailAdapter;
 import cn.yunluosoft.tonglou.adapter.GroupDetailGridViewAdapter;
 import cn.yunluosoft.tonglou.dialog.DiscussDialog;
+import cn.yunluosoft.tonglou.dialog.ShareDialog;
 import cn.yunluosoft.tonglou.model.CommentState;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.GroupDetailState;
@@ -87,6 +96,8 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
     private DiscussDialog discussDialog;
 
     private int flagIndex=-1;
+
+    private UMShareListener umShareListener;
 
     private Handler handler=new Handler(){
         @Override
@@ -150,6 +161,22 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.groupdetail);
         id=getIntent().getStringExtra("id");
         initView();
+        umShareListener=new UMShareListener() {
+            @Override
+            public void onResult(SHARE_MEDIA platform) {
+               // Toast.makeText(GroupDetailActivity.this, platform + " 分享成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA platform, Throwable t) {
+                Toast.makeText(GroupDetailActivity.this,platform + " 分享失败", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA platform) {
+                Toast.makeText(GroupDetailActivity.this,platform + " 分享取消", Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
     private void initView() {
@@ -193,11 +220,12 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.title_share:
-
-                break;
-
-            case R.id.groupdetail_replay:
-
+                if (entity==null){
+                    return;
+                }
+                UMImage image = new UMImage(GroupDetailActivity.this,
+                        BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+                ShareDialog dialog=new ShareDialog(GroupDetailActivity.this,handler,"楼语活动分享",entity.topic,Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id,image,umShareListener);
                 break;
 
             case R.id.groupdetail_send:
@@ -211,6 +239,11 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
 
     // 获取信息
     private void getInfo() {

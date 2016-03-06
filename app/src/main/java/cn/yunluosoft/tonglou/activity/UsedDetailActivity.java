@@ -1,5 +1,7 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
@@ -18,6 +21,11 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +33,7 @@ import java.util.List;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.GroupDetailAdapter;
 import cn.yunluosoft.tonglou.adapter.UsedDetailAdapter;
+import cn.yunluosoft.tonglou.dialog.ShareDialog;
 import cn.yunluosoft.tonglou.model.CommentState;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.GroupDetailState;
@@ -78,6 +87,8 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
 
     private int flagIndex=-1;
 
+    private UMShareListener umShareListener;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -112,6 +123,22 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.useddetail);
         id=getIntent().getStringExtra("id");
         initView();
+        umShareListener=new UMShareListener() {
+            @Override
+            public void onResult(SHARE_MEDIA platform) {
+                //Toast.makeText(UsedDetailActivity.this, platform + " 分享成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA platform, Throwable t) {
+                Toast.makeText(UsedDetailActivity.this,platform + " 分享失败", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA platform) {
+                Toast.makeText(UsedDetailActivity.this,platform + " 分享取消", Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
     private void initView() {
@@ -155,10 +182,13 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.title_share:
+                if (entity==null){
+                    return;
+                }
 
-                break;
-
-            case R.id.useddetail_replay:
+                UMImage image = new UMImage(UsedDetailActivity.this,
+                        BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+                ShareDialog dialog=new ShareDialog(UsedDetailActivity.this,handler,"楼语二手分享",entity.topic,Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id,image,umShareListener);
 
                 break;
 
@@ -172,6 +202,12 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
                 break;
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
 

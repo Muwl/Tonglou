@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_bg"
+    android:orientation="vertical"
+    >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/consult_item_item_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/second_font"
+                android:textColor="#000000"
+                android:maxLines="2"
+                android:text="as大苏打撒打倒垃圾我拉阿瓦达瓦大到就阿瓦算打算" />
+
+            <ImageView
+                android:id="@+id/consult_item_item_image"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_marginLeft="10dp"
+                android:scaleType="centerCrop"
+                android:src="@color/activity_bg"/>
+        </LinearLayout>
+
+    </LinearLayout>

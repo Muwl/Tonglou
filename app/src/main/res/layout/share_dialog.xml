@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/share_weixincirlce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/share_weixincricle"
+            android:gravity="center"
+            android:text="朋友圈"
+            android:textColor="#666666"
+            android:textSize="@dimen/second_font" />
+
+        <TextView
+            android:id="@+id/share_weixin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/share_weixin"
+            android:gravity="center"
+            android:text="微信好友"
+            android:textColor="#666666"
+            android:textSize="@dimen/second_font" />
+
+        <TextView
+            android:id="@+id/share_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/share_weixin"
+            android:gravity="center"
+            android:text="QQ"
+            android:textColor="#666666"
+            android:textSize="@dimen/second_font" />
+
+        <TextView
+            android:id="@+id/share_sina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/share_xinlan"
+            android:gravity="center"
+            android:text="微博"
+            android:textColor="#666666"
+            android:textSize="@dimen/second_font" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/share_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/share_sms"
+            android:gravity="center"
+            android:text="短信"
+            android:textColor="#666666"
+            android:textSize="@dimen/second_font" />
+
+        <TextView
+            android:id="@+id/share_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/share_email"
+            android:gravity="center"
+            android:text="邮件"
+            android:textColor="#666666"
+            android:textSize="@dimen/second_font" />
+
+        <TextView
+            android:id="@+id/share_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/share_louyu"
+            android:gravity="center"
+            android:text="楼语好友"
+            android:textColor="#666666"
+            android:textSize="@dimen/second_font" />
+
+        <TextView
+            android:id="@+id/share_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/share_copy"
+            android:gravity="center"
+            android:text="复制链接"
+            android:textColor="#666666"
+            android:textSize="@dimen/second_font" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dicider_col"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:id="@+id/share_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="@dimen/first_font"
+        android:text="取消"
+        android:gravity="center"
+        android:padding="15dp"
+        />
+
+
+</LinearLayout>
