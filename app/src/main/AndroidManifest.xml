@@ -507,7 +507,6 @@
             android:process=":DownloadingService"></service>
 
 
-
         <!-- 声明sdk所需的service SDK核心功能 -->
         <service android:name="com.easemob.chat.EMChatService" />
         <service android:name="com.easemob.chat.EMChatService" />

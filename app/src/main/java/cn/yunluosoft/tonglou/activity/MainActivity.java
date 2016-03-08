@@ -41,8 +41,6 @@ import cn.yunluosoft.tonglou.easemob.chatuidemo.domain.User;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.MyApplication;
-import cn.yunluosoft.tonglou.utils.ShareDataTool;
-import cn.yunluosoft.tonglou.utils.ToastUtils;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 
 import com.easemob.EMConnectionListener;
