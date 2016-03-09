@@ -3,6 +3,8 @@ package cn.yunluosoft.tonglou.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -18,15 +20,26 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.adapter.ConstactAdapter;
 import cn.yunluosoft.tonglou.adapter.ConsultDetailAdapter;
+import cn.yunluosoft.tonglou.model.ConsultDetailEntity;
+import cn.yunluosoft.tonglou.model.ConsultDetailState;
+import cn.yunluosoft.tonglou.model.ConsultInfoEntity;
+import cn.yunluosoft.tonglou.model.ConsultInfoState;
+import cn.yunluosoft.tonglou.model.FloorSpeechState;
 import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.model.User;
 import cn.yunluosoft.tonglou.utils.Constant;
+import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
+import cn.yunluosoft.tonglou.view.CustomListView;
 
 /**
  * Created by Mu on 2016/2/1.
@@ -39,17 +52,7 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
 
     private ImageView share;
 
-    private WebView webView;
-
-    private TextView atten;
-
-    private TextView read;
-
-    private TextView report;
-
-    private TextView message;
-
-    private ListView listView;
+    private CustomListView customListView;;
 
     private ConsultDetailAdapter adapter;
 
@@ -57,44 +60,45 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
 
     private String id;
 
+    private ConsultInfoEntity entity;
+
+    private int pageNo = 1;
+
+    private boolean proShow = true;
+
+    public boolean isFirst = true;
+
+    private List<ConsultDetailEntity> entities;
+
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.consult_detail);
         id=getIntent().getStringExtra("id");
         initView();
+        getInfo();
     }
 
     private void initView() {
+        entities=new ArrayList<>();
         back= (ImageView) findViewById(R.id.title_back);
         title= (TextView) findViewById(R.id.title_title);
         share= (ImageView) findViewById(R.id.title_share);
-        webView= (WebView) findViewById(R.id.consult_detail_web);
-        atten= (TextView) findViewById(R.id.consult_detail_atten);
-        read= (TextView) findViewById(R.id.consult_detail_read);
-        report= (TextView) findViewById(R.id.consult_detail_report);
-        message= (TextView) findViewById(R.id.consult_detail_message);
-        listView= (android.widget.ListView) findViewById(R.id.consult_detail_list);
+        customListView= (CustomListView) findViewById(R.id.consult_detail_list);
         pro=findViewById(R.id.consult_detail_pro);
 
-        WebView webView = new WebView(this);
-        webView.getSettings().setDefaultTextEncodingName("utf-8");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
-        } else {
-            webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
-        }
-        webView.loadUrl(Constant.ROOT_PATH+"/share/news?newsId="+id);
+
         back.setOnClickListener(this);
         title.setText("资讯详情");
         share.setVisibility(View.VISIBLE);
         share.setOnClickListener(this);
-        atten.setOnClickListener(this);
-        read.setOnClickListener(this);
-        message.setOnClickListener(this);
-        report.setOnClickListener(this);
-        adapter=new ConsultDetailAdapter(this);
-        listView.setAdapter(adapter);
 
 
     }
@@ -118,6 +122,85 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
                 startActivity(intent);
                 break;
         }
+    }
+
+    /**
+     * 添加新闻评论点赞
+     */
+    private void getInfo() {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("Id", id);
+        String url="/v1_1_0//news/readNumAndPraiseNum";
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(ConsultDetailActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(ConsultDetailActivity.this,
+                                        "操作成功");
+                                ConsultInfoState state1=gson.fromJson(arg0.result,ConsultInfoState.class);
+                                entity=state1.result;
+                                adapter = new ConsultDetailAdapter(ConsultDetailActivity.this,id,entity, entities, handler);
+                                customListView.setAdapter(adapter);
+                                customListView
+                                        .setOnRefreshListener(new CustomListView.OnRefreshListener() {
+                                            @Override
+                                            public void onRefresh() {
+                                                customListView.setCanLoadMore(false);
+                                                getInfoList(1);
+                                            }
+                                        });
+                                customListView
+                                        .setOnLoadListener(new CustomListView.OnLoadMoreListener() {
+                                            @Override
+                                            public void onLoadMore() {
+                                                getInfoList(pageNo + 1);
+                                            }
+                                        });
+                                getInfoList(1);
+                                customListView.setCanLoadMore(true);
+                                customListView.setCanRefresh(true);
+
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        ConsultDetailActivity.this, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(ConsultDetailActivity.this);
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        ConsultDetailActivity.this,
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(ConsultDetailActivity.this);
+                        }
+
+                    }
+                });
+
     }
 
 
@@ -174,6 +257,113 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
 
                     }
                 });
+
+    }
+
+
+
+    /**
+     * 获取评论列表
+     */
+    private void getInfoList(final int page) {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("newsId", id);
+        rp.addBodyParameter("pageNo", String.valueOf(page));
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "/v1_1_0/newsComment/find", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+                ToastUtils.displayFailureToast(ConsultDetailActivity.this);
+                customListView.onRefreshComplete();
+                customListView.onLoadMoreComplete();
+                customListView.setCanLoadMore(false);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                try {
+                    Gson gson = new Gson();
+                    // LogManager.LogShow("----", arg0.result+"1111111111",
+                    // LogManager.ERROR);
+                    ReturnState allState = gson.fromJson(arg0.result,
+                            ReturnState.class);
+                    if (Constant.RETURN_OK.equals(allState.msg)) {
+                        pageNo = page;
+                        if (page == 1) {
+                            entities.clear();
+                            adapter.notifyDataSetChanged();
+                        }
+                        if (allState.result == null
+                                || ToosUtils.isStringEmpty(String
+                                .valueOf(allState.result))) {
+                            customListView.onRefreshComplete();
+                            customListView.onLoadMoreComplete();
+                            customListView.setCanLoadMore(false);
+                            adapter.notifyDataSetChanged();
+                            // ToastUtils.displayShortToast(
+                            // MyFloorSpeechActivity.this, "无数据");
+                            return;
+                        }
+                        ConsultDetailState state = gson.fromJson(arg0.result,
+                                ConsultDetailState.class);
+                        if (state.result == null || state.result.size() == 0) {
+                            customListView.onRefreshComplete();
+                            customListView.onLoadMoreComplete();
+                            customListView.setCanLoadMore(false);
+                            adapter.notifyDataSetChanged();
+                            // ToastUtils.displayShortToast(
+                            // MyFloorSpeechActivity.this, "无数据");
+                        } else {
+                            for (int i = 0; i < state.result.size(); i++) {
+                                entities.add(state.result.get(i));
+                            }
+                            adapter.notifyDataSetChanged();
+                            if (pageNo == 1) {
+                                customListView.onRefreshComplete();
+                            } else {
+                                customListView.onRefreshComplete();
+                                customListView.onLoadMoreComplete();
+                            }
+                            customListView.setCanLoadMore(true);
+                        }
+
+                    } else {
+                        ReturnState state = gson.fromJson(arg0.result,
+                                ReturnState.class);
+                        if (Constant.TOKEN_ERR.equals(state.msg)) {
+                            ToastUtils.displayShortToast(ConsultDetailActivity.this,
+                                    "验证错误，请重新登录");
+                            // ToosUtils.goReLogin(getActivity());
+                        } else {
+                            ToastUtils.displayShortToast(ConsultDetailActivity.this,
+                                    (String) state.result);
+
+                        }
+                        customListView.onRefreshComplete();
+                        customListView.onLoadMoreComplete();
+                        customListView.setCanLoadMore(false);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    customListView.onRefreshComplete();
+                    customListView.onLoadMoreComplete();
+                    customListView.setCanLoadMore(false);
+                    ToastUtils.displaySendFailureToast(ConsultDetailActivity.this);
+                }
+
+            }
+        });
 
     }
 
