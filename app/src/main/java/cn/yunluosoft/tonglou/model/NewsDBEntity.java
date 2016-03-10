@@ -35,4 +35,19 @@ public class NewsDBEntity extends EntityBase{
         this.industry = industry;
         this.news = news;
     }
+
+    public NewsDBEntity() {
+    }
+
+    @Override
+    public String toString() {
+        return "NewsDBEntity{" +
+                "id='" + id + '\'' +
+                ", createDate='" + createDate + '\'' +
+                ", isPush='" + isPush + '\'' +
+                ", pushState='" + pushState + '\'' +
+                ", industry='" + industry + '\'' +
+                ", news='" + news + '\'' +
+                '}';
+    }
 }

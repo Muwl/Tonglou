@@ -58,7 +58,7 @@ public class CousultItemAdapter extends BaseAdapter {
         }
         holder.textView.setText(newsEntities.get(position+1).topic);
         bitmapUtils.display(holder.imageView,newsEntities.get(position+1).coverImage);
-        return null;
+        return convertView;
     }
     class  ViewHolder{
         public TextView textView;

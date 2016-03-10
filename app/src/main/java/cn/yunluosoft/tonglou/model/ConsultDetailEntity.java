@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/3/9.
@@ -17,9 +18,11 @@ public class ConsultDetailEntity implements Serializable {
     public String targetUserId;
     public String newsId;
     public String content;
-    public String praise;
+    public List<String> praise;
     public String praiseNum;
+    public String isPraise;
     public String createDate;
+    public String type;
 
 
 }

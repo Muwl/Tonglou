@@ -1,8 +1,11 @@
 package cn.yunluosoft.tonglou.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -15,9 +18,12 @@ import com.lidroid.xutils.BitmapUtils;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.activity.ConsultDetailActivity;
 import cn.yunluosoft.tonglou.model.ConsultDetailEntity;
 import cn.yunluosoft.tonglou.model.ConsultInfoEntity;
 import cn.yunluosoft.tonglou.utils.Constant;
+import cn.yunluosoft.tonglou.utils.LogManager;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -69,7 +75,7 @@ public class ConsultDetailAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
         ViewHolder holder = null;
         ViewHolder1 holder1 = null;
         int type = getItemViewType(position);
@@ -112,17 +118,89 @@ public class ConsultDetailAdapter extends BaseAdapter {
                 holder.webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
             }
             holder.webView.loadUrl(Constant.ROOT_PATH + "/share/news?newsId=" + id);
+            holder.read.setText(entity.readNum);
+            holder.atten.setText(entity.praiseNum);
+            if(Constant.PRAISE_OK.equals(entity.isPraise)){
+                holder.atten.setTextColor(Color.parseColor("#499EB8"));
+                Drawable drawable=context.getResources().getDrawable(R.mipmap.consult_atten_checked);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                holder.atten.setCompoundDrawables(drawable, null, null, null);
+            }else{
+                holder.atten.setTextColor(Color.parseColor("#B3B3B3"));
+                Drawable drawable=context.getResources().getDrawable(R.mipmap.consult_atten);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                holder.atten.setCompoundDrawables(drawable, null, null, null);
+            }
+            holder.atten.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Message message=new Message();
+                    message.what= ConsultDetailActivity.CONSULT_ATTEN;
+                    message.obj=position;
+                    handler.sendMessage(message);
+                }
+            });
+
+            holder.report.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            holder.message.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Message message=new Message();
+                    message.what= ConsultDetailActivity.CONSULT_COMMENT;
+                    message.obj=-1;
+                    handler.sendMessage(message);
+
+                }
+            });
 
         } else {
-            bitmapUtils.display(holder1.icon,entities.get(position-1).publishUserIcon);
-            holder1.name.setText(entities.get(position - 1).publishUserName);
+            bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
+            if ("0".equals(entities.get(position - 1).type)){
+                holder1.name.setText(entities.get(position - 1).publishUserName);
+            }else{
+                holder1.name.setText(entities.get(position - 1).publishUserName+"\u2000"+entities.get(position - 1).targetUserName+"\u2000");
+            }
+
+            if(Constant.PRAISE_OK.equals(entities.get(position - 1).isPraise)){
+                holder1.atten.setTextColor(Color.parseColor("#499EB8"));
+                Drawable drawable=context.getResources().getDrawable(R.mipmap.consult_atten_checked);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                holder1.atten.setCompoundDrawables(drawable, null, null, null);
+            }else{
+                holder1.atten.setTextColor(Color.parseColor("#B3B3B3"));
+                Drawable drawable=context.getResources().getDrawable(R.mipmap.consult_atten);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                holder1.atten.setCompoundDrawables(drawable, null, null, null);
+            }
+            if (ToosUtils.isStringEmpty(entities.get(position - 1).praiseNum)){
+                entities.get(position - 1).praiseNum="0";
+            }
             holder1.atten.setText(entities.get(position - 1).praiseNum + "");
             holder1.content.setText(entities.get(position-1).content);
             holder1.time.setText(entities.get(position-1).createDate);
             holder1.atten.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Message message = new Message();
+                    message.what = ConsultDetailActivity.CONSULT_ATTEN;
+                    message.obj = position;
+                    handler.sendMessage(message);
+                }
+            });
 
+            holder1.reply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Message message=new Message();
+                    message.what= ConsultDetailActivity.CONSULT_COMMENT;
+                    message.obj=position-1;
+                    handler.sendMessage(message);
                 }
             });
 

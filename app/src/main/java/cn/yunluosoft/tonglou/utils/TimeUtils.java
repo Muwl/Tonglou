@@ -19,11 +19,26 @@ public class TimeUtils {
 	public static final SimpleDateFormat DATE_FORMAT_DATE2 = new SimpleDateFormat(
 			"yyyy-M-d");
 
+	public static final SimpleDateFormat DATE_FORMAT_DATE3 = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
+
 	public static Date getDateByStr(String dd) {
 
 		Date date;
 		try {
 			date = DATE_FORMAT_DATE.parse(dd);
+		} catch (java.text.ParseException e) {
+			date = null;
+			e.printStackTrace();
+		}
+		return date;
+	}
+
+	public static Date getDateByStr2(String dd) {
+
+		Date date;
+		try {
+			date = DATE_FORMAT_DATE3.parse(dd);
 		} catch (java.text.ParseException e) {
 			date = null;
 			e.printStackTrace();

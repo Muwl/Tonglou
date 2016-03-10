@@ -23,8 +23,10 @@ import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.Constant;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.DateUtils;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.SmileUtils;
+import cn.yunluosoft.tonglou.model.ConsultEntity;
 import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.LogManager;
+import cn.yunluosoft.tonglou.utils.TimeUtils;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
@@ -37,17 +39,22 @@ public class FloorSpeechAdapter extends BaseAdapter {
     private List<EMConversation> entities;
     private Gson gson;
     private BitmapUtils bitmapUtils;
-
-    public FloorSpeechAdapter(Context context, List<EMConversation> entities) {
+    private List<ConsultEntity> consultEntities;
+    public FloorSpeechAdapter(Context context, List<EMConversation> entities,List<ConsultEntity> consultEntities) {
         this.context = context;
         this.entities = entities;
+        this.consultEntities=consultEntities;
         gson = new Gson();
         bitmapUtils = new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return entities.size();
+        if (consultEntities==null || consultEntities.size()==0) {
+            return entities.size();
+        }else{
+            return  entities.size()+1;
+        }
     }
 
     @Override
@@ -76,52 +83,115 @@ public class FloorSpeechAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-        EMConversation conversation = entities.get(position);
-        // 获取用户username或者群组groupid
-        String username = conversation.getUserName();
-        List<EMGroup> groups = EMGroupManager.getInstance().getAllGroups();
-        EMGroup contact = null;
-        EMMessage lastMessage = null;
-        MessageInfo messageInfo = null;
-        if (conversation.getMsgCount() != 0) {
-            // 把最后一条消息的内容作为item的message内容
-            lastMessage = conversation.getLastMessage();
-            String temp = null;
-            try {
-                messageInfo = ToosUtils.getMessageInfo(lastMessage);
-            } catch (Exception e) {
-                e.printStackTrace();
+        if ( consultEntities.size()!=0){
+            if (position==0){
+                ConsultEntity consultEntity=consultEntities.get(entities.size() - 1);
+                holder.name.setText("资讯信息");
+                holder.icon.setImageResource(R.mipmap.message_consult);
+                holder.time.setText(DateUtils.getTimestampString(TimeUtils.getDateByStr2(consultEntity.createDate)));
+                holder.content.setText(
+                        SmileUtils.getSmiledText(context,consultEntity.news.get(consultEntity.news.size()-1).topic),
+                        TextView.BufferType.SPANNABLE);
+            }else{
+                EMConversation conversation = entities.get(position-1);
+                // 获取用户username或者群组groupid
+                String username = conversation.getUserName();
+                List<EMGroup> groups = EMGroupManager.getInstance().getAllGroups();
+                EMGroup contact = null;
+                EMMessage lastMessage = null;
+                MessageInfo messageInfo = null;
+                if (conversation.getMsgCount() != 0) {
+                    // 把最后一条消息的内容作为item的message内容
+                    lastMessage = conversation.getLastMessage();
+                    String temp = null;
+                    try {
+                        messageInfo = ToosUtils.getMessageInfo(lastMessage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    holder.time.setText(DateUtils.getTimestampString(new Date(
+                            lastMessage.getMsgTime())));
+
+                    holder.content.setText(
+                            SmileUtils.getSmiledText(context,
+                                    getMessageDigest(lastMessage, (context))),
+                            TextView.BufferType.SPANNABLE);
+                }
+
+                if (conversation.getUnreadMsgCount() > 0) {
+                    // 显示与此用户的消息未读数
+                    holder.num
+                            .setText(String.valueOf(conversation.getUnreadMsgCount()));
+                    holder.num.setVisibility(View.VISIBLE);
+                } else {
+                    holder.num.setVisibility(View.INVISIBLE);
+                }
+
+                if (messageInfo != null) {
+                    if (!getGroupFlag(conversation)){
+                        if (lastMessage.direct == EMMessage.Direct.SEND) {
+                            holder.name.setText(messageInfo.receiverNickName);
+                            bitmapUtils.display(holder.icon, messageInfo.receiverHeadUrl);
+                        } else {
+                            holder.name.setText(messageInfo.senderNickName);
+                            bitmapUtils.display(holder.icon, messageInfo.senderHeadUrl);
+                        }}else{
+                        holder.name.setText(messageInfo.receiverNickName);
+                        holder.icon.setImageResource(R.mipmap.ic_launcher);
+                    }
+                }
             }
 
-            holder.time.setText(DateUtils.getTimestampString(new Date(
-                    lastMessage.getMsgTime())));
+        }else {
+            EMConversation conversation = entities.get(position);
+            // 获取用户username或者群组groupid
+            String username = conversation.getUserName();
+            List<EMGroup> groups = EMGroupManager.getInstance().getAllGroups();
+            EMGroup contact = null;
+            EMMessage lastMessage = null;
+            MessageInfo messageInfo = null;
+            if (conversation.getMsgCount() != 0) {
+                // 把最后一条消息的内容作为item的message内容
+                lastMessage = conversation.getLastMessage();
+                String temp = null;
+                try {
+                    messageInfo = ToosUtils.getMessageInfo(lastMessage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-            holder.content.setText(
-                    SmileUtils.getSmiledText(context,
-                            getMessageDigest(lastMessage, (context))),
-                    TextView.BufferType.SPANNABLE);
-        }
+                holder.time.setText(DateUtils.getTimestampString(new Date(
+                        lastMessage.getMsgTime())));
 
-        if (conversation.getUnreadMsgCount() > 0) {
-            // 显示与此用户的消息未读数
-            holder.num
-                    .setText(String.valueOf(conversation.getUnreadMsgCount()));
-            holder.num.setVisibility(View.VISIBLE);
-        } else {
-            holder.num.setVisibility(View.INVISIBLE);
-        }
+                holder.content.setText(
+                        SmileUtils.getSmiledText(context,
+                                getMessageDigest(lastMessage, (context))),
+                        TextView.BufferType.SPANNABLE);
+            }
 
-        if (messageInfo != null) {
-            if (!getGroupFlag(conversation)){
-            if (lastMessage.direct == EMMessage.Direct.SEND) {
-                holder.name.setText(messageInfo.receiverNickName);
-                bitmapUtils.display(holder.icon, messageInfo.receiverHeadUrl);
+            if (conversation.getUnreadMsgCount() > 0) {
+                // 显示与此用户的消息未读数
+                holder.num
+                        .setText(String.valueOf(conversation.getUnreadMsgCount()));
+                holder.num.setVisibility(View.VISIBLE);
             } else {
-                holder.name.setText(messageInfo.senderNickName);
-                bitmapUtils.display(holder.icon, messageInfo.senderHeadUrl);
-            }}else{
-                holder.name.setText(messageInfo.receiverNickName);
-                holder.icon.setImageResource(R.mipmap.ic_launcher);
+                holder.num.setVisibility(View.INVISIBLE);
+            }
+
+            if (messageInfo != null) {
+                if (!getGroupFlag(conversation)) {
+                    if (lastMessage.direct == EMMessage.Direct.SEND) {
+                        holder.name.setText(messageInfo.receiverNickName);
+                        bitmapUtils.display(holder.icon, messageInfo.receiverHeadUrl);
+                    } else {
+                        holder.name.setText(messageInfo.senderNickName);
+                        bitmapUtils.display(holder.icon, messageInfo.senderHeadUrl);
+                    }
+                } else {
+                    holder.name.setText(messageInfo.receiverNickName);
+                    holder.icon.setImageResource(R.mipmap.ic_launcher);
+                }
             }
         }
         return convertView;

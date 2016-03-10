@@ -60,6 +60,14 @@ public class NewsDBUtils {
 		}
 	}
 
+	public void removeAllNews() {
+		try {
+			db.deleteAll(NewsDBEntity.class);
+		} catch (DbException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public List<ConsultEntity> getAllConsultEntities(){
 
 		List<NewsDBEntity> newsDBEntities=getAllNews();
@@ -82,6 +90,7 @@ public class NewsDBUtils {
 		String temp=gson.toJson(consultEntity.news);
 		NewsDBEntity newsDBEntity=new NewsDBEntity(consultEntity.id,consultEntity.createDate,consultEntity.isPush,consultEntity.pushState,consultEntity.industry,temp);
 		saveNews(newsDBEntity);
+
 	}
 
 }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.DemoHXSDKHelper;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.domain.User;
+import cn.yunluosoft.tonglou.model.ConsultEntity;
 
 import com.easemob.EMCallBack;
 import com.google.gson.Gson;
@@ -53,6 +54,8 @@ public class MyApplication extends Application {
 		list.add(activity);
 	}
 
+	private NewsDBUtils newsDBUtils;
+
 	public List<Activity> getActivities() {
 		return list;
 	}
@@ -82,6 +85,7 @@ public class MyApplication extends Application {
 		PlatformConfig.setAlipay("2015111700822536");
 		mPushAgent = PushAgent.getInstance(this);
 		mPushAgent.setDebugMode(true);
+		newsDBUtils=new NewsDBUtils(this);
 
 
 		UmengMessageHandler messageHandler = new UmengMessageHandler(){
@@ -117,7 +121,10 @@ public class MyApplication extends Application {
 			@Override
 			public Notification getNotification(Context context,
 												UMessage msg) {
-
+				String temp=msg.extra.get("content");
+				Gson gson=new Gson();
+				ConsultEntity consultEntity=gson.fromJson(temp,ConsultEntity.class);
+				newsDBUtils.savelConsult(consultEntity);
 				LogManager.LogShow("------------","shoudao-----------",LogManager.ERROR);
 				LogManager.LogShow("------------","msg-----------"+new Gson().toJson(msg.extra),LogManager.ERROR);
 				switch (msg.builder_id) {

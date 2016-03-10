@@ -31,8 +31,10 @@ import cn.yunluosoft.tonglou.activity.ConsultActivity;
 import cn.yunluosoft.tonglou.adapter.FloorSpeechAdapter;
 import cn.yunluosoft.tonglou.dialog.CustomeDialog;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.db.InviteMessgeDao;
+import cn.yunluosoft.tonglou.model.ConsultEntity;
 import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
+import cn.yunluosoft.tonglou.utils.NewsDBUtils;
 import cn.yunluosoft.tonglou.view.swipelist.SwipeMenu;
 import cn.yunluosoft.tonglou.view.swipelist.SwipeMenuListView;
 
@@ -61,12 +63,28 @@ public class FloorSpeechFragment extends Fragment {
 
     private TextView empty_text;
 
+    private NewsDBUtils newsDBUtils;
+
+    private List<ConsultEntity> consultEntities;
+
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case 40:
                     int position = msg.arg1;
-                    delete(position);
+                    if (consultEntities.size()!=0 && position==0){
+                        newsDBUtils.removeAllNews();
+                        consultEntities.clear();
+                        adapter.notifyDataSetChanged();
+                        reFushEmpty();
+                    }else{
+                        if (consultEntities.size()!=0){
+                            delete(position-1);
+                        }else{
+                            delete(position);
+                        }
+                    }
+
                     break;
 
                 default:
@@ -94,6 +112,7 @@ public class FloorSpeechFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         dao = new InviteMessgeDao(getActivity());
+        newsDBUtils=new NewsDBUtils(getActivity());
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public void onMenuItemClick(int position, SwipeMenu menu, int index) {
@@ -109,10 +128,19 @@ public class FloorSpeechFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                int tempPoi=0;
+                if (consultEntities.size()>0){
+                    if (position==0){
+                        Intent intent=new Intent(getActivity(),ConsultActivity.class);
+                        startActivity(intent);
+                        return;
+                    }
+                    tempPoi=position-1;
+                }
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
-                MessageInfo adapterInfo = adapter.getInfo(position);
-                int m = adapter.getDic(position);
-                if (adapter.getGroupFlag(position)) {
+                MessageInfo adapterInfo = adapter.getInfo(tempPoi);
+                int m = adapter.getDic(tempPoi);
+                if (adapter.getGroupFlag(tempPoi)) {
                     intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("info", adapterInfo);
@@ -150,7 +178,11 @@ public class FloorSpeechFragment extends Fragment {
             }
         }
 
-        adapter = new FloorSpeechAdapter(getActivity(), entities);
+        consultEntities=newsDBUtils.getAllConsultEntities();
+        if (consultEntities==null){
+            consultEntities=new ArrayList<>();
+        }
+        adapter = new FloorSpeechAdapter(getActivity(), entities,consultEntities);
         listView.setAdapter(adapter);
         reFushEmpty();
     }
@@ -177,7 +209,7 @@ public class FloorSpeechFragment extends Fragment {
     }
 
     public void reFushEmpty() {
-        if (entities == null || entities.size() == 0) {
+        if (entities == null || entities.size() == 0 && consultEntities.size()==0) {
             empty.setVisibility(View.VISIBLE);
             empty_image.setImageDrawable(getResources().getDrawable(
                     R.mipmap.empty_mes));
@@ -198,6 +230,14 @@ public class FloorSpeechFragment extends Fragment {
                 entities.add(conversations.get(i));
 
             }
+        }
+        consultEntities.clear();
+        List<ConsultEntity> tempEntities=newsDBUtils.getAllConsultEntities();
+        if (tempEntities==null){
+            tempEntities=new ArrayList<>();
+        }
+        for (ConsultEntity consultEntity:tempEntities){
+            consultEntities.add(consultEntity);
         }
         adapter.notifyDataSetChanged();
         reFushEmpty();

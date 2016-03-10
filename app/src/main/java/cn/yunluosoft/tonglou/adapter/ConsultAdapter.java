@@ -56,7 +56,7 @@ public class ConsultAdapter extends BaseAdapter {
             holder=new ViewHolder();
             holder.imageView= (ImageView) convertView.findViewById(R.id.consult_item_image);
             holder.textView= (TextView) convertView.findViewById(R.id.consult_item_text);
-            holder.view= (TextView) convertView.findViewById(R.id.consult_item_view);
+            holder.view= convertView.findViewById(R.id.consult_item_view);
             holder.listView= (MyListView) convertView.findViewById(R.id.consult_item_listview);
             convertView.setTag(holder);
         }else{
