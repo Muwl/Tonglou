@@ -85,7 +85,7 @@ public class FloorSpeechAdapter extends BaseAdapter {
         }
         if ( consultEntities.size()!=0){
             if (position==0){
-                ConsultEntity consultEntity=consultEntities.get(entities.size() - 1);
+                ConsultEntity consultEntity=consultEntities.get(consultEntities.size() - 1);
                 holder.name.setText("资讯信息");
                 holder.icon.setImageResource(R.mipmap.message_consult);
                 holder.time.setText(DateUtils.getTimestampString(TimeUtils.getDateByStr2(consultEntity.createDate)));

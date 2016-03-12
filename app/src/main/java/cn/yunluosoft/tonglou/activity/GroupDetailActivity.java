@@ -103,6 +103,15 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
+
+                case 1223:
+                    Intent intent3=new Intent(GroupDetailActivity.this,ShareFriendActivity.class);
+                    intent3.putExtra("tip","楼语活动分享");
+                    intent3.putExtra("content",entity.topic);
+                    intent3.putExtra("tempUrl",Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id);
+                    startActivity(intent3);
+                    break;
+
                 case 1002:
                     AddPraise();
                     break;

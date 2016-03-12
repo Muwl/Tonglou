@@ -222,6 +222,7 @@ public class ShareDialog implements OnClickListener {
 			break;
 		case R.id.share_friend:
 			dialogAnimation(d, view, height, getWindowHeight(), true);
+			handler.sendEmptyMessage(1223);
 			break;
 		case R.id.share_copy:
 

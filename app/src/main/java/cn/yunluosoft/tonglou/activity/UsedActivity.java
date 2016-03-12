@@ -26,6 +26,7 @@ import java.util.List;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.HiGroupAdapter;
 import cn.yunluosoft.tonglou.adapter.UsedAdapter;
+import cn.yunluosoft.tonglou.dialog.ReportMenuDialog;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.FloorSpeechState;
 import cn.yunluosoft.tonglou.model.ReturnState;
@@ -77,6 +78,13 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case 55:
+                    int position4=msg.arg1;
+                    Intent intent6=new Intent(UsedActivity.this, ReportActivity.class);
+                    intent6.putExtra("flag",1);
+                    intent6.putExtra("contactId",entities.get(position4).id);
+                    startActivity(intent6);
+                    break;
                 case ATTEN:
                     int position= (int) msg.obj;
                     if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)){
@@ -154,7 +162,7 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
                 // entities.clear();
                 // adapter.notifyDataSetChanged();
                 customListView.setCanLoadMore(false);
-                getInfo(1,flag);
+                getInfo(1, flag);
             }
         });
         customListView.setOnLoadListener(new CustomListView.OnLoadMoreListener() {
@@ -162,16 +170,26 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
             public void onLoadMore() {
                 // pageNo++;
                 closePro();
-                getInfo(pageNo + 1,flag);
+                getInfo(pageNo + 1, flag);
             }
         });
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(UsedActivity.this,UsedDetailActivity.class);
-                intent.putExtra("id",entities.get(position-1).id);
+                Intent intent = new Intent(UsedActivity.this, UsedDetailActivity.class);
+                intent.putExtra("id", entities.get(position - 1).id);
                 startActivity(intent);
 
+            }
+        });
+
+        customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ReportMenuDialog dialog = new ReportMenuDialog(UsedActivity.this, handler, position);
+
+                return true;
             }
         });
     }

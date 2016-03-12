@@ -267,6 +267,9 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 		bitmapUtils = new BitmapUtils(this);
 		initView();
 		setUpView();
+		if (getIntent().getIntExtra("flag",0)==-1000){
+			sendText(getIntent().getStringExtra("tempUrl"));
+		}
 	}
 
 	/**

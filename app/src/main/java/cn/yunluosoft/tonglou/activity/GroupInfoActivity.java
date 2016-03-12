@@ -130,16 +130,17 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
             case R.id.groupinfo_toggle:
                 if (toggleButton.isChecked()) {
                     try {
-                        EMGroupManager.getInstance()
-                                .blockGroupMessage(groupId);
+                        EMGroupManager.getInstance().unblockGroupMessage(
+                                groupId);
+
                     } catch (EaseMobException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 } else {
                     try {
-                        EMGroupManager.getInstance().unblockGroupMessage(
-                                groupId);
+                        EMGroupManager.getInstance()
+                                .blockGroupMessage(groupId);
                     } catch (EaseMobException e) {
                         e.printStackTrace();
                     }
@@ -163,7 +164,8 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
 
                     runOnUiThread(new Runnable() {
                         public void run() {
-
+                            LogManager.LogShow("-----","group msg is blocked:"
+                                    + group.getMsgBlocked(),LogManager.ERROR);
                             // update block
                             System.out.println("group msg is blocked:"
                                     + group.getMsgBlocked());

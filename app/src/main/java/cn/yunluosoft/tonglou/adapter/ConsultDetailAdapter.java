@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -144,7 +145,7 @@ public class ConsultDetailAdapter extends BaseAdapter {
             holder.report.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    handler.sendEmptyMessage(ConsultDetailActivity.CONSULT_REPORT);
                 }
             });
 
@@ -164,7 +165,7 @@ public class ConsultDetailAdapter extends BaseAdapter {
             if ("0".equals(entities.get(position - 1).type)){
                 holder1.name.setText(entities.get(position - 1).publishUserName);
             }else{
-                holder1.name.setText(entities.get(position - 1).publishUserName+"\u2000"+entities.get(position - 1).targetUserName+"\u2000");
+                holder1.name.setText(entities.get(position - 1).publishUserName+"\u2000回复\u2000"+entities.get(position - 1).targetUserName);
             }
 
             if(Constant.PRAISE_OK.equals(entities.get(position - 1).isPraise)){

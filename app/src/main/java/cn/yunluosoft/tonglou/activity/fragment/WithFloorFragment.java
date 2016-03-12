@@ -36,10 +36,13 @@ import cn.yunluosoft.tonglou.activity.MainActivity;
 import cn.yunluosoft.tonglou.activity.PPActivity;
 import cn.yunluosoft.tonglou.activity.PPDetailActivity;
 import cn.yunluosoft.tonglou.activity.PublishActivity;
+import cn.yunluosoft.tonglou.activity.ReportActivity;
 import cn.yunluosoft.tonglou.activity.SerchSpeechActivity;
 import cn.yunluosoft.tonglou.activity.UsedActivity;
 import cn.yunluosoft.tonglou.activity.UsedDetailActivity;
 import cn.yunluosoft.tonglou.adapter.WithFloorAdapter;
+import cn.yunluosoft.tonglou.dialog.CustomeDialog;
+import cn.yunluosoft.tonglou.dialog.ReportMenuDialog;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.FloorSpeechState;
 import cn.yunluosoft.tonglou.model.ReturnState;
@@ -95,7 +98,13 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-
+                case 55:
+                    int position4=msg.arg1;
+                    Intent intent6=new Intent(getActivity(), ReportActivity.class);
+                    intent6.putExtra("flag",1);
+                    intent6.putExtra("contactId",entities.get(position4).id);
+                    startActivity(intent6);
+                    break;
                 case ADDGROUP:
                     int position3=msg.arg1;
                     AddJoin(position3);
@@ -160,17 +169,27 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = null;
-                if ("0".equals(entities.get(position-1).modelType)) {
+                if ("0".equals(entities.get(position - 1).modelType)) {
                     intent = new Intent(getActivity(), GroupDetailActivity.class);
-                } else if ("1".equals(entities.get(position-1).modelType)) {
+                } else if ("1".equals(entities.get(position - 1).modelType)) {
                     intent = new Intent(getActivity(), UsedDetailActivity.class);
-                }else if ("2".equals(entities.get(position-1).modelType)) {
+                } else if ("2".equals(entities.get(position - 1).modelType)) {
                     intent = new Intent(getActivity(), PPDetailActivity.class);
-                }else if ("3".equals(entities.get(position-1).modelType)) {
+                } else if ("3".equals(entities.get(position - 1).modelType)) {
                     intent = new Intent(getActivity(), HelpDetailActivity.class);
                 }
-                intent.putExtra("id", entities.get(position-1).id);
+                intent.putExtra("id", entities.get(position - 1).id);
                 startActivity(intent);
+            }
+        });
+
+        customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ReportMenuDialog dialog=new ReportMenuDialog(getActivity(),handler,position);
+
+                return true;
             }
         });
 

@@ -94,6 +94,14 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
+
+                case 1223:
+                    Intent intent3=new Intent(HelpDetailActivity.this,ShareFriendActivity.class);
+                    intent3.putExtra("tip","楼语帮帮分享");
+                    intent3.putExtra("content",entity.topic);
+                    intent3.putExtra("tempUrl",Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id);
+                    startActivity(intent3);
+                    break;
                 case 1002:
                     AddPraise();
                     break;

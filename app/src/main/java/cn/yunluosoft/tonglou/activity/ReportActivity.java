@@ -54,11 +54,13 @@ public class ReportActivity extends BaseActivity implements OnClickListener {
 
 	private View pro;
 
-	private int flag;// 0代表用户举报 1代表楼宇举报
+	private int flag;// 0代表用户举报 1代表楼宇举报 3代表新闻举报
 
 	private String userId;
 
 	private String contactId;
+
+	private String newsId;
 
 	private String reson = null;
 
@@ -70,9 +72,10 @@ public class ReportActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void initView() {
-//		flag = getIntent().getIntExtra("flag", 0);
-//		userId = getIntent().getStringExtra("userId");
-//		contactId = getIntent().getStringExtra("contactId");
+		flag = getIntent().getIntExtra("flag", 0);
+		userId = getIntent().getStringExtra("userId");
+		contactId = getIntent().getStringExtra("contactId");
+		newsId = getIntent().getStringExtra("newsId");
 		title = (TextView) findViewById(R.id.title_title);
 		back = (ImageView) findViewById(R.id.title_back);
 		item1 =  findViewById(R.id.report_item1);
@@ -168,11 +171,19 @@ public class ReportActivity extends BaseActivity implements OnClickListener {
 		final Gson gson = new Gson();
 		RequestParams rp = new RequestParams();
 		String url = Constant.ROOT_PATH + "/v1/reportUser/save";
+		if (flag == 0) {
+			url = Constant.ROOT_PATH + "/v1/reportUser/save";
+			rp.addBodyParameter("byReportUserId", userId);
+		}
 		if (flag == 1) {
 			rp.addBodyParameter("contactId", contactId);
 			url = Constant.ROOT_PATH + "/v1/reportContact/save";
 		}
-		rp.addBodyParameter("byReportUserId", userId);
+
+		if (flag ==2) {
+			rp.addBodyParameter("newsId", newsId);
+			url = Constant.ROOT_PATH + "/v1_1_0/reportNews/report";
+		}
 		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
 		rp.addBodyParameter("reason", reson);
 		HttpUtils utils = new HttpUtils();

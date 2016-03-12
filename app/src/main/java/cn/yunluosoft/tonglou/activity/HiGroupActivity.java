@@ -24,6 +24,7 @@ import java.util.List;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.HiGroupAdapter;
 import cn.yunluosoft.tonglou.adapter.WithFloorAdapter;
+import cn.yunluosoft.tonglou.dialog.ReportMenuDialog;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.FloorSpeechState;
 import cn.yunluosoft.tonglou.model.ReturnState;
@@ -71,6 +72,13 @@ public class HiGroupActivity extends BaseActivity implements View.OnClickListene
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case 55:
+                    int position4=msg.arg1;
+                    Intent intent6=new Intent(HiGroupActivity.this, ReportActivity.class);
+                    intent6.putExtra("flag",1);
+                    intent6.putExtra("contactId",entities.get(position4).id);
+                    startActivity(intent6);
+                    break;
                 case ADDGROUP:
                     int position3=msg.arg1;
                     AddJoin(position3);
@@ -128,8 +136,17 @@ public class HiGroupActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(HiGroupActivity.this, GroupDetailActivity.class);
-                intent.putExtra("id",entities.get(position-1).id);
+                intent.putExtra("id", entities.get(position - 1).id);
                 startActivity(intent);
+            }
+        });
+        customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ReportMenuDialog dialog = new ReportMenuDialog(HiGroupActivity.this, handler, position);
+
+                return true;
             }
         });
 

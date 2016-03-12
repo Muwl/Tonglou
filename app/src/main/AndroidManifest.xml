@@ -235,6 +235,10 @@
         <activity
             android:name="cn.yunluosoft.tonglou.activity.ConsultActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity> <!-- 咨询推送 -->
+        <activity
+            android:name="cn.yunluosoft.tonglou.activity.ShareFriendActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
         <!-- 添加好友 -->
         <activity
