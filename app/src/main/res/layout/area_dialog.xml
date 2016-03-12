@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="0dp" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/area_dialog_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/first_font"
+            android:clickable="true"
+            android:padding="12dp"
+            android:text="取消"
+            android:textColor="#5d5f5f"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/area_dialog_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/first_font"
+            android:clickable="true"
+            android:padding="12dp"
+            android:text="确定"
+            android:textColor="#5d5f5f"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dicider_col"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@color/white"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal" >
+
+        <cn.yunluosoft.tonglou.view.widget.WheelView
+            android:id="@+id/id_province"
+            android:layout_width="0dp"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </cn.yunluosoft.tonglou.view.widget.WheelView>
+
+        <cn.yunluosoft.tonglou.view.widget.WheelView
+            android:id="@+id/id_city"
+            android:background="@color/white"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </cn.yunluosoft.tonglou.view.widget.WheelView>
+
+        <cn.yunluosoft.tonglou.view.widget.WheelView
+            android:id="@+id/id_district"
+            android:layout_width="0dp"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </cn.yunluosoft.tonglou.view.widget.WheelView>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

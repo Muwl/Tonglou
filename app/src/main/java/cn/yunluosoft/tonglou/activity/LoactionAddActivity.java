@@ -2,6 +2,8 @@ package cn.yunluosoft.tonglou.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.dialog.AreaDialog;
 import cn.yunluosoft.tonglou.model.PerfectDataState;
 import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
@@ -35,19 +38,30 @@ public class LoactionAddActivity extends BaseActivity implements View.OnClickLis
 
     private EditText name;
 
-    private View areaView;
-
-    private EditText area;
-
     private View provinceView;
 
-    private EditText province;
+    private TextView province;
 
     private EditText detailAddress;
 
     private TextView ok;
 
     private View pro;
+
+    private String[] strings;
+
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1004:
+                    String s= (String) msg.obj;
+                    strings=s.split("\\*\\*");
+                    province.setText(strings[0]+strings[1]);
+                    break;
+            }
+        }
+    };
 
 
     @Override
@@ -61,17 +75,14 @@ public class LoactionAddActivity extends BaseActivity implements View.OnClickLis
         title= (TextView) findViewById(R.id.title_title);
         back= (ImageView) findViewById(R.id.title_back);
         name= (EditText) findViewById(R.id.location_add_name);
-        areaView=findViewById(R.id.location_add_areaview);
-        area= (EditText) findViewById(R.id.location_add_area);
         provinceView=findViewById(R.id.location_add_provinceview);
-        province= (EditText) findViewById(R.id.location_add_province);
+        province= (TextView) findViewById(R.id.location_add_province);
         detailAddress= (EditText) findViewById(R.id.location_add_detailaddress);
         ok= (TextView) findViewById(R.id.location_add_ok);
         pro=findViewById(R.id.location_add_pro);
 
         title.setText("楼宇地址收录");
         back.setOnClickListener(this);
-        areaView.setOnClickListener(this);
         provinceView.setOnClickListener(this);
         ok.setOnClickListener(this);
 
@@ -91,10 +102,8 @@ public class LoactionAddActivity extends BaseActivity implements View.OnClickLis
 
                 break;
 
-            case R.id.location_add_areaview:
-                break;
-
             case R.id.location_add_provinceview:
+                AreaDialog dialog=new AreaDialog(LoactionAddActivity.this,handler);
                 break;
 
 
@@ -105,10 +114,6 @@ public class LoactionAddActivity extends BaseActivity implements View.OnClickLis
         if (ToosUtils.isTextEmpty(name)){
             ToastUtils.displayShortToast(LoactionAddActivity.this,"请输入楼宇名称！");
             return false;
-        }
-        if (ToosUtils.isTextEmpty(area)){
-            ToastUtils.displayShortToast(LoactionAddActivity.this,"请输入地区！");
-            return  false;
         }
         if (ToosUtils.isTextEmpty(province)){
             ToastUtils.displayShortToast(LoactionAddActivity.this,"请输入省/市！");
@@ -127,8 +132,8 @@ public class LoactionAddActivity extends BaseActivity implements View.OnClickLis
         final Gson gson = new Gson();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("buildingName", ToosUtils.getTextContent(name));
-        rp.addBodyParameter("city", ToosUtils.getTextContent(area));
-        rp.addBodyParameter("province",ToosUtils.getTextContent(province));
+        rp.addBodyParameter("city", strings[1]);
+        rp.addBodyParameter("province",strings[0]);
         rp.addBodyParameter("address",ToosUtils.getTextContent(detailAddress));
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);

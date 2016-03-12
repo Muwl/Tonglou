@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -34,6 +35,7 @@ import java.util.List;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.ConstactAdapter;
 import cn.yunluosoft.tonglou.adapter.ConsultDetailAdapter;
+import cn.yunluosoft.tonglou.dialog.CustomeDialog;
 import cn.yunluosoft.tonglou.dialog.ShareDialog;
 import cn.yunluosoft.tonglou.model.CommentState;
 import cn.yunluosoft.tonglou.model.ConsultDetailEntity;
@@ -102,6 +104,10 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case 40:
+                    int position4=msg.arg1;
+                    delPraise(position4);
+                    break;
                 case 1223:
                     Intent intent=new Intent(ConsultDetailActivity.this,ShareFriendActivity.class);
                     intent.putExtra("tip","新闻资讯分享");
@@ -172,6 +178,16 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
                 Toast.makeText(ConsultDetailActivity.this, platform + " 分享取消", Toast.LENGTH_SHORT).show();
             }
         };
+
+        customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (ShareDataTool.getUserId(ConsultDetailActivity.this).equals(entities.get(position-1).publishUserId)){
+                    CustomeDialog dialog=new CustomeDialog(ConsultDetailActivity.this,handler,"是否删除？",(position-1),-20);
+                }
+                return true;
+            }
+        });
 
 
         back.setOnClickListener(this);
@@ -550,61 +566,63 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
 
     }
 
-//    /**
-//     * 添加新闻评论点赞
-//     */
-//    private void AddCommentPraise() {
-//        RequestParams rp = new RequestParams();
-//        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-//        rp.addBodyParameter("id", id);
-//        String url="/v1_1_0/newsComment/praise";
-//        HttpUtils utils = new HttpUtils();
-//        utils.configTimeout(20000);
-//        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
-//                rp, new RequestCallBack<String>() {
-//                    @Override
-//                    public void onStart() {
-//                        pro.setVisibility(View.VISIBLE);
-//                        super.onStart();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(HttpException arg0, String arg1) {
-//                        pro.setVisibility(View.GONE);
-//                        ToastUtils.displayFailureToast(ConsultDetailActivity.this);
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(ResponseInfo<String> arg0) {
-//                        pro.setVisibility(View.GONE);
-//                        try {
-//                            // Gson gson = new Gson();
-//                            LogManager.LogShow("----", arg0.result,
-//                                    LogManager.ERROR);
-//                            Gson gson = new Gson();
-//                            ReturnState state = gson.fromJson(arg0.result,
-//                                    ReturnState.class);
-//                            if (Constant.RETURN_OK.equals(state.msg)) {
-//                                ToastUtils.displayShortToast(ConsultDetailActivity.this,
-//                                        "操作成功");
-//                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-//                                ToastUtils.displayShortToast(
-//                                        ConsultDetailActivity.this, "验证错误，请重新登录");
-//                                ToosUtils.goReLogin(ConsultDetailActivity.this);
-//                            } else {
-//                                ToastUtils.displayShortToast(
-//                                        ConsultDetailActivity.this,
-//                                        String.valueOf(state.result));
-//                            }
-//                        } catch (Exception e) {
-//                            ToastUtils
-//                                    .displaySendFailureToast(ConsultDetailActivity.this);
-//                        }
-//
-//                    }
-//                });
-//
-//    }
+    /**
+     * 删除评论点赞
+     */
+    private void delPraise(final int position) {
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        rp.addBodyParameter("newsCommentId", entities.get(position).id);
+        String url="/v1_1_0/newsComment/del";
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
+                rp, new RequestCallBack<String>() {
+                    @Override
+                    public void onStart() {
+                        pro.setVisibility(View.VISIBLE);
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        pro.setVisibility(View.GONE);
+                        ToastUtils.displayFailureToast(ConsultDetailActivity.this);
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> arg0) {
+                        pro.setVisibility(View.GONE);
+                        try {
+                            // Gson gson = new Gson();
+                            LogManager.LogShow("----", arg0.result,
+                                    LogManager.ERROR);
+                            Gson gson = new Gson();
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.RETURN_OK.equals(state.msg)) {
+                                ToastUtils.displayShortToast(ConsultDetailActivity.this,
+                                        "操作成功");
+                                entities.remove(position);
+                                adapter.notifyDataSetChanged();
+                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(
+                                        ConsultDetailActivity.this, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(ConsultDetailActivity.this);
+                            } else {
+                                ToastUtils.displayShortToast(
+                                        ConsultDetailActivity.this,
+                                        String.valueOf(state.result));
+                            }
+                        } catch (Exception e) {
+                            ToastUtils
+                                    .displaySendFailureToast(ConsultDetailActivity.this);
+                        }
+
+                    }
+                });
+
+    }
 
 
     /**

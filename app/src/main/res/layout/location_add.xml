@@ -51,43 +51,43 @@
                     android:textSize="@dimen/second_font" />
 
 
-                <LinearLayout
-                    android:id="@+id/location_add_areaview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/text_bg"
-                    android:clickable="true"
-                    android:gravity="center_vertical"
-                    android:padding="10dp">
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/location_add_areaview"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:background="@drawable/text_bg"-->
+                    <!--android:clickable="true"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:padding="10dp">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="地区"
-                        android:textColor="#000"
-                        android:textSize="@dimen/second_font" />
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="地区"-->
+                        <!--android:textColor="#000"-->
+                        <!--android:textSize="@dimen/second_font" />-->
 
 
-                    <EditText
-                        android:id="@+id/location_add_area"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="10dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:background="@null"
-                        android:textColor="#000"
-                        android:textSize="@dimen/second_font" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/location_add_area"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:paddingRight="10dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="right"-->
+                        <!--android:background="@null"-->
+                        <!--android:textColor="#000"-->
+                        <!--android:textSize="@dimen/second_font" />-->
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/go" />
+                    <!--<ImageView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:src="@mipmap/go" />-->
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
 
                 <LinearLayout
@@ -110,7 +110,7 @@
                         android:textSize="@dimen/second_font" />
 
 
-                    <EditText
+                    <TextView
                         android:id="@+id/location_add_province"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
