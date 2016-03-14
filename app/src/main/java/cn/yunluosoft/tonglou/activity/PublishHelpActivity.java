@@ -1,5 +1,6 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -71,6 +72,13 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
                     break;
 
                 case 552:
+                    Intent intent=new Intent(PublishHelpActivity.this,AssistActivity.class);
+                    if (group.getCheckedRadioButtonId()==R.id.title_rb_lef){
+                        intent.putExtra("flag",0);
+                    }else{
+                        intent.putExtra("flag",1);
+                    }
+                    startActivity(intent);
                     finish();
                     break;
 

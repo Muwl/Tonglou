@@ -93,6 +93,7 @@
     <orderEntry type="library" exported="" name="wire-runtime-1.7.0" level="project" />
     <orderEntry type="library" exported="" name="xUtils-2.6.14" level="project" />
     <orderEntry type="library" exported="" name="weiboSDKCore_3.1.2" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-22.2.0-sources" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_WeiXin_1" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_WeiXin_2" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_QQZone_3" level="project" />

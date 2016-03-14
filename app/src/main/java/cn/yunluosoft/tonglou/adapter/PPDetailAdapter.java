@@ -26,12 +26,14 @@ import cn.yunluosoft.tonglou.activity.ChatActivity;
 import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.activity.HelpDetailActivity;
 import cn.yunluosoft.tonglou.activity.PPDetailActivity;
+import cn.yunluosoft.tonglou.dialog.CustomeDialog;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.model.ReplayEntity;
 import cn.yunluosoft.tonglou.model.User;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 import cn.yunluosoft.tonglou.view.MyGridView;
 
@@ -212,10 +214,19 @@ public class PPDetailAdapter extends BaseAdapter {
                 holder1.del.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Message message=new Message();
-                        message.what=1009;
-                        message.arg1=(position-1);
-                        handler.sendMessage(message);
+
+                        String temp="是否删除该评论？";
+                        if (ToosUtils.isStringEmpty(entities.get(position - 1).targetUserId)) {
+                            temp="是否删除该评论？";
+                        }else{
+                            temp="是否删除该回复？";
+                        }
+
+                        CustomeDialog dialog=new CustomeDialog(context,handler,temp,position-1,-2);
+//                        Message message=new Message();
+//                        message.what=1009;
+//                        message.arg1=(position-1);
+//                        handler.sendMessage(message);
                     }
                 });
             }else{

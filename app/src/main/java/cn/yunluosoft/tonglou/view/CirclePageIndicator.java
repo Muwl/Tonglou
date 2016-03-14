@@ -34,6 +34,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+
 import cn.yunluosoft.tonglou.R;
 
 /**

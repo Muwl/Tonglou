@@ -301,6 +301,7 @@ public class HXNotifier {
 			mBuilder.setContentIntent(pendingIntent);
 			// mBuilder.setNumber(notificationNum);
 			Notification notification = mBuilder.build();
+//			Notification notification =mBuilder.getNotification();
 
 			if (isForeground) {
 				notificationManager.notify(foregroundNotifyID, notification);

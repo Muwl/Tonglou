@@ -113,6 +113,7 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initView() {
+        flag=getIntent().getIntExtra("flag",0);
         back= (ImageView) findViewById(R.id.title_back);
         rig= (TextView) findViewById(R.id.title_rig);
         group= (RadioGroup) findViewById(R.id.title_group);
@@ -132,7 +133,11 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
         buy.setText("求购");
         serch.setOnClickListener(this);
 
-        group.check(R.id.title_rb_lef);
+        if (flag==0){
+            group.check(R.id.title_rb_lef);
+        }else{
+            group.check(R.id.title_rb_rig);
+        }
         entities=new ArrayList<>();
 
         adapter = new UsedAdapter(this, entities, handler);

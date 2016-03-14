@@ -7,6 +7,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -109,6 +110,9 @@ public class SerchSpeechActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.serch_speeck);
         modelFlag = getIntent().getIntExtra("modelFlag", 4);
         initView();
+        serch.setFocusableInTouchMode(true);
+        serch.requestFocus();
+        imm.showSoftInput(serch, 0);
     }
 
     private void initView() {

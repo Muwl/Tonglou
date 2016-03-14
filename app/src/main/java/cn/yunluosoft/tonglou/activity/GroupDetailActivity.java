@@ -122,14 +122,14 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                     }else{
                         sendEdit.setHint("回复"+entities.get(flagIndex).publishUserNickname);
                     }
-                    imm.showSoftInput(sendEdit, InputMethodManager.SHOW_FORCED);
+                    imm.showSoftInput(sendEdit, 0);
 //                    if (discussDialog==null){
 //                        discussDialog=new DiscussDialog(GroupDetailActivity.this,handler,-1,"");
 //                    }
 
                     break;
 
-                case 1009:
+                case 40:
                     int position1=msg.arg1;
                     delComment(position1);
                     break;

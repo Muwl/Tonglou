@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import cn.yunluosoft.tonglou.dialog.ShareAlertDialog;
 import cn.yunluosoft.tonglou.model.FriendEntity;
 import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.FriendDBUtils;
+import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 
@@ -66,11 +69,12 @@ public class ShareFriendActivity extends BaseActivity {
                     }
 
                     MessageInfo info = new MessageInfo(
-                            ShareDataTool.getUserId(ShareFriendActivity.this), entities.get(position).id,
-                            ShareDataTool.getUserId(ShareFriendActivity.this), entities.get(position).id,
+                            ShareDataTool.getUserId(ShareFriendActivity.this), entities.get(position).userId,
+                            ShareDataTool.getUserId(ShareFriendActivity.this), entities.get(position).userId,
                             ShareDataTool.getIcon(ShareFriendActivity.this),
                             entities.get(position).icon, myname, rename);
                     intent.putExtra("info", (Serializable) info);
+                    LogManager.LogShow("-----", new Gson().toJson(info), LogManager.ERROR);
                     intent.putExtra("flag",-1000);
                     intent.putExtra("tempUrl",tempUrl);
                     startActivity(intent);

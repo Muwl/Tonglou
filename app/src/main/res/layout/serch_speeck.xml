@@ -44,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="12dp"
+                android:singleLine="true"
                 android:background="@color/transparent"
                 android:hint="搜索"
                 android:textColor="#000"

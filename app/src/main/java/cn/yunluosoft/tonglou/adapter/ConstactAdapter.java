@@ -19,7 +19,11 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.ConstactActivity;
+import cn.yunluosoft.tonglou.activity.GroupDetailActivity;
+import cn.yunluosoft.tonglou.activity.HelpDetailActivity;
+import cn.yunluosoft.tonglou.activity.PPDetailActivity;
 import cn.yunluosoft.tonglou.activity.PhotoShowActivity;
+import cn.yunluosoft.tonglou.activity.UsedDetailActivity;
 import cn.yunluosoft.tonglou.model.ConstantWithfloorEntity;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
@@ -188,15 +192,15 @@ public class ConstactAdapter extends BaseAdapter {
 		} else if (type == type1) {
 
 			bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
-			holder1.icon.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(context, ConstactActivity.class);
-					intent.putExtra("id", entities.get(position-1).publishUserId);
-					intent.putExtra("name", entities.get(position-1).publishUserNickname);
-					context.startActivity(intent);
-				}
-			});
+//			holder1.icon.setOnClickListener(new View.OnClickListener() {
+//				@Override
+//				public void onClick(View v) {
+//					Intent intent = new Intent(context, ConstactActivity.class);
+//					intent.putExtra("id", entities.get(position-1).publishUserId);
+//					intent.putExtra("name", entities.get(position-1).publishUserNickname);
+//					context.startActivity(intent);
+//				}
+//			});
 			holder1.name.setText(entities.get(position - 1).publishUserNickname);
 			if (ToosUtils.isStringEmpty(entities.get(position - 1).detail)) {
 				holder1.content.setVisibility(View.GONE);
@@ -207,18 +211,31 @@ public class ConstactAdapter extends BaseAdapter {
 				holder1.content.setText(s + "...");
 			}
 
-			holder1.content.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-//					Intent intent = new Intent(context,
-//							FloorSpeechDetailActivity.class);
-//					intent.putExtra("flag", 1);
-//					intent.putExtra("id", entities.get(position - 1).id);
-//					((ConstactActivity) context).startActivityForResult(intent,
-//							1005);
-				}
-			});
+//			holder1.content.setOnClickListener(new OnClickListener() {
+//
+//				@Override
+//				public void onClick(View v) {
+//
+//					Intent intent = null;
+//					if ("0".equals(entities.get(position-1).modelType)) {
+//						intent = new Intent(context, GroupDetailActivity.class);
+//					} else if ("1".equals(entities.get(position-1).modelType)) {
+//						intent = new Intent(context, UsedDetailActivity.class);
+//					} else if ("2".equals(entities.get(position-1).modelType)) {
+//						intent = new Intent(context, PPDetailActivity.class);
+//					} else if ("3".equals(entities.get(position-1).modelType)) {
+//						intent = new Intent(context, HelpDetailActivity.class);
+//					}
+//					intent.putExtra("id", entities.get(position-1).id);
+//					context.startActivity(intent);
+////					Intent intent = new Intent(context,
+////							FloorSpeechDetailActivity.class);
+////					intent.putExtra("flag", 1);
+////					intent.putExtra("id", entities.get(position - 1).id);
+////					((ConstactActivity) context).startActivityForResult(intent,
+////							1005);
+//				}
+//			});
 
 
 

@@ -104,7 +104,7 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
                 case 1002:
                     AddPraise();
                     break;
-                case 1009:
+                case 40:
                     int position1=msg.arg1;
                     delComment(position1);
                     break;
@@ -115,7 +115,7 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
                     }else{
                         sendEdit.setHint("回复"+entities.get(flagIndex).publishUserNickname);
                     }
-                    imm.showSoftInput(sendEdit, InputMethodManager.SHOW_FORCED);
+                    imm.showSoftInput(sendEdit,0);
 //                    if (discussDialog==null){
 //                        discussDialog=new DiscussDialog(GroupDetailActivity.this,handler,-1,"");
 //                    }

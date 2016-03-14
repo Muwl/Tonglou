@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,7 +25,6 @@ import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
-import cn.yunluosoft.tonglou.activity.BaseActivity;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
 import cn.yunluosoft.tonglou.view.CirclePageIndicator;
@@ -75,22 +73,24 @@ public class PhotoShowActivity extends BaseActivity {
 		pager.setCurrentItem(position);
 		mIndicator.setViewPager(pager);
 
-		pager.setOnPageChangeListener(new OnPageChangeListener() {
+
+		pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 			@Override
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
-
+				LogManager.LogShow("---------","1111111111111111",LogManager.ERROR);
 			}
 
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				title.setText((arg0 + 1) + "/" + photoEntities.size());
+				LogManager.LogShow("---------", "2222222222222", LogManager.ERROR);
 			}
 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
-
+				LogManager.LogShow("---------","3333333333333",LogManager.ERROR);
 			}
 		});
 

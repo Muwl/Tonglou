@@ -1,5 +1,6 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -66,6 +67,13 @@ public class PublishPPActivity extends BaseActivity implements View.OnClickListe
             switch (msg.what) {
 
                 case 552:
+                    Intent intent=new Intent(PublishPPActivity.this,PPActivity.class);
+                    if (group.getCheckedRadioButtonId()==R.id.title_rb_lef){
+                        intent.putExtra("flag",0);
+                    }else{
+                        intent.putExtra("flag",1);
+                    }
+                    startActivity(intent);
                     finish();
                     break;
 

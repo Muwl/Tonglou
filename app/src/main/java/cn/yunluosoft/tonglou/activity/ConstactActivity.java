@@ -54,6 +54,7 @@ import android.view.View.OnLayoutChangeListener;
 import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -279,6 +280,7 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
                         ShareDataTool.getUserId(ConstactActivity.this), id,
                         ShareDataTool.getIcon(ConstactActivity.this),
                         infoEntity.icon, myname, rename);
+                LogManager.LogShow("-----",new Gson().toJson(info),LogManager.ERROR);
                 intent.putExtra("info", (Serializable) info);
                 startActivity(intent);
 
@@ -385,19 +387,36 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
 						customListView.setBitmapUtils(bitmapUtils);
 						customListView
 								.setOnRefreshListener(new OnRefreshListener() {
-									@Override
-									public void onRefresh() {
-										customListView.setCanLoadMore(false);
-										getInfoList(1);
-									}
-								});
+                                    @Override
+                                    public void onRefresh() {
+                                        customListView.setCanLoadMore(false);
+                                        getInfoList(1);
+                                    }
+                                });
 						customListView
 								.setOnLoadListener(new OnLoadMoreListener() {
-									@Override
-									public void onLoadMore() {
-										getInfoList(pageNo + 1);
-									}
-								});
+                                    @Override
+                                    public void onLoadMore() {
+                                        getInfoList(pageNo + 1);
+                                    }
+                                });
+                        customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent intent = null;
+                                if ("0".equals(entities.get(position-1).modelType)) {
+                                    intent = new Intent(ConstactActivity.this, GroupDetailActivity.class);
+                                } else if ("1".equals(entities.get(position-1).modelType)) {
+                                    intent = new Intent(ConstactActivity.this, UsedDetailActivity.class);
+                                } else if ("2".equals(entities.get(position-1).modelType)) {
+                                    intent = new Intent(ConstactActivity.this, PPDetailActivity.class);
+                                } else if ("3".equals(entities.get(position-1).modelType)) {
+                                    intent = new Intent(ConstactActivity.this, HelpDetailActivity.class);
+                                }
+                                intent.putExtra("id", entities.get(position-1).id);
+                                startActivity(intent);
+                            }
+                        });
 						getInfoList(1);
 						customListView.setCanLoadMore(true);
 						customListView.setCanRefresh(true);

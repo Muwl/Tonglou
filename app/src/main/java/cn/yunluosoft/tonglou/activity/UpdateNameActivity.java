@@ -101,8 +101,13 @@ public class UpdateNameActivity extends BaseActivity implements View.OnClickList
             rp.addBodyParameter("icon", iconFile);
         }
 
+
+
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
+
+        LogManager.LogShow("----", Constant.ROOT_PATH
+                + "/v1/user/saveOrUpdateInfo?sign="+ShareDataTool.getToken(this)+"&info="+ gson.toJson(personInfo),LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                         + "/v1/user/saveOrUpdateInfo", rp,
                 new RequestCallBack<String>() {
@@ -121,6 +126,8 @@ public class UpdateNameActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onSuccess(ResponseInfo<String> arg0) {
                         pro.setVisibility(View.GONE);
+                        LogManager.LogShow("----", arg0.result,
+                                LogManager.ERROR);
                         try {
                             // Gson gson = new Gson();
                             LogManager.LogShow("----", arg0.result,
@@ -156,6 +163,7 @@ public class UpdateNameActivity extends BaseActivity implements View.OnClickList
                                         String.valueOf(state.result));
                             }
                         } catch (Exception e) {
+                            e.printStackTrace();
                             ToastUtils
                                     .displaySendFailureToast(UpdateNameActivity.this);
                         }

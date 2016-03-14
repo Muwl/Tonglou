@@ -113,6 +113,7 @@ public class AssistActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
+        flag=getIntent().getIntExtra("flag",0);
         back= (ImageView) findViewById(R.id.title_back);
         rig= (TextView) findViewById(R.id.title_rig);
         group= (RadioGroup) findViewById(R.id.title_group);
@@ -135,7 +136,11 @@ public class AssistActivity extends BaseActivity implements View.OnClickListener
         adapter = new HelpAdapter(this, entities, handler);
         customListView.setAdapter(adapter);
 
-        group.check(R.id.title_rb_lef);
+        if (flag==0){
+            group.check(R.id.title_rb_lef);
+        }else{
+            group.check(R.id.title_rb_rig);
+        }
         getInfo(pageNo, flag);
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

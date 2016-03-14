@@ -111,6 +111,13 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
                     break;
 
                 case 552:
+                    Intent intent3=new Intent(PublishUsedActivity.this,UsedActivity.class);
+                    if (group.getCheckedRadioButtonId()==R.id.title_rb_lef){
+                        intent3.putExtra("flag",0);
+                    }else{
+                        intent3.putExtra("flag",1);
+                    }
+                    startActivity(intent3);
                     finish();
                     break;
 

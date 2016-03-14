@@ -69,6 +69,9 @@ public class ConstactsAddActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.constacts_add);
         initView();
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        imm.showSoftInput(editText, 0);
     }
 
     private void initView() {
