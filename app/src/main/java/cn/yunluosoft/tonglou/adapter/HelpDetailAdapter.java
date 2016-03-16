@@ -35,6 +35,7 @@ import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
+import cn.yunluosoft.tonglou.view.CustomListView;
 import cn.yunluosoft.tonglou.view.MyGridView;
 
 /**
@@ -53,11 +54,13 @@ public class HelpDetailAdapter extends BaseAdapter {
     private LinearLayout linearLayout;
     private ImageView rep;
 
-    public HelpDetailAdapter(Context context, List<ReplayEntity> entities, FloorSpeechEntity entity, Handler handler) {
+    private CustomListView listView;
+    public HelpDetailAdapter(Context context, List<ReplayEntity> entities, FloorSpeechEntity entity, Handler handler,CustomListView listView) {
         this.context = context;
         this.entities = entities;
         this.handler = handler;
         this.entity = entity;
+        this.listView=listView;
         bitmapUtils = new BitmapUtils(context);
     }
 
@@ -91,6 +94,7 @@ public class HelpDetailAdapter extends BaseAdapter {
         ViewHolder1 holder1=null;
         int type = getItemViewType(position);
         if (type == type0) {
+            convertView=null;
             if (convertView == null
                     || !convertView.getTag().getClass()
                     .equals(ViewHolder.class)) {
@@ -100,6 +104,7 @@ public class HelpDetailAdapter extends BaseAdapter {
                 holder.icon = (CircleImageView) convertView.findViewById(R.id.helpdetail_icon);
                 holder.name = (TextView) convertView.findViewById(R.id.helpdetail_name);
                 holder.address = (TextView) convertView.findViewById(R.id.helpdetail_address);
+                holder.tip = (TextView) convertView.findViewById(R.id.helpdetail_tip);
                 holder.content = (TextView) convertView.findViewById(R.id.helpdetail_content);
                 holder.replay = (ImageView) convertView.findViewById(R.id.helpdetail_replay);
                 holder.join = (TextView) convertView.findViewById(R.id.helpdetail_join);
@@ -130,6 +135,7 @@ public class HelpDetailAdapter extends BaseAdapter {
             bitmapUtils.display(holder.icon, entity.publishUserIcon);
             holder.name.setText(entity.publishUserNickname);
             holder.address.setText(entity.locationName);
+            holder.tip.setText(entity.topic);
             holder.content.setText(entity.detail);
             List<User> userList=entity.praiseUser;
             if(userList==null){
@@ -139,6 +145,7 @@ public class HelpDetailAdapter extends BaseAdapter {
             holder.gridView.setAdapter(gridAdapter);
 
             linearLayout=holder.menu_lin;
+            holder.replay.setTag("pppp" + position);
             rep=holder.replay;
 
             holder.join.setOnClickListener(new View.OnClickListener() {
@@ -290,8 +297,9 @@ public class HelpDetailAdapter extends BaseAdapter {
         menuWindow.update();
 //        menuWindow.showAsDropDown(linearLayout,150,50);
         layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        int xOffset = -(layout.getMeasuredWidth() + rep.getWidth());
-        menuWindow.showAsDropDown(rep,xOffset,DensityUtil.dip2px(context, -25));
+        ImageView imageView= (ImageView) listView.findViewWithTag("pppp"+0);
+        int xOffset = -(layout.getMeasuredWidth() + imageView.getWidth());
+        menuWindow.showAsDropDown(imageView,xOffset,DensityUtil.dip2px(context, -25));
 //        menuWindow.showAtLocation(linearLayout,  Gravity.RIGHT,
 //                DensityUtil.dip2px(context, 45),
 //                (int) (rep.getY()-DensityUtil.dip2px(context,20))); // 设置layout在PopupWindow中显示的位置
@@ -303,6 +311,7 @@ public class HelpDetailAdapter extends BaseAdapter {
     class ViewHolder {
         public CircleImageView icon;
         public TextView name;
+        public TextView tip;
         public TextView address;
         public TextView content;
         public TextView join;

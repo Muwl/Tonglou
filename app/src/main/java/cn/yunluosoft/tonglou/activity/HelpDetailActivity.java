@@ -256,7 +256,7 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
                             if (Constant.RETURN_OK.equals(state.msg)) {
                                 GroupDetailState state1 = gson.fromJson(arg0.result, GroupDetailState.class);
                                 entity = state1.result;
-                                adapter = new HelpDetailAdapter(HelpDetailActivity.this, entities,entity, handler);
+                                adapter = new HelpDetailAdapter(HelpDetailActivity.this, entities,entity, handler,customListView);
                                 customListView.setAdapter(adapter);
                                 getDynamic(1);
                             } else {

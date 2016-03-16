@@ -287,7 +287,7 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                             if (Constant.RETURN_OK.equals(state.msg)) {
                                 GroupDetailState state1 = gson.fromJson(arg0.result, GroupDetailState.class);
                                 entity = state1.result;
-                                adapter = new GroupDetailAdapter(GroupDetailActivity.this, entities,entity, handler);
+                                adapter = new GroupDetailAdapter(GroupDetailActivity.this, entities,entity, handler,customListView);
                                 customListView.setAdapter(adapter);
                                 getDynamic(1);
                             } else {

@@ -58,6 +58,8 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
 
     private TextView title;
 
+    private ImageView add;
+
     private View pro;
 
     private ListView listView;
@@ -74,7 +76,11 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
 
     private View withfloorFriend;
 
-    private View addFriend;
+    private View empty;
+
+    private ImageView empty_image;
+
+    private TextView empty_text;
 
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
@@ -96,14 +102,18 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fcontacts, container, false);
         back = (ImageView) view.findViewById(R.id.title_back);
         title = (TextView) view.findViewById(R.id.title_title);
+        add = (ImageView) view.findViewById(R.id.title_add);
         listView = (ListView) view.findViewById(R.id.fconstact_listview);
         dialog = (TextView) view.findViewById(R.id.fconstact_dialog);
         sideBar = (SideBar) view.findViewById(R.id.fconstact_sidrbar);
         pro = view.findViewById(R.id.fconstact_pro);
         withfloorFriend=view.findViewById(R.id.fconstacts_constact);
-        addFriend=view.findViewById(R.id.fconstacts_add);
+        empty = view.findViewById(R.id.fconstact_empty);
+        empty_image = (ImageView) view.findViewById(R.id.empty_image);
+        empty_text = (TextView) view.findViewById(R.id.empty_text);
 
         back.setVisibility(View.GONE);
+
         title.setText("人脉");
 
         return view;
@@ -113,7 +123,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         withfloorFriend.setOnClickListener(this);
-        addFriend.setOnClickListener(this);
+        add.setOnClickListener(this);
         friendDBUtils = new FriendDBUtils(getActivity());
         entities = friendDBUtils.getAllFriends();
         if (entities == null) {
@@ -166,7 +176,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
                 Intent intent=new Intent(getActivity(), ConstantWithfloorActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.fconstacts_add:
+            case R.id.title_add:
                 Intent intent2=new Intent(getActivity(), ConstactsAddActivity.class);
                 startActivity(intent2);
                 break;
@@ -266,14 +276,14 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
     }
 
     public void reFushEmpty() {
-//        if (entities == null || entities.size() == 0) {
-//            empty.setVisibility(View.VISIBLE);
+        if (entities == null || entities.size() == 0) {
+            empty.setVisibility(View.VISIBLE);
 //            empty_image.setImageDrawable(getResources().getDrawable(
 //                    R.drawable.empty_contact));
-//            empty_text.setText("没有人脉");
-//        } else {
-//            empty.setVisibility(View.GONE);
-//        }
+            empty_text.setText("还没有添加任何人脉");
+        } else {
+            empty.setVisibility(View.GONE);
+        }
     }
 
     private void delCon(final int position) {

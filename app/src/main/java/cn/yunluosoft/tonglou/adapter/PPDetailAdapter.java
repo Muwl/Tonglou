@@ -35,6 +35,7 @@ import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
+import cn.yunluosoft.tonglou.view.CustomListView;
 import cn.yunluosoft.tonglou.view.MyGridView;
 
 /**
@@ -52,12 +53,14 @@ public class PPDetailAdapter extends BaseAdapter {
     private PopupWindow menuWindow;
     private LinearLayout linearLayout;
     private ImageView rep;
+    private CustomListView listView;
 
-    public PPDetailAdapter(Context context, List<ReplayEntity> entities, FloorSpeechEntity entity, Handler handler) {
+    public PPDetailAdapter(Context context, List<ReplayEntity> entities, FloorSpeechEntity entity, Handler handler,CustomListView listView) {
         this.context = context;
         this.entities = entities;
         this.handler = handler;
         this.entity = entity;
+        this.listView=listView;
         bitmapUtils = new BitmapUtils(context);
     }
 
@@ -91,6 +94,7 @@ public class PPDetailAdapter extends BaseAdapter {
         ViewHolder1 holder1=null;
         int type = getItemViewType(position);
         if (type == type0) {
+            convertView=null;
             if (convertView == null
                     || !convertView.getTag().getClass()
                     .equals(ViewHolder.class)) {
@@ -100,6 +104,7 @@ public class PPDetailAdapter extends BaseAdapter {
                 holder.icon = (CircleImageView) convertView.findViewById(R.id.ppdetail_icon);
                 holder.name = (TextView) convertView.findViewById(R.id.ppdetail_name);
                 holder.address = (TextView) convertView.findViewById(R.id.ppdetail_address);
+                holder.tip = (TextView) convertView.findViewById(R.id.ppdetail_tip);
                 holder.content = (TextView) convertView.findViewById(R.id.ppdetail_content);
                 holder.replay = (ImageView) convertView.findViewById(R.id.ppdetail_replay);
                 holder.join = (TextView) convertView.findViewById(R.id.ppdetail_join);
@@ -131,6 +136,7 @@ public class PPDetailAdapter extends BaseAdapter {
             holder.name.setText(entity.publishUserNickname);
             holder.address.setText(entity.locationName);
             holder.content.setText(entity.detail);
+            holder.tip.setText(entity.topic);
             List<User> userList=entity.praiseUser;
             if(userList==null){
                 userList=new ArrayList<>();
@@ -149,6 +155,7 @@ public class PPDetailAdapter extends BaseAdapter {
             holder.gridView.setAdapter(gridAdapter);
 
             linearLayout=holder.menu_lin;
+            holder.replay.setTag("pppp" + position);
             rep=holder.replay;
 
             holder.join.setOnClickListener(new View.OnClickListener() {
@@ -241,6 +248,7 @@ public class PPDetailAdapter extends BaseAdapter {
         public CircleImageView icon;
         public TextView name;
         public TextView address;
+        public TextView tip;
         public TextView content;
         public TextView join;
         public ImageView replay;
@@ -309,8 +317,9 @@ public class PPDetailAdapter extends BaseAdapter {
         menuWindow.update();
 //        menuWindow.showAsDropDown(linearLayout,150,50);
         layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        int xOffset = -(layout.getMeasuredWidth() + rep.getWidth());
-        menuWindow.showAsDropDown(rep, xOffset, DensityUtil.dip2px(context, -25));
+        ImageView imageView= (ImageView) listView.findViewWithTag("pppp"+0);
+        int xOffset = -(layout.getMeasuredWidth() + imageView.getWidth());
+        menuWindow.showAsDropDown(imageView, xOffset, DensityUtil.dip2px(context, -25));
 //        menuWindow.showAtLocation(linearLayout,  Gravity.RIGHT,
 //                DensityUtil.dip2px(context, 45),
 //                (int) (rep.getY()-DensityUtil.dip2px(context,20))); // 设置layout在PopupWindow中显示的位置

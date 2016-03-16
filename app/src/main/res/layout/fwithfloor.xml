@@ -51,27 +51,24 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
-
                 <TextView
-                    android:id="@+id/fwithfloor_group"
+                    android:id="@+id/fwithfloor_help"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_weight="1"
                     android:drawablePadding="4dp"
-                    android:drawableTop="@mipmap/fwithfloor_group"
+                    android:drawableTop="@mipmap/fwithfloor_help"
                     android:gravity="center"
-                    android:text="团嗨"
+                    android:text="帮帮"
                     android:textColor="#666666"
                     android:textSize="@dimen/second_font" />
+
+
 
                 <TextView
                     android:id="@+id/fwithfloor_used"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_weight="1"
                     android:drawablePadding="4dp"
                     android:drawableTop="@mipmap/fwithfloor_used"
@@ -85,8 +82,6 @@
                     android:id="@+id/fwithfloor_pp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_weight="1"
                     android:drawablePadding="4dp"
                     android:drawableTop="@mipmap/fwithfloor_pp"
@@ -96,16 +91,14 @@
                     android:textSize="@dimen/second_font" />
 
                 <TextView
-                    android:id="@+id/fwithfloor_help"
+                    android:id="@+id/fwithfloor_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_weight="1"
                     android:drawablePadding="4dp"
-                    android:drawableTop="@mipmap/fwithfloor_help"
+                    android:drawableTop="@mipmap/fwithfloor_group"
                     android:gravity="center"
-                    android:text="帮帮"
+                    android:text=" 活动"
                     android:textColor="#666666"
                     android:textSize="@dimen/second_font" />
             </LinearLayout>

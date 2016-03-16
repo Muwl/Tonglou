@@ -28,6 +28,7 @@ import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
+import cn.yunluosoft.tonglou.utils.ToastUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -40,11 +41,11 @@ public class PPAdapter extends BaseAdapter {
     private BitmapUtils bitmapUtils;
     private Handler handler;
 
-    public PPAdapter(Context context,List<FloorSpeechEntity> entities,Handler handler) {
+    public PPAdapter(Context context, List<FloorSpeechEntity> entities, Handler handler) {
         this.context = context;
-        this.entities=entities;
-        this.handler=handler;
-        bitmapUtils=new BitmapUtils(context);
+        this.entities = entities;
+        this.handler = handler;
+        bitmapUtils = new BitmapUtils(context);
     }
 
     @Override
@@ -75,12 +76,13 @@ public class PPAdapter extends BaseAdapter {
             holder.start = (TextView) convertView.findViewById(R.id.pp_item_start);
             holder.stop = (TextView) convertView.findViewById(R.id.pp_item_stop);
             holder.content = (TextView) convertView.findViewById(R.id.pp_item_content);
-            holder.bluebtn=convertView.findViewById(R.id.pp_item_bluebtn);
-            holder.graybtn=  convertView.findViewById(R.id.pp_item_graybtn);
-            holder.blueimage= (ImageView) convertView.findViewById(R.id.pp_item_blueimage);
-            holder.bluetext= (TextView) convertView.findViewById(R.id.pp_item_bluetext);
-            holder.graytext= (TextView) convertView.findViewById(R.id.pp_item_graytext);
+            holder.bluebtn = convertView.findViewById(R.id.pp_item_bluebtn);
+            holder.graybtn = convertView.findViewById(R.id.pp_item_graybtn);
+            holder.blueimage = (ImageView) convertView.findViewById(R.id.pp_item_blueimage);
+            holder.bluetext = (TextView) convertView.findViewById(R.id.pp_item_bluetext);
+            holder.graytext = (TextView) convertView.findViewById(R.id.pp_item_graytext);
             holder.praise = (TextView) convertView.findViewById(R.id.pp_item_atten);
+            holder.time = (TextView) convertView.findViewById(R.id.pp_item_time);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -90,6 +92,7 @@ public class PPAdapter extends BaseAdapter {
         holder.name.setText(entities.get(position).publishUserNickname);
         holder.tip.setText(entities.get(position).topic);
         holder.content.setText(entities.get(position).detail);
+        holder.time.setText(entities.get(position).createDate);
         holder.start.setText(entities.get(position).start);
         holder.stop.setText(entities.get(position).end);
         holder.bluebtn.setOnClickListener(new View.OnClickListener() {
@@ -101,37 +104,41 @@ public class PPAdapter extends BaseAdapter {
                         ShareDataTool.getUserId(context), entities.get(position).publishUserId,
                         ShareDataTool.getUserId(context), entities.get(position).publishUserImUsername,
                         ShareDataTool.getIcon(context),
-                        entities.get(position).publishUserIcon,ShareDataTool.getNickname(context), entities.get(position).publishUserNickname);
+                        entities.get(position).publishUserIcon, ShareDataTool.getNickname(context), entities.get(position).publishUserNickname);
                 intent.putExtra("info", (Serializable) info);
                 context.startActivity(intent);
             }
         });
-        if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)){
+        if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)) {
             holder.graybtn.setBackgroundResource(R.drawable.gray_attened);
             holder.graytext.setText("已关注");
-        }else{
+        } else {
             holder.graybtn.setBackgroundResource(R.drawable.gray_atten);
             holder.graytext.setText("关注");
         }
         holder.graybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Message message = new Message();
-                message.what = PPActivity.ATTEN;
-                message.obj = position;
-                handler.sendMessage(message);
+                if (!ShareDataTool.getUserId(context).equals(entities.get(position).publishUserId)) {
+                    Message message = new Message();
+                    message.what = PPActivity.ATTEN;
+                    message.obj = position;
+                    handler.sendMessage(message);
+                } else {
+                    ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
+                }
             }
         });
         holder.praise.setText(entities.get(position).praiseNum);
-        if (Constant.PRAISE_OK.equals(entities.get(position).isPraise)){
+        if (Constant.PRAISE_OK.equals(entities.get(position).isPraise)) {
             holder.praise.setTextColor(Color.parseColor("#499EB8"));
-            Drawable drawable=context.getDrawable(R.mipmap.consult_atten_checked);
+            Drawable drawable = context.getDrawable(R.mipmap.consult_atten_checked);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.praise.setCompoundDrawables(drawable, null, null, null);
 
-        }else{
+        } else {
             holder.praise.setTextColor(Color.parseColor("#B3B3B3"));
-            Drawable drawable=context.getDrawable(R.mipmap.consult_atten);
+            Drawable drawable = context.getDrawable(R.mipmap.consult_atten);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.praise.setCompoundDrawables(drawable, null, null, null);
         }
@@ -148,9 +155,9 @@ public class PPAdapter extends BaseAdapter {
         holder.praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Message message=new Message();
-                message.what= PPActivity.PRAISE;
-                message.obj=position;
+                Message message = new Message();
+                message.what = PPActivity.PRAISE;
+                message.obj = position;
                 handler.sendMessage(message);
             }
         });
@@ -170,5 +177,6 @@ public class PPAdapter extends BaseAdapter {
         public TextView bluetext;
         public TextView graytext;
         public TextView praise;
+        public TextView time;
     }
 }

@@ -93,6 +93,18 @@
                 android:background="@color/dicider_col" />
 
             <TextView
+                android:id="@+id/useddetail_tip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="@dimen/title_font"
+                android:text="到宋家庄"/>
+
+            <TextView
                 android:id="@+id/useddetail_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -22,11 +22,11 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class WelcomeActivity extends BaseActivity {
 //
-//	private ImageView icon;
-//
-//	private ImageView title;
-//
-//	private ImageView content;
+	private ImageView icon;
+
+	private ImageView title;
+
+	private ImageView content;
 
 	private int width;
 
@@ -104,14 +104,14 @@ public class WelcomeActivity extends BaseActivity {
 	}
 
 	private void initView() {
-//		icon = (ImageView) findViewById(R.id.welcome_icon);
-//		title = (ImageView) findViewById(R.id.welcome_title);
-//		content = (ImageView) findViewById(R.id.welcome_content);
-//		LayoutParams iconParams = (LayoutParams) icon.getLayoutParams();
-//		iconParams.width = (int) (0.468 * width);
-//		iconParams.height = (int) (0.488 * width);
-//		iconParams.topMargin = (int) (0.33 * width);
-//		icon.setLayoutParams(iconParams);
+		icon = (ImageView) findViewById(R.id.welcome_icon);
+		title = (ImageView) findViewById(R.id.welcome_title);
+		content = (ImageView) findViewById(R.id.welcome_content);
+		LayoutParams iconParams = (LayoutParams) icon.getLayoutParams();
+		iconParams.width = (int) (0.368 * width);
+		iconParams.height = (int) (0.388 * width);
+		iconParams.topMargin = (int) (0.33 * width);
+		icon.setLayoutParams(iconParams);
 
 	}
 

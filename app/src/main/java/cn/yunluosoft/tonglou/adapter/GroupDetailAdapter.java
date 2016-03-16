@@ -1,8 +1,10 @@
 package cn.yunluosoft.tonglou.adapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
@@ -29,9 +31,11 @@ import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.ReplayEntity;
 import cn.yunluosoft.tonglou.model.User;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
+import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
+import cn.yunluosoft.tonglou.view.CustomListView;
 import cn.yunluosoft.tonglou.view.MyGallery;
 import cn.yunluosoft.tonglou.view.MyGridView;
 
@@ -48,10 +52,12 @@ public class GroupDetailAdapter extends BaseAdapter {
     private int type1 = 2;
     private FloorSpeechEntity entity;
     private PopupWindow menuWindow;
-    private LinearLayout linearLayout;
     private ImageView rep;
 
-    public GroupDetailAdapter(Context context, List<ReplayEntity> entities, FloorSpeechEntity entity, Handler handler) {
+    private CustomListView listView;
+
+    public GroupDetailAdapter(Context context, List<ReplayEntity> entities, FloorSpeechEntity entity, Handler handler,CustomListView listView) {
+        this.listView=listView;
         this.context = context;
         this.entities = entities;
         this.handler = handler;
@@ -89,6 +95,7 @@ public class GroupDetailAdapter extends BaseAdapter {
         ViewHolder1 holder1=null;
         int type = getItemViewType(position);
         if (type == type0) {
+            convertView=null;
             if (convertView == null
                     || !convertView.getTag().getClass()
                     .equals(ViewHolder.class)) {
@@ -101,6 +108,7 @@ public class GroupDetailAdapter extends BaseAdapter {
                 holder.num = (TextView) convertView.findViewById(R.id.groupdetail_num);
                 holder.time = (TextView) convertView.findViewById(R.id.groupdetail_time);
                 holder.content = (TextView) convertView.findViewById(R.id.groupdetail_content);
+                holder.tip = (TextView) convertView.findViewById(R.id.groupdetail_tip);
                 holder.join = (TextView) convertView.findViewById(R.id.groupdetail_join);
                 holder.menu_lin = (LinearLayout) convertView.findViewById(R.id.groupdetail_menu_lin);
                 holder.replay = (ImageView) convertView.findViewById(R.id.groupdetail_replay);
@@ -130,6 +138,7 @@ public class GroupDetailAdapter extends BaseAdapter {
             bitmapUtils.display(holder.icon, entity.publishUserIcon);
             holder.name.setText(entity.publishUserNickname);
             holder.address.setText(entity.locationName);
+            holder.tip.setText(entity.topic);
             holder.num.setText("参团人数：" + entity.planPeopleNum + "/" + entity.groupNum);
             holder.time.setText("截止日期："+entity.endDate);
             holder.content.setText(entity.detail);
@@ -160,7 +169,7 @@ public class GroupDetailAdapter extends BaseAdapter {
             }
             GroupDetailGridViewAdapter gridAdapter=new GroupDetailGridViewAdapter(context,userList);
             holder.gridView.setAdapter(gridAdapter);
-            linearLayout=holder.menu_lin;
+            holder.replay.setTag("pppp" + position);
             rep=holder.replay;
 
             holder.replay.setOnClickListener(new View.OnClickListener() {
@@ -168,9 +177,7 @@ public class GroupDetailAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     if (menuWindow == null || menuWindow.isShowing() == false) {
                         menu_press();
-                        // menu_display = true;
                     } else {
-                        // menu_display = false;
                         menuWindow.dismiss();
 
                     }
@@ -235,6 +242,7 @@ public class GroupDetailAdapter extends BaseAdapter {
     /**
      * 弹出menu菜单
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void menu_press() {
         // if (!menu_display) {
         // 获取LayoutInflater实例
@@ -282,10 +290,11 @@ public class GroupDetailAdapter extends BaseAdapter {
         menuWindow.setFocusable(true);
         menuWindow.setOutsideTouchable(true);
         menuWindow.update();
+        ImageView imageView= (ImageView) listView.findViewWithTag("pppp"+0);
 //        menuWindow.showAsDropDown(linearLayout,150,50);
         layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        int xOffset = -(layout.getMeasuredWidth() + rep.getWidth());
-        menuWindow.showAsDropDown(rep,xOffset,DensityUtil.dip2px(context, -25));
+        int xOffset = -(layout.getMeasuredWidth() + imageView.getWidth());
+        menuWindow.showAsDropDown(imageView,xOffset,DensityUtil.dip2px(context, -25));
 //        menuWindow.showAtLocation(linearLayout,  Gravity.RIGHT,
 //                DensityUtil.dip2px(context, 45),
 //                (int) (rep.getY()-DensityUtil.dip2px(context, 20))); // 设置layout在PopupWindow中显示的位置
@@ -299,6 +308,7 @@ public class GroupDetailAdapter extends BaseAdapter {
         public TextView address;
         public TextView num;
         public TextView time;
+        public TextView tip;
         public TextView content;
         public TextView join;
         public LinearLayout menu_lin;

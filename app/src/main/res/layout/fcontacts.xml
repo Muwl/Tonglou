@@ -46,42 +46,6 @@
         android:layout_height="1px"
         android:background="@color/dicider_col"/>
 
-    <LinearLayout
-        android:id="@+id/fconstacts_add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
-        android:clickable="true"
-        android:paddingRight="12dp"
-        android:background="@drawable/item_bg"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/constant_add"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#666666"
-            android:textSize="@dimen/second_font"
-            android:layout_marginLeft="15dp"
-            android:text="添加好友"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/go"/>
-
-    </LinearLayout>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/dicider_col"/>
 
 
     <RelativeLayout
@@ -117,7 +81,10 @@
             android:layout_gravity="right|center"
             android:background="@null" />
         <!-- </FrameLayout> -->
-
+        <include
+            android:id="@+id/fconstact_empty"
+            layout="@layout/empty"
+            android:visibility="gone" />
         <include
             android:id="@+id/fconstact_pro"
             layout="@layout/pro"

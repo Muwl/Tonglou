@@ -120,7 +120,7 @@ public class HiGroupActivity extends BaseActivity implements View.OnClickListene
         pro=findViewById(R.id.higroup_pro);
 
         back.setOnClickListener(this);
-        title.setText("嗨团");
+        title.setText("活动");
         rig= (TextView) findViewById(R.id.title_rig);
         serch.setOnClickListener(this);
         rig.setVisibility(View.VISIBLE);

@@ -28,6 +28,7 @@ import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
+import cn.yunluosoft.tonglou.utils.ToastUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -79,6 +80,7 @@ public class WithFloorAdapter extends BaseAdapter {
             holder.blueimage= (ImageView) convertView.findViewById(R.id.fwithfloor_item_blueimage);
             holder.graytext= (TextView) convertView.findViewById(R.id.fwithfloor_item_graytext);
             holder.praise= (TextView) convertView.findViewById(R.id.fwithfloor_item_atten);
+            holder.time= (TextView) convertView.findViewById(R.id.fwithfloor_item_time);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
@@ -88,6 +90,7 @@ public class WithFloorAdapter extends BaseAdapter {
         holder.name.setText(entities.get(position).publishUserNickname);
         holder.content.setText(entities.get(position).detail);
         holder.tip.setText(entities.get(position).topic);
+        holder.time.setText(entities.get(position).createDate);
         holder.bluebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,10 +151,14 @@ public class WithFloorAdapter extends BaseAdapter {
         holder.graybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Message message=new Message();
-                message.what= WithFloorFragment.ATTEN;
-                message.obj=position;
-                handler.sendMessage(message);
+                if (!ShareDataTool.getUserId(context).equals(entities.get(position).publishUserId)) {
+                    Message message = new Message();
+                    message.what = WithFloorFragment.ATTEN;
+                    message.obj = position;
+                    handler.sendMessage(message);
+                }else{
+                    ToastUtils.displayShortToast(context,"不可以关注自己的发布！");
+                }
             }
         });
 
@@ -182,10 +189,11 @@ public class WithFloorAdapter extends BaseAdapter {
         holder.praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Message message=new Message();
-                message.what= WithFloorFragment.PRAISE;
-                message.obj=position;
-                handler.sendMessage(message);
+                    Message message = new Message();
+                    message.what = WithFloorFragment.PRAISE;
+                    message.obj = position;
+                    handler.sendMessage(message);
+
             }
         });
         return convertView;
@@ -202,5 +210,6 @@ public class WithFloorAdapter extends BaseAdapter {
         public ImageView blueimage;
         public TextView graytext;
         public TextView praise;
+        public TextView time;
     }
 }

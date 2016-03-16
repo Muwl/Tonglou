@@ -119,6 +119,16 @@
             android:layout_marginRight="10dp"
             android:background="@mipmap/chat_group"
             android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/title_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/title_add"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>

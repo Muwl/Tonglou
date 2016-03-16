@@ -42,6 +42,7 @@ import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
+import cn.yunluosoft.tonglou.view.CustomListView;
 import cn.yunluosoft.tonglou.view.MyGridView;
 import cn.yunluosoft.tonglou.view.MyListView;
 
@@ -60,11 +61,13 @@ public class UsedDetailAdapter extends BaseAdapter {
     private PopupWindow menuWindow;
     private LinearLayout linearLayout;
     private ImageView rep;
+    private CustomListView listView;
 
-    public UsedDetailAdapter(Context context, List<ReplayEntity> entities, FloorSpeechEntity entity, Handler handler) {
+    public UsedDetailAdapter(Context context, List<ReplayEntity> entities, FloorSpeechEntity entity, Handler handler,CustomListView listView) {
         this.context = context;
         this.entities = entities;
         this.handler = handler;
+        this.listView=listView;
         this.entity = entity;
         bitmapUtils = new BitmapUtils(context);
     }
@@ -99,6 +102,7 @@ public class UsedDetailAdapter extends BaseAdapter {
         ViewHolder1 holder1=null;
         int type = getItemViewType(position);
         if (type == type0) {
+            convertView=null;
             if (convertView == null
                     || !convertView.getTag().getClass()
                     .equals(ViewHolder.class)) {
@@ -108,6 +112,7 @@ public class UsedDetailAdapter extends BaseAdapter {
                 holder.icon = (CircleImageView) convertView.findViewById(R.id.useddetail_icon);
                 holder.name = (TextView) convertView.findViewById(R.id.useddetail_name);
                 holder.address = (TextView) convertView.findViewById(R.id.useddetail_address);
+                holder.tip = (TextView) convertView.findViewById(R.id.useddetail_tip);
                 holder.content = (TextView) convertView.findViewById(R.id.useddetail_content);
                 holder.myListView = (MyListView) convertView.findViewById(R.id.useddetail_mylist);
                 holder.blue = (TextView) convertView.findViewById(R.id.useddetail_blue);
@@ -139,6 +144,7 @@ public class UsedDetailAdapter extends BaseAdapter {
             bitmapUtils.display(holder.icon, entity.publishUserIcon);
             holder.name.setText(entity.publishUserNickname);
             holder.address.setText(entity.locationName);
+            holder.tip.setText(entity.topic);
             holder.content.setText(entity.detail);
             List<User> userList=entity.praiseUser;
             if(userList==null){
@@ -178,6 +184,7 @@ public class UsedDetailAdapter extends BaseAdapter {
             });
 
             linearLayout=holder.menu_lin;
+            holder.replay.setTag("pppp" + position);
             rep=holder.replay;
 
             holder.replay.setOnClickListener(new View.OnClickListener() {
@@ -276,6 +283,7 @@ public class UsedDetailAdapter extends BaseAdapter {
     class ViewHolder {
         public CircleImageView icon;
         public TextView name;
+        public TextView tip;
         public TextView address;
         public TextView content;
         public TextView blue;
@@ -348,8 +356,9 @@ public class UsedDetailAdapter extends BaseAdapter {
 //        rep.getG(location);
 //        menuWindow.showAsDropDown(linearLayout,(DensityUtil.getScreenWidth(context)-DensityUtil.dip2px(context, 100)),DensityUtil.dip2px(context, -18));
         layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        int xOffset = -(layout.getMeasuredWidth() + rep.getWidth());
-        menuWindow.showAsDropDown(rep,xOffset,DensityUtil.dip2px(context, -25));
+        ImageView imageView= (ImageView) listView.findViewWithTag("pppp"+0);
+        int xOffset = -(layout.getMeasuredWidth() + imageView.getWidth());
+        menuWindow.showAsDropDown(imageView,xOffset,DensityUtil.dip2px(context, -25));
 //        menuWindow.showAtLocation(linearLayout,  Gravity.RIGHT,
 //                DensityUtil.dip2px(context, 45),
 //                (int) (linearLayout.getTop()-DensityUtil.dip2px(context,20))); // 设置layout在PopupWindow中显示的位置

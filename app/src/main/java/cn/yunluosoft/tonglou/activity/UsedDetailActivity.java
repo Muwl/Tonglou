@@ -253,7 +253,7 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
                             if (Constant.RETURN_OK.equals(state.msg)) {
                                 GroupDetailState state1 = gson.fromJson(arg0.result, GroupDetailState.class);
                                 entity = state1.result;
-                                adapter = new UsedDetailAdapter(UsedDetailActivity.this, entities,entity, handler);
+                                adapter = new UsedDetailAdapter(UsedDetailActivity.this, entities,entity, handler,customListView);
                                 customListView.setAdapter(adapter);
                                 getDynamic(1);
                             } else {
