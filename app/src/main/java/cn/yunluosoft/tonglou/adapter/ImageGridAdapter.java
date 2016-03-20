@@ -39,6 +39,7 @@ public class ImageGridAdapter extends BaseAdapter {
 	private Handler mHandler;
 	private int selectTotal = 0;
 	private BitmapUtils bitmapUtils;
+	private int flagNum;
 	ImageCallback callback = new ImageCallback() {
 		@Override
 		public void imageLoad(ImageView imageView, Bitmap bitmap,
@@ -64,11 +65,12 @@ public class ImageGridAdapter extends BaseAdapter {
 		textcallback = listener;
 	}
 
-	public ImageGridAdapter(Activity act, List<ImageItem> list, Handler mHandler) {
+	public ImageGridAdapter(Activity act, List<ImageItem> list,int flagNum, Handler mHandler) {
 		this.act = act;
 		dataList = list;
 //		cache = new BitmapCache();
 		this.mHandler = mHandler;
+		this.flagNum=flagNum;
 		bitmapUtils=new BitmapUtils(act);
 	}
 
@@ -149,7 +151,7 @@ public class ImageGridAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				String path = dataList.get(position).imagePath;
-				if ((Bimp.drr.size() + selectTotal) < 9) {
+				if ((Bimp.drr.size() + selectTotal) < flagNum) {
 					item.isSelected = !item.isSelected;
 					holder.checkBox.setChecked(item.isSelected);
 					if (item.isSelected) {
@@ -172,7 +174,7 @@ public class ImageGridAdapter extends BaseAdapter {
 							textcallback.onListen(selectTotal);
 						map.remove(path);
 					}
-				} else if ((Bimp.drr.size() + selectTotal) >= 9) {
+				} else if ((Bimp.drr.size() + selectTotal) >= flagNum) {
 					if (item.isSelected == true) {
 						item.isSelected = !item.isSelected;
 						holder.shade.setVisibility(View.INVISIBLE);

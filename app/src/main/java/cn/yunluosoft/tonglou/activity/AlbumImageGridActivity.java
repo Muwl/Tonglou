@@ -42,13 +42,21 @@ public class AlbumImageGridActivity extends BaseActivity {
 
 	private ImageView back;
 
+	private  int flagNum;
+
 	Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 0:
-				Toast.makeText(AlbumImageGridActivity.this, "最多选择9张图片", 400)
-						.show();
+				if (flagNum==9){
+					Toast.makeText(AlbumImageGridActivity.this, "最多选择"+flagNum+"张图片", 400)
+							.show();
+				}else{
+					Toast.makeText(AlbumImageGridActivity.this, "最多选择4张图片", 400)
+							.show();
+				}
+
 				break;
 
 			default:
@@ -62,7 +70,7 @@ public class AlbumImageGridActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_image_grid);
-
+		flagNum=getIntent().getIntExtra("num",9);
 		helper = AlbumHelper.getHelper();
 		helper.init(getApplicationContext());
 		initData();
@@ -91,25 +99,38 @@ public class AlbumImageGridActivity extends BaseActivity {
 				for (; it.hasNext();) {
 					list.add(it.next());
 				}
-
-				if (Bimp.act_bool) {
+				for (int i = 0; i < list.size(); i++) {
+					if (Bimp.drr.size() < flagNum) {
+						Bimp.drr.add(list.get(i));
+					}
+				}
+				if (flagNum==9){
 					Intent intent = new Intent(AlbumImageGridActivity.this,
 							ChatActivity.class);
 					setResult(RESULT_OK, intent);
-					Bimp.act_bool = false;
+//					Bimp.act_bool = false;
 					finish();
+				}else{
+					Intent intent = new Intent(AlbumImageGridActivity.this,
+							PublishUsedActivity.class);
+					setResult(RESULT_OK, intent);
+//					Bimp.act_bool = false;
+					finish();
+				}
+//				if (Bimp.act_bool) {
+
 					// Intent intent = new Intent(AlbumImageGridActivity.this,
 					// TestPicActivity.class);
 					// setResult(RESULT_OK, intent);
 					//
 					// finish();
-				}
-				for (int i = 0; i < list.size(); i++) {
-					if (Bimp.drr.size() < 9) {
-						Bimp.drr.add(list.get(i));
-					}
-				}
-				finish();
+//				}
+//				for (int i = 0; i < list.size(); i++) {
+//					if (Bimp.drr.size() < flagNum) {
+//						Bimp.drr.add(list.get(i));
+//					}
+//				}
+//				finish();
 			}
 
 		});
@@ -141,7 +162,7 @@ public class AlbumImageGridActivity extends BaseActivity {
 	private void initView() {
 		gridView = (GridView) findViewById(R.id.gridview);
 		gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		adapter = new ImageGridAdapter(AlbumImageGridActivity.this, dataList,
+		adapter = new ImageGridAdapter(AlbumImageGridActivity.this, dataList,flagNum,
 				mHandler);
 		gridView.setAdapter(adapter);
 		adapter.setTextCallback(new TextCallback() {

@@ -140,7 +140,7 @@ public class ConstactAdapter extends BaseAdapter {
 		}
 
 		if (type == type0) {
-			bitmapUtils.display(holder.imageBg, floorEntity.background);
+//			bitmapUtils.display(holder.imageBg, floorEntity.background);
 			holder.lllayout.removeAllViews();
 			holder.locate.setText(floorEntity.location);
 			int m = DensityUtil.dip2px(context, 3);

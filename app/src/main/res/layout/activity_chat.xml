@@ -134,7 +134,7 @@
 
             <Button
                 android:id="@+id/btn_send"
-                android:layout_width="32dip"
+                android:layout_width="43dip"
                 android:layout_height="32dip"
                 android:layout_marginRight="4dp"
                 android:background="@drawable/ok_select_btn"

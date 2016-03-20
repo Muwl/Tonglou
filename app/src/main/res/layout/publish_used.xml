@@ -42,6 +42,7 @@
                     android:background="@drawable/groupdetail_edit"
                     android:hint="10字以内"
                     android:padding="10dp"
+                    android:maxLength="10"
                     android:singleLine="true"
                     android:textColor="#000"
                     android:textColorHint="#CCCCCC"
@@ -68,6 +69,7 @@
                     android:hint="100字以内概述活动"
                     android:lines="5"
                     android:padding="10dp"
+                    android:maxLength="100"
                     android:textColor="#000"
                     android:textColorHint="#CCCCCC"
                     android:textSize="@dimen/second_font" />

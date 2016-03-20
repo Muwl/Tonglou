@@ -47,12 +47,14 @@ import cn.yunluosoft.tonglou.dialog.CustomeDialog;
 import cn.yunluosoft.tonglou.dialog.PhotoDialog;
 import cn.yunluosoft.tonglou.dialog.SubmitDialog;
 import cn.yunluosoft.tonglou.model.ReturnState;
+import cn.yunluosoft.tonglou.utils.Bimp;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
+import cn.yunluosoft.tonglou.utils.album.FileUtils;
 import cn.yunluosoft.tonglou.view.MyGridView;
 
 /**
@@ -102,6 +104,29 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case 1:
+
+                    List<File> filesList = new ArrayList<File>();
+                    for (int i = 0; i < Bimp.drr.size(); i++) {
+                        String Str = Bimp.drr.get(i).substring(
+                                Bimp.drr.get(i).lastIndexOf("/") + 1,
+                                Bimp.drr.get(i).lastIndexOf("."));
+                        String s = FileUtils.SDPATH + Str + ".JPEG";
+                        File file = new File(s);
+                        filesList.add(file);
+                    }
+
+                    LogManager.LogShow("--------------", "*************" + Bimp.drr.size() + filesList.size() + Bimp.max, LogManager.ERROR);
+                    if (filesList.size() == Bimp.max) {
+                        for (int j = 0; j < filesList.size(); j++) {
+                                files.add(filesList.get(j));
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    }
+
+
+                    break;
                 case 40:
                     int position = msg.arg1;
                     files.remove(position);
@@ -122,9 +147,15 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
                     break;
 
                 case 82:
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");
+                    Bimp.drr.clear();
+                    Bimp.max = 0;
+                    Intent intent = new Intent(PublishUsedActivity.this,
+                            AlbumImageGridActivity.class);
+                    intent.putExtra("num",(4-files.size()));
                     startActivityForResult(intent, CONTENT_WITH_DATA);
+//                    Intent intent = new Intent(Intent.ACTION_PICK);
+//                    intent.setType("image/*");
+//                    startActivityForResult(intent, CONTENT_WITH_DATA);
 
                     break;
                 case 81:
@@ -149,6 +180,8 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.publish_used);
         initView();
+        Bimp.drr.clear();
+        Bimp.max = 0;
     }
 
     private void initView() {
@@ -232,6 +265,35 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    public void loading() {
+        new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    LogManager.LogShow("--------------","+++++++++++++++++++"+Bimp.drr.size()+Bimp.max,LogManager.ERROR);
+                    if (Bimp.max == Bimp.drr.size()) {
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                        break;
+                    } else {
+                        try {
+                            String path = Bimp.drr.get(Bimp.max);
+                            System.out.println(path);
+                            Bitmap bm = Bimp.revitionImageSize(path);
+                            Bimp.bmp.add(bm);
+                            String newStr = path.substring(
+                                    path.lastIndexOf("/") + 1,
+                                    path.lastIndexOf("."));
+                            FileUtils.saveBitmap(bm, "" + newStr);
+                            Bimp.max += 1;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == 0)
@@ -240,20 +302,22 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
 
             switch (requestCode) {
                 case CONTENT_WITH_DATA:
-                    if (data != null) {
-                        // 得到图片的全路径
-                        int degree = readPictureDegree(getRealPathFromURI(data
-                                .getData()));
-                        BitmapFactory.Options opts = new BitmapFactory.Options();// 获取缩略图显示到屏幕上
-                        opts.inSampleSize = 2;
-                        Bitmap cbitmap = BitmapFactory.decodeFile(
-                                getRealPathFromURI(data.getData()), opts);
-                        Bitmap newbitmap = rotaingImageView(degree, cbitmap);
-                        // 得到图片的全路径
-                        File file = ToosUtils.compressBmpToFile(newbitmap);
-                        files.add(file);
-                        adapter.notifyDataSetChanged();
-                    }
+                    LogManager.LogShow("--------------","+++++++++++++++++++",LogManager.ERROR);
+                    loading();
+//                    if (data != null) {
+//                        // 得到图片的全路径
+//                        int degree = readPictureDegree(getRealPathFromURI(data
+//                                .getData()));
+//                        BitmapFactory.Options opts = new BitmapFactory.Options();// 获取缩略图显示到屏幕上
+//                        opts.inSampleSize = 2;
+//                        Bitmap cbitmap = BitmapFactory.decodeFile(
+//                                getRealPathFromURI(data.getData()), opts);
+//                        Bitmap newbitmap = rotaingImageView(degree, cbitmap);
+//                        // 得到图片的全路径
+//                        File file = ToosUtils.compressBmpToFile(newbitmap);
+//                        files.add(file);
+//                        adapter.notifyDataSetChanged();
+//                    }
                     break;
                 case CAMERA_WITH_DATA:
                     if (ToosUtils.hasSdcard()) {

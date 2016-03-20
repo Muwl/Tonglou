@@ -3,6 +3,7 @@ package cn.yunluosoft.tonglou.dialog;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -20,6 +21,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
+import com.umeng.socialize.Config;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -93,6 +95,14 @@ public class ShareDialog implements OnClickListener {
 		louyu.setOnClickListener(this);
 		coypy.setOnClickListener(this);
 		cancel.setOnClickListener(this);
+
+		Dialog progressDialog = new Dialog(context,R.style.progress_dialog);
+		progressDialog.setContentView(R.layout.dialog);
+		progressDialog.setCancelable(true);
+		progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+		Config.dialog=progressDialog;
+
+
 		init();
 	}
 
@@ -150,6 +160,7 @@ public class ShareDialog implements OnClickListener {
 			break;
 
 		case R.id.share_weixincirlce:
+
 			new ShareAction((Activity)context)
 					.setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
 					.setCallback(listener)
@@ -162,6 +173,7 @@ public class ShareDialog implements OnClickListener {
 			break;
 
 		case R.id.share_weixin:
+
 			new ShareAction((Activity)context)
 					.setPlatform(SHARE_MEDIA.WEIXIN)
 					.setCallback(listener)

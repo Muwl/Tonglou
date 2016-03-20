@@ -41,6 +41,7 @@
                     android:layout_margin="12dp"
                     android:background="@drawable/groupdetail_edit"
                     android:hint="10字以内"
+                    android:maxLength="10"
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textColor="#000"
@@ -65,11 +66,11 @@
                     android:layout_margin="12dp"
                     android:background="@drawable/groupdetail_edit"
                     android:gravity="top"
-                    android:hint="100字以内概述活动"
+                    android:maxLength="100"
+
                     android:lines="5"
                     android:padding="10dp"
                     android:textColor="#000"
-                    android:textColorHint="#CCCCCC"
                     android:textSize="@dimen/second_font" />
 
 
@@ -136,7 +137,10 @@
                         android:paddingRight="10dp"
                         android:gravity="right"
                         android:background="@null"
+                        android:maxLength="5"
                         android:inputType="number"
+                        android:hint="请输入计划人数"
+                        android:textColorHint="#CCCCCC"
                         android:layout_weight="1"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />

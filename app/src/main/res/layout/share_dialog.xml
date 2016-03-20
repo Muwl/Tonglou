@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:drawablePadding="8dp"
-            android:drawableTop="@mipmap/share_weixin"
+            android:drawableTop="@mipmap/share_qq"
             android:gravity="center"
             android:text="QQ"
             android:textColor="#666666"

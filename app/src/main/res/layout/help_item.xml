@@ -13,8 +13,8 @@
         android:layout_height="wrap_content">
         <cn.yunluosoft.tonglou.view.CircleImageView
             android:id="@+id/help_item_icon"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
             android:src="@mipmap/icon_default" />
 
         <TextView
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/second_font"
             android:text="安安"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:textColor="#000"/>
 
     </LinearLayout>
@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:text="一起游玩"
                 android:textColor="#000"
-                android:textSize="@dimen/first_font" />
+                android:textSize="@dimen/second_font" />
 
             <TextView
                 android:id="@+id/help_item_ctime"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:textColor="#666666"
             android:layout_marginTop= "7dp"
-            android:textSize="@dimen/second_font"
+            android:textSize="@dimen/thrid_font"
             android:text="12月21日，香山夜爬，同去的速速加入我们的小团队。"/>
 
         <LinearLayout
@@ -82,19 +82,19 @@
                 android:layout_height="wrap_content"
                 android:textColor="#999999"
                 android:textSize="@dimen/thrid_font"
-                android:layout_marginLeft="7dp"
+                android:layout_marginLeft="6dp"
                 android:text="截止日期：2016-01-10"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:gravity="center_vertical">
 
             <LinearLayout
                 android:id="@+id/help_item_bluebtn"
-                android:layout_width="75dp"
+                android:layout_width="72dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/blue_chat"
                 android:clickable="true"
@@ -105,8 +105,8 @@
                     android:id="@+id/help_item_blueimage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp"
                     android:src="@mipmap/myfloor_speak" />
 
                 <TextView
@@ -116,8 +116,8 @@
                     android:layout_marginLeft="6dp"
                     android:drawablePadding="4dp"
                     android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp"
                     android:text="聊聊"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thrid_font" />
@@ -125,7 +125,7 @@
 
             <LinearLayout
                 android:id="@+id/help_item_graybtn"
-                android:layout_width="75dp"
+                android:layout_width="72dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/gray_atten"
@@ -136,8 +136,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp"
                     android:src="@mipmap/atten" />
 
                 <TextView
@@ -146,8 +146,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
                     android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp"
                     android:text="关注"
                     android:textColor="@color/white"
                     android:textSize="@dimen/thrid_font" />
