@@ -214,6 +214,7 @@ public class AssistActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.title_rig:
                 Intent intent=new Intent(AssistActivity.this,PublishHelpActivity.class);
+                intent.putExtra("flag",flag);
                 startActivity(intent);
 
                 break;

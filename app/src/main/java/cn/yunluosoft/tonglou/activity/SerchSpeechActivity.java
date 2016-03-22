@@ -138,7 +138,7 @@ public class SerchSpeechActivity extends BaseActivity implements View.OnClickLis
             helpAdapter = new HelpAdapter(this, entities, handler);
             customListView.setAdapter(helpAdapter);
         } else if (modelFlag == 4) {
-            withFloorAdapter = new WithFloorAdapter(this, entities, handler);
+            withFloorAdapter = new WithFloorAdapter(this, entities, handler,customListView);
             customListView.setAdapter(withFloorAdapter);
         }
 

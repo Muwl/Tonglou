@@ -214,7 +214,7 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 
             case R.id.person_data_birthview:
                 DateSelectDialog selectDialog = new DateSelectDialog(
-                        PersonDataActivity.this, handler, sdate);
+                        PersonDataActivity.this,"选择生日", handler, sdate,0);
 
                 break;
 

@@ -199,7 +199,7 @@
                         android:gravity="center_vertical"
                         android:hint="请输入职业"
                         android:singleLine="true"
-                        android:maxLength="5"
+                        android:maxLength="10"
                         android:textColor="#000"
                         android:textColorHint="#cccccc"
                         android:textSize="@dimen/second_font" />

@@ -34,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:maxLength="10"
                 android:hint="好名字可以让楼友更容易记住你"
                 android:padding="10dp"
                 android:textColor="#000"

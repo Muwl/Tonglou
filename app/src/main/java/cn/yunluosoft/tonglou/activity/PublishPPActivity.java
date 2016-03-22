@@ -61,6 +61,8 @@ public class PublishPPActivity extends BaseActivity implements View.OnClickListe
 
     private View pro;
 
+    private int flag;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -89,6 +91,7 @@ public class PublishPPActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initView() {
+        flag=getIntent().getIntExtra("flag",0);
         title = (TextView) findViewById(R.id.title_title);
         back = (ImageView) findViewById(R.id.title_back);
         name = (EditText) findViewById(R.id.publish_pp_name);
@@ -108,7 +111,11 @@ public class PublishPPActivity extends BaseActivity implements View.OnClickListe
         rig.setText("求带发布");
         width = DensityUtil.getScreenWidth(this);
         group.setVisibility(View.VISIBLE);
-        group.check(R.id.title_rb_lef);
+        if (flag==0){
+            group.check(R.id.title_rb_lef);
+        }else{
+            group.check(R.id.title_rb_rig);
+        }
 
     }
 

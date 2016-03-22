@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="15dp"
-                    android:text="拼车概述"
+                    android:text="详情"
                     android:textColor="#000"
                     android:textSize="@dimen/second_font" />
 

@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="15dp"
-                    android:text="活动名称"
+                    android:text="标题"
                     android:textColor="#000"
                     android:textSize="@dimen/second_font" />
 
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="15dp"
-                    android:text="活动详情"
+                    android:text="详情"
                     android:textColor="#000"
                     android:textSize="@dimen/second_font" />
 
@@ -66,7 +66,7 @@
                     android:layout_margin="12dp"
                     android:background="@drawable/groupdetail_edit"
                     android:gravity="top"
-                    android:hint="100字以内概述活动"
+                    android:hint="100字以内"
                     android:lines="5"
                     android:padding="10dp"
                     android:maxLength="100"

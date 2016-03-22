@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
@@ -40,11 +41,13 @@ public class WithFloorAdapter extends BaseAdapter {
     private List<FloorSpeechEntity> entities;
     private BitmapUtils bitmapUtils;
     private Handler handler;
+    private ListView listView;
 
-    public WithFloorAdapter(Context context,List<FloorSpeechEntity> entities,Handler handler) {
+    public WithFloorAdapter(Context context,List<FloorSpeechEntity> entities,Handler handler,ListView listView) {
         this.context = context;
         this.entities=entities;
         this.handler=handler;
+        this.listView=listView;
         bitmapUtils=new BitmapUtils(context);
     }
 
@@ -134,13 +137,16 @@ public class WithFloorAdapter extends BaseAdapter {
         });
 
         if ("1".equals(entities.get(position).isInGroup) && "0".equals(entities.get(position).modelType)){
-            holder.bluetext.setText("进群聊");
+            holder.bluetext.setText("加入");
             holder.blueimage.setImageResource(R.mipmap.add_chat);
         }else{
             holder.bluetext.setText("聊聊");
             holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
 
         }
+
+//        holder.graybtn.setTag("graybtn"+position);
+//        holder.graytext.setTag("graytext"+position);
         if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)){
             holder.graybtn.setBackgroundResource(R.drawable.gray_attened);
             holder.graytext.setText("已关注");
@@ -171,7 +177,7 @@ public class WithFloorAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-
+        holder.praise.setTag("praise" + position);
         holder.praise.setText(entities.get(position).praiseNum);
         if (Constant.PRAISE_OK.equals(entities.get(position).isPraise)){
             holder.praise.setTextColor(Color.parseColor("#499EB8"));
@@ -197,6 +203,22 @@ public class WithFloorAdapter extends BaseAdapter {
             }
         });
         return convertView;
+    }
+
+    public void refushAtten(int position){
+        TextView praise= (TextView) listView.findViewWithTag("praise" + position);
+        praise.setText(entities.get(position).praiseNum);
+        if (Constant.PRAISE_OK.equals(entities.get(position).isPraise)){
+            praise.setTextColor(Color.parseColor("#499EB8"));
+            Drawable drawable=context.getResources().getDrawable(R.mipmap.consult_atten_checked);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            praise.setCompoundDrawables(drawable,null,null,null);
+        }else{
+            praise.setTextColor(Color.parseColor("#B3B3B3"));
+            Drawable drawable=context.getResources().getDrawable(R.mipmap.consult_atten);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            praise.setCompoundDrawables(drawable, null, null, null);
+        }
     }
 
     class ViewHolder{

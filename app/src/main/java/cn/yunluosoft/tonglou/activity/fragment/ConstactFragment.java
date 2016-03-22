@@ -115,6 +115,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
         back.setVisibility(View.GONE);
 
         title.setText("人脉");
+        add.setVisibility(View.VISIBLE);
 
         return view;
     }

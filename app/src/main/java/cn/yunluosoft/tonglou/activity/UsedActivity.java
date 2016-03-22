@@ -216,6 +216,7 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.title_rig:
                 Intent intent=new Intent(UsedActivity.this,PublishUsedActivity.class);
+                intent.putExtra("flag",flag);
                 startActivity(intent);
                 break;
             case R.id.used_serch:

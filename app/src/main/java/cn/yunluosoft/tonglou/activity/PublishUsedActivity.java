@@ -100,6 +100,8 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
 
     private File file = null;
 
+    private int flag;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -185,6 +187,7 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initView() {
+        flag=getIntent().getIntExtra("flag",0);
         files = new ArrayList<>();
         title = (TextView) findViewById(R.id.title_title);
         back = (ImageView) findViewById(R.id.title_back);
@@ -206,7 +209,12 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
         adapter = new PublishUsedAdapter(this, width, files);
         gridView.setAdapter(adapter);
         group.setVisibility(View.VISIBLE);
-        group.check(R.id.title_rb_lef);
+        if (flag==0){
+            group.check(R.id.title_rb_lef);
+        }else{
+            group.check(R.id.title_rb_rig);
+        }
+
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

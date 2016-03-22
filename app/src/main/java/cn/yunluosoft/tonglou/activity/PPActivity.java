@@ -213,6 +213,7 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.title_rig:
                 Intent intent=new Intent(PPActivity.this,PublishPPActivity.class);
+                intent.putExtra("flag",flag);
                 startActivity(intent);
                 break;
             case R.id.pp_serch:

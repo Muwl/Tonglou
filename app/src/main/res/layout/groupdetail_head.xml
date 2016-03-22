@@ -36,7 +36,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="13dp"
-                    android:layout_marginTop="12dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -58,40 +57,28 @@
                         android:textColor="#666666"
                         android:textSize="@dimen/second_font" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/groupdetail_num"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="12dp"
                         android:layout_marginTop="2dp"
-                        android:orientation="horizontal">
+                        android:drawableLeft="@mipmap/higroup_item_num"
+                        android:drawablePadding="7dp"
+                        android:text="参团人数：44"
+                        android:textColor="#999999"
+                        android:textSize="@dimen/thrid_font" />
 
-                        <TextView
-                            android:id="@+id/groupdetail_num"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/higroup_item_num"
-                            android:drawablePadding="7dp"
-                            android:text="参团人数：44"
-                            android:textColor="#999999"
-                            android:textSize="@dimen/thrid_font" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/groupdetail_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/higroup_item_time"
-                            android:drawablePadding="7dp"
-                            android:text="截止日期：2016-01-02"
-                            android:textColor="#999999"
-                            android:textSize="@dimen/thrid_font" />
-
-                    </LinearLayout>
-
+                    <TextView
+                        android:id="@+id/groupdetail_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:drawableLeft="@mipmap/higroup_item_time"
+                        android:drawablePadding="7dp"
+                        android:text="截止日期：2016-01-02"
+                        android:textColor="#999999"
+                        android:textSize="@dimen/thrid_font" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -107,13 +94,13 @@
                 android:id="@+id/groupdetail_tip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:textSize="@dimen/title_font"
-                android:text="到宋家庄"/>
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="到宋家庄"
+                android:textColor="#000"
+                android:textSize="@dimen/title_font" />
 
 
             <TextView

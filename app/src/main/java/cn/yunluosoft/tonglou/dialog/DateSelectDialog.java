@@ -29,6 +29,7 @@ import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.TimeUtils;
+import cn.yunluosoft.tonglou.utils.ToastUtils;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 
 /**
@@ -47,19 +48,25 @@ public class DateSelectDialog implements OnClickListener {
 	private Handler handler;
 	private String date;
 	private String temp;
-
-	public DateSelectDialog(Context context, Handler handler, String temp) {
+	private String stitle;
+	private TextView title;
+	private int flag;//0代表没有任何限制 1代表不能小于现在的时间
+	public DateSelectDialog(Context context,String stitle,Handler handler, String temp,int flag) {
 		super();
 		this.context = context;
 		this.handler = handler;
+		this.flag=flag;
 		this.temp = temp;
+		this.stitle=stitle;
 		d = new Dialog(context);
 		d.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		view = View.inflate(context, R.layout.date_select, null);
 		d.setContentView(view);
 		ok = (TextView) d.findViewById(R.id.date_ok);
 		cancel = (TextView) d.findViewById(R.id.date_cancel);
+		title= (TextView) d.findViewById(R.id.date_title);
 		datePicker = (DatePicker) d.findViewById(R.id.date_date);
+		title.setText(stitle);
 		Calendar calendar = Calendar.getInstance();
 		if (!ToosUtils.isStringEmpty(temp)) {
 			calendar.setTime(TimeUtils.getDateByStr(temp));
@@ -144,6 +151,12 @@ public class DateSelectDialog implements OnClickListener {
 			dialogAnimation(d, view, height, getWindowHeight(), true);
 			break;
 		case R.id.date_ok:
+			if (flag==1) {
+				if (TimeUtils.getDate().compareTo(TimeUtils.getStringByString(date)) > 0) {
+					ToastUtils.displayShortToast(context, "选择的时间不能小于现在时间！");
+					return;
+				}
+			}
 			dialogAnimation(d, view, height, getWindowHeight(), true);
 			Message message = new Message();
 			message.what = 51;

@@ -27,6 +27,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.task.LoadLocalBigImgTask;
@@ -58,6 +59,13 @@ public class ShowBigImage extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_big_image);
+		ImageView back= (ImageView) findViewById(R.id.image_page_back);
+		back.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 
 		image = (PhotoView) findViewById(R.id.image);
 		loadLocalPb = (ProgressBar) findViewById(R.id.pb_load_local);
@@ -100,12 +108,7 @@ public class ShowBigImage extends BaseActivity {
 			image.setImageResource(default_res);
 		}
 
-		image.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+
 	}
 
 	/**

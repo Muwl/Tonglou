@@ -377,6 +377,14 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
 							bomView.setVisibility(View.VISIBLE);
 						}
 
+                        if (ShareDataTool.getUserId(ConstactActivity.this).equals(id)){
+                            bomView.setVisibility(View.GONE);
+                            remark.setVisibility(View.GONE);
+                        }else{
+                            bomView.setVisibility(View.VISIBLE);
+                            remark.setVisibility(View.VISIBLE);
+                        }
+
 						LogManager.LogShow("ffff", infoEntity.toString(),
 								LogManager.ERROR);
 						adapter = new ConstactAdapter(ConstactActivity.this,

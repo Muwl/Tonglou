@@ -162,7 +162,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         pp.setOnClickListener(this);
         rig.setOnClickListener(this);
         help.setOnClickListener(this);
-        adapter = new WithFloorAdapter(getActivity(), entities, handler);
+        adapter = new WithFloorAdapter(getActivity(), entities, handler,customListView);
         customListView.setAdapter(adapter);
 
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -601,7 +601,8 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                                 }else{
                                     entities.get(position).praiseNum=String.valueOf((Integer.valueOf(entities.get(position).praiseNum)-1));
                                 }
-                                adapter.notifyDataSetChanged();
+                                adapter.refushAtten(position);
+//                                adapter.notifyDataSetChanged();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
                                         getActivity(), "验证错误，请重新登录");

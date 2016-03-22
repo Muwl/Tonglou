@@ -133,7 +133,7 @@ public class PublishGroupActivity extends BaseActivity implements View.OnClickLi
 
             case R.id.publish_group_timeview:
                 DateSelectDialog selectDialog = new DateSelectDialog(
-                        PublishGroupActivity.this, handler, sdate);
+                        PublishGroupActivity.this,"选择日期", handler, sdate,1);
                 break;
 
             case R.id.publish_group_ok:

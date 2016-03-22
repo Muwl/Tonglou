@@ -62,6 +62,8 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
 
     private String sdate;
 
+    private int flag;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -94,6 +96,7 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initView() {
+        flag=getIntent().getIntExtra("flag",0);
         title = (TextView) findViewById(R.id.title_title);
         back = (ImageView) findViewById(R.id.title_back);
         name = (EditText) findViewById(R.id.publish_help_name);
@@ -116,7 +119,12 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
         rig.setText("发布自荐");
         width = DensityUtil.getScreenWidth(this);
         group.setVisibility(View.VISIBLE);
-        group.check(R.id.title_rb_lef);
+        if (flag==0){
+            group.check(R.id.title_rb_lef);
+        }else{
+            group.check(R.id.title_rb_rig);
+        }
+
 
     }
 
@@ -128,7 +136,7 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.publish_help_timeview:
                 DateSelectDialog selectDialog = new DateSelectDialog(
-                        PublishHelpActivity.this, handler, sdate);
+                        PublishHelpActivity.this,"选择日期", handler, sdate,1);
                 break;
 
             case R.id.publish_help_ok:
