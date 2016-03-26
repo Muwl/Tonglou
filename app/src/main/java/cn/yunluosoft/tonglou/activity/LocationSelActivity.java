@@ -6,6 +6,8 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.LocationAdapter;
+import cn.yunluosoft.tonglou.dialog.CustomeDialog;
 import cn.yunluosoft.tonglou.model.LocationEntity;
 import cn.yunluosoft.tonglou.model.LocationState;
 import cn.yunluosoft.tonglou.model.PerfectDataState;
@@ -101,6 +104,20 @@ public class LocationSelActivity extends BaseActivity implements
 
     private TextView ok;
 
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what){
+                case 40:
+                    Intent intent=new Intent(LocationSelActivity.this,LoactionAddActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +162,7 @@ public class LocationSelActivity extends BaseActivity implements
         back.setOnClickListener(this);
         ok.setOnClickListener(this);
         ok.setText("完成");
-        ok.setVisibility(View.VISIBLE);
+//        ok.setVisibility(View.VISIBLE);
         title.setText("位置定位");
         go.setOnClickListener(this);
 
@@ -244,15 +261,16 @@ public class LocationSelActivity extends BaseActivity implements
             case R.id.title_back:
                 finish();
                 break;
-            case R.id.title_rig:
+            case R.id.location_ok:
                 if (flag == 0) {
                     if (locationEntity != null
                             && locationEntity.name.equals(ToosUtils
                             .getTextContent(name))) {
                         sendSub();
                     } else {
-                        ToastUtils.displayShortToast(LocationSelActivity.this,
-                                "请选择您所在楼宇");
+//                        ToastUtils.displayShortToast(LocationSelActivity.this,
+//                                "请选择您所在楼宇");
+                        CustomeDialog dialog=new CustomeDialog(LocationSelActivity.this,handler,"请输入的楼语展示还未收录\n请点击添加楼宇名称！",-1,-1);
                     }
 
                 } else {
@@ -261,15 +279,17 @@ public class LocationSelActivity extends BaseActivity implements
                             .getTextContent(name))) {
                         updateLocation();
                     } else {
-                        ToastUtils.displayShortToast(LocationSelActivity.this,
-                                "请选择您所在楼宇");
+                        CustomeDialog dialog=new CustomeDialog(LocationSelActivity.this,handler,"请输入的楼语展示还未收录\n请点击添加楼宇名称！",-1,-1);
+//                        ToastUtils.displayShortToast(LocationSelActivity.this,
+//                                "请选择您所在楼宇");
+
                     }
                 }
                 break;
-            case R.id.location_ok:
-                Intent intent=new Intent(LocationSelActivity.this,LoactionAddActivity.class);
-                startActivity(intent);
-                break;
+//            case R.id.location_ok:
+//                Intent intent=new Intent(LocationSelActivity.this,LoactionAddActivity.class);
+//                startActivity(intent);
+//                break;
 
             default:
                 break;

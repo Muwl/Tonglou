@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.view.sortlistview;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+
+import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 
 public class SideBar extends View {
@@ -50,7 +53,9 @@ public class SideBar extends View {
 		int singleHeight = height / b.length;// 获取每一个字母的高度
 
 		for (int i = 0; i < b.length; i++) {
+//			ColorStateList csl = (ColorStateList) getResources().getColorStateList(R.color.silde_text);
 			paint.setColor(Color.rgb(0x66, 0x66, 0x66));
+//			paint.setColor(csl);
 			// paint.setColor(Color.WHITE);
 			paint.setTypeface(Typeface.DEFAULT_BOLD);
 			paint.setAntiAlias(true);

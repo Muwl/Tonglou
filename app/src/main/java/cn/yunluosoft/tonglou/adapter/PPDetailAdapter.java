@@ -107,6 +107,9 @@ public class PPDetailAdapter extends BaseAdapter {
                 holder.tip = (TextView) convertView.findViewById(R.id.ppdetail_tip);
                 holder.content = (TextView) convertView.findViewById(R.id.ppdetail_content);
                 holder.replay = (ImageView) convertView.findViewById(R.id.ppdetail_replay);
+                holder.parimage = (ImageView) convertView.findViewById(R.id.ppdetail_parimage);
+                holder.start = (TextView) convertView.findViewById(R.id.ppdetail_start);
+                holder.stop = (TextView) convertView.findViewById(R.id.ppdetail_stop);
                 holder.join = (TextView) convertView.findViewById(R.id.ppdetail_join);
                 holder.menu_lin = (LinearLayout) convertView.findViewById(R.id.ppdetail_menu_lin);
                 holder.gridView = (MyGridView) convertView.findViewById(R.id.ppdetail_grid);
@@ -137,6 +140,8 @@ public class PPDetailAdapter extends BaseAdapter {
             holder.address.setText(entity.locationName);
             holder.content.setText(entity.detail);
             holder.tip.setText(entity.topic);
+            holder.start.setText(entity.start);
+            holder.stop.setText(entity.end);
             List<User> userList=entity.praiseUser;
             if(userList==null){
                 userList=new ArrayList<>();
@@ -157,6 +162,12 @@ public class PPDetailAdapter extends BaseAdapter {
             linearLayout=holder.menu_lin;
             holder.replay.setTag("pppp" + position);
             rep=holder.replay;
+
+            if (userList.size()==0){
+                holder.parimage.setVisibility(View.INVISIBLE);
+            }else{
+                holder.parimage.setVisibility(View.VISIBLE);
+            }
 
             holder.join.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -251,7 +262,10 @@ public class PPDetailAdapter extends BaseAdapter {
         public TextView tip;
         public TextView content;
         public TextView join;
+        public TextView start;
+        public TextView stop;
         public ImageView replay;
+        public ImageView parimage;
         public LinearLayout menu_lin;
         public MyGridView gridView;
     }

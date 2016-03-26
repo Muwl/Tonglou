@@ -1,5 +1,6 @@
 package cn.yunluosoft.tonglou.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +33,7 @@ import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.DensityUtil;
 import cn.yunluosoft.tonglou.utils.LogManager;
+import cn.yunluosoft.tonglou.utils.MyApplication;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
@@ -285,6 +287,18 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
                                 ToastUtils.displayShortToast(
                                         GroupInfoActivity.this,
                                         String.valueOf(state.result));
+                                List<Activity> activities=MyApplication.getInstance().getActivities();
+                                try {
+                                    if (activities != null && activities.size() != 0) {
+                                        for (int i = 0; i < activities.size(); i++) {
+                                            if (activities.get(i).getClass().getName().equals(ChatActivity.class.getName())) {
+                                                activities.get(i).finish();
+                                            }
+                                        }
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
                                 finish();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(

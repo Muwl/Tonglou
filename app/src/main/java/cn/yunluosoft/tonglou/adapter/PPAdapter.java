@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -95,20 +96,27 @@ public class PPAdapter extends BaseAdapter {
         holder.time.setText(entities.get(position).createDate);
         holder.start.setText(entities.get(position).start);
         holder.stop.setText(entities.get(position).end);
-        holder.bluebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context,
-                        ChatActivity.class);
-                MessageInfo info = new MessageInfo(
-                        ShareDataTool.getUserId(context), entities.get(position).publishUserId,
-                        ShareDataTool.getUserId(context), entities.get(position).publishUserImUsername,
-                        ShareDataTool.getIcon(context),
-                        entities.get(position).publishUserIcon, ShareDataTool.getNickname(context), entities.get(position).publishUserNickname);
-                intent.putExtra("info", (Serializable) info);
-                context.startActivity(intent);
-            }
-        });
+        if (!entities.get(position).publishUserId.equals(ShareDataTool.getUserId(context))) {
+            holder.bluebtn.setBackgroundResource(R.drawable.blue_chat);
+            holder.bluebtn.setClickable(true);
+            holder.bluebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context,
+                            ChatActivity.class);
+                    MessageInfo info = new MessageInfo(
+                            ShareDataTool.getUserId(context), entities.get(position).publishUserId,
+                            ShareDataTool.getUserId(context), entities.get(position).publishUserImUsername,
+                            ShareDataTool.getIcon(context),
+                            entities.get(position).publishUserIcon, ShareDataTool.getNickname(context), entities.get(position).publishUserNickname);
+                    intent.putExtra("info", (Serializable) info);
+                    context.startActivity(intent);
+                }
+            });
+        } else {
+            holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
+            holder.bluebtn.setClickable(false);
+        }
         if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)) {
             holder.graybtn.setBackgroundResource(R.drawable.gray_attened);
             holder.graytext.setText("已关注");
@@ -116,6 +124,7 @@ public class PPAdapter extends BaseAdapter {
             holder.graybtn.setBackgroundResource(R.drawable.gray_atten);
             holder.graytext.setText("关注");
         }
+
         holder.graybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,13 +141,15 @@ public class PPAdapter extends BaseAdapter {
         holder.praise.setText(entities.get(position).praiseNum);
         if (Constant.PRAISE_OK.equals(entities.get(position).isPraise)) {
             holder.praise.setTextColor(Color.parseColor("#499EB8"));
-            Drawable drawable = context.getDrawable(R.mipmap.consult_atten_checked);
+
+            Drawable drawable =ContextCompat.getDrawable(context, R.mipmap.consult_atten_checked);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.praise.setCompoundDrawables(drawable, null, null, null);
 
         } else {
             holder.praise.setTextColor(Color.parseColor("#B3B3B3"));
-            Drawable drawable = context.getDrawable(R.mipmap.consult_atten);
+
+            Drawable drawable =   ContextCompat.getDrawable(context, R.mipmap.consult_atten);;
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.praise.setCompoundDrawables(drawable, null, null, null);
         }

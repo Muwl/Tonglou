@@ -81,9 +81,9 @@
                         android:gravity="center"
                         android:paddingBottom="12dp"
                         android:paddingTop="12dp"
-                        android:text="如果搜不到你所在的楼宇，请点击添加"
+                        android:text="完成"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/thrid_font" />
+                        android:textSize="@dimen/second_font" />
 
                     <ListView
                         android:id="@+id/location_listview"

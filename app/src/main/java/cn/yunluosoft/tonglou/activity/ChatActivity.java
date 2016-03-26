@@ -525,6 +525,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 		}else{
 			// 群聊
 			messageInfo=(MessageInfo) getIntent().getSerializableExtra("info");
+
 			MessageInfo info=new MessageInfo(ShareDataTool.getUserId(this), messageInfo.receiverUserId, ShareDataTool.getImUsername(this), messageInfo.receiverImUserName,ShareDataTool.getIcon(this), messageInfo.receiverHeadUrl, ShareDataTool.getNickname(this), messageInfo.receiverNickName);
 			messageInfo=info;
 			toChatUsername = messageInfo.receiverImUserName;
@@ -1999,7 +2000,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 						Toast.makeText(ChatActivity.this, st13, Toast.LENGTH_SHORT).show();
 						// if (GroupDetailsActivity.instance != null)
 						// GroupDetailsActivity.instance.finish();
-						// finish();
+						 finish();
 					}
 				}
 			});
@@ -2017,7 +2018,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 						Toast.makeText(ChatActivity.this, st14, Toast.LENGTH_SHORT).show();
 						// if (GroupDetailsActivity.instance != null)
 						// GroupDetailsActivity.instance.finish();
-						// finish();
+						 finish();
 					}
 				}
 			});

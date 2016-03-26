@@ -107,6 +107,7 @@ public class HelpDetailAdapter extends BaseAdapter {
                 holder.tip = (TextView) convertView.findViewById(R.id.helpdetail_tip);
                 holder.content = (TextView) convertView.findViewById(R.id.helpdetail_content);
                 holder.replay = (ImageView) convertView.findViewById(R.id.helpdetail_replay);
+                holder.parimage = (ImageView) convertView.findViewById(R.id.helpdetail_parimage);
                 holder.join = (TextView) convertView.findViewById(R.id.helpdetail_join);
                 holder.menu_lin = (LinearLayout) convertView.findViewById(R.id.helpdetail_menu_lin);
                 holder.gridView = (MyGridView) convertView.findViewById(R.id.helpdetail_grid);
@@ -143,6 +144,13 @@ public class HelpDetailAdapter extends BaseAdapter {
             }
             GroupDetailGridViewAdapter gridAdapter=new GroupDetailGridViewAdapter(context,userList);
             holder.gridView.setAdapter(gridAdapter);
+
+            if (userList.size()==0){
+                holder.parimage.setVisibility(View.INVISIBLE);
+            }else{
+                holder.parimage.setVisibility(View.VISIBLE);
+            }
+
 
             linearLayout=holder.menu_lin;
             holder.replay.setTag("pppp" + position);
@@ -317,6 +325,7 @@ public class HelpDetailAdapter extends BaseAdapter {
         public TextView join;
         public LinearLayout menu_lin;
         public ImageView replay;
+        public ImageView parimage;
         public MyGridView gridView;
     }
 

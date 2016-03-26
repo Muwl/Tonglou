@@ -186,6 +186,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#B3B3B3"
                 android:drawablePadding="5dp"
+                android:visibility="gone"
                 android:layout_marginLeft="20dp"
                 android:clickable="true"
                 android:drawableLeft="@mipmap/consult_atten"

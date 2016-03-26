@@ -112,6 +112,7 @@ public class GroupDetailAdapter extends BaseAdapter {
                 holder.join = (TextView) convertView.findViewById(R.id.groupdetail_join);
                 holder.menu_lin = (LinearLayout) convertView.findViewById(R.id.groupdetail_menu_lin);
                 holder.replay = (ImageView) convertView.findViewById(R.id.groupdetail_replay);
+                holder.parimage = (ImageView) convertView.findViewById(R.id.groupdetail_parimage);
                 holder.gridView = (MyGridView) convertView.findViewById(R.id.groupdetail_grid);
                 convertView.setTag(holder);
             } else {
@@ -142,10 +143,23 @@ public class GroupDetailAdapter extends BaseAdapter {
             holder.num.setText("参团人数：" + entity.planPeopleNum + "/" + entity.groupNum);
             holder.time.setText("截止日期："+entity.endDate);
             holder.content.setText(entity.detail);
+            holder.join.setEnabled(true);
+            holder.join.setClickable(true);
             if ("0".equals(entity.isInGroup)){
                 holder.join.setText("已参加进群聊");
             }else{
                 holder.join.setText("参加");
+                try {
+                    if ("0".equals(entity.applyState) && Integer.valueOf(entity.planPeopleNum)<=Integer.valueOf(entity.groupNum)){
+                        holder.join.setText("活动结束");
+                        holder.join.setEnabled(false);
+                        holder.join.setClickable(false);
+                    }
+                }catch (Exception e){
+                    
+                }
+
+
             }
 
             holder.join.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +183,13 @@ public class GroupDetailAdapter extends BaseAdapter {
             }
             GroupDetailGridViewAdapter gridAdapter=new GroupDetailGridViewAdapter(context,userList);
             holder.gridView.setAdapter(gridAdapter);
+
+            if (userList.size()==0){
+                holder.parimage.setVisibility(View.INVISIBLE);
+            }else{
+                holder.parimage.setVisibility(View.VISIBLE);
+            }
+
             holder.replay.setTag("pppp" + position);
             rep=holder.replay;
 
@@ -313,6 +334,7 @@ public class GroupDetailAdapter extends BaseAdapter {
         public TextView join;
         public LinearLayout menu_lin;
         public ImageView replay;
+        public ImageView parimage;
         public MyGridView gridView;
     }
 

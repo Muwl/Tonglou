@@ -118,6 +118,7 @@ public class UsedDetailAdapter extends BaseAdapter {
                 holder.blue = (TextView) convertView.findViewById(R.id.useddetail_blue);
                 holder.menu_lin = (LinearLayout) convertView.findViewById(R.id.useddetail_menu_lin);
                 holder.replay = (ImageView) convertView.findViewById(R.id.useddetail_replay);
+                holder.parImage = (ImageView) convertView.findViewById(R.id.useddetail_parimage);
                 holder.gridView = (MyGridView) convertView.findViewById(R.id.useddetail_grid);
                 convertView.setTag(holder);
             } else {
@@ -153,10 +154,18 @@ public class UsedDetailAdapter extends BaseAdapter {
             GroupDetailGridViewAdapter gridAdapter=new GroupDetailGridViewAdapter(context,userList);
             holder.gridView.setAdapter(gridAdapter);
 
+            if (userList.size()==0){
+                holder.parImage.setVisibility(View.INVISIBLE);
+            }else{
+                holder.parImage.setVisibility(View.VISIBLE);
+            }
+
+
             List<String> images=entity.images;
             if (images==null){
                 images=new ArrayList<>();
             }
+
 
             holder.icon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -289,6 +298,7 @@ public class UsedDetailAdapter extends BaseAdapter {
         public TextView blue;
         public MyListView myListView;
         public ImageView replay;
+        public ImageView parImage;
         public LinearLayout menu_lin;
         public MyGridView gridView;
     }

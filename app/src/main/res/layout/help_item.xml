@@ -163,6 +163,7 @@
                 android:drawablePadding="5dp"
                 android:layout_marginLeft="20dp"
                 android:clickable="true"
+                android:visibility="gone"
                 android:drawableLeft="@mipmap/consult_atten"
                 android:textSize="@dimen/second_font"
                 android:text="343"/>

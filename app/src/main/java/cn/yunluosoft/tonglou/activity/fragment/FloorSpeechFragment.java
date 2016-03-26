@@ -128,7 +128,7 @@ public class FloorSpeechFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                int tempPoi=0;
+                int tempPoi=position;
                 if (consultEntities.size()>0){
                     if (position==0){
                         Intent intent=new Intent(getActivity(),ConsultActivity.class);

@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -104,30 +105,58 @@ public class HiGroupAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-        holder.bluebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if ("0".equals(entities.get(position).isInGroup)) {
-                    Intent intent = new Intent(context,
-                            ChatActivity.class);
-                    MessageInfo messageInfo = new MessageInfo();
-                    messageInfo.receiverHeadUrl = entities.get(position).id;
-                    messageInfo.receiverImUserName = entities.get(position).imGroupId;
-                    messageInfo.receiverNickName = entities.get(position).groupName;
-                    messageInfo.receiverUserId = entities.get(position).imGroupId;
-                    intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("info", messageInfo);
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
-                } else {
-                    Message message = new Message();
-                    message.what = HiGroupActivity.ADDGROUP;
-                    message.arg1 = position;
-                    handler.sendMessage(message);
+
+//        if (!entities.get(position).publishUserId.equals(ShareDataTool.getUserId(context))) {
+            holder.bluebtn.setBackgroundResource(R.drawable.blue_chat);
+            holder.bluebtn.setClickable(true);
+            holder.bluebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if ("0".equals(entities.get(position).isInGroup)) {
+                        Intent intent = new Intent(context,
+                                ChatActivity.class);
+                        MessageInfo messageInfo = new MessageInfo();
+                        messageInfo.receiverHeadUrl = entities.get(position).id;
+                        messageInfo.receiverImUserName = entities.get(position).imGroupId;
+                        messageInfo.receiverNickName = entities.get(position).groupName;
+                        messageInfo.receiverUserId = entities.get(position).imGroupId;
+                        intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("info", messageInfo);
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
+                    } else {
+                        Message message = new Message();
+                        message.what = HiGroupActivity.ADDGROUP;
+                        message.arg1 = position;
+                        handler.sendMessage(message);
+                    }
+                }
+            });
+
+            if ("0".equals(entities.get(position).isInGroup)) {
+                holder.bluetext.setText("聊聊");
+                holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
+            } else {
+                if ("0".equals(entities.get(position).applyState) && Integer.valueOf(entities.get(position).planPeopleNum)<=Integer.valueOf(entities.get(position).groupNum)){
+                    holder.bluetext.setText("已结束");
+                    holder.blueimage.setImageResource(R.mipmap.end);
+                    holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
+                    holder.bluebtn.setClickable(false);
+                    holder.bluebtn.setEnabled(false);
+                }else {
+                    holder.bluetext.setText("加入");
+                    holder.blueimage.setImageResource(R.mipmap.add_chat);
                 }
             }
-        });
+//        }
+//        else {
+//            holder.bluetext.setText("聊聊");
+//            holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
+//            holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
+//            holder.bluebtn.setClickable(false);
+//        }
+
         if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)) {
             holder.graybtn.setBackgroundResource(R.drawable.gray_attened);
             holder.graytext.setText("已关注");
@@ -149,23 +178,17 @@ public class HiGroupAdapter extends BaseAdapter {
             }
         });
 
-        if ("0".equals(entities.get(position).isInGroup)) {
-            holder.bluetext.setText("聊聊");
-            holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
-        } else {
-            holder.bluetext.setText("加入");
-            holder.blueimage.setImageResource(R.mipmap.add_chat);
-        }
+
         holder.praise.setText(entities.get(position).praiseNum);
         if (Constant.PRAISE_OK.equals(entities.get(position).isPraise)) {
             holder.praise.setTextColor(Color.parseColor("#499EB8"));
-            Drawable drawable = context.getResources().getDrawable(R.mipmap.consult_atten_checked);
+            Drawable drawable =ContextCompat.getDrawable(context, R.mipmap.consult_atten_checked);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.praise.setCompoundDrawables(drawable, null, null, null);
 
         } else {
             holder.praise.setTextColor(Color.parseColor("#B3B3B3"));
-            Drawable drawable = context.getResources().getDrawable(R.mipmap.consult_atten);
+            Drawable drawable =   ContextCompat.getDrawable(context, R.mipmap.consult_atten);;
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.praise.setCompoundDrawables(drawable, null, null, null);
         }

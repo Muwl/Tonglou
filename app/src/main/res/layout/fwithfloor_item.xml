@@ -149,6 +149,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:drawableLeft="@mipmap/consult_atten"
                     android:drawablePadding="5dp"
                     android:text="343"
