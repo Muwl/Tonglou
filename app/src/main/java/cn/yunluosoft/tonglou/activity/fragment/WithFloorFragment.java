@@ -66,17 +66,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
 
     private TextView title;
 
-    private View serch;
-
     private TextView rig;
-
-    private TextView group;
-
-    private TextView used;
-
-    private TextView pp;
-
-    private TextView help;
 
     private CustomListView customListView;
 
@@ -136,12 +126,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         View view = inflater.inflate(R.layout.fwithfloor, container, false);
         title = (TextView) view.findViewById(R.id.title_title);
         view.findViewById(R.id.title_back).setVisibility(View.GONE);
-        serch = view.findViewById(R.id.fwithfloor_serch);
         rig = (TextView) view.findViewById(R.id.title_rig);
-        group = (TextView) view.findViewById(R.id.fwithfloor_group);
-        used = (TextView) view.findViewById(R.id.fwithfloor_used);
-        pp = (TextView) view.findViewById(R.id.fwithfloor_pp);
-        help = (TextView) view.findViewById(R.id.fwithfloor_help);
         customListView = (CustomListView) view.findViewById(R.id.fwithfloor_list);
         pro = view.findViewById(R.id.fwithfloor_pro);
 
@@ -156,12 +141,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         entities = new ArrayList<>();
-        serch.setOnClickListener(this);
-        group.setOnClickListener(this);
-        used.setOnClickListener(this);
-        pp.setOnClickListener(this);
         rig.setOnClickListener(this);
-        help.setOnClickListener(this);
         adapter = new WithFloorAdapter(getActivity(), entities, handler,customListView);
         customListView.setAdapter(adapter);
 
@@ -169,16 +149,16 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = null;
-                if ("0".equals(entities.get(position - 1).modelType)) {
+                if ("0".equals(entities.get(position - 2).modelType)) {
                     intent = new Intent(getActivity(), GroupDetailActivity.class);
-                } else if ("1".equals(entities.get(position - 1).modelType)) {
+                } else if ("1".equals(entities.get(position - 2).modelType)) {
                     intent = new Intent(getActivity(), UsedDetailActivity.class);
-                } else if ("2".equals(entities.get(position - 1).modelType)) {
+                } else if ("2".equals(entities.get(position - 2).modelType)) {
                     intent = new Intent(getActivity(), PPDetailActivity.class);
-                } else if ("3".equals(entities.get(position - 1).modelType)) {
+                } else if ("3".equals(entities.get(position - 2).modelType)) {
                     intent = new Intent(getActivity(), HelpDetailActivity.class);
                 }
-                intent.putExtra("id", entities.get(position - 1).id);
+                intent.putExtra("id", entities.get(position - 2).id);
                 startActivity(intent);
             }
         });
@@ -187,7 +167,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                ReportMenuDialog dialog=new ReportMenuDialog(getActivity(),handler,position);
+                ReportMenuDialog dialog=new ReportMenuDialog(getActivity(),handler,position-1);
 
                 return true;
             }
@@ -228,37 +208,12 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.fwithfloor_serch:
-                Intent intent5=new Intent(getActivity(), SerchSpeechActivity.class);
-                intent5.putExtra("modelFlag",4);
-                startActivity(intent5);
-                break;
+
             case R.id.title_rig:
                 Intent intent4 = new Intent(getActivity(), PublishActivity.class);
                 startActivity(intent4);
                 break;
-            case R.id.fwithfloor_group:
-                Intent intent = new Intent(getActivity(), HiGroupActivity.class);
-                startActivity(intent);
-                break;
 
-            case R.id.fwithfloor_used:
-                Intent intent1 = new Intent(getActivity(), UsedActivity.class);
-                startActivity(intent1);
-
-                break;
-
-            case R.id.fwithfloor_pp:
-                Intent intent2 = new Intent(getActivity(), PPActivity.class);
-                startActivity(intent2);
-
-                break;
-
-            case R.id.fwithfloor_help:
-                Intent intent3 = new Intent(getActivity(), AssistActivity.class);
-                startActivity(intent3);
-
-                break;
 
         }
     }

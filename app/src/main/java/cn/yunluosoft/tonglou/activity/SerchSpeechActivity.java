@@ -27,6 +27,7 @@ import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.HelpAdapter;
 import cn.yunluosoft.tonglou.adapter.HiGroupAdapter;
 import cn.yunluosoft.tonglou.adapter.PPAdapter;
+import cn.yunluosoft.tonglou.adapter.SerchFloorAdapter;
 import cn.yunluosoft.tonglou.adapter.UsedAdapter;
 import cn.yunluosoft.tonglou.adapter.WithFloorAdapter;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
@@ -62,7 +63,7 @@ public class SerchSpeechActivity extends BaseActivity implements View.OnClickLis
 
     private HelpAdapter helpAdapter;
 
-    private WithFloorAdapter withFloorAdapter;
+    private SerchFloorAdapter serchFloorAdapter;
 
     private View pro;
 
@@ -138,8 +139,8 @@ public class SerchSpeechActivity extends BaseActivity implements View.OnClickLis
             helpAdapter = new HelpAdapter(this, entities, handler);
             customListView.setAdapter(helpAdapter);
         } else if (modelFlag == 4) {
-            withFloorAdapter = new WithFloorAdapter(this, entities, handler,customListView);
-            customListView.setAdapter(withFloorAdapter);
+            serchFloorAdapter = new SerchFloorAdapter(this, entities, handler,customListView);
+            customListView.setAdapter(serchFloorAdapter);
         }
 
         customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
@@ -237,7 +238,7 @@ public class SerchSpeechActivity extends BaseActivity implements View.OnClickLis
         } else if (modelFlag == 3) {
             helpAdapter.notifyDataSetChanged();
         } else if (modelFlag == 4) {
-            withFloorAdapter.notifyDataSetChanged();
+            serchFloorAdapter.notifyDataSetChanged();
         }
     }
 
