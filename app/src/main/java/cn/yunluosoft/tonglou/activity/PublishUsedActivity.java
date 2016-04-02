@@ -249,7 +249,7 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
                                            int position, long id) {
                 if (position < files.size()) {
                     CustomeDialog dialog = new CustomeDialog(PublishUsedActivity.this,
-                            handler, "确定要删除该照片？", position, -1);
+                            handler, "确定要删除该照片？", position, -1,null);
                 }
                 return true;
             }

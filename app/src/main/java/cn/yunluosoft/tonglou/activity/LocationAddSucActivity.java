@@ -19,10 +19,13 @@ public class LocationAddSucActivity extends BaseActivity implements View.OnClick
 
     private TextView ok;
 
+    private int flag;// 0代表注册 1代表修改
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location_addsuc);
+        flag = getIntent().getIntExtra("flag", 0);
         initView();
     }
 
@@ -46,6 +49,7 @@ public class LocationAddSucActivity extends BaseActivity implements View.OnClick
 
             case R.id.location_addsuc_ok:
                 Intent intent=new Intent(LocationAddSucActivity.this,LocationNerbayActivity.class);
+                intent.putExtra("flag",flag);
                 startActivity(intent);
                 finish();
                 break;

@@ -50,7 +50,7 @@ public class DateSelectDialog implements OnClickListener {
 	private String temp;
 	private String stitle;
 	private TextView title;
-	private int flag;//0代表没有任何限制 1代表不能小于现在的时间
+	private int flag;//0代表没有任何限制 1代表不能小于现在的时间 2代表不能大于现在的时间
 	public DateSelectDialog(Context context,String stitle,Handler handler, String temp,int flag) {
 		super();
 		this.context = context;
@@ -154,6 +154,13 @@ public class DateSelectDialog implements OnClickListener {
 			if (flag==1) {
 				if (TimeUtils.getDate().compareTo(TimeUtils.getStringByString(date)) > 0) {
 					ToastUtils.displayShortToast(context, "选择的时间不能小于现在时间！");
+					return;
+				}
+			}
+
+			if (flag==2) {
+				if (TimeUtils.getDate().compareTo(TimeUtils.getStringByString(date)) < 0) {
+					ToastUtils.displayShortToast(context, "选择的时间不能大于现在时间！");
 					return;
 				}
 			}

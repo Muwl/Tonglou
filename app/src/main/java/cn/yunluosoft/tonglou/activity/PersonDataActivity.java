@@ -214,7 +214,7 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 
             case R.id.person_data_birthview:
                 DateSelectDialog selectDialog = new DateSelectDialog(
-                        PersonDataActivity.this,"选择生日", handler, sdate,0);
+                        PersonDataActivity.this,"选择生日", handler, sdate,2);
 
                 break;
 
@@ -488,6 +488,12 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
                         pro.setVisibility(View.GONE);
+                        LogManager.LogShow("----", arg0.getMessage(),
+                                LogManager.ERROR);
+                        LogManager.LogShow("----", arg0.toString(),
+                                LogManager.ERROR);
+                        LogManager.LogShow("----",arg1,
+                                LogManager.ERROR);
                         ToastUtils.displayFailureToast(PersonDataActivity.this);
                     }
 
@@ -540,6 +546,7 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                                         String.valueOf(state.result));
                             }
                         } catch (Exception e) {
+
                             ToastUtils
                                     .displaySendFailureToast(PersonDataActivity.this);
                         }

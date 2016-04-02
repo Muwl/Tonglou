@@ -135,11 +135,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.setting_clearcash:
 			CustomeDialog customeDialog = new CustomeDialog(
-					SettingActivity.this, handler, "确定清除缓存？", 0, -1);
+					SettingActivity.this, handler, "确定清除缓存？", 0, -1,null);
 			break;
 			case R.id.setting_exit:
 				CustomeDialog customeDialog2 = new CustomeDialog(
-						SettingActivity.this, handler, "确定退出？", 0, -2);
+						SettingActivity.this, handler, "确定退出？", 0, -2,null);
 
 				break;
 		default:

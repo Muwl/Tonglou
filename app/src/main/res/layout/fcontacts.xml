@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/activity_bg"
+    android:background="@color/white"
     android:layout_height="match_parent">
     <include
         android:id="@+id/fconstacts_title"
@@ -60,26 +60,32 @@
             android:scrollbars="none" />
 
 
-        <TextView
-            android:id="@+id/fconstact_dialog"
-            android:layout_width="80.0dip"
-            android:layout_height="80.0dip"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:background="@drawable/dialog_bg"
-            android:gravity="center"
-            android:textColor="#ffffffff"
-            android:textSize="30.0dip"
-            android:visibility="invisible" />
+
 
         <cn.yunluosoft.tonglou.view.sortlistview.SideBar
             android:id="@+id/fconstact_sidrbar"
-            android:layout_width="30.0dip"
-            android:layout_height="wrap_content"
+            android:layout_width="26dip"
+            android:layout_marginRight="7dp"
+            android:layout_height="370dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="right|center"
-            android:background="@null" />
+            android:background="@drawable/sild_bg" />
+
+        <TextView
+            android:id="@+id/fconstact_dialog"
+            android:layout_width="49dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/fconstact_sidrbar"
+            android:layout_marginRight="35dp"
+            android:background="@mipmap/sild_dialog_bg"
+            android:textColor="#499eb8"
+            android:text="A"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:visibility="invisible" />
         <!-- </FrameLayout> -->
         <include
             android:id="@+id/fconstact_empty"

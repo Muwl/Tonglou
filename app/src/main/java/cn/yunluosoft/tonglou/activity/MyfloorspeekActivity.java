@@ -183,9 +183,9 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (flag==0){
-                    CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此关注？",position-1,-1);
+                    CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此关注？",position-1,-1,null);
                 }else{
-                    CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此发布？",position-1,-2);
+                    CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此发布？",position-1,-2,null);
                 }
 
                 return true;

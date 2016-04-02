@@ -50,6 +50,8 @@ public class LoactionAddActivity extends BaseActivity implements View.OnClickLis
 
     private String[] strings;
 
+    private int flag;// 0代表注册 1代表修改
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -74,6 +76,7 @@ public class LoactionAddActivity extends BaseActivity implements View.OnClickLis
     private void initView() {
         title= (TextView) findViewById(R.id.title_title);
         back= (ImageView) findViewById(R.id.title_back);
+        flag = getIntent().getIntExtra("flag", 0);
         name= (EditText) findViewById(R.id.location_add_name);
         provinceView=findViewById(R.id.location_add_provinceview);
         province= (TextView) findViewById(R.id.location_add_province);
@@ -165,6 +168,7 @@ public class LoactionAddActivity extends BaseActivity implements View.OnClickLis
                                 ToastUtils.displayShortToast(
                                         LoactionAddActivity.this, "提交成功");
                                 Intent intent=new Intent(LoactionAddActivity.this,LocationAddSucActivity.class);
+                                intent.putExtra("flag",flag);
                                 startActivity(intent);
                                 finish();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {

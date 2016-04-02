@@ -155,6 +155,11 @@ public class HelpDetailAdapter extends BaseAdapter {
             linearLayout=holder.menu_lin;
             holder.replay.setTag("pppp" + position);
             rep=holder.replay;
+            if (ShareDataTool.getUserId(context).equals(entity.publishUserId)){
+                holder.join.setVisibility(View.GONE);
+            }else{
+                holder.join.setVisibility(View.VISIBLE);
+            }
 
             holder.join.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -202,7 +207,12 @@ public class HelpDetailAdapter extends BaseAdapter {
 
         } else if(type == type1) {
             bitmapUtils.display(holder1.icon, entities.get(position-1).publishUserIcon);
-            holder1.name.setText(entities.get(position - 1).publishUserNickname);
+            if (ToosUtils.isStringEmpty(entities.get(position-1).parentId) || entities.get(position-1).parentId.equals(entity.id) ){
+                holder1.name.setText(entities.get(position - 1).publishUserNickname);
+            }else{
+                holder1.name.setText(entities.get(position - 1).publishUserNickname+"\u2000回复\u2000"+entities.get(position-1).targetUserNickname);
+            }
+//            holder1.name.setText(entities.get(position - 1).publishUserNickname);
             holder1.content.setText(entities.get(position-1).content);
             holder1.time.setText(entities.get(position-1).createDate);
             holder1.reply.setOnClickListener(new View.OnClickListener() {
@@ -238,7 +248,7 @@ public class HelpDetailAdapter extends BaseAdapter {
                             temp="是否删除该回复？";
                         }
 
-                        CustomeDialog dialog=new CustomeDialog(context,handler,temp,position-1,-2);
+                        CustomeDialog dialog=new CustomeDialog(context,handler,temp,position-1,-2,null);
 //                        Message message=new Message();
 //                        message.what=1009;
 //                        message.arg1=(position-1);

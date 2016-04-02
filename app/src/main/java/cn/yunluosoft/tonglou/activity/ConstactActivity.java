@@ -143,7 +143,7 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
 
                 case 83:
                     CustomeDialog customeDialog = new CustomeDialog(
-                            ConstactActivity.this, handler, "确定加入黑名单？", -100, -100);
+                            ConstactActivity.this, handler, "确定加入黑名单？", -100, -100,null);
 
                     break;
 
@@ -287,7 +287,7 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
                 break;
             case R.id.constact_detail_add:
                 CustomeDialog customeDialog = new CustomeDialog(this, handler,
-                        "确定添加？", 0, -1);
+                        "确定添加？", 0, -1,null);
                 break;
 
             default:
@@ -753,8 +753,7 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
 	 *
 	 * @param
 	 */
-	private void sortConversationByLastChatTime(
-			List<Pair<Long, EMConversation>> conversationList) {
+	private void sortConversationByLastChatTime(List<Pair<Long, EMConversation>> conversationList) {
 		Collections.sort(conversationList,
 				new Comparator<Pair<Long, EMConversation>>() {
 					@Override
@@ -828,5 +827,9 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
 				});
 
 	}
+
+
+
+
 
 }

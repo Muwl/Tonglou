@@ -93,7 +93,7 @@ public class HiGroupAdapter extends BaseAdapter {
         holder.tip.setText(entities.get(position).topic);
         holder.content.setText(entities.get(position).detail);
         holder.createTime.setText(entities.get(position).createDate);
-        holder.num.setText("参团人数：" + entities.get(position).planPeopleNum + "/" + entities.get(position).groupNum);
+        holder.num.setText("参团人数：" + entities.get(position).groupNum + "/" +entities.get(position).planPeopleNum );
         holder.time.setText("截止日期：" + entities.get(position).endDate);
 
         holder.icon.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +139,7 @@ public class HiGroupAdapter extends BaseAdapter {
                 holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
             } else {
                 if ("0".equals(entities.get(position).applyState) && Integer.valueOf(entities.get(position).planPeopleNum)<=Integer.valueOf(entities.get(position).groupNum)){
-                    holder.bluetext.setText("已结束");
+                    holder.bluetext.setText("已满");
                     holder.blueimage.setImageResource(R.mipmap.end);
                     holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
                     holder.bluebtn.setClickable(false);

@@ -10,6 +10,8 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import cn.yunluosoft.tonglou.R;
 
 /**
@@ -27,6 +29,8 @@ public class SubmitDialog extends Dialog implements
     private TextView close;
     private String msg;
     private int flag;//1嗨团发布成功 2二手发布 3帮帮发布  4 二手发布
+    private TextView back;
+    private ImageView div;
 
     public SubmitDialog(Context context, int flag, Handler handler) {
         super(context, R.style.dialog2);
@@ -46,12 +50,18 @@ public class SubmitDialog extends Dialog implements
         tip = (TextView) findViewById(R.id.submit_tip);
         content = (TextView) findViewById(R.id.submit_content);
         close = (TextView) findViewById(R.id.submit_close);
+        back = (TextView) findViewById(R.id.submit_back);
+        div= (ImageView) findViewById(R.id.submit_div);
         close.setOnClickListener(this);
-
+        back.setOnClickListener(this);
+        back.setVisibility(View.GONE);
+        div.setVisibility(View.GONE);
         if (flag == 1) {
             tip.setText("发布成功");
             content.setText("请等待人员进入");
             close.setText("进入活动群");
+            back.setVisibility(View.VISIBLE);
+            div.setVisibility(View.VISIBLE);
         } else if (flag == 2) {
             tip.setText("发布成功");
             content.setVisibility(View.GONE);
@@ -77,6 +87,11 @@ public class SubmitDialog extends Dialog implements
         switch (v.getId()) {
             case R.id.submit_close:
                 handler.sendEmptyMessage(552);
+                dismiss();
+                break;
+
+            case R.id.submit_back:
+                handler.sendEmptyMessage(558);
                 dismiss();
                 break;
             default:

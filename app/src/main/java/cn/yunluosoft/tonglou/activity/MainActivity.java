@@ -327,6 +327,10 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 				popAllFragmentsExceptTheBottomOne();
 			} catch (Exception e) {
 			}
+		} else if(pageIndex==2){
+			group.check(R.id.main_bottom_withfloor);
+		}else if(pageIndex==4){
+			group.check(R.id.main_bottom_person);
 		}
 
 		onrefush();

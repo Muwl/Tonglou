@@ -84,6 +84,7 @@ public class PPAdapter extends BaseAdapter {
             holder.graytext = (TextView) convertView.findViewById(R.id.pp_item_graytext);
             holder.praise = (TextView) convertView.findViewById(R.id.pp_item_atten);
             holder.time = (TextView) convertView.findViewById(R.id.pp_item_time);
+            holder.car= (ImageView) convertView.findViewById(R.id.pp_item_car);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -154,6 +155,12 @@ public class PPAdapter extends BaseAdapter {
             holder.praise.setCompoundDrawables(drawable, null, null, null);
         }
 
+        if ("0".equals(entities.get(position).supplyType)){
+            holder.car.setImageResource(R.mipmap.car_car);
+        }else{
+            holder.car.setImageResource(R.mipmap.car_nocar);
+        }
+
         holder.icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,6 +194,7 @@ public class PPAdapter extends BaseAdapter {
         public ImageView blueimage;
         public TextView bluetext;
         public TextView graytext;
+        public  ImageView car;
         public TextView praise;
         public TextView time;
     }

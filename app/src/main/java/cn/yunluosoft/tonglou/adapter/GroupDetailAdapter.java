@@ -140,7 +140,7 @@ public class GroupDetailAdapter extends BaseAdapter {
             holder.name.setText(entity.publishUserNickname);
             holder.address.setText(entity.locationName);
             holder.tip.setText(entity.topic);
-            holder.num.setText("参团人数：" + entity.planPeopleNum + "/" + entity.groupNum);
+            holder.num.setText("参团人数：" +entity.groupNum + "/" + entity.planPeopleNum);
             holder.time.setText("截止日期："+entity.endDate);
             holder.content.setText(entity.detail);
             holder.join.setEnabled(true);
@@ -151,7 +151,7 @@ public class GroupDetailAdapter extends BaseAdapter {
                 holder.join.setText("参加");
                 try {
                     if ("0".equals(entity.applyState) && Integer.valueOf(entity.planPeopleNum)<=Integer.valueOf(entity.groupNum)){
-                        holder.join.setText("活动结束");
+                        holder.join.setText("人数已满");
                         holder.join.setEnabled(false);
                         holder.join.setClickable(false);
                     }
@@ -207,11 +207,16 @@ public class GroupDetailAdapter extends BaseAdapter {
 
         } else if(type == type1) {
             bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
-            if (ToosUtils.isStringEmpty(entities.get(position-1).targetUserId)){
+            if (ToosUtils.isStringEmpty(entities.get(position-1).parentId) || entities.get(position-1).parentId.equals(entity.id) ){
                 holder1.name.setText(entities.get(position - 1).publishUserNickname);
             }else{
                 holder1.name.setText(entities.get(position - 1).publishUserNickname+"\u2000回复\u2000"+entities.get(position-1).targetUserNickname);
             }
+//            if (ToosUtils.isStringEmpty(entities.get(position-1).targetUserId)){
+//                holder1.name.setText(entities.get(position - 1).publishUserNickname);
+//            }else{
+//                holder1.name.setText(entities.get(position - 1).publishUserNickname+"\u2000回复\u2000"+entities.get(position-1).targetUserNickname);
+//            }
             if (ShareDataTool.getUserId(context).equals(entities.get(position-1).publishUserId)){
                 holder1.del.setVisibility(View.VISIBLE);
                 holder1.del.setOnClickListener(new View.OnClickListener() {
@@ -224,7 +229,7 @@ public class GroupDetailAdapter extends BaseAdapter {
                             temp="是否删除该回复？";
                         }
 
-                        CustomeDialog dialog=new CustomeDialog(context,handler,temp,position-1,-2);
+                        CustomeDialog dialog=new CustomeDialog(context,handler,temp,position-1,-2,null);
 //                        Message message=new Message();
 //                        message.what=1009;
 //                        message.arg1=(position-1);

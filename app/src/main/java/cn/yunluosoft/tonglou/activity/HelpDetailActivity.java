@@ -476,7 +476,7 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
                                     User user=new User();
                                     user.id=ShareDataTool.getUserId(HelpDetailActivity.this);
                                     user.icon=ShareDataTool.getIcon(HelpDetailActivity.this);
-                                    entity.praiseUser.add(user);
+                                    entity.praiseUser.add(0,user);
                                 }
                                 adapter.notifyDataSetChanged();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
@@ -508,7 +508,7 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
             rp.addBodyParameter("parentId", entity.id);
             rp.addBodyParameter("targetUserId",entity.publishUserId);
         }else{
-            rp.addBodyParameter("parentId", entities.get(position).parentId);
+            rp.addBodyParameter("parentId", entities.get(position).id);
             rp.addBodyParameter("targetUserId",entities.get(position).publishUserId);
 
         }
@@ -550,23 +550,23 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
                                     ReplayEntity replayEntity=new ReplayEntity();
                                     replayEntity.id=commentState.result.commentId;
                                     replayEntity.content=temp;
-                                    replayEntity.parentId="-1";
+                                    replayEntity.parentId=entity.id;
                                     replayEntity.publishUserIcon=ShareDataTool.getIcon(HelpDetailActivity.this);
                                     replayEntity.publishUserId=ShareDataTool.getUserId(HelpDetailActivity.this);
                                     replayEntity.publishUserNickname=ShareDataTool.getNickname(HelpDetailActivity.this);
-                                    replayEntity.createDate= TimeUtils.getDate();
+                                    replayEntity.createDate= commentState.result.createDate;
                                     entities.add(0, replayEntity);
                                 }else{
                                     ReplayEntity replayEntity=new ReplayEntity();
                                     replayEntity.id=commentState.result.commentId;
                                     replayEntity.content=temp;
-                                    replayEntity.parentId="-1";
+                                    replayEntity.parentId=entities.get(position).id;
                                     replayEntity.publishUserIcon=ShareDataTool.getIcon(HelpDetailActivity.this);
                                     replayEntity.publishUserId = ShareDataTool.getUserId(HelpDetailActivity.this);
                                     replayEntity.publishUserNickname = ShareDataTool.getNickname(HelpDetailActivity.this);
                                     replayEntity.targetUserId=entities.get(position).publishUserId;
                                     replayEntity.targetUserNickname=entities.get(position).publishUserNickname;
-                                    replayEntity.createDate= TimeUtils.getDate();
+                                    replayEntity.createDate= commentState.result.createDate;
                                     entities.add(position + 1, replayEntity);
                                 }
                                 flagIndex=-1;

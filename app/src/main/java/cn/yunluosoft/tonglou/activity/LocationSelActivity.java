@@ -111,6 +111,7 @@ public class LocationSelActivity extends BaseActivity implements
             switch (msg.what){
                 case 40:
                     Intent intent=new Intent(LocationSelActivity.this,LoactionAddActivity.class);
+                    intent.putExtra("flag",flag);
                     startActivity(intent);
                     break;
             }
@@ -270,7 +271,7 @@ public class LocationSelActivity extends BaseActivity implements
                     } else {
 //                        ToastUtils.displayShortToast(LocationSelActivity.this,
 //                                "请选择您所在楼宇");
-                        CustomeDialog dialog=new CustomeDialog(LocationSelActivity.this,handler,"请输入的楼语展示还未收录\n请点击添加楼宇名称！",-1,-1);
+                        CustomeDialog dialog=new CustomeDialog(LocationSelActivity.this,handler,"请输入的楼语暂时还未收录\n请点击添加楼宇名称！",-1,-1,"添加");
                     }
 
                 } else {
@@ -279,7 +280,7 @@ public class LocationSelActivity extends BaseActivity implements
                             .getTextContent(name))) {
                         updateLocation();
                     } else {
-                        CustomeDialog dialog=new CustomeDialog(LocationSelActivity.this,handler,"请输入的楼语展示还未收录\n请点击添加楼宇名称！",-1,-1);
+                        CustomeDialog dialog=new CustomeDialog(LocationSelActivity.this,handler,"请输入的楼语暂时还未收录\n请点击添加楼宇名称！",-1,-1,"添加");
 //                        ToastUtils.displayShortToast(LocationSelActivity.this,
 //                                "请选择您所在楼宇");
 

@@ -154,6 +154,12 @@ public class UsedDetailAdapter extends BaseAdapter {
             GroupDetailGridViewAdapter gridAdapter=new GroupDetailGridViewAdapter(context,userList);
             holder.gridView.setAdapter(gridAdapter);
 
+            if (ShareDataTool.getUserId(context).equals(entity.publishUserId)){
+                holder.blue.setVisibility(View.GONE);
+            }else{
+                holder.blue.setVisibility(View.VISIBLE);
+            }
+
             if (userList.size()==0){
                 holder.parImage.setVisibility(View.INVISIBLE);
             }else{
@@ -232,8 +238,12 @@ public class UsedDetailAdapter extends BaseAdapter {
             });
 
         } else if(type == type1) {
-            bitmapUtils.display(holder1.icon, entities.get(position-1).publishUserIcon);
-            holder1.name.setText(entities.get(position - 1).publishUserNickname);
+            bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
+            if (ToosUtils.isStringEmpty(entities.get(position-1).parentId) || entities.get(position-1).parentId.equals(entity.id) ){
+                holder1.name.setText(entities.get(position - 1).publishUserNickname);
+            }else{
+                holder1.name.setText(entities.get(position - 1).publishUserNickname+"\u2000回复\u2000"+entities.get(position-1).targetUserNickname);
+            }
             holder1.content.setText(entities.get(position-1).content);
             holder1.time.setText(entities.get(position-1).createDate);
 
@@ -274,7 +284,7 @@ public class UsedDetailAdapter extends BaseAdapter {
                             temp="是否删除该回复？";
                         }
 
-                        CustomeDialog dialog=new CustomeDialog(context,handler,temp,position-1,-2);
+                        CustomeDialog dialog=new CustomeDialog(context,handler,temp,position-1,-2,null);
 //                        Message message=new Message();
 //                        message.what=1009;
 //                        message.arg1=(position-1);

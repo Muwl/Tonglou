@@ -69,41 +69,41 @@ public class SmileUtils {
 
 	static {
 		
-	    addPattern(emoticons, ee_1, R.mipmap.ee_1);
-	    addPattern(emoticons, ee_2, R.mipmap.ee_2);
-	    addPattern(emoticons, ee_3, R.mipmap.ee_3);
-	    addPattern(emoticons, ee_4, R.mipmap.ee_4);
-	    addPattern(emoticons, ee_5, R.mipmap.ee_5);
-	    addPattern(emoticons, ee_6, R.mipmap.ee_6);
-	    addPattern(emoticons, ee_7, R.mipmap.ee_7);
-	    addPattern(emoticons, ee_8, R.mipmap.ee_8);
-	    addPattern(emoticons, ee_9, R.mipmap.ee_9);
-	    addPattern(emoticons, ee_10, R.mipmap.ee_10);
-	    addPattern(emoticons, ee_11, R.mipmap.ee_11);
-	    addPattern(emoticons, ee_12, R.mipmap.ee_12);
-	    addPattern(emoticons, ee_13, R.mipmap.ee_13);
-	    addPattern(emoticons, ee_14, R.mipmap.ee_14);
-	    addPattern(emoticons, ee_15, R.mipmap.ee_15);
-	    addPattern(emoticons, ee_16, R.mipmap.ee_16);
-	    addPattern(emoticons, ee_17, R.mipmap.ee_17);
-	    addPattern(emoticons, ee_18, R.mipmap.ee_18);
-	    addPattern(emoticons, ee_19, R.mipmap.ee_19);
-	    addPattern(emoticons, ee_20, R.mipmap.ee_20);
-	    addPattern(emoticons, ee_21, R.mipmap.ee_21);
-	    addPattern(emoticons, ee_22, R.mipmap.ee_22);
-	    addPattern(emoticons, ee_23, R.mipmap.ee_23);
-	    addPattern(emoticons, ee_24, R.mipmap.ee_24);
-	    addPattern(emoticons, ee_25, R.mipmap.ee_25);
-	    addPattern(emoticons, ee_26, R.mipmap.ee_26);
-	    addPattern(emoticons, ee_27, R.mipmap.ee_27);
-	    addPattern(emoticons, ee_28, R.mipmap.ee_28);
-	    addPattern(emoticons, ee_29, R.mipmap.ee_29);
-	    addPattern(emoticons, ee_30, R.mipmap.ee_30);
-	    addPattern(emoticons, ee_31, R.mipmap.ee_31);
-	    addPattern(emoticons, ee_32, R.mipmap.ee_32);
-	    addPattern(emoticons, ee_33, R.mipmap.ee_33);
-	    addPattern(emoticons, ee_34, R.mipmap.ee_34);
-	    addPattern(emoticons, ee_35, R.mipmap.ee_35);
+	    addPattern(emoticons, ee_1, R.drawable.ee_1);
+	    addPattern(emoticons, ee_2, R.drawable.ee_2);
+	    addPattern(emoticons, ee_3, R.drawable.ee_3);
+	    addPattern(emoticons, ee_4, R.drawable.ee_4);
+	    addPattern(emoticons, ee_5, R.drawable.ee_5);
+	    addPattern(emoticons, ee_6, R.drawable.ee_6);
+	    addPattern(emoticons, ee_7, R.drawable.ee_7);
+	    addPattern(emoticons, ee_8, R.drawable.ee_8);
+	    addPattern(emoticons, ee_9, R.drawable.ee_9);
+	    addPattern(emoticons, ee_10, R.drawable.ee_10);
+	    addPattern(emoticons, ee_11, R.drawable.ee_11);
+	    addPattern(emoticons, ee_12, R.drawable.ee_12);
+	    addPattern(emoticons, ee_13, R.drawable.ee_13);
+	    addPattern(emoticons, ee_14, R.drawable.ee_14);
+	    addPattern(emoticons, ee_15, R.drawable.ee_15);
+	    addPattern(emoticons, ee_16, R.drawable.ee_16);
+	    addPattern(emoticons, ee_17, R.drawable.ee_17);
+	    addPattern(emoticons, ee_18, R.drawable.ee_18);
+	    addPattern(emoticons, ee_19, R.drawable.ee_19);
+	    addPattern(emoticons, ee_20, R.drawable.ee_20);
+	    addPattern(emoticons, ee_21, R.drawable.ee_21);
+	    addPattern(emoticons, ee_22, R.drawable.ee_22);
+	    addPattern(emoticons, ee_23, R.drawable.ee_23);
+	    addPattern(emoticons, ee_24, R.drawable.ee_24);
+	    addPattern(emoticons, ee_25, R.drawable.ee_25);
+	    addPattern(emoticons, ee_26, R.drawable.ee_26);
+	    addPattern(emoticons, ee_27, R.drawable.ee_27);
+	    addPattern(emoticons, ee_28, R.drawable.ee_28);
+	    addPattern(emoticons, ee_29, R.drawable.ee_29);
+	    addPattern(emoticons, ee_30, R.drawable.ee_30);
+	    addPattern(emoticons, ee_31, R.drawable.ee_31);
+	    addPattern(emoticons, ee_32, R.drawable.ee_32);
+	    addPattern(emoticons, ee_33, R.drawable.ee_33);
+	    addPattern(emoticons, ee_34, R.drawable.ee_34);
+	    addPattern(emoticons, ee_35, R.drawable.ee_35);
 	}
 
 	private static void addPattern(Map<Pattern, Integer> map, String smile,

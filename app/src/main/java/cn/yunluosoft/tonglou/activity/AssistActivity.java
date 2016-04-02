@@ -196,6 +196,8 @@ public class AssistActivity extends BaseActivity implements View.OnClickListener
         });
     }
 
+
+
     public void closePro() {
         proShow = false;
     }

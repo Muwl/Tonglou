@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/report_text"
-                android:textSize="@dimen/second_font"
+                android:textSize="@dimen/thrid_font"
                 android:visibility="gone"
                 android:text="删除"
                 android:clickable="true"/>
@@ -59,7 +59,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="12dp">
             <TextView
                 android:id="@+id/groupdetail_item_time"
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/report_text"
-                android:textSize="@dimen/second_font"
+                android:textSize="@dimen/thrid_font"
                 android:text="回复"
                 android:clickable="true"/>
         </LinearLayout>

@@ -111,7 +111,7 @@ public class BlackActivity extends BaseActivity implements OnClickListener {
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				CustomeDialog customeDialog = new CustomeDialog(
-						BlackActivity.this, handler, "确定删除？", position, -1);
+						BlackActivity.this, handler, "确定删除？", position, -1,null);
 				// delete(position);
 				return true;
 			}

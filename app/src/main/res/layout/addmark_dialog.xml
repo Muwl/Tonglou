@@ -13,16 +13,16 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="添加备注"
-        android:textColor="@color/register_sex"
+        android:text="好友备注"
+        android:textColor="#000"
         android:textSize="@dimen/second_font" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="17dp" >
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp" >
 
         <EditText
             android:id="@+id/addmark_dialog_name"
@@ -36,9 +36,9 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1px"
             android:layout_below="@id/addmark_dialog_name"
-            android:background="@drawable/login_textbom" />
+            android:background="@color/btn_white_pressed" />
     </RelativeLayout>
 
     <ImageView
@@ -65,7 +65,7 @@
             android:paddingRight="15dp"
             android:paddingTop="12dp"
             android:text="取消"
-            android:textColor="@color/ptime_title"
+            android:textColor="#0076FF"
             android:textSize="@dimen/second_font" />
 
         <ImageView
@@ -86,7 +86,7 @@
             android:paddingRight="15dp"
             android:paddingTop="12dp"
             android:text="确定"
-            android:textColor="@color/ptime_title"
+            android:textColor="#0076FF"
             android:textSize="@dimen/second_font" />
     </LinearLayout>
 

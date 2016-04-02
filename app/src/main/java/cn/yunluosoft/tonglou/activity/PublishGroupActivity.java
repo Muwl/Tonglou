@@ -75,6 +75,13 @@ public class PublishGroupActivity extends BaseActivity implements View.OnClickLi
                     time.setText(sdate);
                     break;
 
+                case 558:
+                    Intent intent3=new Intent(PublishGroupActivity.this,MainActivity.class);
+                    intent3.putExtra("index",2);
+                    startActivity(intent3);
+                    finish();
+                    break;
+
                 case 552:
                     Intent intent = new Intent(PublishGroupActivity.this,
                             ChatActivity.class);

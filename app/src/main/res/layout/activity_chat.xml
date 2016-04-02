@@ -120,7 +120,7 @@
                     android:layout_margin="1dip"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/chatting_biaoqing_btn_enable"
-                    android:visibility="gone" />
+                    />
             </RelativeLayout>
 
             <Button

@@ -76,7 +76,7 @@ public class ConstantWithfloorActivity extends BaseActivity implements View.OnCl
         empty_image = (ImageView) findViewById(R.id.empty_image);
         empty_text = (TextView)findViewById(R.id.empty_text);
 
-        title.setText("同楼好友");
+        title.setText("本楼人员");
         back.setOnClickListener(this);
         entities = new ArrayList<ConstantWithfloorEntity>();
         adapter=new ConstantWithfloorAdapter(this,entities);

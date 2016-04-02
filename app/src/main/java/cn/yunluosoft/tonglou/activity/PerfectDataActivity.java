@@ -205,7 +205,7 @@ public class PerfectDataActivity extends BaseActivity implements
 		case R.id.perfect_birthlin:
 
 			DateSelectDialog selectDialog = new DateSelectDialog(
-					PerfectDataActivity.this,"选择生日", handler, sdate,0);
+					PerfectDataActivity.this,"选择生日", handler, sdate,2);
 
 			break;
 

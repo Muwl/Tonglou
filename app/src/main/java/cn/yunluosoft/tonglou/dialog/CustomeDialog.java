@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
 
 /**
  * @author Mu
@@ -25,13 +26,15 @@ public class CustomeDialog extends Dialog implements
 	private String msg;
 	private int position;
 	private int flag;
-	public CustomeDialog(Context context, Handler handler, String msg,int position,int flag) {
+	private String okString;
+	public CustomeDialog(Context context, Handler handler, String msg,int position,int flag,String okString) {
 		super(context, R.style.dialog2);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.handler = handler;
 		this.context = context;
 		this.msg = msg;
 		this.position=position;
+		this.okString=okString;
 		this.flag=flag;
 		setContentView(R.layout.custom_dialog);
 		getWindow().setBackgroundDrawable(new BitmapDrawable());
@@ -45,6 +48,9 @@ public class CustomeDialog extends Dialog implements
 		ok = (TextView) findViewById(R.id.custom_dialog_ok);
 		cancel = (TextView) findViewById(R.id.custom_dialog_cancel);
 		text.setText(msg);
+		if (ToosUtils.isStringEmpty(okString)){
+			ok.setText(okString);
+		}
 
 		ok.setOnClickListener(this);
 		cancel.setOnClickListener(this);

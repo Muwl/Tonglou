@@ -74,7 +74,6 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
     private ImageView share;
 
     private CustomListView customListView;
-    ;
 
     private ConsultDetailAdapter adapter;
 
@@ -183,7 +182,7 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (ShareDataTool.getUserId(ConsultDetailActivity.this).equals(entities.get(position-1).publishUserId)){
-                    CustomeDialog dialog=new CustomeDialog(ConsultDetailActivity.this,handler,"是否删除？",(position-1),-20);
+                    CustomeDialog dialog=new CustomeDialog(ConsultDetailActivity.this,handler,"是否删除？",(position-1),-20,null);
                 }
                 return true;
             }

@@ -7,4 +7,5 @@ import java.io.Serializable;
  */
 public class CommentEntity implements Serializable{
     public String commentId;//评论id
+    public String createDate;
 }
