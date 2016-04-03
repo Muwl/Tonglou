@@ -54,7 +54,7 @@ public class ReportActivity extends BaseActivity implements OnClickListener {
 
 	private View pro;
 
-	private int flag;// 0代表用户举报 1代表楼宇举报 3代表新闻举报
+	private int flag;// 0代表用户举报 1代表动态举报 2代表新闻举报 3代表群举报
 
 	private String userId;
 
@@ -63,6 +63,8 @@ public class ReportActivity extends BaseActivity implements OnClickListener {
 	private String newsId;
 
 	private String reson = null;
+
+	private String denyId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class ReportActivity extends BaseActivity implements OnClickListener {
 		flag = getIntent().getIntExtra("flag", 0);
 		userId = getIntent().getStringExtra("userId");
 		contactId = getIntent().getStringExtra("contactId");
+		denyId = getIntent().getStringExtra("deyid");
 		newsId = getIntent().getStringExtra("newsId");
 		title = (TextView) findViewById(R.id.title_title);
 		back = (ImageView) findViewById(R.id.title_back);
@@ -176,13 +179,20 @@ public class ReportActivity extends BaseActivity implements OnClickListener {
 			rp.addBodyParameter("byReportUserId", userId);
 		}
 		if (flag == 1) {
-			rp.addBodyParameter("contactId", contactId);
-			url = Constant.ROOT_PATH + "/v1/reportContact/save";
+			rp.addBodyParameter("dynamicId", contactId);
+			rp.addBodyParameter("type", "0");
+			url = Constant.ROOT_PATH + "/v1_1_0/report/save";
 		}
 
 		if (flag ==2) {
 			rp.addBodyParameter("newsId", newsId);
 			url = Constant.ROOT_PATH + "/v1_1_0/reportNews/report";
+		}
+
+		if (flag==3){
+			rp.addBodyParameter("dynamicId", denyId);
+			rp.addBodyParameter("type", "1");
+			url = Constant.ROOT_PATH + "/v1_1_0/report/save";
 		}
 		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
 		rp.addBodyParameter("reason", reson);

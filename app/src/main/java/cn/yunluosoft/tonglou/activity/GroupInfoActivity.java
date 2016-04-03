@@ -129,6 +129,8 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
 
             case R.id.groupinfo_report:
                 Intent intent=new Intent(GroupInfoActivity.this,ReportActivity.class);
+                intent.putExtra("deyid",id);
+                intent.putExtra("flag",3);
                 startActivity(intent);
 
                 break;
