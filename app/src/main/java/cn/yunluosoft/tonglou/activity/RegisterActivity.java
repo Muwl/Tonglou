@@ -405,10 +405,9 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 								ShareDataTool
 										.SaveFlag(RegisterActivity.this, 0);
 								ToastUtils.displayShortToast(
-										RegisterActivity.this, "注册成功，请完善信息");
-								Intent intent = new Intent(
-										RegisterActivity.this,
-										PerfectDataActivity.class);
+										RegisterActivity.this, "注册成功，请选择楼宇");
+								Intent intent = new Intent(RegisterActivity.this,LocationSelActivity.class);
+								intent.putExtra("flag", 0);
 								startActivity(intent);
 
 							} else {

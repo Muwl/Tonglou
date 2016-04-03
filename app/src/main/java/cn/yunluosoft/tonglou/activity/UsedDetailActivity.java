@@ -210,12 +210,13 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
                 break;
 
             case R.id.useddetail_send:
-                if (ToosUtils.isTextEmpty(sendEdit)){
-                    ToastUtils.displayShortToast(UsedDetailActivity.this,"内容不能为空！");
-                    return;
+                if (ToosUtils.CheckComInfo(UsedDetailActivity.this)) {
+                    if (ToosUtils.isTextEmpty(sendEdit)) {
+                        ToastUtils.displayShortToast(UsedDetailActivity.this, "内容不能为空！");
+                        return;
+                    }
+                    sendComment(flagIndex, ToosUtils.getTextContent(sendEdit));
                 }
-                sendComment(flagIndex,ToosUtils.getTextContent(sendEdit));
-
                 break;
 
         }

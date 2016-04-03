@@ -208,12 +208,13 @@ public class PPDetailActivity extends BaseActivity implements View.OnClickListen
 
 
             case R.id.ppdetail_send:
-                if (ToosUtils.isTextEmpty(sendEdit)){
-                    ToastUtils.displayShortToast(PPDetailActivity.this,"内容不能为空！");
-                    return;
+                if (ToosUtils.CheckComInfo(PPDetailActivity.this)) {
+                    if (ToosUtils.isTextEmpty(sendEdit)) {
+                        ToastUtils.displayShortToast(PPDetailActivity.this, "内容不能为空！");
+                        return;
+                    }
+                    sendComment(flagIndex, ToosUtils.getTextContent(sendEdit));
                 }
-                sendComment(flagIndex,ToosUtils.getTextContent(sendEdit));
-
                 break;
 
         }

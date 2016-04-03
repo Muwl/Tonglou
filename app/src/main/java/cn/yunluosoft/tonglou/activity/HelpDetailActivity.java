@@ -215,12 +215,13 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
 
 
             case R.id.helpdetail_send:
-                if (ToosUtils.isTextEmpty(sendEdit)){
-                    ToastUtils.displayShortToast(HelpDetailActivity.this,"内容不能为空！");
-                    return;
+                if (ToosUtils.CheckComInfo(HelpDetailActivity.this)) {
+                    if (ToosUtils.isTextEmpty(sendEdit)) {
+                        ToastUtils.displayShortToast(HelpDetailActivity.this, "内容不能为空！");
+                        return;
+                    }
+                    sendComment(flagIndex, ToosUtils.getTextContent(sendEdit));
                 }
-                sendComment(flagIndex,ToosUtils.getTextContent(sendEdit));
-
                 break;
 
         }

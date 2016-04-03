@@ -165,7 +165,9 @@ public class GroupDetailAdapter extends BaseAdapter {
             holder.join.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    handler.sendEmptyMessage(1112);
+                    if (ToosUtils.CheckComInfo(context)) {
+                        handler.sendEmptyMessage(1112);
+                    }
                 }
             });
             holder.icon.setOnClickListener(new View.OnClickListener() {
@@ -196,11 +198,13 @@ public class GroupDetailAdapter extends BaseAdapter {
             holder.replay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (menuWindow == null || menuWindow.isShowing() == false) {
-                        menu_press();
-                    } else {
-                        menuWindow.dismiss();
+                    if (ToosUtils.CheckComInfo(context)) {
+                        if (menuWindow == null || menuWindow.isShowing() == false) {
+                            menu_press();
+                        } else {
+                            menuWindow.dismiss();
 
+                        }
                     }
                 }
             });
@@ -222,18 +226,20 @@ public class GroupDetailAdapter extends BaseAdapter {
                 holder1.del.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String temp="是否删除该评论？";
-                        if (ToosUtils.isStringEmpty(entities.get(position-1).targetUserId)) {
-                            temp="是否删除该评论？";
-                        }else{
-                            temp="是否删除该回复？";
-                        }
+                        if (ToosUtils.CheckComInfo(context)) {
+                            String temp = "是否删除该评论？";
+                            if (ToosUtils.isStringEmpty(entities.get(position - 1).targetUserId)) {
+                                temp = "是否删除该评论？";
+                            } else {
+                                temp = "是否删除该回复？";
+                            }
 
-                        CustomeDialog dialog=new CustomeDialog(context,handler,temp,position-1,-2,null);
+                            CustomeDialog dialog = new CustomeDialog(context, handler, temp, position - 1, -2, null);
 //                        Message message=new Message();
 //                        message.what=1009;
 //                        message.arg1=(position-1);
 //                        handler.sendMessage(message);
+                        }
                     }
                 });
             }else{
@@ -255,10 +261,12 @@ public class GroupDetailAdapter extends BaseAdapter {
             holder1.reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Message message=new Message();
-                    message.what=1005;
-                    message.arg1=(position-1);
-                    handler.sendMessage(message);
+                    if (ToosUtils.CheckComInfo(context)) {
+                        Message message = new Message();
+                        message.what = 1005;
+                        message.arg1 = (position - 1);
+                        handler.sendMessage(message);
+                    }
                 }
             });
         }

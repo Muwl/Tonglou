@@ -19,6 +19,7 @@ import cn.yunluosoft.tonglou.activity.MyfloorspeekActivity;
 import cn.yunluosoft.tonglou.activity.PersonDataActivity;
 import cn.yunluosoft.tonglou.activity.SettingActivity;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
 
 import com.lidroid.xutils.BitmapUtils;
 
@@ -100,12 +101,12 @@ public class PersonFragment extends Fragment implements OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        name.setText(ShareDataTool.getNickname(getActivity()));
-        locate.setText(ShareDataTool.getLocation(getActivity()));
-        bitmapUtils = new BitmapUtils(getActivity());
+        name.setText(ShareDataTool.getNickname(context));
+        locate.setText(ShareDataTool.getLocation(context));
+        bitmapUtils = new BitmapUtils(context);
         bitmapUtils.configDefaultLoadingImage(R.mipmap.icon_default);
         bitmapUtils.configDefaultLoadFailedImage(R.mipmap.icon_default);
-        bitmapUtils.display(icon, ShareDataTool.getIcon(getActivity()));
+        bitmapUtils.display(icon, ShareDataTool.getIcon(context));
     }
 
 
@@ -113,33 +114,36 @@ public class PersonFragment extends Fragment implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fperson_dataview:
-                Intent intent5 = new Intent(getActivity(), PersonDataActivity.class);
-                startActivity(intent5);
+                if (ToosUtils.CheckComInfo(context)) {
+                    Intent intent5 = new Intent(context, PersonDataActivity.class);
+                    startActivity(intent5);
+                }
                 break;
             case R.id.fperson_locateview:
-                Intent intent3 = new Intent(getActivity(),
+                Intent intent3 = new Intent(context,
                         LocationSelActivity.class);
                 intent3.putExtra("flag", 1);
                 startActivity(intent3);
 
                 break;
             case R.id.fperson_floorspeech:
-                Intent intent = new Intent(getActivity(),
+                Intent intent = new Intent(context,
                         MyfloorspeekActivity.class);
                 startActivity(intent);
                 break;
             case R.id.fperson_suggestview:
-                Intent intent2 = new Intent(getActivity(), FreebackActivity.class);
-                startActivity(intent2);
-
+                if (ToosUtils.CheckComInfo(context)) {
+                    Intent intent2 = new Intent(context, FreebackActivity.class);
+                    startActivity(intent2);
+                }
                 break;
             case R.id.fperson_settingview:
-                Intent intent6 = new Intent(getActivity(), SettingActivity.class);
+                Intent intent6 = new Intent(context, SettingActivity.class);
                 startActivity(intent6);
 
                 break;
             case R.id.fperson_about:
-                Intent intent4 = new Intent(getActivity(), AboutActivity.class);
+                Intent intent4 = new Intent(context, AboutActivity.class);
                 startActivity(intent4);
 
                 break;

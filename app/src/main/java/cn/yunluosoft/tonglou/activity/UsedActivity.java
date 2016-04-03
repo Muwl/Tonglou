@@ -191,9 +191,9 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
         customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                ReportMenuDialog dialog = new ReportMenuDialog(UsedActivity.this, handler, position);
-
+                if (ToosUtils.CheckComInfo(UsedActivity.this)) {
+                    ReportMenuDialog dialog = new ReportMenuDialog(UsedActivity.this, handler, position);
+                }
                 return true;
             }
         });
@@ -215,9 +215,11 @@ public class UsedActivity extends BaseActivity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.title_rig:
-                Intent intent=new Intent(UsedActivity.this,PublishUsedActivity.class);
-                intent.putExtra("flag",flag);
-                startActivity(intent);
+                if (ToosUtils.CheckComInfo(UsedActivity.this)) {
+                    Intent intent = new Intent(UsedActivity.this, PublishUsedActivity.class);
+                    intent.putExtra("flag", flag);
+                    startActivity(intent);
+                }
                 break;
             case R.id.used_serch:
                 Intent intent5=new Intent(UsedActivity.this, SerchSpeechActivity.class);

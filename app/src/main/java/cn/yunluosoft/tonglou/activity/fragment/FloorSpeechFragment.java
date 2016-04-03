@@ -125,8 +125,8 @@ public class FloorSpeechFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        dao = new InviteMessgeDao(getActivity());
-        newsDBUtils=new NewsDBUtils(getActivity());
+        dao = new InviteMessgeDao(context);
+        newsDBUtils=new NewsDBUtils(context);
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public void onMenuItemClick(int position, SwipeMenu menu, int index) {
@@ -145,13 +145,13 @@ public class FloorSpeechFragment extends Fragment {
                 int tempPoi=position;
                 if (consultEntities.size()>0){
                     if (position==0){
-                        Intent intent=new Intent(getActivity(),ConsultActivity.class);
+                        Intent intent=new Intent(context,ConsultActivity.class);
                         startActivity(intent);
                         return;
                     }
                     tempPoi=position-1;
                 }
-                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                Intent intent = new Intent(context, ChatActivity.class);
                 MessageInfo adapterInfo = adapter.getInfo(tempPoi);
                 int m = adapter.getDic(tempPoi);
                 if (adapter.getGroupFlag(tempPoi)) {
@@ -174,7 +174,7 @@ public class FloorSpeechFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
-                CustomeDialog customeDialog = new CustomeDialog(getActivity(),
+                CustomeDialog customeDialog = new CustomeDialog(context,
                         handler, "确定删除？", position, -1,null);
                 // delete(position);
                 return true;
@@ -196,7 +196,7 @@ public class FloorSpeechFragment extends Fragment {
         if (consultEntities==null){
             consultEntities=new ArrayList<>();
         }
-        adapter = new FloorSpeechAdapter(getActivity(), entities,consultEntities);
+        adapter = new FloorSpeechAdapter(context, entities,consultEntities);
         listView.setAdapter(adapter);
         reFushEmpty();
     }
@@ -213,7 +213,7 @@ public class FloorSpeechFragment extends Fragment {
         EMChatManager.getInstance().deleteConversation(
                 entities.get(position).getUserName(),
                 entities.get(position).isGroup(), true);
-        InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(getActivity());
+        InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(context);
         inviteMessgeDao.deleteMessage(entities.get(position).getUserName());
         entities.remove(position);
         adapter.notifyDataSetChanged();
@@ -301,7 +301,7 @@ public class FloorSpeechFragment extends Fragment {
 //                        sortItem.second.getUserName(),
 //                        sortItem.second.isGroup(), true);
 //                InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(
-//                        getActivity());
+//                        context);
 //                inviteMessgeDao.deleteMessage(sortItem.second.getUserName());
 //                continue;
 //            } else {

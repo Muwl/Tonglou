@@ -181,8 +181,9 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
         customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (ShareDataTool.getUserId(ConsultDetailActivity.this).equals(entities.get(position-1).publishUserId)){
-                    CustomeDialog dialog=new CustomeDialog(ConsultDetailActivity.this,handler,"是否删除？",(position-1),-20,null);
+                    if (ShareDataTool.getUserId(ConsultDetailActivity.this).equals(entities.get(position - 1).publishUserId)) {
+                        CustomeDialog dialog = new CustomeDialog(ConsultDetailActivity.this, handler, "是否删除？", (position - 1), -20, null);
+
                 }
                 return true;
             }
@@ -221,11 +222,13 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
                 break;
 
             case R.id.consult_detail_send:
-                if (ToosUtils.isTextEmpty(sendEdit)) {
-                    ToastUtils.displayShortToast(ConsultDetailActivity.this, "内容不能为空！");
-                    return;
+                if (ToosUtils.CheckComInfo(ConsultDetailActivity.this)) {
+                    if (ToosUtils.isTextEmpty(sendEdit)) {
+                        ToastUtils.displayShortToast(ConsultDetailActivity.this, "内容不能为空！");
+                        return;
+                    }
+                    sendComment(flagIndex, ToosUtils.getTextContent(sendEdit));
                 }
-                sendComment(flagIndex, ToosUtils.getTextContent(sendEdit));
                 break;
         }
     }

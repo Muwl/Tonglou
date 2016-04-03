@@ -133,39 +133,53 @@ public class ConsultDetailAdapter extends BaseAdapter {
                 holder.atten.setCompoundDrawables(drawable, null, null, null);
             }
             holder.atten.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Message message=new Message();
-                    message.what= ConsultDetailActivity.CONSULT_ATTEN;
-                    message.obj=position;
-                    handler.sendMessage(message);
-                }
-            });
+                                                @Override
+                                                public void onClick(View v) {
+                                                    if (ToosUtils.CheckComInfo(context)) {
+                                                        Message message = new Message();
+                                                        message.what = ConsultDetailActivity.CONSULT_ATTEN;
+                                                        message.obj = position;
+                                                        handler.sendMessage(message);
+                                                    }
+                                                }
+                                            }
 
-            holder.report.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handler.sendEmptyMessage(ConsultDetailActivity.CONSULT_REPORT);
-                }
-            });
+            );
 
-            holder.message.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Message message=new Message();
-                    message.what= ConsultDetailActivity.CONSULT_COMMENT;
-                    message.obj=-1;
-                    handler.sendMessage(message);
+                holder.report.setOnClickListener(new View.OnClickListener() {
+                                                     @Override
+                                                     public void onClick(View v) {
+                                                         if (ToosUtils.CheckComInfo(context)) {
+                                                             handler.sendEmptyMessage(ConsultDetailActivity.CONSULT_REPORT);
+                                                         }
+                                                     }
+                                                 }
 
-                }
-            });
+                );
 
-        } else {
+                    holder.message.setOnClickListener(new View.OnClickListener()
+
+                    {
+                        @Override
+                        public void onClick(View v) {
+                            if (ToosUtils.CheckComInfo(context)) {
+                                Message message = new Message();
+                                message.what = ConsultDetailActivity.CONSULT_COMMENT;
+                                message.obj = -1;
+                                handler.sendMessage(message);
+                            }
+
+                            }
+                        }
+
+                        );
+
+                    }else {
             bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
             if ("0".equals(entities.get(position - 1).type)){
                 holder1.name.setText(entities.get(position - 1).publishUserName);
             }else{
-                holder1.name.setText(entities.get(position - 1).publishUserName+"\u2000回复\u2000"+entities.get(position - 1).targetUserName);
+                holder1.name.setText(entities.get(position - 1).publishUserName + "\u2000回复\u2000" + entities.get(position - 1).targetUserName);
             }
 
             if(Constant.PRAISE_OK.equals(entities.get(position - 1).isPraise)){
@@ -183,25 +197,29 @@ public class ConsultDetailAdapter extends BaseAdapter {
                 entities.get(position - 1).praiseNum="0";
             }
             holder1.atten.setText(entities.get(position - 1).praiseNum + "");
-            holder1.content.setText(entities.get(position-1).content);
-            holder1.time.setText(entities.get(position-1).createDate);
+            holder1.content.setText(entities.get(position - 1).content);
+            holder1.time.setText(entities.get(position - 1).createDate);
             holder1.atten.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Message message = new Message();
-                    message.what = ConsultDetailActivity.CONSULT_ATTEN;
-                    message.obj = position;
-                    handler.sendMessage(message);
+                    if (ToosUtils.CheckComInfo(context)) {
+                        Message message = new Message();
+                        message.what = ConsultDetailActivity.CONSULT_ATTEN;
+                        message.obj = position;
+                        handler.sendMessage(message);
+                    }
                 }
             });
 
             holder1.reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Message message=new Message();
-                    message.what= ConsultDetailActivity.CONSULT_COMMENT;
-                    message.obj=position-1;
-                    handler.sendMessage(message);
+                    if (ToosUtils.CheckComInfo(context)) {
+                        Message message = new Message();
+                        message.what = ConsultDetailActivity.CONSULT_COMMENT;
+                        message.obj = position - 1;
+                        handler.sendMessage(message);
+                    }
                 }
             });
 

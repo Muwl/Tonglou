@@ -205,13 +205,15 @@ public class UsedDetailAdapter extends BaseAdapter {
             holder.replay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (menuWindow == null || menuWindow.isShowing() == false) {
-                        menu_press();
-                        // menu_display = true;
-                    } else {
-                        // menu_display = false;
-                        menuWindow.dismiss();
+                    if (ToosUtils.CheckComInfo(context)) {
+                        if (menuWindow == null || menuWindow.isShowing() == false) {
+                            menu_press();
+                            // menu_display = true;
+                        } else {
+                            // menu_display = false;
+                            menuWindow.dismiss();
 
+                        }
                     }
                 }
             });
@@ -219,21 +221,23 @@ public class UsedDetailAdapter extends BaseAdapter {
             holder.blue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,
-                            ChatActivity.class);
-                    MessageInfo messageInfo=new MessageInfo();
-                    messageInfo.receiverHeadUrl=entity.publishUserIcon;
-                    messageInfo.receiverImUserName=entity.publishUserImUsername;
-                    messageInfo.receiverNickName=entity.publishUserNickname;
-                    messageInfo.receiverUserId=entity.publishUserId;
-                    messageInfo.senderHeadUrl= ShareDataTool.getIcon(context);
-                    messageInfo.senderImUserName=ShareDataTool.getImUsername(context);
-                    messageInfo.senderUserId= ShareDataTool.getUserId(context);
-                    messageInfo.senderNickName= ShareDataTool.getNickname(context);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("info", messageInfo);
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
+                    if (ToosUtils.CheckComInfo(context)) {
+                        Intent intent = new Intent(context,
+                                ChatActivity.class);
+                        MessageInfo messageInfo = new MessageInfo();
+                        messageInfo.receiverHeadUrl = entity.publishUserIcon;
+                        messageInfo.receiverImUserName = entity.publishUserImUsername;
+                        messageInfo.receiverNickName = entity.publishUserNickname;
+                        messageInfo.receiverUserId = entity.publishUserId;
+                        messageInfo.senderHeadUrl = ShareDataTool.getIcon(context);
+                        messageInfo.senderImUserName = ShareDataTool.getImUsername(context);
+                        messageInfo.senderUserId = ShareDataTool.getUserId(context);
+                        messageInfo.senderNickName = ShareDataTool.getNickname(context);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("info", messageInfo);
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
+                    }
                 }
             });
 
@@ -250,13 +254,15 @@ public class UsedDetailAdapter extends BaseAdapter {
             holder1.reply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (menuWindow == null || menuWindow.isShowing() == false) {
-                        menu_press();
-                        // menu_display = true;
-                    } else {
-                        // menu_display = false;
-                        menuWindow.dismiss();
+                    if (ToosUtils.CheckComInfo(context)) {
+                        if (menuWindow == null || menuWindow.isShowing() == false) {
+                            menu_press();
+                            // menu_display = true;
+                        } else {
+                            // menu_display = false;
+                            menuWindow.dismiss();
 
+                        }
                     }
                 }
             });
@@ -276,15 +282,16 @@ public class UsedDetailAdapter extends BaseAdapter {
                 holder1.del.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (ToosUtils.CheckComInfo(context)) {
+                            String temp = "是否删除该评论？";
+                            if (ToosUtils.isStringEmpty(entities.get(position - 1).targetUserId)) {
+                                temp = "是否删除该评论？";
+                            } else {
+                                temp = "是否删除该回复？";
+                            }
 
-                        String temp="是否删除该评论？";
-                        if (ToosUtils.isStringEmpty(entities.get(position - 1).targetUserId)) {
-                            temp="是否删除该评论？";
-                        }else{
-                            temp="是否删除该回复？";
+                            CustomeDialog dialog = new CustomeDialog(context, handler, temp, position - 1, -2, null);
                         }
-
-                        CustomeDialog dialog=new CustomeDialog(context,handler,temp,position-1,-2,null);
 //                        Message message=new Message();
 //                        message.what=1009;
 //                        message.arg1=(position-1);

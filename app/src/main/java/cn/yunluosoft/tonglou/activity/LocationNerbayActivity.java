@@ -253,8 +253,6 @@ public class LocationNerbayActivity extends BaseActivity implements View.OnClick
                                         ShareDataTool
                                                 .getIcon(LocationNerbayActivity.this),
                                         (String) entity.name, entity.id);
-                        ShareDataTool.saveUpdateFlag(LocationNerbayActivity.this,
-                                1);
 
                         if (flag==0){
                             loginHX(ShareDataTool

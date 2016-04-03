@@ -31,6 +31,7 @@ import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -103,49 +104,51 @@ public class SerchFloorAdapter extends BaseAdapter {
             holder.bluebtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ("0".equals(entities.get(position).modelType)) {
-                        if ("0".equals(entities.get(position).isInGroup)) {
+                    if (ToosUtils.CheckComInfo(context)) {
+                        if ("0".equals(entities.get(position).modelType)) {
+                            if ("0".equals(entities.get(position).isInGroup)) {
+                                Intent intent = new Intent(context,
+                                        ChatActivity.class);
+                                MessageInfo messageInfo = new MessageInfo();
+                                messageInfo.receiverHeadUrl = entities.get(position).id;
+                                messageInfo.receiverImUserName = entities.get(position).imGroupId;
+                                messageInfo.receiverNickName = entities.get(position).groupName;
+                                messageInfo.receiverUserId = entities.get(position).imGroupId;
+                                intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("info", messageInfo);
+                                intent.putExtras(bundle);
+                                context.startActivity(intent);
+                            } else {
+                                Message message = new Message();
+                                message.what = HiGroupActivity.ADDGROUP;
+                                message.arg1 = position;
+                                handler.sendMessage(message);
+                            }
+                        } else {
                             Intent intent = new Intent(context,
                                     ChatActivity.class);
                             MessageInfo messageInfo = new MessageInfo();
-                            messageInfo.receiverHeadUrl = entities.get(position).id;
-                            messageInfo.receiverImUserName = entities.get(position).imGroupId;
-                            messageInfo.receiverNickName = entities.get(position).groupName;
-                            messageInfo.receiverUserId = entities.get(position).imGroupId;
-                            intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                            messageInfo.receiverHeadUrl = entities.get(position).publishUserIcon;
+                            messageInfo.receiverImUserName = entities.get(position).publishUserImUsername;
+                            messageInfo.receiverNickName = entities.get(position).publishUserNickname;
+                            messageInfo.receiverUserId = entities.get(position).publishUserId;
+                            messageInfo.senderHeadUrl = ShareDataTool.getIcon(context);
+                            messageInfo.senderImUserName = ShareDataTool.getImUsername(context);
+                            messageInfo.senderUserId = ShareDataTool.getUserId(context);
+                            messageInfo.senderNickName = ShareDataTool.getNickname(context);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("info", messageInfo);
                             intent.putExtras(bundle);
                             context.startActivity(intent);
-                        } else {
-                            Message message = new Message();
-                            message.what = HiGroupActivity.ADDGROUP;
-                            message.arg1 = position;
-                            handler.sendMessage(message);
                         }
-                    } else {
-                        Intent intent = new Intent(context,
-                                ChatActivity.class);
-                        MessageInfo messageInfo = new MessageInfo();
-                        messageInfo.receiverHeadUrl = entities.get(position).publishUserIcon;
-                        messageInfo.receiverImUserName = entities.get(position).publishUserImUsername;
-                        messageInfo.receiverNickName = entities.get(position).publishUserNickname;
-                        messageInfo.receiverUserId = entities.get(position).publishUserId;
-                        messageInfo.senderHeadUrl = ShareDataTool.getIcon(context);
-                        messageInfo.senderImUserName = ShareDataTool.getImUsername(context);
-                        messageInfo.senderUserId = ShareDataTool.getUserId(context);
-                        messageInfo.senderNickName = ShareDataTool.getNickname(context);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("info", messageInfo);
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
                     }
                 }
             });
 
             if ("1".equals(entities.get(position).isInGroup) && "0".equals(entities.get(position).modelType)) {
                 if ("0".equals(entities.get(position).applyState) && Integer.valueOf(entities.get(position).planPeopleNum) <= Integer.valueOf(entities.get(position).groupNum)) {
-                    holder.bluetext.setText("已结束");
+                    holder.bluetext.setText("已满");
                     holder.blueimage.setImageResource(R.mipmap.end);
                     holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
                     holder.bluebtn.setClickable(false);
@@ -178,13 +181,15 @@ public class SerchFloorAdapter extends BaseAdapter {
         holder.graybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!ShareDataTool.getUserId(context).equals(entities.get(position).publishUserId)) {
-                    Message message = new Message();
-                    message.what = WithFloorFragment.ATTEN;
-                    message.obj = position;
-                    handler.sendMessage(message);
-                } else {
-                    ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
+                if (ToosUtils.CheckComInfo(context)) {
+                    if (!ShareDataTool.getUserId(context).equals(entities.get(position).publishUserId)) {
+                        Message message = new Message();
+                        message.what = WithFloorFragment.ATTEN;
+                        message.obj = position;
+                        handler.sendMessage(message);
+                    } else {
+                        ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
+                    }
                 }
             }
         });
@@ -216,11 +221,12 @@ public class SerchFloorAdapter extends BaseAdapter {
         holder.praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Message message = new Message();
-                message.what = WithFloorFragment.PRAISE;
-                message.obj = position;
-                handler.sendMessage(message);
-
+                if (ToosUtils.CheckComInfo(context)) {
+                    Message message = new Message();
+                    message.what = WithFloorFragment.PRAISE;
+                    message.obj = position;
+                    handler.sendMessage(message);
+                }
             }
         });
         return convertView;

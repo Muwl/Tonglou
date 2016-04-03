@@ -36,6 +36,7 @@ import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 import cn.yunluosoft.tonglou.view.MyGridView;
 
@@ -146,42 +147,47 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
                 holder.bluebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if ("0".equals(entities.get(position-1).modelType)) {
-                            if ("0".equals(entities.get(position-1).isInGroup)) {
+
+                        if (ToosUtils.CheckComInfo(context)) {
+
+
+                            if ("0".equals(entities.get(position - 1).modelType)) {
+                                if ("0".equals(entities.get(position - 1).isInGroup)) {
+                                    Intent intent = new Intent(context,
+                                            ChatActivity.class);
+                                    MessageInfo messageInfo = new MessageInfo();
+                                    messageInfo.receiverHeadUrl = entities.get(position - 1).id;
+                                    messageInfo.receiverImUserName = entities.get(position - 1).imGroupId;
+                                    messageInfo.receiverNickName = entities.get(position - 1).groupName;
+                                    messageInfo.receiverUserId = entities.get(position - 1).imGroupId;
+                                    intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("info", messageInfo);
+                                    intent.putExtras(bundle);
+                                    context.startActivity(intent);
+                                } else {
+                                    Message message = new Message();
+                                    message.what = HiGroupActivity.ADDGROUP;
+                                    message.arg1 = position - 1;
+                                    handler.sendMessage(message);
+                                }
+                            } else {
                                 Intent intent = new Intent(context,
                                         ChatActivity.class);
                                 MessageInfo messageInfo = new MessageInfo();
-                                messageInfo.receiverHeadUrl = entities.get(position-1).id;
-                                messageInfo.receiverImUserName = entities.get(position-1).imGroupId;
-                                messageInfo.receiverNickName = entities.get(position-1).groupName;
-                                messageInfo.receiverUserId = entities.get(position-1).imGroupId;
-                                intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                                messageInfo.receiverHeadUrl = entities.get(position - 1).publishUserIcon;
+                                messageInfo.receiverImUserName = entities.get(position - 1).publishUserImUsername;
+                                messageInfo.receiverNickName = entities.get(position - 1).publishUserNickname;
+                                messageInfo.receiverUserId = entities.get(position - 1).publishUserId;
+                                messageInfo.senderHeadUrl = ShareDataTool.getIcon(context);
+                                messageInfo.senderImUserName = ShareDataTool.getImUsername(context);
+                                messageInfo.senderUserId = ShareDataTool.getUserId(context);
+                                messageInfo.senderNickName = ShareDataTool.getNickname(context);
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("info", messageInfo);
                                 intent.putExtras(bundle);
                                 context.startActivity(intent);
-                            } else {
-                                Message message = new Message();
-                                message.what = HiGroupActivity.ADDGROUP;
-                                message.arg1 = position-1;
-                                handler.sendMessage(message);
                             }
-                        } else {
-                            Intent intent = new Intent(context,
-                                    ChatActivity.class);
-                            MessageInfo messageInfo = new MessageInfo();
-                            messageInfo.receiverHeadUrl = entities.get(position-1).publishUserIcon;
-                            messageInfo.receiverImUserName = entities.get(position-1).publishUserImUsername;
-                            messageInfo.receiverNickName = entities.get(position-1).publishUserNickname;
-                            messageInfo.receiverUserId = entities.get(position-1).publishUserId;
-                            messageInfo.senderHeadUrl = ShareDataTool.getIcon(context);
-                            messageInfo.senderImUserName = ShareDataTool.getImUsername(context);
-                            messageInfo.senderUserId = ShareDataTool.getUserId(context);
-                            messageInfo.senderNickName = ShareDataTool.getNickname(context);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("info", messageInfo);
-                            intent.putExtras(bundle);
-                            context.startActivity(intent);
                         }
                     }
                 });
@@ -221,13 +227,15 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
             holder.graybtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!ShareDataTool.getUserId(context).equals(entities.get(position-1).publishUserId)) {
-                        Message message = new Message();
-                        message.what = WithFloorFragment.ATTEN;
-                        message.obj = position-1;
-                        handler.sendMessage(message);
-                    } else {
-                        ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
+                    if (ToosUtils.CheckComInfo(context)) {
+                        if (!ShareDataTool.getUserId(context).equals(entities.get(position - 1).publishUserId)) {
+                            Message message = new Message();
+                            message.what = WithFloorFragment.ATTEN;
+                            message.obj = position - 1;
+                            handler.sendMessage(message);
+                        } else {
+                            ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
+                        }
                     }
                 }
             });
@@ -259,10 +267,12 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
             holder.praise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Message message = new Message();
-                    message.what = WithFloorFragment.PRAISE;
-                    message.obj = position-1;
-                    handler.sendMessage(message);
+                    if (ToosUtils.CheckComInfo(context)) {
+                        Message message = new Message();
+                        message.what = WithFloorFragment.PRAISE;
+                        message.obj = position - 1;
+                        handler.sendMessage(message);
+                    }
 
                 }
             });

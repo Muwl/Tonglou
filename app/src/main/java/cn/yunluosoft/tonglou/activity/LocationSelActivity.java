@@ -84,9 +84,9 @@ public class LocationSelActivity extends BaseActivity implements
 
     private View root;
 
-    private PersonInfo info;
-
-    private String path;
+//    private PersonInfo info;
+//
+//    private String path;
 
     private List<LocationEntity> locationEntities;
 
@@ -135,10 +135,10 @@ public class LocationSelActivity extends BaseActivity implements
 
     private void initView() {
         flag = getIntent().getIntExtra("flag", 0);
-        if (flag == 0) {
-            info = (PersonInfo) getIntent().getSerializableExtra("info");
-            path = (String) getIntent().getStringExtra("path");
-        }
+//        if (flag == 0) {
+//            info = (PersonInfo) getIntent().getSerializableExtra("info");
+//            path = (String) getIntent().getStringExtra("path");
+//        }
         locationEntities = new ArrayList<LocationEntity>();
         adapter = new LocationAdapter(this, locationEntities);
         root = findViewById(R.id.location_root);
@@ -267,7 +267,7 @@ public class LocationSelActivity extends BaseActivity implements
                     if (locationEntity != null
                             && locationEntity.name.equals(ToosUtils
                             .getTextContent(name))) {
-                        sendSub();
+                        updateLocation();
                     } else {
 //                        ToastUtils.displayShortToast(LocationSelActivity.this,
 //                                "请选择您所在楼宇");
@@ -367,78 +367,78 @@ public class LocationSelActivity extends BaseActivity implements
                 requestCallBack);
     }
 
-    private void sendSub() {
-        final Gson gson = new Gson();
-        RequestParams rp = new RequestParams();
-        info.location = locationEntity.name;
-        info.buildingId = locationEntity.id;
-        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-        rp.addBodyParameter("info", gson.toJson(info));
-        rp.addBodyParameter("icon", new File(path));
-        LogManager.LogShow("------", gson.toJson(info), LogManager.ERROR);
-        HttpUtils utils = new HttpUtils();
-        utils.configTimeout(20000);
-        utils.send(HttpMethod.POST, Constant.ROOT_PATH
-                        + "/v1/user/saveOrUpdateInfo", rp,
-                new RequestCallBack<String>() {
-                    @Override
-                    public void onStart() {
-                        pro.setVisibility(View.VISIBLE);
-                        super.onStart();
-                    }
-
-                    @Override
-                    public void onFailure(HttpException arg0, String arg1) {
-                        pro.setVisibility(View.GONE);
-                        ToastUtils
-                                .displayFailureToast(LocationSelActivity.this);
-                    }
-
-                    @Override
-                    public void onSuccess(ResponseInfo<String> arg0) {
-                        pro.setVisibility(View.GONE);
-                        try {
-                            // Gson gson = new Gson();
-                            LogManager.LogShow("----", arg0.result,
-                                    LogManager.ERROR);
-                            ReturnState state = gson.fromJson(arg0.result,
-                                    ReturnState.class);
-                            if (Constant.RETURN_OK.equals(state.msg)) {
-                                PerfectDataState dataState = gson.fromJson(
-                                        arg0.result, PerfectDataState.class);
-                                ShareDataTool.SaveInfoDetail(
-                                        LocationSelActivity.this,
-                                        dataState.result.nickname,
-                                        dataState.result.icon,
-                                        dataState.result.location,locationEntity.id);
-                                ShareDataTool.SaveFlag(
-                                        LocationSelActivity.this, 1);
-                                loginHX(ShareDataTool
-                                                .getImUsername(LocationSelActivity.this),
-                                        ShareDataTool
-                                                .getImPassword(LocationSelActivity.this));
-                                // Intent intent = new Intent(
-                                // LocationSelActivity.this,
-                                // MainActivity.class);
-                                // startActivity(intent);
-                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-                                ToastUtils.displayShortToast(
-                                        LocationSelActivity.this, "验证错误，请重新登录");
-                                ToosUtils.goReLogin(LocationSelActivity.this);
-                            } else {
-                                ToastUtils.displayShortToast(
-                                        LocationSelActivity.this,
-                                        String.valueOf(state.result));
-                            }
-                        } catch (Exception e) {
-                            ToastUtils
-                                    .displaySendFailureToast(LocationSelActivity.this);
-                        }
-
-                    }
-                });
-
-    }
+//    private void sendSub() {
+//        final Gson gson = new Gson();
+//        RequestParams rp = new RequestParams();
+//        info.location = locationEntity.name;
+//        info.buildingId = locationEntity.id;
+//        rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+//        rp.addBodyParameter("info", gson.toJson(info));
+//        rp.addBodyParameter("icon", new File(path));
+//        LogManager.LogShow("------", gson.toJson(info), LogManager.ERROR);
+//        HttpUtils utils = new HttpUtils();
+//        utils.configTimeout(20000);
+//        utils.send(HttpMethod.POST, Constant.ROOT_PATH
+//                        + "/v1/user/saveOrUpdateInfo", rp,
+//                new RequestCallBack<String>() {
+//                    @Override
+//                    public void onStart() {
+//                        pro.setVisibility(View.VISIBLE);
+//                        super.onStart();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(HttpException arg0, String arg1) {
+//                        pro.setVisibility(View.GONE);
+//                        ToastUtils
+//                                .displayFailureToast(LocationSelActivity.this);
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(ResponseInfo<String> arg0) {
+//                        pro.setVisibility(View.GONE);
+//                        try {
+//                            // Gson gson = new Gson();
+//                            LogManager.LogShow("----", arg0.result,
+//                                    LogManager.ERROR);
+//                            ReturnState state = gson.fromJson(arg0.result,
+//                                    ReturnState.class);
+//                            if (Constant.RETURN_OK.equals(state.msg)) {
+//                                PerfectDataState dataState = gson.fromJson(
+//                                        arg0.result, PerfectDataState.class);
+//                                ShareDataTool.SaveInfoDetail(
+//                                        LocationSelActivity.this,
+//                                        dataState.result.nickname,
+//                                        dataState.result.icon,
+//                                        dataState.result.location,locationEntity.id);
+//                                ShareDataTool.SaveFlag(
+//                                        LocationSelActivity.this, 1);
+//                                loginHX(ShareDataTool
+//                                                .getImUsername(LocationSelActivity.this),
+//                                        ShareDataTool
+//                                                .getImPassword(LocationSelActivity.this));
+//                                // Intent intent = new Intent(
+//                                // LocationSelActivity.this,
+//                                // MainActivity.class);
+//                                // startActivity(intent);
+//                            } else if (Constant.TOKEN_ERR.equals(state.msg)) {
+//                                ToastUtils.displayShortToast(
+//                                        LocationSelActivity.this, "验证错误，请重新登录");
+//                                ToosUtils.goReLogin(LocationSelActivity.this);
+//                            } else {
+//                                ToastUtils.displayShortToast(
+//                                        LocationSelActivity.this,
+//                                        String.valueOf(state.result));
+//                            }
+//                        } catch (Exception e) {
+//                            ToastUtils
+//                                    .displaySendFailureToast(LocationSelActivity.this);
+//                        }
+//
+//                    }
+//                });
+//
+//    }
 
     private void updateLocation() {
         RequestParams rp = new RequestParams();
@@ -477,12 +477,18 @@ public class LocationSelActivity extends BaseActivity implements
                                                 .getNickname(LocationSelActivity.this),
                                         ShareDataTool
                                                 .getIcon(LocationSelActivity.this),
-                                        (String) locationEntity.name,locationEntity.id);
-                        ToastUtils.displayShortToast(LocationSelActivity.this,
-                                "修改成功");
-                        ShareDataTool.saveUpdateFlag(LocationSelActivity.this,
-                                1);
-                        finish();
+                                        (String) locationEntity.name, locationEntity.id);
+                        if (flag==0){
+                            loginHX(ShareDataTool
+                                                .getImUsername(LocationSelActivity.this),
+                                        ShareDataTool
+                                                .getImPassword(LocationSelActivity.this));
+                        }else{
+                            ToastUtils.displayShortToast(LocationSelActivity.this,
+                                    "修改成功");
+                            finish();
+                        }
+
                     } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                         ToastUtils.displayShortToast(LocationSelActivity.this,
                                 "验证错误，请重新登录");

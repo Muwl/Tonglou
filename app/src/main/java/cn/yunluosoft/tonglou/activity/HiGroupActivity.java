@@ -143,9 +143,9 @@ public class HiGroupActivity extends BaseActivity implements View.OnClickListene
         customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                ReportMenuDialog dialog = new ReportMenuDialog(HiGroupActivity.this, handler, position);
-
+                if (ToosUtils.CheckComInfo(HiGroupActivity.this)) {
+                    ReportMenuDialog dialog = new ReportMenuDialog(HiGroupActivity.this, handler, position);
+                }
                 return true;
             }
         });
@@ -187,8 +187,10 @@ public class HiGroupActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.title_rig:
-                Intent intent=new Intent(HiGroupActivity.this,PublishGroupActivity.class);
-                startActivity(intent);
+                if (ToosUtils.CheckComInfo(HiGroupActivity.this)) {
+                    Intent intent = new Intent(HiGroupActivity.this, PublishGroupActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case  R.id.higroup_serch:
                 Intent intent5=new Intent(HiGroupActivity.this, SerchSpeechActivity.class);

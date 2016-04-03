@@ -248,11 +248,13 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             case R.id.groupdetail_send:
-                if (ToosUtils.isTextEmpty(sendEdit)){
-                ToastUtils.displayShortToast(GroupDetailActivity.this,"内容不能为空！");
-                return;
-            }
-                sendComment(flagIndex,ToosUtils.getTextContent(sendEdit));
+                if (ToosUtils.CheckComInfo(GroupDetailActivity.this)) {
+                    if (ToosUtils.isTextEmpty(sendEdit)) {
+                        ToastUtils.displayShortToast(GroupDetailActivity.this, "内容不能为空！");
+                        return;
+                    }
+                    sendComment(flagIndex, ToosUtils.getTextContent(sendEdit));
+                }
                 break;
 
         }

@@ -188,8 +188,9 @@ public class AssistActivity extends BaseActivity implements View.OnClickListener
         customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                ReportMenuDialog dialog = new ReportMenuDialog(AssistActivity.this, handler, position);
+                if (ToosUtils.CheckComInfo(AssistActivity.this)) {
+                    ReportMenuDialog dialog = new ReportMenuDialog(AssistActivity.this, handler, position);
+                }
 
                 return true;
             }
@@ -215,10 +216,11 @@ public class AssistActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.title_rig:
-                Intent intent=new Intent(AssistActivity.this,PublishHelpActivity.class);
-                intent.putExtra("flag",flag);
-                startActivity(intent);
-
+                if (ToosUtils.CheckComInfo(AssistActivity.this)) {
+                    Intent intent = new Intent(AssistActivity.this, PublishHelpActivity.class);
+                    intent.putExtra("flag", flag);
+                    startActivity(intent);
+                }
                 break;
             case R.id.help_serch:
                 Intent intent5=new Intent(AssistActivity.this, SerchSpeechActivity.class);

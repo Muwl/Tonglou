@@ -240,54 +240,59 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
                 finish();
                 break;
             case R.id.constact_detail_remark:
-                int flag = 0;
-                int backflag = 0;
+                if (ToosUtils.CheckComInfo(ConstactActivity.this)) {
+                    int flag = 0;
+                    int backflag = 0;
 //
-                if (Constant.RELATION_YES
-                        .equals(constactDetailReEntity.relationship)) {
-                    flag = 0;
-                } else {
-                    flag = 1;
-                }
-                if (Constant.BLACK_YES.equals(constactDetailReEntity.isBlack)) {
-                    backflag = 0;
-                } else {
-                    backflag = 1;
-                }
+                    if (Constant.RELATION_YES
+                            .equals(constactDetailReEntity.relationship)) {
+                        flag = 0;
+                    } else {
+                        flag = 1;
+                    }
+                    if (Constant.BLACK_YES.equals(constactDetailReEntity.isBlack)) {
+                        backflag = 0;
+                    } else {
+                        backflag = 1;
+                    }
 
-                RigDialog rigDialog = new RigDialog(ConstactActivity.this, handler,
-                        flag, backflag);
+                    RigDialog rigDialog = new RigDialog(ConstactActivity.this, handler,
+                            flag, backflag);
+                }
                 break;
             case R.id.constact_detail_conversate:
-                Intent intent = new Intent(ConstactActivity.this,
-                        ChatActivity.class);
-                String myname = ShareDataTool.getNickname(ConstactActivity.this);
-                if (ToosUtils.isStringEmpty(constactDetailReEntity.friendsToMe)) {
-                    myname = ShareDataTool.getNickname(ConstactActivity.this);
-                } else {
-                    myname = constactDetailReEntity.friendsToMe;
+                if (ToosUtils.CheckComInfo(ConstactActivity.this)) {
+                    Intent intent = new Intent(ConstactActivity.this,
+                            ChatActivity.class);
+                    String myname = ShareDataTool.getNickname(ConstactActivity.this);
+                    if (ToosUtils.isStringEmpty(constactDetailReEntity.friendsToMe)) {
+                        myname = ShareDataTool.getNickname(ConstactActivity.this);
+                    } else {
+                        myname = constactDetailReEntity.friendsToMe;
+                    }
+
+                    String rename = infoEntity.nickname;
+                    if (ToosUtils.isStringEmpty(constactDetailReEntity.meToFriends)) {
+                        rename = infoEntity.nickname;
+                    } else {
+                        rename = constactDetailReEntity.meToFriends;
+                    }
+
+                    MessageInfo info = new MessageInfo(
+                            ShareDataTool.getUserId(ConstactActivity.this), id,
+                            ShareDataTool.getUserId(ConstactActivity.this), id,
+                            ShareDataTool.getIcon(ConstactActivity.this),
+                            infoEntity.icon, myname, rename);
+                    LogManager.LogShow("-----", new Gson().toJson(info), LogManager.ERROR);
+                    intent.putExtra("info", (Serializable) info);
+                    startActivity(intent);
                 }
-
-                String rename = infoEntity.nickname;
-                if (ToosUtils.isStringEmpty(constactDetailReEntity.meToFriends)) {
-                    rename = infoEntity.nickname;
-                } else {
-                    rename = constactDetailReEntity.meToFriends;
-                }
-
-                MessageInfo info = new MessageInfo(
-                        ShareDataTool.getUserId(ConstactActivity.this), id,
-                        ShareDataTool.getUserId(ConstactActivity.this), id,
-                        ShareDataTool.getIcon(ConstactActivity.this),
-                        infoEntity.icon, myname, rename);
-                LogManager.LogShow("-----",new Gson().toJson(info),LogManager.ERROR);
-                intent.putExtra("info", (Serializable) info);
-                startActivity(intent);
-
                 break;
             case R.id.constact_detail_add:
-                CustomeDialog customeDialog = new CustomeDialog(this, handler,
-                        "确定添加？", 0, -1,null);
+                if (ToosUtils.CheckComInfo(ConstactActivity.this)) {
+                    CustomeDialog customeDialog = new CustomeDialog(this, handler,
+                            "确定添加？", 0, -1, null);
+                }
                 break;
 
             default:

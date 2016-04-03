@@ -207,10 +207,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					@Override
 					public void onSuccess(ResponseInfo<String> arg0) {
 						pro.setVisibility(View.GONE);
-						LogManager
-								.LogShow("------",
-										"ddddddddddddddddd",
-										LogManager.ERROR);
+
 						try {
 							Gson gson = new Gson();
 							ReturnState state = gson.fromJson(arg0.result,
@@ -243,17 +240,29 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 							} else if (Constant.USER_NOCOM.equals(state.msg)) {
 								String temp = ToosUtils
 										.getEncryptto((String) state.result);
-								RegisterEntity entity = gson.fromJson(temp,
-										RegisterEntity.class);
+								LogManager
+										.LogShow("------206",
+												temp,
+												LogManager.ERROR);
+								LoginEntity entity = gson.fromJson(temp,
+										LoginEntity.class);
 								ShareDataTool.SaveInfo(LoginActivity.this,
 										entity.token, entity.userId,
 										entity.imUsername, entity.imPassword);
+								ShareDataTool.SaveInfoDetail(
+										LoginActivity.this, "",
+										"",entity.buildingName, entity.buildingId);
 								ShareDataTool.SaveFlag(LoginActivity.this, 0);
-								ToastUtils.displayShortToast(
-										LoginActivity.this, "登陆成功，请完善信息");
-								Intent intent = new Intent(LoginActivity.this,
-										PerfectDataActivity.class);
-								startActivity(intent);
+//								ToastUtils.displayShortToast(
+//										LoginActivity.this, "登陆成功，请完善信息");
+								if (ToosUtils.isStringEmpty(entity.buildingId)){
+									Intent intent = new Intent(LoginActivity.this,LocationSelActivity.class);
+									intent.putExtra("flag", 0);
+									startActivity(intent);
+								}else{
+									loginHX(entity.imUsername, entity.imPassword);
+								}
+
 							} else {
 								ToastUtils.displayShortToast(
 										LoginActivity.this,

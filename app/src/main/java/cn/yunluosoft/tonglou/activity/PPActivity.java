@@ -188,9 +188,9 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
         customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                ReportMenuDialog dialog = new ReportMenuDialog(PPActivity.this, handler, position);
-
+                if (ToosUtils.CheckComInfo(PPActivity.this)) {
+                    ReportMenuDialog dialog = new ReportMenuDialog(PPActivity.this, handler, position);
+                }
                 return true;
             }
         });
@@ -212,9 +212,11 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.title_rig:
-                Intent intent=new Intent(PPActivity.this,PublishPPActivity.class);
-                intent.putExtra("flag",flag);
-                startActivity(intent);
+                if (ToosUtils.CheckComInfo(PPActivity.this)) {
+                    Intent intent = new Intent(PPActivity.this, PublishPPActivity.class);
+                    intent.putExtra("flag", flag);
+                    startActivity(intent);
+                }
                 break;
             case R.id.pp_serch:
                 Intent intent5=new Intent(PPActivity.this, SerchSpeechActivity.class);

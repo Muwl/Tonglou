@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.yunluosoft.tonglou.activity.LoginActivity;
+import cn.yunluosoft.tonglou.dialog.CheckDialog;
 import u.aly.cp;
 
 import android.app.ActivityManager;
@@ -294,6 +295,16 @@ public class ToosUtils {
 
         return file;
 
+    }
+
+
+    public static boolean CheckComInfo(Context context){
+        if (ShareDataTool.getFlag(context)==0){
+            CheckDialog dialog=new CheckDialog(context);
+            return false;
+        }else{
+            return  true;
+        }
     }
 
 }

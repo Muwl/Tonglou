@@ -19,7 +19,9 @@ import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.dialog.DateSelectDialog;
 import cn.yunluosoft.tonglou.dialog.PhotoDialog;
 import cn.yunluosoft.tonglou.dialog.TradeSelectDialog;
+import cn.yunluosoft.tonglou.model.PerfectDataState;
 import cn.yunluosoft.tonglou.model.PersonInfo;
+import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
@@ -244,17 +246,19 @@ public class PerfectDataActivity extends BaseActivity implements
 				info.birthday = ToosUtils.getTextContent(birth);
 				info.industry = ToosUtils.getTextContent(trade);
 				info.job = ToosUtils.getTextContent(job);
-				Intent intent = new Intent(PerfectDataActivity.this,
-						LocationSelActivity.class);
-				intent.putExtra("flag", 0);
-				Gson gson = new Gson();
-				intent.putExtra("info", info);
-				// intent.putExtra("info", gson.toJson(info));
-				if (file != null) {
-					intent.putExtra("path", file.getAbsolutePath());
-				}
-
-				startActivity(intent);
+				
+				sendSub(info,file);
+//				Intent intent = new Intent(PerfectDataActivity.this,
+//						LocationSelActivity.class);
+//				intent.putExtra("flag", 0);
+//				Gson gson = new Gson();
+//				intent.putExtra("info", info);
+//				// intent.putExtra("info", gson.toJson(info));
+//				if (file != null) {
+//					intent.putExtra("path", file.getAbsolutePath());
+//				}
+//
+//				startActivity(intent);
 			}
 
 			break;
@@ -347,6 +351,82 @@ public class PerfectDataActivity extends BaseActivity implements
 			return false;
 		}
 		return true;
+	}
+
+
+	private void sendSub(PersonInfo info ,File file) {
+		final Gson gson = new Gson();
+		RequestParams rp = new RequestParams();
+		info.location = ShareDataTool.getLocation(this);
+		info.buildingId = ShareDataTool.getBuildingId(this);
+		rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+		rp.addBodyParameter("info", gson.toJson(info));
+		if (file!=null){
+			rp.addBodyParameter("icon", file);
+		}
+		LogManager.LogShow("------", gson.toJson(info), LogManager.ERROR);
+		HttpUtils utils = new HttpUtils();
+		utils.configTimeout(20000);
+		utils.send(HttpMethod.POST, Constant.ROOT_PATH
+						+ "/v1/user/saveOrUpdateInfo", rp,
+				new RequestCallBack<String>() {
+					@Override
+					public void onStart() {
+						pro.setVisibility(View.VISIBLE);
+						super.onStart();
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						pro.setVisibility(View.GONE);
+						ToastUtils.displayFailureToast(PerfectDataActivity.this);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						pro.setVisibility(View.GONE);
+						try {
+							// Gson gson = new Gson();
+							LogManager.LogShow("----", arg0.result,
+									LogManager.ERROR);
+							ReturnState state = gson.fromJson(arg0.result,
+									ReturnState.class);
+							if (Constant.RETURN_OK.equals(state.msg)) {
+								PerfectDataState dataState = gson.fromJson(
+										arg0.result, PerfectDataState.class);
+								ShareDataTool.SaveInfoDetail(
+										PerfectDataActivity.this,
+										dataState.result.nickname,
+										dataState.result.icon,
+										dataState.result.location, ShareDataTool.getBuildingId(PerfectDataActivity.this));
+								ShareDataTool.SaveFlag(
+										PerfectDataActivity.this, 1);
+								finish();
+//								loginHX(ShareDataTool
+//												.getImUsername(PerfectDataActivity.this),
+//										ShareDataTool
+//												.getImPassword(PerfectDataActivity.this));
+								// Intent intent = new Intent(
+								// LocationSelActivity.this,
+								// MainActivity.class);
+								// startActivity(intent);
+							} else if (Constant.TOKEN_ERR.equals(state.msg)) {
+								ToastUtils.displayShortToast(
+										PerfectDataActivity.this, "验证错误，请重新登录");
+								ToosUtils.goReLogin(PerfectDataActivity.this);
+							} else {
+								ToastUtils.displayShortToast(
+										PerfectDataActivity.this,
+										String.valueOf(state.result));
+							}
+						} catch (Exception e) {
+							ToastUtils
+									.displaySendFailureToast(PerfectDataActivity.this);
+						}
+
+					}
+				});
+
 	}
 
 }

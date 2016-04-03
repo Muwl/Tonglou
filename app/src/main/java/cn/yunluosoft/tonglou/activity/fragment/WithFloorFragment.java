@@ -176,8 +176,10 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         customListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (ToosUtils.CheckComInfo(context)) {
 
-                ReportMenuDialog dialog=new ReportMenuDialog(context,handler,position-1);
+                    ReportMenuDialog dialog = new ReportMenuDialog(context, handler, position - 1);
+                }
 
                 return true;
             }
@@ -220,8 +222,10 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         switch (view.getId()) {
 
             case R.id.title_rig:
-                Intent intent4 = new Intent(context, PublishActivity.class);
-                startActivity(intent4);
+                if (ToosUtils.CheckComInfo(context)) {
+                    Intent intent4 = new Intent(context, PublishActivity.class);
+                    startActivity(intent4);
+                }
                 break;
 
 

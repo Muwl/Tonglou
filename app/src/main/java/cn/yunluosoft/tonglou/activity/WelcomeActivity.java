@@ -124,9 +124,10 @@ public class WelcomeActivity extends BaseActivity {
 			return;
 		}
 
-		if (0 == ShareDataTool.getFlag(this)) {
+		if (ToosUtils.isStringEmpty(ShareDataTool.getBuildingId(this))) {
 			Intent intent = new Intent(WelcomeActivity.this,
-					PerfectDataActivity.class);
+					LocationSelActivity.class);
+			intent.putExtra("flag",0);
 			startActivity(intent);
 			finish();
 		} else {

@@ -30,6 +30,7 @@ import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -105,13 +106,15 @@ public class HelpAdapter extends BaseAdapter {
         holder.graybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!ShareDataTool.getUserId(context).equals(entities.get(position).publishUserId)) {
-                    Message message = new Message();
-                    message.what = AssistActivity.ATTEN;
-                    message.obj = position;
-                    handler.sendMessage(message);
-                } else {
-                    ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
+                if (ToosUtils.CheckComInfo(context)) {
+                    if (!ShareDataTool.getUserId(context).equals(entities.get(position).publishUserId)) {
+                        Message message = new Message();
+                        message.what = AssistActivity.ATTEN;
+                        message.obj = position;
+                        handler.sendMessage(message);
+                    } else {
+                        ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
+                    }
                 }
             }
         });
@@ -122,15 +125,17 @@ public class HelpAdapter extends BaseAdapter {
             holder.bluebtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,
-                            ChatActivity.class);
-                    MessageInfo info = new MessageInfo(
-                            ShareDataTool.getUserId(context), entities.get(position).publishUserId,
-                            ShareDataTool.getUserId(context), entities.get(position).publishUserImUsername,
-                            ShareDataTool.getIcon(context),
-                            entities.get(position).publishUserIcon, ShareDataTool.getNickname(context), entities.get(position).publishUserNickname);
-                    intent.putExtra("info", (Serializable) info);
-                    context.startActivity(intent);
+                    if (ToosUtils.CheckComInfo(context)) {
+                        Intent intent = new Intent(context,
+                                ChatActivity.class);
+                        MessageInfo info = new MessageInfo(
+                                ShareDataTool.getUserId(context), entities.get(position).publishUserId,
+                                ShareDataTool.getUserId(context), entities.get(position).publishUserImUsername,
+                                ShareDataTool.getIcon(context),
+                                entities.get(position).publishUserIcon, ShareDataTool.getNickname(context), entities.get(position).publishUserNickname);
+                        intent.putExtra("info", (Serializable) info);
+                        context.startActivity(intent);
+                    }
                 }
             });
         }else{
@@ -163,10 +168,12 @@ public class HelpAdapter extends BaseAdapter {
         holder.praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Message message = new Message();
-                message.what = AssistActivity.PRAISE;
-                message.obj = position;
-                handler.sendMessage(message);
+                if (ToosUtils.CheckComInfo(context)) {
+                    Message message = new Message();
+                    message.what = AssistActivity.PRAISE;
+                    message.obj = position;
+                    handler.sendMessage(message);
+                }
             }
         });
 
