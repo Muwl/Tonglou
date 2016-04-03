@@ -164,6 +164,15 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
         title.setText("二手详情");
         share.setOnClickListener(this);
         send.setOnClickListener(this);
+        customListView
+                .setOnRefreshListener(new CustomListView.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        closePro();
+                        customListView.setCanLoadMore(false);
+                        getDynamic(1);
+                    }
+                });
         customListView.setOnLoadListener(new CustomListView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

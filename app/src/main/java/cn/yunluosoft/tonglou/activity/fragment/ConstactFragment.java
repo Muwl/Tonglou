@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.GetChars;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +84,9 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
 
     private TextView empty_text;
 
+    private static Context context;
+
+
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
@@ -95,6 +100,14 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
             }
         };
     };
+
+
+
+    public static  ConstactFragment getInstance(Context context) {
+        ConstactFragment fragment = new ConstactFragment() ;
+        ConstactFragment.context = context;
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -116,7 +129,6 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
 
         title.setText("人脉");
         add.setVisibility(View.VISIBLE);
-
         return view;
     }
 
@@ -125,12 +137,12 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
         super.onActivityCreated(savedInstanceState);
         withfloorFriend.setOnClickListener(this);
         add.setOnClickListener(this);
-        friendDBUtils = new FriendDBUtils(getActivity());
+        friendDBUtils = new FriendDBUtils(context);
         entities = friendDBUtils.getAllFriends();
         if (entities == null) {
             entities = new ArrayList<FriendEntity>();
         }
-        adaper = new FconstactsAdaper(getActivity(),entities);
+        adaper = new FconstactsAdaper(context,entities);
         listView.setAdapter(adaper);
 
 
@@ -139,7 +151,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
-                CustomeDialog customeDialog = new CustomeDialog(getActivity(),
+                CustomeDialog customeDialog = new CustomeDialog(context,
                         handler, "确定删除？", position, -1,null);
                 // delete(position);
                 return true;
@@ -152,7 +164,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Intent intent = new Intent(getActivity(),
+                Intent intent = new Intent(context,
                         ConstactActivity.class);
                 intent.putExtra("id", entities.get(position).userId);
                 if (!ToosUtils.isStringEmpty(entities.get(position).remarkName)) {
@@ -174,11 +186,11 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
 
         switch (view.getId()){
             case R.id.fconstacts_constact:
-                Intent intent=new Intent(getActivity(), ConstantWithfloorActivity.class);
+                Intent intent=new Intent(context, ConstantWithfloorActivity.class);
                 startActivity(intent);
                 break;
             case R.id.title_add:
-                Intent intent2=new Intent(getActivity(), ConstactsAddActivity.class);
+                Intent intent2=new Intent(context, ConstactsAddActivity.class);
                 startActivity(intent2);
                 break;
 
@@ -188,7 +200,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
 
     private void getInfo() {
         RequestParams rp = new RequestParams();
-        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        rp.addBodyParameter("sign", ShareDataTool.getToken(context));
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/contact/find",
@@ -202,7 +214,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
                         pro.setVisibility(View.GONE);
-                        ToastUtils.displayFailureToast(getActivity());
+                        ToastUtils.displayFailureToast(context);
                     }
 
                     @Override
@@ -239,7 +251,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
                                 friendDBUtils.saveAllFriends(entities);
                                 adaper.notifyDataSetChanged();
 
-                                // adaper = new FconstactsAdaper(getActivity(),
+                                // adaper = new FconstactsAdaper(context,
                                 // entities);
                                 // listView.setAdapter(adaper);
                                 // 设置右侧触摸监听
@@ -259,16 +271,16 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
                                 });
                                 reFushEmpty();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-                                ToastUtils.displayShortToast(getActivity(),
+                                ToastUtils.displayShortToast(context,
                                         "验证错误，请重新登录");
-                                ToosUtils.goReLogin(getActivity());
+                                ToosUtils.goReLogin(context);
                             } else {
-                                ToastUtils.displayShortToast(getActivity(),
+                                ToastUtils.displayShortToast(context,
                                         String.valueOf(state.result));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ToastUtils.displaySendFailureToast(getActivity());
+                            ToastUtils.displaySendFailureToast(context);
                         }
 
                     }
@@ -289,7 +301,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
 
     private void delCon(final int position) {
         RequestParams rp = new RequestParams();
-        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        rp.addBodyParameter("sign", ShareDataTool.getToken(context));
         rp.addBodyParameter("toUserId", entities.get(position).userId);
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
@@ -304,7 +316,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
                         pro.setVisibility(View.GONE);
-                        ToastUtils.displayFailureToast(getActivity());
+                        ToastUtils.displayFailureToast(context);
                     }
 
                     @Override
@@ -318,7 +330,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
                             ReturnState state = gson.fromJson(arg0.result,
                                     ReturnState.class);
                             if (Constant.RETURN_OK.equals(state.msg)) {
-                                ToastUtils.displayShortToast(getActivity(),
+                                ToastUtils.displayShortToast(context,
                                         String.valueOf(state.result));
                                 friendDBUtils.removeFriend(entities
                                         .get(position));
@@ -326,15 +338,15 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
                                 adaper.notifyDataSetChanged();
                                 reFushEmpty();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
-                                ToastUtils.displayShortToast(getActivity(),
+                                ToastUtils.displayShortToast(context,
                                         "验证错误，请重新登录");
-                                ToosUtils.goReLogin(getActivity());
+                                ToosUtils.goReLogin(context);
                             } else {
-                                ToastUtils.displayShortToast(getActivity(),
+                                ToastUtils.displayShortToast(context,
                                         String.valueOf(state.result));
                             }
                         } catch (Exception e) {
-                            ToastUtils.displaySendFailureToast(getActivity());
+                            ToastUtils.displaySendFailureToast(context);
                         }
 
                     }

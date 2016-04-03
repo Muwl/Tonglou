@@ -171,6 +171,15 @@ public class PPDetailActivity extends BaseActivity implements View.OnClickListen
                 getDynamic(pageNo + 1);
             }
         });
+        customListView
+                .setOnRefreshListener(new CustomListView.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        closePro();
+                        customListView.setCanLoadMore(false);
+                        getDynamic(1);
+                    }
+                });
         entities=new ArrayList<>();
 
 

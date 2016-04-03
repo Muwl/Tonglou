@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.activity.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -84,13 +85,15 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
 
     private boolean flag = true;
 
+    private static Context context;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 55:
                     int position4=msg.arg1;
-                    Intent intent6=new Intent(getActivity(), ReportActivity.class);
+                    Intent intent6=new Intent(context, ReportActivity.class);
                     intent6.putExtra("flag",1);
                     intent6.putExtra("contactId",entities.get(position4).id);
                     startActivity(intent6);
@@ -119,6 +122,13 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         }
     };
 
+    public static  WithFloorFragment getInstance(Context context) {
+        WithFloorFragment fragment = new WithFloorFragment() ;
+        WithFloorFragment.context = context;
+        return fragment;
+    }
+
+
 
     @Nullable
     @Override
@@ -142,7 +152,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         super.onActivityCreated(savedInstanceState);
         entities = new ArrayList<>();
         rig.setOnClickListener(this);
-        adapter = new WithFloorAdapter(getActivity(), entities, handler,customListView);
+        adapter = new WithFloorAdapter(context, entities, handler,customListView);
         customListView.setAdapter(adapter);
 
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -150,13 +160,13 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = null;
                 if ("0".equals(entities.get(position - 2).modelType)) {
-                    intent = new Intent(getActivity(), GroupDetailActivity.class);
+                    intent = new Intent(context, GroupDetailActivity.class);
                 } else if ("1".equals(entities.get(position - 2).modelType)) {
-                    intent = new Intent(getActivity(), UsedDetailActivity.class);
+                    intent = new Intent(context, UsedDetailActivity.class);
                 } else if ("2".equals(entities.get(position - 2).modelType)) {
-                    intent = new Intent(getActivity(), PPDetailActivity.class);
+                    intent = new Intent(context, PPDetailActivity.class);
                 } else if ("3".equals(entities.get(position - 2).modelType)) {
-                    intent = new Intent(getActivity(), HelpDetailActivity.class);
+                    intent = new Intent(context, HelpDetailActivity.class);
                 }
                 intent.putExtra("id", entities.get(position - 2).id);
                 startActivity(intent);
@@ -167,7 +177,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                ReportMenuDialog dialog=new ReportMenuDialog(getActivity(),handler,position-1);
+                ReportMenuDialog dialog=new ReportMenuDialog(context,handler,position-1);
 
                 return true;
             }
@@ -210,7 +220,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         switch (view.getId()) {
 
             case R.id.title_rig:
-                Intent intent4 = new Intent(getActivity(), PublishActivity.class);
+                Intent intent4 = new Intent(context, PublishActivity.class);
                 startActivity(intent4);
                 break;
 
@@ -224,7 +234,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
      */
     private void AddJoin(final int position) {
         RequestParams rp = new RequestParams();
-        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        rp.addBodyParameter("sign", ShareDataTool.getToken(context));
         rp.addBodyParameter("dynamicId", entities.get(position).id);
         String url="/v1_1_0/dynamic/joinActivity";
         HttpUtils utils = new HttpUtils();
@@ -240,7 +250,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
                         pro.setVisibility(View.GONE);
-                        ToastUtils.displayFailureToast(getActivity());
+                        ToastUtils.displayFailureToast(context);
                     }
 
                     @Override
@@ -254,23 +264,23 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                             ReturnState state = gson.fromJson(arg0.result,
                                     ReturnState.class);
                             if (Constant.RETURN_OK.equals(state.msg)) {
-                                ToastUtils.displayShortToast(getActivity(),
+                                ToastUtils.displayShortToast(context,
                                         "操作成功");
                                 entities.get(position).isInGroup=0+"";
                                 entities.get(position).groupNum=String.valueOf(Integer.valueOf(entities.get(position).groupNum)+1);
                                 adapter.notifyDataSetChanged();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
-                                        getActivity(), "验证错误，请重新登录");
-                                ToosUtils.goReLogin(getActivity());
+                                        context, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(context);
                             } else {
                                 ToastUtils.displayShortToast(
-                                        getActivity(),
+                                        context,
                                         String.valueOf(state.result));
                             }
                         } catch (Exception e) {
                             ToastUtils
-                                    .displaySendFailureToast(getActivity());
+                                    .displaySendFailureToast(context);
                         }
 
                     }
@@ -283,21 +293,21 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
      * 获取楼语列表
      */
     private void getInfo(final int page) {
-        if (getActivity() == null) {
+        if (context == null) {
             return;
         }
-        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(getActivity()))) {
+        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(context))) {
             return;
         }
         RequestParams rp = new RequestParams();
-        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        rp.addBodyParameter("sign", ShareDataTool.getToken(context));
         rp.addBodyParameter("modelType", "4");
         rp.addBodyParameter("pageNo", String.valueOf(page));
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         LogManager.LogShow("=========",
                 Constant.ROOT_PATH + "/v1_1_0/dynamic/findDynamic?sign="
-                        + ShareDataTool.getToken(getActivity()) + "&modelType=4&pageNo="
+                        + ShareDataTool.getToken(context) + "&modelType=4&pageNo="
                         + String.valueOf(pageNo), LogManager.ERROR);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
                 + "/v1_1_0/dynamic/findDynamic", rp, new RequestCallBack<String>() {
@@ -315,7 +325,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onFailure(HttpException arg0, String arg1) {
                 pro.setVisibility(View.GONE);
-                ToastUtils.displayFailureToast(getActivity());
+                ToastUtils.displayFailureToast(context);
                 customListView.onRefreshComplete();
                 customListView.onLoadMoreComplete();
                 customListView.setCanLoadMore(false);
@@ -331,7 +341,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                             ReturnState.class);
                     if (Constant.RETURN_OK.equals(allState.msg)) {
                         pageNo = page;
-//                        ShareDataTool.savePageNo(getActivity(), page);
+//                        ShareDataTool.savePageNo(context, page);
                         if (page == 1) {
                             entities.clear();
                             adapter.notifyDataSetChanged();
@@ -350,7 +360,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
 //                            } else {
 //                                empty.setVisibility(View.GONE);
 //                            }
-                            // ToastUtils.displayShortToast(getActivity(),
+                            // ToastUtils.displayShortToast(context,
                             // "无数据");
                             return;
                         }
@@ -368,7 +378,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
 //                            } else {
 //                                empty.setVisibility(View.GONE);
 //                            }
-                            // ToastUtils.displayShortToast(getActivity(),
+                            // ToastUtils.displayShortToast(context,
                             // "无数据");
                         } else {
                             for (int i = 0; i < state.result.size(); i++) {
@@ -377,9 +387,9 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                             adapter.notifyDataSetChanged();
                             if (pageNo == 1) {
                                 customListView.onRefreshComplete();
-//                                ShareDataTool.saveGetNum(getActivity(), 0);
-//                                ShareDataTool.saveGetNumTime(getActivity(), 0);
-//                                ((MainActivity) getActivity()).onrefush();
+//                                ShareDataTool.saveGetNum(context, 0);
+//                                ShareDataTool.saveGetNumTime(context, 0);
+//                                ((MainActivity) context).onrefush();
                                 customListView.setSelection(0);
                             } else {
                                 customListView.onRefreshComplete();
@@ -392,11 +402,11 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                         ReturnState state = gson.fromJson(arg0.result,
                                 ReturnState.class);
                         if (Constant.TOKEN_ERR.equals(state.msg)) {
-                            ToastUtils.displayShortToast(getActivity(),
+                            ToastUtils.displayShortToast(context,
                                     "验证错误，请重新登录");
-                            ToosUtils.goReLogin(getActivity());
+                            ToosUtils.goReLogin(context);
                         } else {
-                            ToastUtils.displayShortToast(getActivity(),
+                            ToastUtils.displayShortToast(context,
                                     (String) state.result);
 
                         }
@@ -419,7 +429,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                     customListView.onRefreshComplete();
                     customListView.onLoadMoreComplete();
                     customListView.setCanLoadMore(false);
-                    ToastUtils.displaySendFailureToast(getActivity());
+                    ToastUtils.displaySendFailureToast(context);
 //                    if (entities.size() == 0) {
 //                        empty.setVisibility(View.VISIBLE);
 //                        empty_image.setImageDrawable(getResources()
@@ -441,11 +451,11 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
      * flag 0 代表添加关注 1代表取消关注
      */
     private void AddAtten(final int flag, final int position) {
-        if (getActivity() == null) {
+        if (context == null) {
             return;
         }
         RequestParams rp = new RequestParams();
-        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        rp.addBodyParameter("sign", ShareDataTool.getToken(context));
         rp.addBodyParameter("dynamicId", entities.get(position).id);
         String url="/v1_1_0/dynamic/addAttention";
         if (flag==0){
@@ -466,7 +476,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
                         pro.setVisibility(View.GONE);
-                        ToastUtils.displayFailureToast(getActivity());
+                        ToastUtils.displayFailureToast(context);
                     }
 
                     @Override
@@ -480,22 +490,22 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                             ReturnState state = gson.fromJson(arg0.result,
                                     ReturnState.class);
                             if (Constant.RETURN_OK.equals(state.msg)) {
-                                ToastUtils.displayShortToast(getActivity(),
+                                ToastUtils.displayShortToast(context,
                                         String.valueOf(state.result));
                                 entities.get(position).isAttention=flag+"";
                                 adapter.notifyDataSetChanged();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
-                                        getActivity(), "验证错误，请重新登录");
-                                ToosUtils.goReLogin(getActivity());
+                                        context, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(context);
                             } else {
                                 ToastUtils.displayShortToast(
-                                        getActivity(),
+                                        context,
                                         String.valueOf(state.result));
                             }
                         } catch (Exception e) {
                             ToastUtils
-                                    .displaySendFailureToast(getActivity());
+                                    .displaySendFailureToast(context);
                         }
 
                     }
@@ -508,11 +518,11 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
      * flag 0 代表添加点赞 1代表取消点赞
      */
     private void AddPraise(final int flag, final int position) {
-        if (getActivity() == null) {
+        if (context == null) {
             return;
         }
         RequestParams rp = new RequestParams();
-        rp.addBodyParameter("sign", ShareDataTool.getToken(getActivity()));
+        rp.addBodyParameter("sign", ShareDataTool.getToken(context));
         rp.addBodyParameter("dynamicId", entities.get(position).id);
         String url="/v1_1_0/dynamic/praise";
         if (flag==0){
@@ -520,7 +530,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         }else{
             url="/v1_1_0/dynamic/cancelPraise";
         }
-        LogManager.LogShow("----",Constant.ROOT_PATH + url+"?sign="+ ShareDataTool.getToken(getActivity())+"&dynamicId="+entities.get(position).id,LogManager.ERROR);
+        LogManager.LogShow("----",Constant.ROOT_PATH + url+"?sign="+ ShareDataTool.getToken(context)+"&dynamicId="+entities.get(position).id,LogManager.ERROR);
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + url,
@@ -534,7 +544,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                     @Override
                     public void onFailure(HttpException arg0, String arg1) {
                         pro.setVisibility(View.GONE);
-                        ToastUtils.displayFailureToast(getActivity());
+                        ToastUtils.displayFailureToast(context);
                     }
 
                     @Override
@@ -548,7 +558,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                             ReturnState state = gson.fromJson(arg0.result,
                                     ReturnState.class);
                             if (Constant.RETURN_OK.equals(state.msg)) {
-                                ToastUtils.displayShortToast(getActivity(),
+                                ToastUtils.displayShortToast(context,
                                         "操作成功");
                                 entities.get(position).isPraise=flag+"";
                                 if (flag==0){
@@ -560,16 +570,16 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
 //                                adapter.notifyDataSetChanged();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
-                                        getActivity(), "验证错误，请重新登录");
-                                ToosUtils.goReLogin(getActivity());
+                                        context, "验证错误，请重新登录");
+                                ToosUtils.goReLogin(context);
                             } else {
                                 ToastUtils.displayShortToast(
-                                        getActivity(),
+                                        context,
                                         String.valueOf(state.result));
                             }
                         } catch (Exception e) {
                             ToastUtils
-                                    .displaySendFailureToast(getActivity());
+                                    .displaySendFailureToast(context);
                         }
 
                     }

@@ -236,7 +236,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 							popAllFragmentsExceptTheBottomOne();
 							FragmentTransaction ft = fMgr.beginTransaction();
 							ft.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
-							WithFloorFragment floorFragment = new WithFloorFragment();
+							WithFloorFragment floorFragment = WithFloorFragment.getInstance(MainActivity.this);
 							ft.add(R.id.main_fragment, floorFragment,
 									"WithFloorFragment");
 							ft.addToBackStack("WithFloorFragment");
@@ -251,7 +251,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 							popAllFragmentsExceptTheBottomOne();
 							FragmentTransaction ft2 = fMgr.beginTransaction();
 							ft2.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
-							ConstactFragment constactFragment = new ConstactFragment();
+							ConstactFragment constactFragment = ConstactFragment.getInstance(MainActivity.this);
 							ft2.add(R.id.main_fragment, constactFragment,
 									"ConstactFragment");
 							ft2.addToBackStack("ConstactFragment");
@@ -267,7 +267,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 							popAllFragmentsExceptTheBottomOne();
 							FragmentTransaction ft3 = fMgr.beginTransaction();
 							ft3.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
-							PersonFragment personFragment = new PersonFragment();
+							PersonFragment personFragment =  PersonFragment.getInstance(MainActivity.this);
 							ft3.add(R.id.main_fragment, personFragment,
 									"PersonFragment");
 							ft3.addToBackStack("PersonFragment");
@@ -352,7 +352,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	private void initFragment() {
 		try {
 			FragmentTransaction ft = fMgr.beginTransaction();
-			FloorSpeechFragment floorSpeechFragment = new FloorSpeechFragment();
+			FloorSpeechFragment floorSpeechFragment = FloorSpeechFragment.getInstance(MainActivity.this);
 			ft.add(R.id.main_fragment, floorSpeechFragment, "FloorSpeechFragment");
 			ft.addToBackStack("FloorSpeechFragment");
 			ft.commitAllowingStateLoss();

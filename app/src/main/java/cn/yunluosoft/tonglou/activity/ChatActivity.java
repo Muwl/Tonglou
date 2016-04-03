@@ -525,6 +525,9 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 		}else{
 			// 群聊
 			messageInfo=(MessageInfo) getIntent().getSerializableExtra("info");
+			if (messageInfo==null){
+				return;
+			}
 
 			MessageInfo info=new MessageInfo(ShareDataTool.getUserId(this), messageInfo.receiverUserId, ShareDataTool.getImUsername(this), messageInfo.receiverImUserName,ShareDataTool.getIcon(this), messageInfo.receiverHeadUrl, ShareDataTool.getNickname(this), messageInfo.receiverNickName);
 			messageInfo=info;

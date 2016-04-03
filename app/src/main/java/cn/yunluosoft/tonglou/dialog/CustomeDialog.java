@@ -48,8 +48,10 @@ public class CustomeDialog extends Dialog implements
 		ok = (TextView) findViewById(R.id.custom_dialog_ok);
 		cancel = (TextView) findViewById(R.id.custom_dialog_cancel);
 		text.setText(msg);
-		if (ToosUtils.isStringEmpty(okString)){
+		if (!ToosUtils.isStringEmpty(okString)){
 			ok.setText(okString);
+		}else {
+			ok.setText("确定");
 		}
 
 		ok.setOnClickListener(this);

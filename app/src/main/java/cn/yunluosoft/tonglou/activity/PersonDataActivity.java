@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,13 +58,13 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 
     private CircleImageView icon;
 
-    private TextView name;
+    private EditText name;
 
     private TextView sex;
 
     private TextView birth;
 
-    private View nameView;
+//    private View nameView;
 
     private View sexView;
 
@@ -75,13 +76,15 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 
     private View tradeView;
 
-    private TextView job;
+    private EditText job;
 
-    private View jobView;
+//    private View jobView;
 
-    private TextView signature;
+    private EditText signature;
 
-    private View signatureView;
+//    private View signatureView;
+
+    private TextView rig;
 
     private View pro;
 
@@ -116,23 +119,17 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                 case 91:
                     // tradIndex = msg.arg1;
                     // trade.setText((String) msg.obj);
-                    PersonInfo personInfo = new PersonInfo();
-                    personInfo.industry = (String) msg.obj;
-                    sendUpdate(personInfo, null, 5, (String) msg.obj);
+                    trade.setText((String) msg.obj);
                     break;
                 case 94:
                     // tradIndex = msg.arg1;
                     // trade.setText((String) msg.obj);
-                    PersonInfo personInfo3 = new PersonInfo();
-                    personInfo3.sex = (String) msg.obj;
-                    sendUpdate(personInfo3, null, 4, (String) msg.obj);
+                    sex.setText((String) msg.obj);
                     break;
                 case 51:
                     sdate = (String) msg.obj;
 //                    birth.setText(sdate);
-                    PersonInfo personInfo2 = new PersonInfo();
-                    personInfo2.birthday = (String) msg.obj;
-                    sendUpdate(personInfo2, null, 3, sdate);
+                    birth.setText(sdate);
                     break;
 
                 case 82:
@@ -174,33 +171,38 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
     private void initView() {
         title = (TextView) findViewById(R.id.title_title);
         back = (ImageView) findViewById(R.id.title_back);
+        rig = (TextView) findViewById(R.id.title_rig);
         icon = (CircleImageView) findViewById(R.id.person_data_icon);
         iconView = findViewById(R.id.person_data_iconview);
-        name = (TextView) findViewById(R.id.person_data_name);
+        name = (EditText) findViewById(R.id.person_data_name);
         sex = (TextView) findViewById(R.id.person_data_sex);
         birth = (TextView) findViewById(R.id.person_data_birth);
         birthView = findViewById(R.id.person_data_birthview);
-        nameView = findViewById(R.id.person_data_nameview);
+//        nameView = findViewById(R.id.person_data_nameview);
         sexView = findViewById(R.id.person_data_sexview);
-        jobView = findViewById(R.id.person_data_jobview);
-        signatureView = findViewById(R.id.person_data_signview);
+//        jobView = findViewById(R.id.person_data_jobview);
+//        signatureView = findViewById(R.id.person_data_signview);
         tradeView = findViewById(R.id.person_data_tradview);
         trade = (TextView) findViewById(R.id.person_data_trad);
-        job = (TextView) findViewById(R.id.person_data_job);
-        signature = (TextView) findViewById(R.id.person_data_sign);
+        job = (EditText) findViewById(R.id.person_data_job);
+        signature = (EditText) findViewById(R.id.person_data_sign);
 
         pro = findViewById(R.id.person_data_pro);
         gv = findViewById(R.id.person_data_gv);
 
         title.setText("个人资料");
+        rig.setText("保存");
+        rig.setVisibility(View.VISIBLE);
         back.setOnClickListener(this);
         iconView.setOnClickListener(this);
         birthView.setOnClickListener(this);
         tradeView.setOnClickListener(this);
-        nameView.setOnClickListener(this);
+//        nameView.setOnClickListener(this);
         sexView.setOnClickListener(this);
-        jobView.setOnClickListener(this);
-        signatureView.setOnClickListener(this);
+//        jobView.setOnClickListener(this);
+//        signatureView.setOnClickListener(this);
+        rig.setOnClickListener(this);
+
 
     }
 
@@ -209,6 +211,15 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         switch (v.getId()) {
             case R.id.title_back:
                 finish();
+                break;
+
+            case R.id.title_rig:
+                if (info==null){
+                    return;
+                }
+                if (checkInput()){
+                    sendUpdate();
+                }
                 break;
 
 
@@ -231,11 +242,11 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 
                 break;
 
-            case R.id.person_data_nameview:
-                Intent intent = new Intent(PersonDataActivity.this, UpdateNameActivity.class);
-                startActivityForResult(intent, 785);
-                // startActivity(intent);
-                break;
+//            case R.id.person_data_nameview:
+//                Intent intent = new Intent(PersonDataActivity.this, UpdateNameActivity.class);
+//                startActivityForResult(intent, 785);
+//                // startActivity(intent);
+//                break;
 
             case R.id.person_data_sexview:
                 SexSelectDialog selectDialog3 = new SexSelectDialog(
@@ -244,16 +255,16 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 
                 break;
 
-            case R.id.person_data_jobview:
-                Intent intent5 = new Intent(PersonDataActivity.this, UpdateJobActivity.class);
-//                startActivity(intent5);
-                startActivityForResult(intent5, 786);
-                break;
-            case R.id.person_data_signview:
-                Intent intent4 = new Intent(PersonDataActivity.this, UpdateSignActivity.class);
-//                startActivity(intent4);
-                startActivityForResult(intent4, 787);
-                break;
+//            case R.id.person_data_jobview:
+//                Intent intent5 = new Intent(PersonDataActivity.this, UpdateJobActivity.class);
+////                startActivity(intent5);
+//                startActivityForResult(intent5, 786);
+//                break;
+//            case R.id.person_data_signview:
+//                Intent intent4 = new Intent(PersonDataActivity.this, UpdateSignActivity.class);
+////                startActivity(intent4);
+//                startActivityForResult(intent4, 787);
+
             default:
                 break;
         }
@@ -298,25 +309,25 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                     break;
                 case PHOTO_PICKED_WITH_DATA:
                     bitmap = data.getParcelableExtra("data");
-
-                    if (bitmap != null) {
-                        File file = null;
-                        if (Environment.getExternalStorageState().equals(
-                                Environment.MEDIA_MOUNTED)) {
-
-                            file = ToosUtils.saveImage2SD(
-                                    Environment.getExternalStorageDirectory() + "/louyu/"
-                                            + String.valueOf(System.currentTimeMillis())
-                                            + ".JPEG", bitmap);
-                            sendUpdate(null, file, 1, null);
-//                            rp.addBodyParameter("icon", file);
-                        } else {
-                            ToastUtils.displayShortToast(PersonDataActivity.this,
-                                    "无SD卡,无法上传图片");
-                            return;
-                        }
-
-                    }
+                    icon.setImageBitmap(bitmap);
+//                    if (bitmap != null) {
+//                        File file = null;
+//                        if (Environment.getExternalStorageState().equals(
+//                                Environment.MEDIA_MOUNTED)) {
+//
+//                            file = ToosUtils.saveImage2SD(
+//                                    Environment.getExternalStorageDirectory() + "/louyu/"
+//                                            + String.valueOf(System.currentTimeMillis())
+//                                            + ".JPEG", bitmap);
+//                            sendUpdate(null, file, 1, null);
+////                            rp.addBodyParameter("icon", file);
+//                        } else {
+//                            ToastUtils.displayShortToast(PersonDataActivity.this,
+//                                    "无SD卡,无法上传图片");
+//                            return;
+//                        }
+//
+//                    }
 //                    icon.setImageBitmap(bitmap);
                     break;
             }
@@ -463,17 +474,38 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
     }
 
     //flag 1修改头像 2 修改名称 3修改生日 4修改性别 5修改行业 6修改职位 7修改签名
-    private void sendUpdate(PersonInfo personInfo, File iconFile, final int flag, final String temp) {
+    private void sendUpdate() {
         RequestParams rp = new RequestParams();
         final Gson gson = new Gson();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
-        if (personInfo != null) {
-            rp.addBodyParameter("info", gson.toJson(personInfo));
+        info.nickname = ToosUtils.getTextContent(name);
+        if ("男".equals(ToosUtils.getTextContent(sex))) {
+            info.sex = Constant.SEX_MAN;
+        } else {
+            info.sex = Constant.SEX_WOMEN;
         }
-        if (iconFile != null) {
-            rp.addBodyParameter("icon", iconFile);
-        }
+        info.birthday = ToosUtils.getTextContent(birth);
+        info.industry = ToosUtils.getTextContent(trade);
+        info.job = ToosUtils.getTextContent(job);
+        info.signature = ToosUtils.getTextContent(signature);
+        rp.addBodyParameter("info", gson.toJson(info));
+        if (bitmap != null) {
+            File file = null;
+            if (Environment.getExternalStorageState().equals(
+                    android.os.Environment.MEDIA_MOUNTED)) {
 
+                file = ToosUtils.saveImage2SD(
+                        Environment.getExternalStorageDirectory() + "/louyu/"
+                                + String.valueOf(System.currentTimeMillis())
+                                + ".JPEG", bitmap);
+                rp.addBodyParameter("icon", file);
+            } else {
+                ToastUtils.displayShortToast(PersonDataActivity.this,
+                        "无SD卡,无法上传图片");
+                return;
+            }
+
+        }
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
@@ -518,24 +550,11 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                                         dataState.result.location, ShareDataTool.getBuildingId(PersonDataActivity.this));
                                 ShareDataTool.SaveFlag(PersonDataActivity.this,
                                         1);
-                                if (flag == 1) {
-                                    bitmapUtils.display(icon, dataState.result.icon);
-                                } else if (flag == 2) {
-                                    name.setText(temp);
-                                } else if (flag == 3) {
-                                    birth.setText(temp);
-                                } else if (flag == 4) {
-                                    sex.setText(temp);
-                                } else if (flag == 5) {
-                                    trade.setText(temp);
-                                } else if (flag == 6) {
-                                    job.setText(temp);
-                                } else if (flag == 7) {
-                                    signature.setText(temp);
-                                }
+
                                 EMChatManager.getInstance()
                                         .updateCurrentUserNick(
                                                 dataState.result.nickname);
+                                finish();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
                                         PersonDataActivity.this, "验证错误，请重新登录");

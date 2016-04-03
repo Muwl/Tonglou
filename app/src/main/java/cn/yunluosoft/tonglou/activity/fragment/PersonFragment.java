@@ -1,5 +1,6 @@
 package cn.yunluosoft.tonglou.activity.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -54,6 +55,8 @@ public class PersonFragment extends Fragment implements OnClickListener {
 
     private BitmapUtils bitmapUtils;
 
+    private static Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,6 +77,13 @@ public class PersonFragment extends Fragment implements OnClickListener {
         title.setText("我的");
         return view;
     }
+
+    public static  PersonFragment getInstance(Context context) {
+        PersonFragment fragment = new PersonFragment() ;
+        PersonFragment.context = context;
+        return fragment;
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

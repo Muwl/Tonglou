@@ -1,6 +1,7 @@
 package cn.yunluosoft.tonglou.activity.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +17,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMContact;
 import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMGroup;
+import com.easemob.chat.EMGroupManager;
+import com.easemob.chat.EMMessage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,6 +39,7 @@ import cn.yunluosoft.tonglou.easemob.chatuidemo.db.InviteMessgeDao;
 import cn.yunluosoft.tonglou.model.ConsultEntity;
 import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.utils.Constant;
+import cn.yunluosoft.tonglou.utils.LogManager;
 import cn.yunluosoft.tonglou.utils.NewsDBUtils;
 import cn.yunluosoft.tonglou.view.swipelist.SwipeMenu;
 import cn.yunluosoft.tonglou.view.swipelist.SwipeMenuListView;
@@ -67,6 +73,8 @@ public class FloorSpeechFragment extends Fragment {
 
     private List<ConsultEntity> consultEntities;
 
+    private static  Context context;
+
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
@@ -92,6 +100,12 @@ public class FloorSpeechFragment extends Fragment {
             }
         };
     };
+
+    public static  FloorSpeechFragment getInstance(Context context) {
+        FloorSpeechFragment fragment = new FloorSpeechFragment() ;
+        FloorSpeechFragment.context = context;
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -359,4 +373,6 @@ public class FloorSpeechFragment extends Fragment {
 
                 });
     }
+
+
 }

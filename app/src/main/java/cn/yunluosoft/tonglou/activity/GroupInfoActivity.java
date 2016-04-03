@@ -5,13 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMContact;
+import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
+import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
@@ -22,11 +27,15 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Hashtable;
 import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.adapter.GroupInfoAdapter;
 import cn.yunluosoft.tonglou.dialog.CustomeDialog;
+import cn.yunluosoft.tonglou.easemob.chatuidemo.db.InviteMessgeDao;
 import cn.yunluosoft.tonglou.model.GroupInfoEntity;
 import cn.yunluosoft.tonglou.model.GroupInfoState;
 import cn.yunluosoft.tonglou.model.ReturnState;
@@ -227,7 +236,7 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
                                         entities.add(state1.result.get(i));
                                     }
                                 }
-                                LogManager.LogShow("--",gson.toJson(entities),LogManager.ERROR);
+                                LogManager.LogShow("--", gson.toJson(entities), LogManager.ERROR);
                                 adapter.notifyDataSetChanged();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
@@ -287,7 +296,8 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
                                 ToastUtils.displayShortToast(
                                         GroupInfoActivity.this,
                                         String.valueOf(state.result));
-                                List<Activity> activities=MyApplication.getInstance().getActivities();
+                                List<Activity> activities = MyApplication.getInstance().getActivities();
+                                delGroupMes(groupId);
                                 try {
                                     if (activities != null && activities.size() != 0) {
                                         for (int i = 0; i < activities.size(); i++) {
@@ -296,7 +306,7 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
                                             }
                                         }
                                     }
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 finish();
@@ -316,6 +326,97 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
 
                     }
                 });
+
+    }
+
+
+    /**
+     * 获取所有会话
+     *
+     * @param context
+     * @return +
+     */
+    private List<EMConversation> loadConversationsWithRecentChat() {
+        // 获取所有会话，包括陌生人
+        Hashtable<String, EMConversation> conversations = EMChatManager
+                .getInstance().getAllConversations();
+        // 过滤掉messages size为0的conversation
+        /**
+         * 如果在排序过程中有新消息收到，lastMsgTime会发生变化 影响排序过程，Collection.sort会产生异常
+         * 保证Conversation在Sort过程中最后一条消息的时间不变 避免并发问题
+         */
+        List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
+        synchronized (conversations) {
+            for (EMConversation conversation : conversations.values()) {
+                if (conversation.getAllMessages().size() != 0) {
+                    sortList.add(new Pair<Long, EMConversation>(conversation
+                            .getLastMessage().getMsgTime(), conversation));
+                }
+            }
+        }
+        try {
+            // Internal is TimSort algorithm, has bug
+            sortConversationByLastChatTime(sortList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<EMConversation> list = new ArrayList<EMConversation>();
+        for (Pair<Long, EMConversation> sortItem : sortList) {
+            list.add(sortItem.second);
+        }
+        return list;
+    }
+
+
+    /**
+     * 根据最后一条消息的时间排序
+     *
+     * @param usernames
+     */
+    private void sortConversationByLastChatTime(
+            List<Pair<Long, EMConversation>> conversationList) {
+        Collections.sort(conversationList,
+                new Comparator<Pair<Long, EMConversation>>() {
+                    @Override
+                    public int compare(final Pair<Long, EMConversation> con1,
+                                       final Pair<Long, EMConversation> con2) {
+
+                        if (con1.first == con2.first) {
+                            return 0;
+                        } else if (con2.first > con1.first) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    }
+
+                });
+    }
+
+
+    /**
+     * 删除群聊信息
+     * @param
+     * @return
+     */
+    public void delGroupMes(String groppId) {
+
+        List<EMConversation> conversations=loadConversationsWithRecentChat();
+        for (int i=0;i<conversations.size();i++){
+            // 获取用户username或者群组groupid
+            String username = conversations.get(i).getUserName();
+                if (username.equals(groppId)) {
+                    EMChatManager.getInstance().deleteConversation(
+                            conversations.get(i).getUserName(),
+                            conversations.get(i).isGroup(), true);
+                    InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(GroupInfoActivity.this);
+                    inviteMessgeDao.deleteMessage(conversations.get(i).getUserName());
+                    break;
+                }
+
+
+        }
+
 
     }
 }
