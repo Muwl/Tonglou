@@ -49,6 +49,8 @@ public class PublishPPActivity extends BaseActivity implements View.OnClickListe
 
     private EditText stop;
 
+    private TextView delcontent;
+
     private int width;
 
     private RadioGroup group;
@@ -97,6 +99,7 @@ public class PublishPPActivity extends BaseActivity implements View.OnClickListe
         name = (EditText) findViewById(R.id.publish_pp_name);
         detail = (EditText) findViewById(R.id.publish_pp_content);
         ok = (TextView) findViewById(R.id.publish_pp_ok);
+        delcontent= (TextView) findViewById(R.id.publish_pp_delcontent);
         start= (EditText) findViewById(R.id.publish_pp_start);
         stop= (EditText) findViewById(R.id.publish_pp_stop);
         pro = findViewById(R.id.publish_pp_pro);
@@ -111,6 +114,22 @@ public class PublishPPActivity extends BaseActivity implements View.OnClickListe
         rig.setText("求带发布");
         width = DensityUtil.getScreenWidth(this);
         group.setVisibility(View.VISIBLE);
+
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.title_rb_lef) {
+                    name.setHint("车主+内容（10字之内）");
+                    delcontent.setText("拼车详情");
+                    detail.setHint("车型+上下班时间+金额+……（100字之内）");
+                } else {
+                    name.setHint("乘客+内容（10字之内）");
+                    delcontent.setText("求带详情");
+                    detail.setHint("上下班时间+金额+……（100字之内）");
+                }
+            }
+        });
+
         if (flag==0){
             group.check(R.id.title_rb_lef);
         }else{

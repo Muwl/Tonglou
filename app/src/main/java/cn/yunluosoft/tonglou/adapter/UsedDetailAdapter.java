@@ -255,14 +255,10 @@ public class UsedDetailAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     if (ToosUtils.CheckComInfo(context)) {
-                        if (menuWindow == null || menuWindow.isShowing() == false) {
-                            menu_press();
-                            // menu_display = true;
-                        } else {
-                            // menu_display = false;
-                            menuWindow.dismiss();
-
-                        }
+                        Message message = new Message();
+                        message.what = 1005;
+                        message.arg1 = (position - 1);
+                        handler.sendMessage(message);
                     }
                 }
             });

@@ -62,27 +62,27 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission
         android:name="android.permission.ACCESS_MOCK_LOCATION"
         tools:ignore="MockLocation" />
@@ -183,8 +183,7 @@
         <activity
             android:name="cn.yunluosoft.tonglou.activity.PersonDataActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"
-            ></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
 
 
         <!-- 提交反馈 -->
@@ -236,7 +235,8 @@
         <activity
             android:name="cn.yunluosoft.tonglou.activity.ConsultActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity> <!-- 咨询推送 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
+        <!-- 咨询推送 -->
         <activity
             android:name="cn.yunluosoft.tonglou.activity.ShareFriendActivity"
             android:screenOrientation="portrait"
@@ -275,8 +275,7 @@
         <!-- 写留言-->
         <activity
             android:name="cn.yunluosoft.tonglou.activity.PhotoShowActivity"
-            android:screenOrientation="portrait"
-           ></activity>
+            android:screenOrientation="portrait"></activity>
         <!-- 写留言-->
         <activity
             android:name="cn.yunluosoft.tonglou.activity.SerchSpeechActivity"
@@ -290,20 +289,20 @@
         <!-- 二手-->
         <activity
             android:name="cn.yunluosoft.tonglou.activity.UsedActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
         <!-- 拼拼-->
         <activity
             android:name="cn.yunluosoft.tonglou.activity.PPActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
         <!-- 帮帮-->
         <activity
             android:name="cn.yunluosoft.tonglou.activity.AssistActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustResize"></activity>
         <!-- 活动详情-->
         <activity
@@ -446,14 +445,14 @@
             android:theme="@style/Theme.UMDefault" />
 
         <activity
-            android:name="com.umeng.soexample.wxapi.WXEntryActivity"
+            android:name="cn.yunluosoft.tonglou.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity
-            android:name=".WBShareActivity"
+            android:name=".wxapi.WBShareActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
             <intent-filter>

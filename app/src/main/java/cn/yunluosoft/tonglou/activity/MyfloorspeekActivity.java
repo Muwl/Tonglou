@@ -138,7 +138,7 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
         publish= (RadioButton) findViewById(R.id.myfloorspeech_pub);
         customListView= (CustomListView) findViewById(R.id.myfloorspeech_list);
         pro=findViewById(R.id.myfloorspeech_pro);
-        title.setText("我的楼语");
+        title.setText("楼语信息");
         back.setOnClickListener(this);
         group.check(R.id.myfloorspeech_atten);
         getAtten(pageNo, flag);
@@ -185,7 +185,12 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
                 if (flag==0){
                     CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此关注？",position-1,-1,null);
                 }else{
-                    CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此发布？",position-1,-2,null);
+                    if ("0".equals(entities.get(position).modelType)){
+                        CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"删除活动聊天群也会解散，是否删除？",position-1,-2,null);
+                    }else{
+                        CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此发布？",position-1,-2,null);
+                    }
+
                 }
 
                 return true;

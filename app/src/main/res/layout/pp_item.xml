@@ -52,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:visibility="gone"
                 android:src="@mipmap/car_car"/>
 
             <TextView
@@ -79,6 +80,7 @@
                 android:drawableLeft="@mipmap/pp_start"
                 android:drawablePadding="5dp"
                 android:text="玲珑大厦"
+                android:maxWidth="140dp"
                 android:textColor="#666666"
                 android:textSize="@dimen/thrid_font" />
 
@@ -96,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@mipmap/pp_stop"
                 android:drawablePadding="5dp"
+                android:maxWidth="140dp"
                 android:text="宋家庄"
                 android:textColor="#666666"
                 android:textSize="@dimen/thrid_font" />

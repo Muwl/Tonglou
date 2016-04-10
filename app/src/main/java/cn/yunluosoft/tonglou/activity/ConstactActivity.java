@@ -289,10 +289,10 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
                 }
                 break;
             case R.id.constact_detail_add:
-                if (ToosUtils.CheckComInfo(ConstactActivity.this)) {
+//                if (ToosUtils.CheckComInfo(ConstactActivity.this)) {
                     CustomeDialog customeDialog = new CustomeDialog(this, handler,
                             "确定添加？", 0, -1, null);
-                }
+//                }
                 break;
 
             default:
@@ -417,16 +417,16 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Intent intent = null;
-                                if ("0".equals(entities.get(position-1).modelType)) {
+                                if ("0".equals(entities.get(position-2).modelType)) {
                                     intent = new Intent(ConstactActivity.this, GroupDetailActivity.class);
-                                } else if ("1".equals(entities.get(position-1).modelType)) {
+                                } else if ("1".equals(entities.get(position-2).modelType)) {
                                     intent = new Intent(ConstactActivity.this, UsedDetailActivity.class);
-                                } else if ("2".equals(entities.get(position-1).modelType)) {
+                                } else if ("2".equals(entities.get(position-2).modelType)) {
                                     intent = new Intent(ConstactActivity.this, PPDetailActivity.class);
-                                } else if ("3".equals(entities.get(position-1).modelType)) {
+                                } else if ("3".equals(entities.get(position-2).modelType)) {
                                     intent = new Intent(ConstactActivity.this, HelpDetailActivity.class);
                                 }
-                                intent.putExtra("id", entities.get(position-1).id);
+                                intent.putExtra("id", entities.get(position-2).id);
                                 startActivity(intent);
                             }
                         });

@@ -114,10 +114,10 @@ public class PersonFragment extends Fragment implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fperson_dataview:
-                if (ToosUtils.CheckComInfo(context)) {
+//                if (ToosUtils.CheckComInfo(context)) {
                     Intent intent5 = new Intent(context, PersonDataActivity.class);
                     startActivity(intent5);
-                }
+//                }
                 break;
             case R.id.fperson_locateview:
                 Intent intent3 = new Intent(context,

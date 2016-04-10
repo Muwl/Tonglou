@@ -143,7 +143,7 @@ public class GalleryAdapter extends BaseAdapter {
 				emotion.setText("情感：保密");
 			}
 
-			birth.setText("生日：" + floorEntity.birthday);
+			birth.setText("星座：" + floorEntity.constellation);
 			if (!ToosUtils.isStringEmpty(floorEntity.hobby)) {
 				interect.setText(floorEntity.hobby);
 			} else {

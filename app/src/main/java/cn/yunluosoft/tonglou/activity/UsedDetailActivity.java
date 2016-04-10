@@ -96,8 +96,8 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
 
                 case 1223:
                     Intent intent3=new Intent(UsedDetailActivity.this,ShareFriendActivity.class);
-                    intent3.putExtra("tip","楼语二手分享");
-                    intent3.putExtra("content",entity.topic);
+                    intent3.putExtra("tip",entity.topic);
+                    intent3.putExtra("content","楼语，开启同楼交友新生活");
                     intent3.putExtra("tempUrl",Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id);
                     startActivity(intent3);
                     break;
@@ -115,7 +115,7 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
                     }else{
                         sendEdit.setHint("回复"+entities.get(flagIndex).publishUserNickname);
                     }
-                    imm.showSoftInput(sendEdit,0);
+                    imm.showSoftInput(sendEdit,InputMethodManager.SHOW_FORCED);
 //                    if (discussDialog==null){
 //                        discussDialog=new DiscussDialog(GroupDetailActivity.this,handler,-1,"");
 //                    }
@@ -205,7 +205,7 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
 
                 UMImage image = new UMImage(UsedDetailActivity.this,
                         BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-                ShareDialog dialog=new ShareDialog(UsedDetailActivity.this,handler,"楼语二手分享",entity.topic,Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id,image,umShareListener);
+                ShareDialog dialog=new ShareDialog(UsedDetailActivity.this,handler,entity.topic,"楼语，开启同楼交友新生活",Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id,image,umShareListener);
 
                 break;
 

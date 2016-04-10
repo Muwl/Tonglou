@@ -132,7 +132,7 @@ public class PPAdapter extends BaseAdapter {
         holder.graybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ToosUtils.CheckComInfo(context)) {
+//                if (ToosUtils.CheckComInfo(context)) {
                     if (!ShareDataTool.getUserId(context).equals(entities.get(position).publishUserId)) {
                         Message message = new Message();
                         message.what = PPActivity.ATTEN;
@@ -140,7 +140,7 @@ public class PPAdapter extends BaseAdapter {
                         handler.sendMessage(message);
                     } else {
                         ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
-                    }
+//                    }
                 }
             }
         });

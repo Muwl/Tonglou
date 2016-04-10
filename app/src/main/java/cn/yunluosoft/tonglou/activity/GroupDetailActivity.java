@@ -106,8 +106,8 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
 
                 case 1223:
                     Intent intent3=new Intent(GroupDetailActivity.this,ShareFriendActivity.class);
-                    intent3.putExtra("tip","楼语活动分享");
-                    intent3.putExtra("content",entity.topic);
+                    intent3.putExtra("tip",entity.topic);
+                    intent3.putExtra("content","楼语，开启同楼交友新生活");
                     intent3.putExtra("tempUrl",Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id);
                     startActivity(intent3);
                     break;
@@ -226,7 +226,7 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
         entities=new ArrayList<>();
 
 
-        getInfo();
+//        getInfo(1);
 
     }
     public void closePro() {
@@ -244,7 +244,7 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                 }
                 UMImage image = new UMImage(GroupDetailActivity.this,
                         BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-                ShareDialog dialog=new ShareDialog(GroupDetailActivity.this,handler,"楼语活动分享",entity.topic,Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id,image,umShareListener);
+                ShareDialog dialog=new ShareDialog(GroupDetailActivity.this,handler,entity.topic,"楼语，开启同楼交友新生活",Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id,image,umShareListener);
                 break;
 
             case R.id.groupdetail_send:
@@ -261,13 +261,19 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        getInfo(0);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     // 获取信息
-    private void getInfo() {
+    private void getInfo(final int flag) {
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("dynamicId",id);
@@ -301,7 +307,10 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                                 entity = state1.result;
                                 adapter = new GroupDetailAdapter(GroupDetailActivity.this, entities,entity, handler,customListView);
                                 customListView.setAdapter(adapter);
-                                getDynamic(1);
+                                if (flag==0){
+                                    getDynamic(1);
+                                }
+
                             } else {
                                 ToastUtils.displayShortToast(
                                         GroupDetailActivity.this,

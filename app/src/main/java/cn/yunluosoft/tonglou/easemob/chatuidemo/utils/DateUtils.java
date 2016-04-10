@@ -14,7 +14,7 @@ import com.easemob.util.TimeInfo;
 
 public class DateUtils {
 
-    private static final long INTERVAL_IN_MILLISECONDS = 30 * 1000;
+    private static final long INTERVAL_IN_MILLISECONDS = 3*60 * 1000;
 
     public static String getTimestampString(Date messageDate) {
         Locale curLocale = HXSDKHelper.getInstance().getAppContext().getResources().getConfiguration().locale;

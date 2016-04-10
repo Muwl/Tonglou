@@ -23,6 +23,7 @@ public class ConstantWithfloorEntity implements Serializable {
 	public String companyName;
 	public String affectiveState;
 	public String hobby;
+	public String constellation;
 	
 	
 }

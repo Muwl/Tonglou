@@ -34,6 +34,9 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroupManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.lidroid.xutils.HttpUtils;
@@ -368,7 +371,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		Gson gson = new Gson();
 		rp.addBodyParameter("info",
 				ToosUtils.getEncrypt(gson.toJson(registerEntity)));
-		LogManager.LogShow("---",ToosUtils.getEncrypt(gson.toJson(registerEntity)),LogManager.ERROR);
+		LogManager.LogShow("---", ToosUtils.getEncrypt(gson.toJson(registerEntity)), LogManager.ERROR);
 		HttpUtils utils = new HttpUtils();
 		utils.configTimeout(20000);
 		utils.send(HttpMethod.POST, Constant.ROOT_PATH + "/v1/user/register",
@@ -404,11 +407,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 										entity.imUsername, entity.imPassword);
 								ShareDataTool
 										.SaveFlag(RegisterActivity.this, 0);
-								ToastUtils.displayShortToast(
-										RegisterActivity.this, "注册成功，请选择楼宇");
-								Intent intent = new Intent(RegisterActivity.this,LocationSelActivity.class);
-								intent.putExtra("flag", 0);
-								startActivity(intent);
+
+								loginHX(entity.imUsername, entity.imPassword);
 
 							} else {
 								ToastUtils.displayShortToast(
@@ -424,5 +424,71 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 				});
 
 	}
+
+
+
+	private void loginHX(final String currentUsername,
+						 final String currentPassword) {
+		pro.setVisibility(View.VISIBLE);
+		EMChatManager.getInstance().login(currentUsername, currentPassword,
+				new EMCallBack() {
+					@Override
+					public void onSuccess() {
+//						 pro.setVisibility(View.GONE);
+						// 登陆成功，保存用户名密码
+						MyApplication.getInstance()
+								.setUserName(currentUsername);
+						MyApplication.getInstance()
+								.setPassword(currentPassword);
+
+						try {
+							// pro.setVisibility(View.GONE);
+							// ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
+							// ** manually load all local groups and
+							// conversations in case we are auto login
+							EMChatManager.getInstance().updateCurrentUserNick(
+									ShareDataTool
+											.getNickname(RegisterActivity.this));
+							EMGroupManager.getInstance().loadAllGroups();
+							EMChatManager.getInstance().loadAllConversations();
+						} catch (Exception e) {
+							e.printStackTrace();
+							// 取好友或者群聊失败，不让进入主页面
+							runOnUiThread(new Runnable() {
+								public void run() {
+									MyApplication.getInstance().logout(null);
+								}
+							});
+							return;
+						}
+
+						// 进入主页面
+						LogManager.LogShow("-----", "登录成功", LogManager.ERROR);
+//						ToastUtils.displayShortToast(
+//								RegisterActivity.this, "注册成功，请选择楼宇");
+						Intent intent = new Intent(RegisterActivity.this,LocationSelActivity.class);
+						intent.putExtra("flag", 0);
+						startActivity(intent);
+						finish();
+					}
+
+					@Override
+					public void onProgress(int progress, String status) {
+					}
+
+					@Override
+					public void onError(final int code, final String message) {
+
+						runOnUiThread(new Runnable() {
+							public void run() {
+								pro.setVisibility(View.GONE);
+
+							}
+						});
+					}
+				});
+
+	}
+
 
 }

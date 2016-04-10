@@ -22,7 +22,7 @@
                 android:id="@+id/constact_head_birth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="生日：1991-12-11"
+                android:text="星座："
                 android:textColor="@color/white"
                 android:textSize="@dimen/second_font" />
 

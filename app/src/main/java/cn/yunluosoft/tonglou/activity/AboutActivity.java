@@ -34,7 +34,7 @@ public class AboutActivity extends BaseActivity implements OnClickListener {
 		back = (ImageView) findViewById(R.id.title_back);
 		title = (TextView) findViewById(R.id.title_title);
 		back.setOnClickListener(this);
-		title.setText("关于我们");
+		title.setText("关于楼语");
 
 		webView = (WebView) findViewById(R.id.about_webview);
 		WebSettings wSet = webView.getSettings();

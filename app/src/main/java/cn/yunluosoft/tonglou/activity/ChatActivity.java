@@ -1095,7 +1095,9 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 	 * @param
 	 */
 	public void sendText(String content) {
-
+		if (ToosUtils.isStringEmpty(content) || ToosUtils.isStringEmpty(content.trim())){
+			return;
+		}
 		if (content.length() > 0) {
 			EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
 			// 如果是群聊，设置chattype,默认是单聊

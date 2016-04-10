@@ -46,6 +46,8 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
 
     private View tiemView;
 
+    private TextView delcontent;
+
     private TextView time;
 
     private int width;
@@ -105,6 +107,7 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
         tiemView=findViewById(R.id.publish_help_timeview);
         time= (TextView) findViewById(R.id.publish_help_time);
         pro = findViewById(R.id.publish_help_pro);
+        delcontent= (TextView) findViewById(R.id.publish_help_delcontent);
         group = (RadioGroup) findViewById(R.id.title_group);
         lef = (RadioButton) findViewById(R.id.title_rb_lef);
         rig = (RadioButton) findViewById(R.id.title_rb_rig);
@@ -119,11 +122,29 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
         rig.setText("发布自荐");
         width = DensityUtil.getScreenWidth(this);
         group.setVisibility(View.VISIBLE);
+
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId==R.id.title_rb_lef){
+                    name.setHint("求帮+内容（10字之内）");
+                    delcontent.setText("请求帮助");
+                    detail.setHint("描述需要帮助的内容（100字之内）");
+                }else{
+                    name.setHint("自荐+内容（10字之内）");
+                    delcontent.setText("我来帮助");
+                    detail.setHint("描述需要帮助的内容（100字之内）");
+                }
+            }
+        });
+
         if (flag==0){
             group.check(R.id.title_rb_lef);
         }else{
             group.check(R.id.title_rb_rig);
         }
+
+
 
 
     }

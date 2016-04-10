@@ -40,7 +40,7 @@ public class CheckDialog extends Dialog implements
 		text = (TextView) findViewById(R.id.custom_dialog_text);
 		ok = (TextView) findViewById(R.id.custom_dialog_ok);
 		cancel = (TextView) findViewById(R.id.custom_dialog_cancel);
-		text.setText("您还没完善您的个人信息不能进行下一步，请先完善");
+		text.setText("完善资料，开启缤纷生活");
 		ok.setText("去完善");
 
 

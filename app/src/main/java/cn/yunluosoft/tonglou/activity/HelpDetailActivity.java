@@ -97,8 +97,9 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
 
                 case 1223:
                     Intent intent3=new Intent(HelpDetailActivity.this,ShareFriendActivity.class);
-                    intent3.putExtra("tip","楼语帮帮分享");
-                    intent3.putExtra("content",entity.topic);
+                    intent3.putExtra("tip",entity.topic);
+//                    intent3.putExtra("content",entity.topic);
+                    intent3.putExtra("content","楼语，开启同楼交友新生活");
                     intent3.putExtra("tempUrl",Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id);
                     startActivity(intent3);
                     break;
@@ -210,7 +211,7 @@ public class HelpDetailActivity extends BaseActivity implements View.OnClickList
                 }
                 UMImage image = new UMImage(HelpDetailActivity.this,
                         BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-                ShareDialog dialog=new ShareDialog(HelpDetailActivity.this,handler,"楼语帮帮分享",entity.topic,Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id,image,umShareListener);
+                ShareDialog dialog=new ShareDialog(HelpDetailActivity.this,handler,entity.topic,"楼语，开启同楼交友新生活",Constant.ROOT_PATH+"/share/dynamic?dynamicId="+entity.id,image,umShareListener);
                 break;
 
 

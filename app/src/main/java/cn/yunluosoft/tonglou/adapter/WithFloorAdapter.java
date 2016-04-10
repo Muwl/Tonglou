@@ -136,9 +136,31 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
             holder1.pp.setOnClickListener(this);
             holder1.help.setOnClickListener(this);
         } else if (type == type1) {
-            bitmapUtils.display(holder.icon, entities.get(position-1).publishUserIcon);
-            holder.name.setText(entities.get(position-1).publishUserNickname);
-            holder.content.setText(entities.get(position-1).detail);
+            bitmapUtils.display(holder.icon, entities.get(position - 1).publishUserIcon);
+
+            holder.name.setText(entities.get(position - 1).publishUserNickname);
+            if("0".equals(entities.get(position-1).modelType)){
+                holder.content.setText("活动："+entities.get(position-1).detail);
+            }else if("1".equals(entities.get(position-1).modelType)){
+                if ("0".equals(entities.get(position-1).supplyType)){
+                    holder.content.setText("转让："+entities.get(position-1).detail);
+                }else{
+                    holder.content.setText("求购："+entities.get(position-1).detail);
+                }
+
+            }else if("2".equals(entities.get(position-1).modelType)){
+                if ("0".equals(entities.get(position-1).supplyType)){
+                    holder.content.setText("车主："+entities.get(position-1).detail);
+                }else{
+                    holder.content.setText("求带："+entities.get(position-1).detail);
+                }
+            }else if("3".equals(entities.get(position-1).modelType)){
+                if ("0".equals(entities.get(position-1).supplyType)){
+                    holder.content.setText("求帮："+entities.get(position-1).detail);
+                }else{
+                    holder.content.setText("自荐："+entities.get(position-1).detail);
+                }
+            }
             holder.tip.setText(entities.get(position-1).topic);
             holder.time.setText(entities.get(position-1).createDate);
             if ("0".equals(entities.get(position-1).modelType) || !entities.get(position-1).publishUserId.equals(ShareDataTool.getUserId(context))) {
@@ -193,6 +215,12 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
                 });
 
                 if ("1".equals(entities.get(position-1).isInGroup) && "0".equals(entities.get(position-1).modelType)) {
+                    if (ToosUtils.isStringEmpty(entities.get(position-1).planPeopleNum)){
+                        entities.get(position-1).planPeopleNum="0";
+                    }
+                    if (ToosUtils.isStringEmpty(entities.get(position-1).groupNum)){
+                        entities.get(position-1).groupNum="0";
+                    }
                     if ("0".equals(entities.get(position-1).applyState) && Integer.valueOf(entities.get(position-1).planPeopleNum) <= Integer.valueOf(entities.get(position-1).groupNum)) {
                         holder.bluetext.setText("已结束");
                         holder.blueimage.setImageResource(R.mipmap.end);
@@ -227,7 +255,7 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
             holder.graybtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (ToosUtils.CheckComInfo(context)) {
+//                    if (ToosUtils.CheckComInfo(context)) {
                         if (!ShareDataTool.getUserId(context).equals(entities.get(position - 1).publishUserId)) {
                             Message message = new Message();
                             message.what = WithFloorFragment.ATTEN;
@@ -236,7 +264,7 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
                         } else {
                             ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
                         }
-                    }
+//                    }
                 }
             });
 

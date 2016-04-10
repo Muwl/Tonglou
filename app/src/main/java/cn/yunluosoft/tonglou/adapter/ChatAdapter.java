@@ -778,10 +778,12 @@ public class ChatAdapter extends BaseAdapter {
 				textView.setText(itemStr);
 				textView.setTextSize(15);
 				try {
-					XmlPullParser xrp = context.getResources().getXml(
-							R.drawable.menu_msg_text_color);
-					textView.setTextColor(ColorStateList.createFromXml(
-							context.getResources(), xrp));
+					ColorStateList csl=(ColorStateList)context.getResources().getColorStateList(R.color.menu_msg_text_color);
+//					XmlPullParser xrp = context.getResources().getXml(
+//							R.drawable.menu_msg_text_color);
+//					textView.setTextColor(ColorStateList.createFromXml(
+//							context.getResources(), xrp));
+					textView.setTextColor(csl);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -967,7 +969,7 @@ public class ChatAdapter extends BaseAdapter {
 										activity.getString(R.string.send_fail)
 												+ activity
 														.getString(R.string.connect_failuer_toast),
-										0).show();
+										Toast.LENGTH_SHORT).show();
 								timer.cancel();
 							}
 
@@ -1103,7 +1105,7 @@ public class ChatAdapter extends BaseAdapter {
 										activity.getString(R.string.send_fail)
 												+ activity
 														.getString(R.string.connect_failuer_toast),
-										0).show();
+										Toast.LENGTH_SHORT).show();
 								timer.cancel();
 							}
 
@@ -1156,11 +1158,12 @@ public class ChatAdapter extends BaseAdapter {
 						.getMsgId()) && VoicePlayClickListener.isPlaying) {
 			AnimationDrawable voiceAnimation;
 			if (message.direct == Direct.RECEIVE) {
-				holder.iv.setImageResource(R.anim.voice_from_icon);
+				holder.iv.setBackgroundResource(R.drawable.voice_from_icon);
+//				holder.iv.setImageResource(R.anim.voice_from_icon);
 			} else {
-				holder.iv.setImageResource(R.anim.voice_to_icon);
+				holder.iv.setBackgroundResource(R.drawable.voice_to_icon);
 			}
-			voiceAnimation = (AnimationDrawable) holder.iv.getDrawable();
+			voiceAnimation = (AnimationDrawable) holder.iv.getBackground();
 			voiceAnimation.start();
 		} else {
 			if (message.direct == Direct.RECEIVE) {
@@ -1341,7 +1344,7 @@ public class ChatAdapter extends BaseAdapter {
 										activity.getString(R.string.send_fail)
 												+ activity
 														.getString(R.string.connect_failuer_toast),
-										0).show();
+										Toast.LENGTH_SHORT).show();
 								timer.cancel();
 							}
 
@@ -1412,7 +1415,7 @@ public class ChatAdapter extends BaseAdapter {
 	 * 
 	 * @param message
 	 * @param holder
-	 * @param position
+	 * @param
 	 */
 	public void sendMsgInBackground(final EMMessage message,
 			final ViewHolder holder) {
@@ -1541,7 +1544,7 @@ public class ChatAdapter extends BaseAdapter {
 									activity.getString(R.string.send_fail)
 											+ activity
 													.getString(R.string.connect_failuer_toast),
-									0).show();
+									Toast.LENGTH_SHORT).show();
 						}
 					});
 				}
@@ -1600,21 +1603,21 @@ public class ChatAdapter extends BaseAdapter {
 								activity.getString(R.string.send_fail)
 										+ activity
 												.getString(R.string.error_send_invalid_content),
-								0).show();
+								Toast.LENGTH_SHORT).show();
 					} else if (message.getError() == EMError.MESSAGE_SEND_NOT_IN_THE_GROUP) {
 						Toast.makeText(
 								activity,
 								activity.getString(R.string.send_fail)
 										+ activity
 												.getString(R.string.error_send_not_in_the_group),
-								0).show();
+								Toast.LENGTH_SHORT).show();
 					} else {
 						Toast.makeText(
 								activity,
 								activity.getString(R.string.send_fail)
 										+ activity
 												.getString(R.string.connect_failuer_toast),
-								0).show();
+								Toast.LENGTH_SHORT).show();
 					}
 				}
 
@@ -1628,7 +1631,6 @@ public class ChatAdapter extends BaseAdapter {
 	 * 
 	 * @param thumbernailPath
 	 * @param iv
-	 * @param position
 	 * @return the image exists or not
 	 */
 	private boolean showImageView(final String thumbernailPath,

@@ -2,7 +2,7 @@ package cn.yunluosoft.tonglou.utils;
 
 public class Constant {
 
-	public static final String ROOT_PATH = "http://120.25.225.224:8081/louyu";
+	public static final String ROOT_PATH = "http://120.25.225.224:8080/louyu";
 //	public static final String ROOT_PATH = "http://192.168.1.10:8080/louyu";
 
 

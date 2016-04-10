@@ -255,13 +255,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								ShareDataTool.SaveFlag(LoginActivity.this, 0);
 //								ToastUtils.displayShortToast(
 //										LoginActivity.this, "登陆成功，请完善信息");
-								if (ToosUtils.isStringEmpty(entity.buildingId)){
-									Intent intent = new Intent(LoginActivity.this,LocationSelActivity.class);
-									intent.putExtra("flag", 0);
-									startActivity(intent);
-								}else{
-									loginHX(entity.imUsername, entity.imPassword);
-								}
+
+								loginHX(entity.imUsername, entity.imPassword);
 
 							} else {
 								ToastUtils.displayShortToast(
@@ -346,8 +341,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						// 进入主页面
 						LogManager.LogShow("-----", "登录成功", LogManager.ERROR);
 
-						startActivity(new Intent(LoginActivity.this,
-								MainActivity.class));
+						if (ToosUtils.isStringEmpty(ShareDataTool.getBuildingId(LoginActivity.this))){
+							Intent intent = new Intent(LoginActivity.this,LocationSelActivity.class);
+							intent.putExtra("flag", 0);
+							startActivity(intent);
+						}else {
+
+							startActivity(new Intent(LoginActivity.this,
+									MainActivity.class));
+
+						}
 						finish();
 					}
 

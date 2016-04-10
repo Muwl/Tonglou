@@ -50,6 +50,7 @@
 
 
                 <TextView
+                    android:id="@+id/publish_pp_delcontent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
@@ -104,7 +105,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:background="@drawable/groupdetail_edit"
-                        android:hint="输入地点"
+                        android:hint="地点"
                         android:padding="12dp"
                         android:singleLine="true"
                         android:textColor="#000"
@@ -126,7 +127,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:background="@drawable/groupdetail_edit"
-                        android:hint="输入地点"
+                        android:hint="地点"
                         android:padding="10dp"
                         android:maxLength="12"
                         android:singleLine="true"

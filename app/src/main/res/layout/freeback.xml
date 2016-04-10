@@ -31,7 +31,7 @@
                     android:gravity="top"
                     android:layout_marginTop="10dp"
                     android:padding="15dp"
-                    android:hint="请输入反馈意见"
+                    android:hint="您的宝贵意见，是我们前进的动力。"
                     android:lineSpacingMultiplier="1.5"
                     android:lines="5"
                     android:textColor="#000"

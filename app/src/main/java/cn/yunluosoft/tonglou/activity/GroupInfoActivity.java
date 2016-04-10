@@ -136,7 +136,7 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
                 break;
 
             case R.id.groupinfo_exit:
-                CustomeDialog dialog=new CustomeDialog(GroupInfoActivity.this,handler,"确定要退出群？",-1,-1,null);
+                CustomeDialog dialog=new CustomeDialog(GroupInfoActivity.this,handler,"删除聊天群活动也会关闭，是否删除？",-1,-1,null);
 
                 break;
 

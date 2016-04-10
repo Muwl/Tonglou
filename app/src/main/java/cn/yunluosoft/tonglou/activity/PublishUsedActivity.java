@@ -74,6 +74,8 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
 
     private PublishUsedAdapter adapter;
 
+    private TextView delcontent;
+
     private int width;
 
     private RadioGroup group;
@@ -195,6 +197,7 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
         detail = (EditText) findViewById(R.id.publish_used_content);
         gridView = (MyGridView) findViewById(R.id.publish_used_grid);
         ok = (TextView) findViewById(R.id.publish_used_ok);
+        delcontent= (TextView) findViewById(R.id.publish_used_delcontent);
         pro = findViewById(R.id.publish_used_pro);
         group = (RadioGroup) findViewById(R.id.title_group);
         lef = (RadioButton) findViewById(R.id.title_rb_lef);
@@ -209,6 +212,22 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
         adapter = new PublishUsedAdapter(this, width, files);
         gridView.setAdapter(adapter);
         group.setVisibility(View.VISIBLE);
+
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.title_rb_lef) {
+                    name.setHint("转让+宝贝名称（10字之内）");
+                    delcontent.setText("宝贝详情");
+                    detail.setHint("宝贝详情+出售价格+交易方式+……（100字之内）");
+                } else {
+                    name.setHint("求购+宝贝名称（10字之内）");
+                    delcontent.setText("求购详情");
+                    detail.setHint("求购详情+求购价格+交易方式+……（100字之内）");
+                }
+            }
+        });
+
         if (flag==0){
             group.check(R.id.title_rb_lef);
         }else{

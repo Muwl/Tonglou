@@ -89,13 +89,43 @@
                         android:background="@color/transparent"
                         android:layout_marginLeft="15dp"
                         android:gravity="right"
-                        android:text="奔奥"
                         android:hint="请输入"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
 
 
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="7dp" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="性别"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                    <ToggleButton
+                        android:id="@+id/person_data_sex"
+                        android:layout_width="58dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/switch_btn"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
                 </LinearLayout>
 
                 <ImageView
@@ -111,7 +141,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/item_bg"
                     android:clickable="true"
-                    android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:padding="10dp" >
 
@@ -128,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
-                        android:text="1990-01-01"
+                        android:hint="请选择"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
 
@@ -140,48 +169,10 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_marginLeft="10dp"
                     android:background="@color/dicider_col" />
 
-                <LinearLayout
-                    android:id="@+id/person_data_sexview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/item_bg"
-                    android:clickable="true"
-                    android:gravity="center_vertical"
-                    android:padding="10dp" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="性别"
-                        android:textColor="#000"
-                        android:textSize="@dimen/second_font" />
-
-                    <TextView
-                        android:id="@+id/person_data_sex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="10dp"
-                        android:text="女"
-                        android:textColor="#000"
-                        android:textSize="@dimen/second_font" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/go" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@color/dicider_col" />
 
                 <LinearLayout
                     android:id="@+id/person_data_tradview"
@@ -205,7 +196,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
-                        android:text="IT行业"
+                        android:hint="请选择"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
 
@@ -242,11 +233,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingRight="20dp"
-                        android:text="前台"
                         android:layout_marginLeft="15dp"
                         android:background="@color/transparent"
                         android:gravity="right"
-                        android:hint="请输入"
+                        android:hint="请输入职位"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
 
@@ -279,11 +269,10 @@
                         android:id="@+id/person_data_sign"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="我很懒"
                         android:paddingRight="20dp"
                         android:background="@color/transparent"
                         android:gravity="right"
-                        android:hint="请输入"
+                        android:hint="请输入个性签名"
                         android:layout_marginLeft="15dp"
                         android:singleLine="true"
                         android:textColor="#000"
@@ -297,6 +286,122 @@
                     android:layout_height="1px"
                     android:background="@color/dicider_col" />
 
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/dicider_col" />
+
+
+                <LinearLayout
+                    android:id="@+id/person_data_emotionview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_bg"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="情感"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                    <TextView
+                        android:id="@+id/person_data_emotion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:hint="请选择"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/go" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/dicider_col" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="职位"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                    <EditText
+                        android:id="@+id/person_data_interest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@color/transparent"
+                        android:gravity="right"
+                        android:hint="请输入兴趣"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/dicider_col" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:clickable="true"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="单位名称"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                    <EditText
+                        android:id="@+id/person_data_unit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@color/transparent"
+                        android:gravity="right"
+                        android:hint="请输入单位名称"
+                        android:textColor="#000"
+                        android:textSize="@dimen/second_font" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/dicider_col" />
 
             </LinearLayout>
         </ScrollView>

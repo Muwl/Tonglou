@@ -2,7 +2,9 @@ package cn.yunluosoft.tonglou.activity;
 
 import java.io.File;
 
+import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroupManager;
 import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
@@ -25,9 +27,11 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.dialog.DateSelectDialog;
+import cn.yunluosoft.tonglou.dialog.EmotionDialog;
 import cn.yunluosoft.tonglou.dialog.PhotoDialog;
 import cn.yunluosoft.tonglou.dialog.SexSelectDialog;
 import cn.yunluosoft.tonglou.dialog.TradeSelectDialog;
@@ -37,6 +41,7 @@ import cn.yunluosoft.tonglou.model.PersonInfoState;
 import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
+import cn.yunluosoft.tonglou.utils.MyApplication;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.TimeUtils;
 import cn.yunluosoft.tonglou.utils.ToastUtils;
@@ -60,13 +65,11 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 
     private EditText name;
 
-    private TextView sex;
+    private ToggleButton sex;
 
     private TextView birth;
 
 //    private View nameView;
-
-    private View sexView;
 
     private View iconView;
 
@@ -102,6 +105,15 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 
     private String sdate;
 
+    private TextView emotion;
+
+    private View emotionView;
+
+    private EditText interest;
+
+    private EditText unit;
+
+
     private int emotionFlag;
 
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
@@ -131,6 +143,18 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 //                    birth.setText(sdate);
                     birth.setText(sdate);
                     break;
+
+                case 71:
+                    emotionFlag = Constant.EMOTION_SERCET;
+                    emotion.setText("保密");
+                    break;
+                case 72:
+                    emotionFlag = Constant.EMOTION_MARRIED;
+                    emotion.setText("已婚");
+                    break;
+                case 73:
+                    emotionFlag = Constant.EMOTION_NOMARRIED;
+                    emotion.setText("未婚");
 
                 case 82:
                     Intent intent = new Intent(Intent.ACTION_PICK);
@@ -164,7 +188,12 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         sdate = TimeUtils.getDate();
         bitmapUtils = new BitmapUtils(this);
         initView();
-        getInfo();
+        if (!ToosUtils.isStringEmpty(ShareDataTool.getNickname(this))){
+            getInfo();
+        }else{
+            gv.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @SuppressLint("CutPasteId")
@@ -175,11 +204,14 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         icon = (CircleImageView) findViewById(R.id.person_data_icon);
         iconView = findViewById(R.id.person_data_iconview);
         name = (EditText) findViewById(R.id.person_data_name);
-        sex = (TextView) findViewById(R.id.person_data_sex);
+        sex = (ToggleButton) findViewById(R.id.person_data_sex);
+        emotion = (TextView) findViewById(R.id.person_data_emotion);
+        emotionView = findViewById(R.id.person_data_emotionview);
+        interest = (EditText) findViewById(R.id.person_data_interest);
+        unit = (EditText) findViewById(R.id.person_data_unit);
         birth = (TextView) findViewById(R.id.person_data_birth);
         birthView = findViewById(R.id.person_data_birthview);
 //        nameView = findViewById(R.id.person_data_nameview);
-        sexView = findViewById(R.id.person_data_sexview);
 //        jobView = findViewById(R.id.person_data_jobview);
 //        signatureView = findViewById(R.id.person_data_signview);
         tradeView = findViewById(R.id.person_data_tradview);
@@ -197,8 +229,8 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         iconView.setOnClickListener(this);
         birthView.setOnClickListener(this);
         tradeView.setOnClickListener(this);
+        emotionView.setOnClickListener(this);
 //        nameView.setOnClickListener(this);
-        sexView.setOnClickListener(this);
 //        jobView.setOnClickListener(this);
 //        signatureView.setOnClickListener(this);
         rig.setOnClickListener(this);
@@ -214,9 +246,7 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                 break;
 
             case R.id.title_rig:
-                if (info==null){
-                    return;
-                }
+
                 if (checkInput()){
                     sendUpdate();
                 }
@@ -248,11 +278,16 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 //                // startActivity(intent);
 //                break;
 
-            case R.id.person_data_sexview:
-                SexSelectDialog selectDialog3 = new SexSelectDialog(
-                        PersonDataActivity.this, handler,
-                        ToosUtils.getTextContent(sex));
+//            case R.id.person_data_sexview:
+//                SexSelectDialog selectDialog3 = new SexSelectDialog(
+//                        PersonDataActivity.this, handler,
+//                        ToosUtils.getTextContent(sex));
+//
+//                break;
 
+            case R.id.person_data_emotionview:
+                EmotionDialog emotionDialog = new EmotionDialog(
+                        PersonDataActivity.this, handler, emotionFlag);
                 break;
 
 //            case R.id.person_data_jobview:
@@ -422,9 +457,9 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         bitmapUtils.display(icon, info.icon);
         name.setText(info.nickname);
         if (Constant.SEX_MAN.equals(info.sex)) {
-            sex.setText("男");
+            sex.setChecked(true);
         } else {
-            sex.setText("女");
+            sex.setChecked(false);
         }
         birth.setText(info.birthday);
         sdate = info.birthday;
@@ -432,6 +467,26 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         job.setText(info.job);
         if (!ToosUtils.isStringEmpty(info.signature)) {
             signature.setText(info.signature);
+        }
+
+        if (!ToosUtils.isStringEmpty(info.affectiveState)) {
+            emotionFlag = Integer.valueOf(info.affectiveState);
+            if (String.valueOf(Constant.EMOTION_MARRIED).equals(
+                    info.affectiveState)) {
+                emotion.setText("已婚");
+            } else if (String.valueOf(Constant.EMOTION_NOMARRIED).equals(
+                    info.affectiveState)) {
+                emotion.setText("未婚");
+            } else {
+                emotion.setText("保密");
+            }
+        }
+
+        if (!ToosUtils.isStringEmpty(info.hobby)) {
+            interest.setText(info.hobby);
+        }
+        if (!ToosUtils.isStringEmpty(info.companyName)) {
+            unit.setText(info.companyName);
         }
 
 //        if (!ToosUtils.isStringEmpty(info.hobby)) {
@@ -466,6 +521,16 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
             ToastUtils.displayShortToast(this, "昵称不能为空");
             return false;
         }
+
+        if (ToosUtils.isTextEmpty(birth)) {
+            ToastUtils.displayShortToast(this, "生日不能为空");
+            return false;
+        }
+
+        if (bitmap==null && (info==null || (info!=null && ToosUtils.isStringEmpty(info.icon)))) {
+            ToastUtils.displayShortToast(this, "生日不能为空");
+            return false;
+        }
         if (ToosUtils.isTextEmpty(job)) {
             ToastUtils.displayShortToast(this, "职位不能为空");
             return false;
@@ -478,8 +543,11 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         RequestParams rp = new RequestParams();
         final Gson gson = new Gson();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
+        if (info==null){
+            info=new PersonInfo();
+        }
         info.nickname = ToosUtils.getTextContent(name);
-        if ("男".equals(ToosUtils.getTextContent(sex))) {
+        if (sex.isChecked()) {
             info.sex = Constant.SEX_MAN;
         } else {
             info.sex = Constant.SEX_WOMEN;
@@ -487,7 +555,14 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
         info.birthday = ToosUtils.getTextContent(birth);
         info.industry = ToosUtils.getTextContent(trade);
         info.job = ToosUtils.getTextContent(job);
+        if (ToosUtils.isTextEmpty(emotion)) {
+            info.affectiveState = "";
+        } else {
+            info.affectiveState = String.valueOf(emotionFlag);
+        }
         info.signature = ToosUtils.getTextContent(signature);
+        info.hobby = ToosUtils.getTextContent(interest);
+        info.companyName = ToosUtils.getTextContent(unit);
         rp.addBodyParameter("info", gson.toJson(info));
         if (bitmap != null) {
             File file = null;
@@ -574,6 +649,7 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                 });
 
     }
+
 
 
 }
