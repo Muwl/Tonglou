@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import cn.yunluosoft.tonglou.R;
@@ -25,10 +26,12 @@ public class AddMarkDialog extends Dialog implements
 	private TextView ok;
 	private TextView cancel;
 	private EditText editText;
+	InputMethodManager imm;
 
 	public AddMarkDialog(Context context, Handler handler) {
 		super(context, R.style.dialog2);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 		this.handler = handler;
 		this.context = context;
 		setContentView(R.layout.addmark_dialog);
@@ -62,10 +65,12 @@ public class AddMarkDialog extends Dialog implements
 			message.what = 104;
 			message.obj=ToosUtils.getTextContent(editText);
 			handler.sendMessage(message);
+			imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.SHOW_FORCED);
 			dismiss();
 			break;
 		case R.id.addmark_dialog_cancel:
 			handler.sendEmptyMessage(105);
+			imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.SHOW_FORCED);
 			dismiss();
 			break;
 		default:

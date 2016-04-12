@@ -71,6 +71,8 @@ public class GalleryAdapter extends BaseAdapter {
 					.findViewById(R.id.constact_head_icon);
 			TextView name = (TextView) convertView
 					.findViewById(R.id.constact_head_name);
+			ImageView sex = (ImageView) convertView
+					.findViewById(R.id.constact_head_sex);
 			TextView job = (TextView) convertView
 					.findViewById(R.id.fwithfloor_item_job);
 			TextView tarde = (TextView) convertView
@@ -96,7 +98,11 @@ public class GalleryAdapter extends BaseAdapter {
 			});
 			bitmapUtils.display(icon, floorEntity.icon);
 			name.setText(floorEntity.nickname);
-
+			if (Constant.SEX_MAN.equals(floorEntity.sex)){
+				sex.setImageResource(R.mipmap.icon_sex_male);
+			}else{
+				sex.setImageResource(R.mipmap.icon_sex_female);
+			}
 			job.setText(floorEntity.job);
 			tarde.setText(floorEntity.industry);
 			if (!ToosUtils.isStringEmpty(floorEntity.signature)) {

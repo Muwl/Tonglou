@@ -133,15 +133,15 @@ public class PPAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 //                if (ToosUtils.CheckComInfo(context)) {
-                    if (!ShareDataTool.getUserId(context).equals(entities.get(position).publishUserId)) {
+//                    if (!ShareDataTool.getUserId(context).equals(entities.get(position).publishUserId)) {
                         Message message = new Message();
                         message.what = PPActivity.ATTEN;
                         message.obj = position;
                         handler.sendMessage(message);
-                    } else {
-                        ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
-//                    }
-                }
+//                    } else {
+//                        ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
+////                    }
+//                }
             }
         });
         holder.praise.setText(entities.get(position).praiseNum);

@@ -163,7 +163,7 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
             }
             holder.tip.setText(entities.get(position-1).topic);
             holder.time.setText(entities.get(position-1).createDate);
-            if ("0".equals(entities.get(position-1).modelType) || !entities.get(position-1).publishUserId.equals(ShareDataTool.getUserId(context))) {
+//            if ("0".equals(entities.get(position-1).modelType) || !entities.get(position-1).publishUserId.equals(ShareDataTool.getUserId(context))) {
                 holder.bluebtn.setBackgroundResource(R.drawable.blue_chat);
                 holder.bluebtn.setClickable(true);
                 holder.bluebtn.setOnClickListener(new View.OnClickListener() {
@@ -236,12 +236,12 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
                     holder.bluetext.setText("聊聊");
                     holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
                 }
-            } else {
-                holder.bluetext.setText("聊聊");
-                holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
-                holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
-                holder.bluebtn.setClickable(false);
-            }
+//            } else {
+//                holder.bluetext.setText("聊聊");
+//                holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
+//                holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
+//                holder.bluebtn.setClickable(false);
+//            }
 
 //        holder.graybtn.setTag("graybtn"+position);
 //        holder.graytext.setTag("graytext"+position);
@@ -256,14 +256,14 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
                 @Override
                 public void onClick(View view) {
 //                    if (ToosUtils.CheckComInfo(context)) {
-                        if (!ShareDataTool.getUserId(context).equals(entities.get(position - 1).publishUserId)) {
+//                        if (!ShareDataTool.getUserId(context).equals(entities.get(position - 1).publishUserId)) {
                             Message message = new Message();
                             message.what = WithFloorFragment.ATTEN;
                             message.obj = position - 1;
                             handler.sendMessage(message);
-                        } else {
-                            ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
-                        }
+//                        } else {
+//                            ToastUtils.displayShortToast(context, "不可以关注自己的发布！");
+//                        }
 //                    }
                 }
             });

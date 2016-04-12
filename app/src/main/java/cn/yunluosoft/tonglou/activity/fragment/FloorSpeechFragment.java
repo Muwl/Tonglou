@@ -118,7 +118,7 @@ public class FloorSpeechFragment extends Fragment {
         empty = view.findViewById(R.id.ffloorspeech_empty);
         empty_image = (ImageView) view.findViewById(R.id.empty_image);
         empty_text = (TextView) view.findViewById(R.id.empty_text);
-        title.setText("让整栋楼听到你的声音");
+        title.setText("楼语");
         return view;
     }
 

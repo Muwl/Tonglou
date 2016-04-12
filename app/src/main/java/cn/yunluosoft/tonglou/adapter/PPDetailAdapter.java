@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -218,7 +219,7 @@ public class PPDetailAdapter extends BaseAdapter {
             if (ToosUtils.isStringEmpty(entities.get(position-1).parentId) || entities.get(position-1).parentId.equals(entity.id) ){
                 holder1.name.setText(entities.get(position - 1).publishUserNickname);
             }else{
-                holder1.name.setText(entities.get(position - 1).publishUserNickname+"\u2000回复\u2000"+entities.get(position-1).targetUserNickname);
+                holder1.name.setText(Html.fromHtml(entities.get(position - 1).publishUserNickname + "\u2000<font color=\"#0076FF\">回复</font>\u2000" + entities.get(position - 1).targetUserNickname));
             }
             holder1.content.setText(entities.get(position-1).content);
             holder1.time.setText(entities.get(position-1).createDate);

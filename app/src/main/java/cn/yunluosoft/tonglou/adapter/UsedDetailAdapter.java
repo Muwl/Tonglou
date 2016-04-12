@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import cn.yunluosoft.tonglou.activity.PhotoShowActivity;
 import cn.yunluosoft.tonglou.activity.UsedDetailActivity;
 import cn.yunluosoft.tonglou.dialog.CustomeDialog;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
+import cn.yunluosoft.tonglou.model.ImageEntity;
 import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.model.ReplayEntity;
 import cn.yunluosoft.tonglou.model.User;
@@ -167,12 +169,15 @@ public class UsedDetailAdapter extends BaseAdapter {
             }
 
 
-            List<String> images=entity.images;
-            if (images==null){
-                images=new ArrayList<>();
+            List<ImageEntity> imageEntities=entity.images;
+            if (imageEntities==null){
+                imageEntities=new ArrayList<>();
             }
 
-
+           List<String> images=new ArrayList<>();
+            for (int i=0;i<imageEntities.size();i++){
+                images.add(imageEntities.get(i).img);
+            }
             holder.icon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -246,7 +251,7 @@ public class UsedDetailAdapter extends BaseAdapter {
             if (ToosUtils.isStringEmpty(entities.get(position-1).parentId) || entities.get(position-1).parentId.equals(entity.id) ){
                 holder1.name.setText(entities.get(position - 1).publishUserNickname);
             }else{
-                holder1.name.setText(entities.get(position - 1).publishUserNickname+"\u2000回复\u2000"+entities.get(position-1).targetUserNickname);
+                holder1.name.setText(Html.fromHtml(entities.get(position - 1).publishUserNickname + "\u2000<font color=\"#0076FF\">回复</font>\u2000" + entities.get(position - 1).targetUserNickname));
             }
             holder1.content.setText(entities.get(position-1).content);
             holder1.time.setText(entities.get(position-1).createDate);

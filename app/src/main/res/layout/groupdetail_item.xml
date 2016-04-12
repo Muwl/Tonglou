@@ -50,7 +50,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="12dp"
-            android:singleLine="true"
             android:textColor="#666666"
             android:textSize="@dimen/second_font"
             android:layout_marginTop="8dp"

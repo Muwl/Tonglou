@@ -185,7 +185,7 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
                 if (flag==0){
                     CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此关注？",position-1,-1,null);
                 }else{
-                    if ("0".equals(entities.get(position).modelType)){
+                    if ("0".equals(entities.get(position-1).modelType)){
                         CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"删除活动聊天群也会解散，是否删除？",position-1,-2,null);
                     }else{
                         CustomeDialog customeDialog=new CustomeDialog(MyfloorspeekActivity.this,handler,"确定要删除此发布？",position-1,-2,null);

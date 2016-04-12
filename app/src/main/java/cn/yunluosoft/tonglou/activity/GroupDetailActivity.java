@@ -122,7 +122,10 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                     }else{
                         sendEdit.setHint("回复"+entities.get(flagIndex).publishUserNickname);
                     }
-                    imm.showSoftInput(sendEdit, 0);
+                    sendEdit.setFocusable(true);
+                    sendEdit.setFocusableInTouchMode(true);
+                    sendEdit.requestFocus();
+                    imm.showSoftInput(sendEdit,InputMethodManager.SHOW_FORCED);
 //                    if (discussDialog==null){
 //                        discussDialog=new DiscussDialog(GroupDetailActivity.this,handler,-1,"");
 //                    }
@@ -683,7 +686,7 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                                     replayEntity.targetUserId=entities.get(position).publishUserId;
                                     replayEntity.targetUserNickname=entities.get(position).publishUserNickname;
                                     replayEntity.createDate= commentState.result.createDate;
-                                    entities.add(position + 1, replayEntity);
+                                    entities.add(0, replayEntity);
                                 }
                                 flagIndex=-1;
                                 sendEdit.setHint("请输入评论内容");

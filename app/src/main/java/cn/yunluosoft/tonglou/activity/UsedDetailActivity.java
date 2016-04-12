@@ -115,6 +115,9 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
                     }else{
                         sendEdit.setHint("回复"+entities.get(flagIndex).publishUserNickname);
                     }
+                    sendEdit.setFocusable(true);
+                    sendEdit.setFocusableInTouchMode(true);
+                    sendEdit.requestFocus();
                     imm.showSoftInput(sendEdit,InputMethodManager.SHOW_FORCED);
 //                    if (discussDialog==null){
 //                        discussDialog=new DiscussDialog(GroupDetailActivity.this,handler,-1,"");
@@ -521,7 +524,6 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
         }
         rp.addBodyParameter("dynamicId",entity.id);
         rp.addBodyParameter("content",temp);
-        rp.addBodyParameter("dynamicId", entity.id);
         String url="/v1_1_0/dynamicComment/save";
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
@@ -574,7 +576,8 @@ public class UsedDetailActivity extends BaseActivity implements View.OnClickList
                                     replayEntity.targetUserId=entities.get(position).publishUserId;
                                     replayEntity.targetUserNickname=entities.get(position).publishUserNickname;
                                     replayEntity.createDate=commentState.result.createDate;
-                                    entities.add(position + 1, replayEntity);
+//                                    entities.add(position + 1, replayEntity);
+                                    entities.add(0, replayEntity);
                                 }
                                 flagIndex=-1;
                                 sendEdit.setHint("请输入评论内容");

@@ -69,6 +69,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableLeft="@mipmap/pp_start"
+                            android:maxWidth="150dp"
                             android:drawablePadding="5dp"
                             android:text="玲珑大厦"
                             android:textColor="#666666"
@@ -89,6 +90,7 @@
                             android:drawableLeft="@mipmap/pp_stop"
                             android:drawablePadding="5dp"
                             android:text="宋家庄"
+                            android:maxWidth="150dp"
                             android:textColor="#666666"
                             android:textSize="@dimen/thrid_font" />
 

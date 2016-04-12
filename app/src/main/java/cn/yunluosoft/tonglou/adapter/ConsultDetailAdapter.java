@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -179,7 +180,7 @@ public class ConsultDetailAdapter extends BaseAdapter {
             if ("0".equals(entities.get(position - 1).type)){
                 holder1.name.setText(entities.get(position - 1).publishUserName);
             }else{
-                holder1.name.setText(entities.get(position - 1).publishUserName + "\u2000回复\u2000" + entities.get(position - 1).targetUserName);
+                holder1.name.setText(Html.fromHtml(entities.get(position - 1).publishUserName + "\u2000<font color=\"#0076FF\">回复</font>\u2000" + entities.get(position - 1).targetUserName));
             }
 
             if(Constant.PRAISE_OK.equals(entities.get(position - 1).isPraise)){
