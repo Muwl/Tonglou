@@ -78,9 +78,9 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
 
     private ConstactAdapter adapter;
 
-    private TextView conversate;
+    private View conversate;
 
-    private TextView add;
+    private View add;
 
     private View bomView;
 
@@ -174,8 +174,8 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
         remark = (ImageView) findViewById(R.id.constact_detail_remark);
         pro = findViewById(R.id.constact_detail_pro);
         gv = findViewById(R.id.constact_detail_gv);
-        conversate = (TextView) findViewById(R.id.constact_detail_conversate);
-        add = (TextView) findViewById(R.id.constact_detail_add);
+        conversate =  findViewById(R.id.constact_detail_conversate);
+        add = findViewById(R.id.constact_detail_add);
         bomView = findViewById(R.id.constact_detail_bom);
 
         customListView.setTitle(title);

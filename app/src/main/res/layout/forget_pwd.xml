@@ -96,6 +96,7 @@
                         android:layout_toLeftOf="@id/forgetpwd_getcode"
                         android:layout_toRightOf="@id/forgetpwd_text1"
                         android:background="@null"
+                        android:inputType="number"
                         android:gravity="center_vertical"
                         android:hint="请输入验证码"
                         android:textColor="#000"

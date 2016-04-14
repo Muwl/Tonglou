@@ -25,5 +25,10 @@
             android:id="@+id/fwithfloor_pro"
             layout="@layout/pro"
             android:visibility="gone" />
+
+        <include
+            android:id="@+id/fwithfloor_empty"
+            layout="@layout/empty"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

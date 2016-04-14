@@ -15,7 +15,7 @@ public class BPUtil {
 		return bpUtil;
 	}
 
-	private static final int DEFAULT_CODE_LENGTH = 6;
+	private static final int DEFAULT_CODE_LENGTH = 4;
 
 	private static int codeLength = DEFAULT_CODE_LENGTH;
 	

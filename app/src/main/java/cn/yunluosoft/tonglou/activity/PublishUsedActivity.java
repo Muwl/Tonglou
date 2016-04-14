@@ -217,11 +217,11 @@ public class PublishUsedActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.title_rb_lef) {
-                    name.setHint("转让+宝贝名称（10字之内）");
+                    name.setHint("宝贝名称（10字之内）");
                     delcontent.setText("宝贝详情");
                     detail.setHint("宝贝详情+出售价格+交易方式+……（100字之内）");
                 } else {
-                    name.setHint("求购+宝贝名称（10字之内）");
+                    name.setHint("宝贝名称（10字之内）");
                     delcontent.setText("求购详情");
                     detail.setHint("求购详情+求购价格+交易方式+……（100字之内）");
                 }

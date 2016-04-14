@@ -154,7 +154,10 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                     break;
                 case 73:
                     emotionFlag = Constant.EMOTION_NOMARRIED;
-                    emotion.setText("未婚");
+                    emotion.setText("单身");
+                case 74:
+                    emotionFlag = Constant.EMOTION_MARRIEING;
+                    emotion.setText("热恋");
 
                 case 82:
                     Intent intent = new Intent(Intent.ACTION_PICK);

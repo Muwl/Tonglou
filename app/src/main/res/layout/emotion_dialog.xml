@@ -16,9 +16,9 @@
         android:padding="0dp" >
 
         <RelativeLayout
-             android:id="@+id/emotion_dialog_secret"
-             android:clickable="true"
+            android:id="@+id/emotion_dialog_nomarried"
             android:layout_width="match_parent"
+            android:clickable="true"
             android:layout_height="wrap_content" >
 
             <TextView
@@ -28,18 +28,18 @@
                 android:gravity="center"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
-                android:text="保密"
+                android:text="单身"
                 android:textColor="#2d2d2f"
                 android:textSize="@dimen/second_font" />
 
             <ImageView
-                android:id="@+id/emotion_dialog_secretok"
+                android:id="@+id/emotion_dialog_nomarriedok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:visibility="invisible"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp"
+                android:visibility="invisible"
                 android:src="@drawable/emotion_ok" />
         </RelativeLayout>
 
@@ -47,6 +47,40 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="#c7c7c7" />
+
+        <RelativeLayout
+            android:id="@+id/emotion_dialog_nomarriing"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="热恋"
+                android:textColor="#2d2d2f"
+                android:textSize="@dimen/second_font" />
+
+            <ImageView
+                android:id="@+id/emotion_dialog_nomarriingok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:visibility="invisible"
+                android:src="@drawable/emotion_ok" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#c7c7c7" />
+
 
         <RelativeLayout
               android:id="@+id/emotion_dialog_married"
@@ -76,15 +110,17 @@
                 android:src="@drawable/emotion_ok" />
         </RelativeLayout>
 
+
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="#c7c7c7" />
 
         <RelativeLayout
-             android:id="@+id/emotion_dialog_nomarried"
+            android:id="@+id/emotion_dialog_secret"
+            android:clickable="true"
             android:layout_width="match_parent"
-             android:clickable="true"
             android:layout_height="wrap_content" >
 
             <TextView
@@ -94,20 +130,22 @@
                 android:gravity="center"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
-                android:text="未婚"
+                android:text="保密"
                 android:textColor="#2d2d2f"
                 android:textSize="@dimen/second_font" />
 
             <ImageView
-                android:id="@+id/emotion_dialog_nomarriedok"
+                android:id="@+id/emotion_dialog_secretok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:visibility="invisible"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp"
-                android:visibility="invisible"
                 android:src="@drawable/emotion_ok" />
         </RelativeLayout>
+
+
     </LinearLayout>
 
     <TextView

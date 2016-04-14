@@ -194,6 +194,7 @@ public class CustomListView extends ListView implements OnScrollListener {
 		setCacheColorHint(pContext.getResources().getColor(R.color.transparent));
 		mInflater = LayoutInflater.from(pContext);
 		this.setDividerHeight(0);
+		setOverScrollMode(View.OVER_SCROLL_NEVER);
 
 		addHeadView();
 

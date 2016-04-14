@@ -63,7 +63,7 @@ public class ShareDialog implements OnClickListener {
 	private ClipboardManager myClipboard;
 	private ClipData myClip;
 	private String topic;
-	public ShareDialog(Context context, Handler handler,String text,String topic,String url,UMImage image, UMShareListener listener) {
+	public ShareDialog(Context context, Handler handler,String topic,String text,String url,UMImage image, UMShareListener listener) {
 		super();
 		this.context = context;
 		this.handler = handler;

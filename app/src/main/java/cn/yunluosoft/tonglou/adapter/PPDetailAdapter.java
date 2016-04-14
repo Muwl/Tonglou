@@ -215,7 +215,11 @@ public class PPDetailAdapter extends BaseAdapter {
             });
 
         } else if(type == type1) {
-            bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
+            if(!entities.get(position - 1).publishUserIcon.equals(holder1.icon.getTag())) {
+                holder1.icon.setTag(entities.get(position - 1).publishUserIcon);
+                bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
+            }
+//            bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
             if (ToosUtils.isStringEmpty(entities.get(position-1).parentId) || entities.get(position-1).parentId.equals(entity.id) ){
                 holder1.name.setText(entities.get(position - 1).publishUserNickname);
             }else{

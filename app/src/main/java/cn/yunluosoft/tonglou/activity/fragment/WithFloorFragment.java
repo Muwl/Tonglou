@@ -87,6 +87,13 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
 
     private static Context context;
 
+    private View empty;
+
+    private ImageView empty_image;
+
+    private TextView empty_text;
+
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -140,6 +147,10 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         customListView = (CustomListView) view.findViewById(R.id.fwithfloor_list);
         pro = view.findViewById(R.id.fwithfloor_pro);
 
+        empty = view.findViewById(R.id.fwithfloor_empty);
+        empty_image = (ImageView) view.findViewById(R.id.empty_image);
+        empty_text = (TextView) view.findViewById(R.id.empty_text);
+
         rig.setText("发布");
         rig.setVisibility(View.VISIBLE);
 
@@ -154,6 +165,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         rig.setOnClickListener(this);
         adapter = new WithFloorAdapter(context, entities, handler,customListView);
         customListView.setAdapter(adapter);
+        customListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -402,6 +414,8 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                             customListView.setCanLoadMore(true);
                         }
 
+                        reFushEmpty();
+
                     } else {
                         ReturnState state = gson.fromJson(arg0.result,
                                 ReturnState.class);
@@ -447,6 +461,17 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
             }
         });
 
+    }
+
+    public void reFushEmpty() {
+        if (entities == null || entities.size() == 0) {
+            empty.setVisibility(View.VISIBLE);
+            empty_image.setImageDrawable(getResources().getDrawable(
+                    R.mipmap.withfloor_empty));
+            empty_text.setText("没有同楼信息！");
+        } else {
+            empty.setVisibility(View.GONE);
+        }
     }
 
 

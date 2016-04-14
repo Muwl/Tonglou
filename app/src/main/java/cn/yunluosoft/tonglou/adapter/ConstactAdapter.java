@@ -125,14 +125,18 @@ public class ConstactAdapter extends BaseAdapter {
 			if (convertView == null
 					|| !convertView.getTag().getClass()
 							.equals(ViewHolder1.class)) {
-				convertView = inflater.inflate(R.layout.myfloorspeech_publish_item, null);
+				convertView = inflater.inflate(R.layout.constant_item, null);
 				holder1 = new ViewHolder1();
 				holder1.icon = (CircleImageView) convertView
-						.findViewById(R.id.myfloorspeech_publish_item_icon);
+						.findViewById(R.id.constant_item_icon);
 				holder1.name = (TextView) convertView
-						.findViewById(R.id.myfloorspeech_publish_item_name);
+						.findViewById(R.id.constant_item_name);
+				holder1.topic = (TextView) convertView
+						.findViewById(R.id.constant_item_tip);
+				holder1.time = (TextView) convertView
+						.findViewById(R.id.constant_item_time);
 				holder1.content = (TextView) convertView
-						.findViewById(R.id.myfloorspeech_publish_item_content);
+						.findViewById(R.id.constant_item_content);
 				convertView.setTag(holder1);
 			} else {
 				holder1 = (ViewHolder1) convertView.getTag();
@@ -202,6 +206,9 @@ public class ConstactAdapter extends BaseAdapter {
 //				}
 //			});
 			holder1.name.setText(entities.get(position - 1).publishUserNickname);
+			holder1.name.setVisibility(View.GONE);
+			holder1.time.setText(entities.get(position - 1).createDate);
+			holder1.topic.setText(entities.get(position - 1).topic);
 			if (ToosUtils.isStringEmpty(entities.get(position - 1).detail)) {
 				holder1.content.setVisibility(View.GONE);
 			} else if (entities.get(position - 1).detail.length() <= 96) {
@@ -260,7 +267,9 @@ public class ConstactAdapter extends BaseAdapter {
 	class ViewHolder1 {
 		public CircleImageView icon;
 		public TextView name;
+		public TextView topic;
 		public TextView content;
+		public TextView time;
 	}
 
 }

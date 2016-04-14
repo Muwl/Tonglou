@@ -17,11 +17,13 @@ public class Constant {
 			"金融", "学生", "教育培训", "医疗生物", "政府科研", "司法法律", "房产建筑", "服务业", "汽车摩托",
 			"轻工贸易", "电子电器", "机械重工", "农林牧渔", "光电新能源", "物联网", "化工环保" };
 
-	public static final int EMOTION_MARRIED = 0;
+	public static final int EMOTION_NOMARRIED= 0;
 
-	public static final int EMOTION_NOMARRIED = 1;
+	public static final int EMOTION_MARRIEING = 1;
 
-	public static final int EMOTION_SERCET = 2;
+	public static final int EMOTION_MARRIED = 2;
+
+	public static final int EMOTION_SERCET = 3;
 
 	public static final String SEX_MAN = "0";
 
@@ -41,6 +43,8 @@ public class Constant {
 	public static final String TOKEN_ERR = "201";
 
 	public static final String USER_NOCOM = "206";
+
+	public static final String USER_NOINFO= "209";
 
 	public static final String PRAISE_OK = "0";//已点赞
 

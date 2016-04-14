@@ -161,7 +161,6 @@
     <city name="北京市">
       <district name="昌平区" zipcode="100000" />
       <district name="朝阳区" zipcode="100000" />
-      <district name="崇文区" zipcode="100000" />
       <district name="大兴区" zipcode="100000" />
       <district name="东城区" zipcode="100000" />
       <district name="房山区" zipcode="100000" />
@@ -175,7 +174,6 @@
       <district name="顺义区" zipcode="100000" />
       <district name="通州区" zipcode="100000" />
       <district name="西城区" zipcode="100000" />
-      <district name="宣武区" zipcode="100000" />
       <district name="延庆县" zipcode="100000" />
       <district name="其他" zipcode="100000" />
     </city>

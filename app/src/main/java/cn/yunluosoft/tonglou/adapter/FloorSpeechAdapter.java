@@ -190,7 +190,7 @@ public class FloorSpeechAdapter extends BaseAdapter {
                     }
                 } else {
                     holder.name.setText(messageInfo.receiverNickName);
-                    holder.icon.setImageResource(R.mipmap.ic_launcher);
+                    holder.icon.setImageResource(R.mipmap.grop_icon);
                 }
             }
         }

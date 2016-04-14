@@ -139,10 +139,13 @@ public class GalleryAdapter extends BaseAdapter {
 				if (String.valueOf(Constant.EMOTION_MARRIED).equals(
 						floorEntity.affectiveState)) {
 					emotion.setText("情感：已婚");
-				} else if (String.valueOf(Constant.EMOTION_NOMARRIED).equals(
+				}  else if (String.valueOf(Constant.EMOTION_NOMARRIED).equals(
 						floorEntity.affectiveState)) {
-					emotion.setText("情感：未婚");
-				} else {
+					emotion.setText("情感：单身");
+				}else if (String.valueOf(Constant.EMOTION_MARRIEING).equals(
+						floorEntity.affectiveState)) {
+					emotion.setText("情感：热恋");
+				}else {
 					emotion.setText("情感：保密");
 				}
 			} else {

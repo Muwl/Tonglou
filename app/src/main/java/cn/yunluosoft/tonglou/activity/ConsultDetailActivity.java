@@ -686,7 +686,8 @@ public class ConsultDetailActivity extends BaseActivity implements View.OnClickL
                                     returnEntity.result.publishUserIcon = ShareDataTool.getIcon(ConsultDetailActivity.this);
                                     returnEntity.result.targetUserName = entities.get(position).publishUserName;
                                     returnEntity.result.targetUserIcon = entities.get(position).publishUserIcon;
-                                    entities.add(position + 1, returnEntity.result);
+//                                    entities.add(position + 1, returnEntity.result);
+                                    entities.add(0, returnEntity.result);
                                 }
                                 flagIndex = -1;
                                 sendEdit.setHint("请输入评论内容");

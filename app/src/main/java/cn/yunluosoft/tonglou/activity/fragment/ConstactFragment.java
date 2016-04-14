@@ -291,9 +291,9 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
     public void reFushEmpty() {
         if (entities == null || entities.size() == 0) {
             empty.setVisibility(View.VISIBLE);
-//            empty_image.setImageDrawable(getResources().getDrawable(
-//                    R.drawable.empty_contact));
-            empty_text.setText("还没有添加任何人脉");
+            empty_image.setImageDrawable(getResources().getDrawable(
+                    R.mipmap.constant_empty));
+            empty_text.setText("没有人脉！");
         } else {
             empty.setVisibility(View.GONE);
         }

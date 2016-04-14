@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="12dp"
                     android:background="@drawable/groupdetail_edit"
-                    android:hint="时间+地点（10字之内）"
+                    android:hint="吸引的标题（10字之内）"
                     android:maxLength="10"
                     android:padding="10dp"
                     android:singleLine="true"

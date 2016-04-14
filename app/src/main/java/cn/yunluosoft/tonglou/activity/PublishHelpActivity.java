@@ -118,7 +118,7 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
         time.setText(sdate);
         ok.setOnClickListener(this);
         tiemView.setOnClickListener(this);
-        lef.setText("发布帮助");
+        lef.setText("发布求帮");
         rig.setText("发布自荐");
         width = DensityUtil.getScreenWidth(this);
         group.setVisibility(View.VISIBLE);
@@ -127,11 +127,11 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId==R.id.title_rb_lef){
-                    name.setHint("求帮+内容（10字之内）");
+                    name.setHint("吸引的标题（10字之内）");
                     delcontent.setText("请求帮助");
                     detail.setHint("描述需要帮助的内容（100字之内）");
                 }else{
-                    name.setHint("自荐+内容（10字之内）");
+                    name.setHint("吸引的标题（10字之内）");
                     delcontent.setText("我来帮助");
                     detail.setHint("描述需要帮助的内容（100字之内）");
                 }

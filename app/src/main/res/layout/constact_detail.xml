@@ -19,34 +19,50 @@
             android:gravity="center"
             android:padding="10dp" >
 
-            <TextView
+            <RelativeLayout
                 android:id="@+id/constact_detail_conversate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/login_btn"
-                android:clickable="true"
                 android:gravity="center"
+                android:clickable="true"
                 android:paddingBottom="12dp"
-                android:paddingTop="12dp"
-                android:text="对话"
-                android:textColor="@color/white"
-                android:textSize="@dimen/first_font" />
+                android:paddingTop="12dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:drawablePadding="8dp"
+                    android:drawableLeft="@mipmap/icon_perliaol"
+                    android:text="对话"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/first_font" />
+            </RelativeLayout>
 
-            <TextView
+            <RelativeLayout
                 android:id="@+id/constact_detail_add"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/login_btn"
-                android:clickable="true"
                 android:gravity="center"
+                android:clickable="true"
+                android:layout_marginLeft="10dp"
                 android:paddingBottom="12dp"
-                android:paddingTop="12dp"
+                android:paddingTop="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@mipmap/icon_peradd"
                 android:text="加人脉"
                 android:textColor="@color/white"
                 android:textSize="@dimen/first_font" />
+
+            </RelativeLayout>
         </LinearLayout>
 
         <cn.yunluosoft.tonglou.view.CustomListView
