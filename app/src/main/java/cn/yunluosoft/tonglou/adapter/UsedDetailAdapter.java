@@ -174,7 +174,7 @@ public class UsedDetailAdapter extends BaseAdapter {
                 imageEntities=new ArrayList<>();
             }
 
-           List<String> images=new ArrayList<>();
+           final List<String> images=new ArrayList<>();
             for (int i=0;i<imageEntities.size();i++){
                 images.add(imageEntities.get(i).img);
             }
@@ -197,7 +197,7 @@ public class UsedDetailAdapter extends BaseAdapter {
                     intent.putExtra("position", position);
                     Bundle bundle = new Bundle();
                     intent.putExtra("photo",
-                            (Serializable) (entity.images));
+                            (Serializable) (images));
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 }

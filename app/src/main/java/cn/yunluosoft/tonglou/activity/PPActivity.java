@@ -128,8 +128,8 @@ public class PPActivity extends BaseActivity implements View.OnClickListener {
         rig.setVisibility(View.VISIBLE);
         rig.setOnClickListener(this);
         rig.setText("发布");
-        assign.setText("拼车");
-        buy.setText("求带");
+        assign.setText("车主");
+        buy.setText("乘客");
         group.setVisibility(View.VISIBLE);
         serch.setOnClickListener(this);
         entities=new ArrayList<>();
