@@ -20,7 +20,8 @@
 
         <TextView
             android:id="@+id/pp_item_name"
-            android:layout_width="wrap_content"
+            android:layout_width="58dp"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="安安"

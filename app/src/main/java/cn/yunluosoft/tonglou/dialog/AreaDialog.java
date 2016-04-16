@@ -207,6 +207,8 @@ public class AreaDialog implements OnClickListener,OnWheelChangedListener {
 		}
 		mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(context, areas));
 		mViewDistrict.setCurrentItem(0);
+		mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[0];
+		mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
 	}
 
 	/**

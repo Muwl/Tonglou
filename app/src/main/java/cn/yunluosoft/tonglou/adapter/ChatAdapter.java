@@ -1158,12 +1158,12 @@ public class ChatAdapter extends BaseAdapter {
 						.getMsgId()) && VoicePlayClickListener.isPlaying) {
 			AnimationDrawable voiceAnimation;
 			if (message.direct == Direct.RECEIVE) {
-				holder.iv.setBackgroundResource(R.drawable.voice_from_icon);
+				holder.iv.setImageResource(R.drawable.voice_from_icon);
 //				holder.iv.setImageResource(R.anim.voice_from_icon);
 			} else {
-				holder.iv.setBackgroundResource(R.drawable.voice_to_icon);
+				holder.iv.setImageResource(R.drawable.voice_to_icon);
 			}
-			voiceAnimation = (AnimationDrawable) holder.iv.getBackground();
+			voiceAnimation = (AnimationDrawable) holder.iv.getDrawable();
 			voiceAnimation.start();
 		} else {
 			if (message.direct == Direct.RECEIVE) {

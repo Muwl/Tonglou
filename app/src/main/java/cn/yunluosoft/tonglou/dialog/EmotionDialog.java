@@ -68,7 +68,7 @@ public class EmotionDialog implements OnClickListener {
         married.setOnClickListener(this);
         nomarried.setOnClickListener(this);
         cancel.setOnClickListener(this);
-
+        marriing.setOnClickListener(this);
         if (flag == Constant.EMOTION_SERCET) {
             secretImage.setVisibility(View.VISIBLE);
         } else if (flag == Constant.EMOTION_MARRIED) {

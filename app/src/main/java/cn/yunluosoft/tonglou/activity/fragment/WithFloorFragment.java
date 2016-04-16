@@ -229,6 +229,11 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
         proShow = true;
     }
 
+
+    public void scrollFirst(){
+        customListView.smoothScrollToPosition(0);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

@@ -136,7 +136,11 @@ public class PPDetailAdapter extends BaseAdapter {
             }
         }
         if (type == type0) {
-            bitmapUtils.display(holder.icon, entity.publishUserIcon);
+            if(!entity.publishUserIcon.equals(holder.icon.getTag())) {
+                holder.icon.setTag(entity.publishUserIcon);
+                bitmapUtils.display(holder.icon, entity.publishUserIcon);
+            }
+//            bitmapUtils.display(holder.icon, entity.publishUserIcon);
             holder.name.setText(entity.publishUserNickname);
             holder.address.setText(entity.locationName);
             holder.content.setText(entity.detail);
@@ -170,11 +174,11 @@ public class PPDetailAdapter extends BaseAdapter {
                 holder.parimage.setVisibility(View.VISIBLE);
             }
 
-            if (ShareDataTool.getUserId(context).equals(entity.publishUserId)){
-                holder.join.setVisibility(View.GONE);
-            }else{
+//            if (ShareDataTool.getUserId(context).equals(entity.publishUserId)){
+//                holder.join.setVisibility(View.GONE);
+//            }else{
                 holder.join.setVisibility(View.VISIBLE);
-            }
+//            }
 
             holder.join.setOnClickListener(new View.OnClickListener() {
                 @Override

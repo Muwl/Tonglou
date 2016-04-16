@@ -138,7 +138,7 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
         publish= (RadioButton) findViewById(R.id.myfloorspeech_pub);
         customListView= (CustomListView) findViewById(R.id.myfloorspeech_list);
         pro=findViewById(R.id.myfloorspeech_pro);
-        title.setText("楼语信息");
+        title.setText("同楼信息");
         back.setOnClickListener(this);
         group.check(R.id.myfloorspeech_atten);
         getAtten(pageNo, flag);

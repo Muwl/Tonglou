@@ -19,7 +19,8 @@
 
         <TextView
             android:id="@+id/higroup_item_name"
-            android:layout_width="wrap_content"
+            android:layout_width="58dp"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:textSize="@dimen/thrid_font"
             android:text="安安"

@@ -92,7 +92,7 @@ public class UsedAdapter extends BaseAdapter {
         holder.tip.setText(entities.get(position).topic);
         holder.content.setText(entities.get(position).detail);
         holder.time.setText(entities.get(position).createDate);
-        if (!entities.get(position).publishUserId.equals(ShareDataTool.getUserId(context))) {
+//        if (!entities.get(position).publishUserId.equals(ShareDataTool.getUserId(context))) {
             holder.bluebtn.setBackgroundResource(R.drawable.blue_chat);
             holder.bluebtn.setClickable(true);
             holder.bluebtn.setOnClickListener(new View.OnClickListener() {
@@ -111,10 +111,10 @@ public class UsedAdapter extends BaseAdapter {
                     }
                 }
             });
-        } else {
-            holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
-            holder.bluebtn.setClickable(false);
-        }
+//        } else {
+//            holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
+//            holder.bluebtn.setClickable(false);
+//        }
         if (Constant.ATTEN_OK.equals(entities.get(position).isAttention)) {
             holder.graybtn.setBackgroundResource(R.drawable.gray_attened);
             holder.graytext.setText("已关注");

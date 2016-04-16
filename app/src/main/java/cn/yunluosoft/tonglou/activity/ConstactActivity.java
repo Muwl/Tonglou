@@ -179,6 +179,7 @@ public class ConstactActivity extends BaseActivity implements OnClickListener,
         bomView = findViewById(R.id.constact_detail_bom);
 
         customListView.setTitle(title);
+        customListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         title.setText(titleString);
         back.setOnClickListener(this);
         conversate.setOnClickListener(this);

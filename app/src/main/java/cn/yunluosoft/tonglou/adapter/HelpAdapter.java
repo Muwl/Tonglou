@@ -119,7 +119,7 @@ public class HelpAdapter extends BaseAdapter {
             }
         });
 
-        if (!entities.get(position).publishUserId.equals(ShareDataTool.getUserId(context))) {
+       // if (!entities.get(position).publishUserId.equals(ShareDataTool.getUserId(context))) {
             holder.bluebtn.setBackgroundResource(R.drawable.blue_chat);
             holder.bluebtn.setClickable(true);
             holder.bluebtn.setOnClickListener(new View.OnClickListener() {
@@ -138,10 +138,10 @@ public class HelpAdapter extends BaseAdapter {
                     }
                 }
             });
-        }else{
-            holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
-            holder.bluebtn.setClickable(false);
-        }
+//        }else{
+//            holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
+//            holder.bluebtn.setClickable(false);
+//        }
 
 //        if ("0".equals(entities.get(position).isInGroup)){
         holder.bluetext.setText("聊聊");

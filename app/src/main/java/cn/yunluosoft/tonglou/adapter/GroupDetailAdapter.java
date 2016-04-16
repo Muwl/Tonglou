@@ -137,7 +137,11 @@ public class GroupDetailAdapter extends BaseAdapter {
             }
         }
         if (type == type0) {
-            bitmapUtils.display(holder.icon, entity.publishUserIcon);
+            if(!entity.publishUserIcon.equals(holder.icon.getTag())) {
+                holder.icon.setTag(entity.publishUserIcon);
+                bitmapUtils.display(holder.icon, entity.publishUserIcon);
+            }
+//            bitmapUtils.display(holder.icon, entity.publishUserIcon);
             holder.name.setText(entity.publishUserNickname);
             holder.address.setText(entity.locationName);
             holder.tip.setText(entity.topic);

@@ -114,7 +114,7 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
     private EditText unit;
 
 
-    private int emotionFlag;
+    private int emotionFlag=1;
 
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
 
@@ -155,9 +155,11 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                 case 73:
                     emotionFlag = Constant.EMOTION_NOMARRIED;
                     emotion.setText("单身");
+                    break;
                 case 74:
                     emotionFlag = Constant.EMOTION_MARRIEING;
                     emotion.setText("热恋");
+                    break;
 
                 case 82:
                     Intent intent = new Intent(Intent.ACTION_PICK);

@@ -204,6 +204,18 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 				}
 			}
 		});
+		withFloor.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (pageIndex == 2){
+					WithFloorFragment fragment = (WithFloorFragment) fMgr
+							.findFragmentByTag("WithFloorFragment");
+					if (fragment!=null){
+						fragment.scrollFirst();
+					}
+				}
+			}
+		});
 
 		group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override

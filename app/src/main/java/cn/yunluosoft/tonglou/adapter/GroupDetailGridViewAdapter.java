@@ -55,7 +55,11 @@ public class GroupDetailGridViewAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-        bitmapUtils.display(holder.icon,entities.get(position).icon);
+        if(!entities.get(position ).icon.equals(holder.icon.getTag())) {
+            holder.icon.setTag(entities.get(position).icon);
+            bitmapUtils.display(holder.icon, entities.get(position).icon);
+        }
+//        bitmapUtils.display(holder.icon,entities.get(position).icon);
         holder.icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

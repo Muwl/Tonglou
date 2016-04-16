@@ -144,7 +144,11 @@ public class UsedDetailAdapter extends BaseAdapter {
             }
         }
         if (type == type0) {
-            bitmapUtils.display(holder.icon, entity.publishUserIcon);
+            if(!entity.publishUserIcon.equals(holder.icon.getTag())) {
+                holder.icon.setTag(entity.publishUserIcon);
+                bitmapUtils.display(holder.icon, entity.publishUserIcon);
+            }
+//            bitmapUtils.display(holder.icon, entity.publishUserIcon);
             holder.name.setText(entity.publishUserNickname);
             holder.address.setText(entity.locationName);
             holder.tip.setText(entity.topic);
@@ -156,11 +160,11 @@ public class UsedDetailAdapter extends BaseAdapter {
             GroupDetailGridViewAdapter gridAdapter=new GroupDetailGridViewAdapter(context,userList);
             holder.gridView.setAdapter(gridAdapter);
 
-            if (ShareDataTool.getUserId(context).equals(entity.publishUserId)){
-                holder.blue.setVisibility(View.GONE);
-            }else{
+//            if (ShareDataTool.getUserId(context).equals(entity.publishUserId)){
+//                holder.blue.setVisibility(View.GONE);
+//            }else{
                 holder.blue.setVisibility(View.VISIBLE);
-            }
+//            }
 
             if (userList.size()==0){
                 holder.parImage.setVisibility(View.INVISIBLE);
