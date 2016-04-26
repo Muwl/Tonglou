@@ -32,6 +32,7 @@ import cn.yunluosoft.tonglou.model.MessageInfo;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.exceptions.EaseMobException;
+import com.google.gson.Gson;
 
 public class ToosUtils {
 
@@ -189,6 +190,9 @@ public class ToosUtils {
         message.setAttribute("receiverHeadUrl", messageInfo.receiverHeadUrl);
         message.setAttribute("senderNickName", messageInfo.senderNickName);
         message.setAttribute("receiverNickName", messageInfo.receiverNickName);
+        if (ToosUtils.isStringEmpty(messageInfo.groupDynamicID)) {
+            message.setAttribute("groupDynamicID", messageInfo.groupDynamicID);
+        }
     }
 
     /**
@@ -198,15 +202,28 @@ public class ToosUtils {
      * @param
      */
     public static MessageInfo getMessageInfo(EMMessage message) {
+
         try {
-            return new MessageInfo(message.getStringAttribute("senderUserId"),
-                    message.getStringAttribute("receiverUserId"),
-                    message.getStringAttribute("senderImUserName"),
-                    message.getStringAttribute("receiverImUserName"),
-                    message.getStringAttribute("senderHeadUrl"),
-                    message.getStringAttribute("receiverHeadUrl"),
-                    message.getStringAttribute("senderNickName"),
-                    message.getStringAttribute("receiverNickName"));
+            if (message.getChatType().equals(EMMessage.ChatType.GroupChat)){
+                return new MessageInfo(message.getStringAttribute("senderUserId"),
+                        message.getStringAttribute("receiverUserId"),
+                        message.getStringAttribute("senderImUserName"),
+                        message.getStringAttribute("receiverImUserName"),
+                        message.getStringAttribute("senderHeadUrl"),
+                        message.getStringAttribute("receiverHeadUrl"),
+                        message.getStringAttribute("senderNickName"),
+                        message.getStringAttribute("receiverNickName"),message.getStringAttribute("groupDynamicID"));
+            }else{
+                return new MessageInfo(message.getStringAttribute("senderUserId"),
+                        message.getStringAttribute("receiverUserId"),
+                        message.getStringAttribute("senderImUserName"),
+                        message.getStringAttribute("receiverImUserName"),
+                        message.getStringAttribute("senderHeadUrl"),
+                        message.getStringAttribute("receiverHeadUrl"),
+                        message.getStringAttribute("senderNickName"),
+                        message.getStringAttribute("receiverNickName"));
+            }
+
         } catch (EaseMobException e) {
             e.printStackTrace();
             return null;

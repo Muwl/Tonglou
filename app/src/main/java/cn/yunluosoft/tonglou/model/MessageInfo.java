@@ -36,7 +36,17 @@ public class MessageInfo implements Serializable {
 		this.receiverNickName = receiverNickName;
 	}
 
-
+	public MessageInfo(String senderUserId, String receiverUserId, String senderImUserName, String receiverImUserName, String senderHeadUrl, String receiverHeadUrl, String senderNickName, String receiverNickName, String groupDynamicID) {
+		this.senderUserId = senderUserId;
+		this.receiverUserId = receiverUserId;
+		this.senderImUserName = senderImUserName;
+		this.receiverImUserName = receiverImUserName;
+		this.senderHeadUrl = senderHeadUrl;
+		this.receiverHeadUrl = receiverHeadUrl;
+		this.senderNickName = senderNickName;
+		this.receiverNickName = receiverNickName;
+		this.groupDynamicID = groupDynamicID;
+	}
 
 	public MessageInfo() {
 		super();
