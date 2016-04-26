@@ -111,6 +111,7 @@ public class SerchFloorAdapter extends BaseAdapter {
                                         ChatActivity.class);
                                 MessageInfo messageInfo = new MessageInfo();
                                 messageInfo.receiverHeadUrl = entities.get(position).id;
+                                messageInfo.groupDynamicID = entities.get(position).id;
                                 messageInfo.receiverImUserName = entities.get(position).imGroupId;
                                 messageInfo.receiverNickName = entities.get(position).groupName;
                                 messageInfo.receiverUserId = entities.get(position).imGroupId;

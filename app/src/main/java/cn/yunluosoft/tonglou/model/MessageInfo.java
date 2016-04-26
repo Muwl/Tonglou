@@ -17,6 +17,7 @@ public class MessageInfo implements Serializable {
 	public String receiverHeadUrl;
 	public String senderNickName;
 	public String receiverNickName;
+	public String groupDynamicID;
 
 	
 

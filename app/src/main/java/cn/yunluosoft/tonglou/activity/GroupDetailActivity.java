@@ -143,6 +143,7 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
                                 ChatActivity.class);
                         MessageInfo messageInfo=new MessageInfo();
                         messageInfo.receiverHeadUrl=entity.id;
+                        messageInfo.groupDynamicID=entity.id;
                         messageInfo.receiverImUserName=entity.imGroupId;
                         messageInfo.receiverNickName=entity.groupName;
                         messageInfo.receiverUserId=entity.imGroupId;

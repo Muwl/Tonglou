@@ -179,6 +179,7 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
                                             ChatActivity.class);
                                     MessageInfo messageInfo = new MessageInfo();
                                     messageInfo.receiverHeadUrl = entities.get(position - 1).id;
+                                    messageInfo.groupDynamicID = entities.get(position - 1).id;
                                     messageInfo.receiverImUserName = entities.get(position - 1).imGroupId;
                                     messageInfo.receiverNickName = entities.get(position - 1).groupName;
                                     messageInfo.receiverUserId = entities.get(position - 1).imGroupId;
