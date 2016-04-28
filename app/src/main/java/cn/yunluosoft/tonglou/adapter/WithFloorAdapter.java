@@ -152,7 +152,7 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
                 if ("0".equals(entities.get(position-1).supplyType)){
                     holder.content.setText("车主："+entities.get(position-1).detail);
                 }else{
-                    holder.content.setText("求带："+entities.get(position-1).detail);
+                    holder.content.setText("乘客："+entities.get(position-1).detail);
                 }
             }else if("3".equals(entities.get(position-1).modelType)){
                 if ("0".equals(entities.get(position-1).supplyType)){
@@ -223,7 +223,7 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
                         entities.get(position-1).groupNum="0";
                     }
                     if ("0".equals(entities.get(position-1).applyState) && Integer.valueOf(entities.get(position-1).planPeopleNum) <= Integer.valueOf(entities.get(position-1).groupNum)) {
-                        holder.bluetext.setText("已结束");
+                        holder.bluetext.setText("已关闭");
                         holder.blueimage.setImageResource(R.mipmap.end);
                         holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
                         holder.bluebtn.setClickable(false);

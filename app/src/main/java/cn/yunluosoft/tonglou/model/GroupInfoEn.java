@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/3/1.
  */
-public class GroupInfoState implements Serializable {
-    public String msg;
-    public GroupInfoEn result;
+public class GroupInfoEn implements Serializable {
+    public List<GroupInfoEntity> detail;
+    public String manager;
 }

@@ -131,12 +131,14 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 				false)) {
 			// 防止被移除后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
 			// 三个fragment里加的判断同理
+			LogManager.LogShow("------------------","diyige---------------",LogManager.ERROR);
 			DemoHXSDKHelper.getInstance().logout(true, null);
 			finish();
 			startActivity(new Intent(this, LoginActivity.class));
 			return;
 		} else if (savedInstanceState != null
 				&& savedInstanceState.getBoolean("isConflict", false)) {
+			LogManager.LogShow("------------------","dierge---------------",LogManager.ERROR);
 			// 防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
 			// 三个fragment里加的判断同理
 			finish();
@@ -224,7 +226,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 				switch (checkedId) {
 					case R.id.main_bottom_floorSpeech:
 						// pageIndex = 1;
-						try {
+//						try {
 							if ((fMgr.findFragmentByTag("FloorSpeechFragment") != null && fMgr
 									.findFragmentByTag("FloorSpeechFragment")
 									.isVisible())) {
@@ -237,14 +239,14 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 								//fragment.onrefush();
 							}
 							popAllFragmentsExceptTheBottomOne();
-						} catch (Exception e) {
-						}
+//						} catch (Exception e) {
+//						}
 
 						break;
 
 					case R.id.main_bottom_withfloor:
 						pageIndex = 2;
-						try {
+//						try {
 							popAllFragmentsExceptTheBottomOne();
 							FragmentTransaction ft = fMgr.beginTransaction();
 							ft.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
@@ -253,13 +255,13 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 									"WithFloorFragment");
 							ft.addToBackStack("WithFloorFragment");
 							ft.commitAllowingStateLoss();
-						} catch (Exception e) {
-						}
+//						} catch (Exception e) {
+//						}
 
 						break;
 					case R.id.main_bottom_contact:
 						pageIndex = 3;
-						try {
+//						try {
 							popAllFragmentsExceptTheBottomOne();
 							FragmentTransaction ft2 = fMgr.beginTransaction();
 							ft2.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
@@ -269,13 +271,13 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 							ft2.addToBackStack("ConstactFragment");
 							ft2.commitAllowingStateLoss();
 
-						} catch (Exception e) {
-						}
+//						} catch (Exception e) {
+//						}
 
 						break;
 					case R.id.main_bottom_person:
 						pageIndex = 4;
-						try {
+//						try {
 							popAllFragmentsExceptTheBottomOne();
 							FragmentTransaction ft3 = fMgr.beginTransaction();
 							ft3.hide(fMgr.findFragmentByTag("FloorSpeechFragment"));
@@ -284,8 +286,8 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 									"PersonFragment");
 							ft3.addToBackStack("PersonFragment");
 							ft3.commitAllowingStateLoss();
-						} catch (Exception e) {
-						}
+//						} catch (Exception e) {
+//						}
 
 						break;
 
@@ -335,10 +337,10 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 		if (pageIndex == 1) {
 			group.check(R.id.main_bottom_floorSpeech);
-			try {
+//			try {
 				popAllFragmentsExceptTheBottomOne();
-			} catch (Exception e) {
-			}
+//			} catch (Exception e) {
+//			}
 		} else if(pageIndex==2){
 			group.check(R.id.main_bottom_withfloor);
 		}else if(pageIndex==4){
@@ -362,15 +364,15 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	 * 初始化首个Fragment
 	 */
 	private void initFragment() {
-		try {
+//		try {
 			FragmentTransaction ft = fMgr.beginTransaction();
 			FloorSpeechFragment floorSpeechFragment = FloorSpeechFragment.getInstance(MainActivity.this);
 			ft.add(R.id.main_fragment, floorSpeechFragment, "FloorSpeechFragment");
 			ft.addToBackStack("FloorSpeechFragment");
 			ft.commitAllowingStateLoss();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
 
 	}
 

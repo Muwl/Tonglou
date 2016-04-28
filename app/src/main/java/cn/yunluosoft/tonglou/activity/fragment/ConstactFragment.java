@@ -152,7 +152,7 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
                 CustomeDialog customeDialog = new CustomeDialog(context,
-                        handler, "确定删除？", position, -1,null);
+                        handler, "确定删除？", position, -1, null);
                 // delete(position);
                 return true;
             }
@@ -178,6 +178,12 @@ public class ConstactFragment extends Fragment implements View.OnClickListener{
             }
         });
 //
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getInfo();
     }
 

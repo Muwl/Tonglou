@@ -29,6 +29,7 @@ public class FloorSpeechEntity implements Serializable {
     public String end;//终点
     public String id;//id
     public String detail;//详情
+    public String state;//详情
     public String createDate;//创建时间
 
     public String toString() {

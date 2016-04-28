@@ -77,6 +77,8 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
 
     private String groupId;
 
+    GroupInfoState state1;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -136,7 +138,14 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
                 break;
 
             case R.id.groupinfo_exit:
-                CustomeDialog dialog=new CustomeDialog(GroupInfoActivity.this,handler,"删除聊天群活动也会关闭，是否删除？",-1,-1,null);
+                if (state1!=null ){
+                    if ("0".equals(state1.result.manager)){
+                        CustomeDialog dialog=new CustomeDialog(GroupInfoActivity.this,handler,"退出群，报名活动也将退出？",-1,-1,null);
+                    }else{
+                        CustomeDialog dialog=new CustomeDialog(GroupInfoActivity.this,handler,"删除聊天群，活动也会关闭，是否删除？",-1,-1,null);
+                    }
+                }
+
 
                 break;
 
@@ -232,10 +241,10 @@ public class GroupInfoActivity extends BaseActivity implements View.OnClickListe
                             ReturnState state = gson.fromJson(arg0.result,
                                     ReturnState.class);
                             if (Constant.RETURN_OK.equals(state.msg)) {
-                                GroupInfoState state1 = gson.fromJson(arg0.result, GroupInfoState.class);
-                                if (state1.result != null && state1.result.size() != 0) {
-                                    for (int i = 0; i < state1.result.size(); i++) {
-                                        entities.add(state1.result.get(i));
+                                 state1 = gson.fromJson(arg0.result, GroupInfoState.class);
+                                if (state1.result != null && state1.result.detail.size() != 0) {
+                                    for (int i = 0; i < state1.result.detail.size(); i++) {
+                                        entities.add(state1.result.detail.get(i));
                                     }
                                 }
                                 LogManager.LogShow("--", gson.toJson(entities), LogManager.ERROR);

@@ -85,9 +85,12 @@
                         android:id="@+id/person_data_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingRight="20dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="20dp"
+                        android:singleLine="true"
                         android:background="@color/transparent"
                         android:layout_marginLeft="15dp"
+                        android:maxLength="10"
                         android:gravity="right"
                         android:hint="请输入"
                         android:textColor="#000"
@@ -236,6 +239,7 @@
                         android:layout_marginLeft="15dp"
                         android:background="@color/transparent"
                         android:gravity="right"
+                        android:maxLength="10"
                         android:hint="请输入职位"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
@@ -344,7 +348,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="职位"
+                        android:text="兴趣"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
 
@@ -356,6 +360,7 @@
                         android:layout_marginLeft="15dp"
                         android:background="@color/transparent"
                         android:gravity="right"
+                        android:maxLength="10"
                         android:hint="请输入兴趣"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />
@@ -391,6 +396,7 @@
                         android:layout_marginLeft="15dp"
                         android:background="@color/transparent"
                         android:gravity="right"
+                        android:maxLength="20"
                         android:hint="请输入单位名称"
                         android:textColor="#000"
                         android:textSize="@dimen/second_font" />

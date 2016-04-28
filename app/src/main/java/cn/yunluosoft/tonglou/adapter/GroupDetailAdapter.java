@@ -156,7 +156,12 @@ public class GroupDetailAdapter extends BaseAdapter {
                 holder.join.setText("参加");
                 try {
                     if ("0".equals(entity.applyState) && Integer.valueOf(entity.planPeopleNum)<=Integer.valueOf(entity.groupNum)){
-                        holder.join.setText("人数已满");
+                        holder.join.setText("活动关闭");
+                        holder.join.setEnabled(false);
+                        holder.join.setClickable(false);
+                    }
+                    if ("2".equals(entity.state)){
+                        holder.join.setText("活动关闭");
                         holder.join.setEnabled(false);
                         holder.join.setClickable(false);
                     }

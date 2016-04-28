@@ -143,7 +143,7 @@ public class HiGroupAdapter extends BaseAdapter {
                 holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
             } else {
                 if ("0".equals(entities.get(position).applyState) && Integer.valueOf(entities.get(position).planPeopleNum)<=Integer.valueOf(entities.get(position).groupNum)){
-                    holder.bluetext.setText("已满");
+                    holder.bluetext.setText("已关闭");
                     holder.blueimage.setImageResource(R.mipmap.end);
                     holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
                     holder.bluebtn.setClickable(false);

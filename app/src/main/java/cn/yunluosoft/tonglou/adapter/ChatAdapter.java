@@ -523,9 +523,9 @@ public class ChatAdapter extends BaseAdapter {
 					if (holder.tv_delivered != null) {
 						holder.tv_delivered.setVisibility(View.INVISIBLE);
 					}
-					holder.tv_ack.setVisibility(View.VISIBLE);
+					holder.tv_ack.setVisibility(View.GONE);
 				} else {
-					holder.tv_ack.setVisibility(View.INVISIBLE);
+					holder.tv_ack.setVisibility(View.GONE);
 
 					// check and display msg delivered ack status
 					if (holder.tv_delivered != null) {

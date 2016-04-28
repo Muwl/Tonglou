@@ -481,8 +481,11 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
                 emotion.setText("已婚");
             } else if (String.valueOf(Constant.EMOTION_NOMARRIED).equals(
                     info.affectiveState)) {
-                emotion.setText("未婚");
-            } else {
+                emotion.setText("单身");
+            } else if(String.valueOf(Constant.EMOTION_MARRIEING).equals(
+                    info.affectiveState)){
+                emotion.setText("热恋");
+            }else {
                 emotion.setText("保密");
             }
         }

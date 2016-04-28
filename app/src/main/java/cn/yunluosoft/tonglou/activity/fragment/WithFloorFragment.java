@@ -197,7 +197,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
             }
         });
 
-        getInfo(1);
+
         customListView.setOnRefreshListener(new CustomListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -221,6 +221,12 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getInfo(1);
+    }
+
     public void closePro() {
         proShow = false;
     }
@@ -231,7 +237,7 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
 
 
     public void scrollFirst(){
-        customListView.smoothScrollToPosition(0);
+        customListView.setSelection(0);
     }
 
     @Override

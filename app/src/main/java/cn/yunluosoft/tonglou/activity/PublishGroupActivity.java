@@ -166,6 +166,11 @@ public class PublishGroupActivity extends BaseActivity implements View.OnClickLi
             ToastUtils.displayShortToast(PublishGroupActivity.this,"人数不能为空！");
             return false;
         }
+
+        if (Integer.valueOf(ToosUtils.getTextContent(num))<2){
+            ToastUtils.displayShortToast(PublishGroupActivity.this,"人数不能低于2人！");
+            return false;
+        }
         return  true;
     }
 
