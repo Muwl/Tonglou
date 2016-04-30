@@ -18,6 +18,7 @@ import cn.yunluosoft.tonglou.activity.LocationSelActivity;
 import cn.yunluosoft.tonglou.activity.MyfloorspeekActivity;
 import cn.yunluosoft.tonglou.activity.PersonDataActivity;
 import cn.yunluosoft.tonglou.activity.SettingActivity;
+import cn.yunluosoft.tonglou.model.LocationEntity;
 import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 
@@ -122,6 +123,10 @@ public class PersonFragment extends Fragment implements OnClickListener {
             case R.id.fperson_locateview:
                 Intent intent3 = new Intent(context,
                         LocationSelActivity.class);
+                LocationEntity locationEntity=new LocationEntity();
+                locationEntity.name=ShareDataTool.getLocation(context);
+                locationEntity.id=ShareDataTool.getBuildingId(context);
+                intent3.putExtra("entity",locationEntity);
                 intent3.putExtra("flag", 1);
                 startActivity(intent3);
 

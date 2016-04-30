@@ -27,6 +27,7 @@ import cn.yunluosoft.tonglou.adapter.WithFloorAdapter;
 import cn.yunluosoft.tonglou.dialog.ReportMenuDialog;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.FloorSpeechState;
+import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
@@ -388,6 +389,19 @@ public class HiGroupActivity extends BaseActivity implements View.OnClickListene
                                 entities.get(position).isInGroup=0+"";
                                 entities.get(position).groupNum=String.valueOf(Integer.valueOf(entities.get(position).groupNum)+1);
                                 adapter.notifyDataSetChanged();
+                                Intent intent = new Intent(HiGroupActivity.this,
+                                        ChatActivity.class);
+                                MessageInfo messageInfo = new MessageInfo();
+                                messageInfo.receiverHeadUrl = entities.get(position).id;
+                                messageInfo.groupDynamicID = entities.get(position ).id;
+                                messageInfo.receiverImUserName = entities.get(position ).imGroupId;
+                                messageInfo.receiverNickName = entities.get(position).groupName;
+                                messageInfo.receiverUserId = entities.get(position).imGroupId;
+                                intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("info", messageInfo);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
                                         HiGroupActivity.this, "验证错误，请重新登录");

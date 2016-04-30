@@ -2,8 +2,11 @@ package cn.yunluosoft.tonglou.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -60,6 +63,12 @@ public class ConstantWithfloorActivity extends BaseActivity implements View.OnCl
 
     private TextView empty_text;
 
+    private EditText editText;
+
+    private String stag="";
+
+    private boolean checkFlag = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +80,7 @@ public class ConstantWithfloorActivity extends BaseActivity implements View.OnCl
         title= (TextView) findViewById(R.id.title_title);
         back= (ImageView) findViewById(R.id.title_back);
         listView= (CustomListView) findViewById(R.id.constant_withfloor_list);
+        editText = (EditText) findViewById(R.id.constant_withfloor_edit);
         pro=findViewById(R.id.constant_withfloor_pro);
         empty = findViewById(R.id.constant_withfloor_empty);
         empty_image = (ImageView) findViewById(R.id.empty_image);
@@ -81,7 +91,7 @@ public class ConstantWithfloorActivity extends BaseActivity implements View.OnCl
         entities = new ArrayList<ConstantWithfloorEntity>();
         adapter=new ConstantWithfloorAdapter(this,entities);
         listView.setAdapter(adapter);
-        getInfo(pageNo);
+        getInfo(pageNo,stag);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -104,14 +114,50 @@ public class ConstantWithfloorActivity extends BaseActivity implements View.OnCl
                 // entities.clear();
                 // adapter.notifyDataSetChanged();
                 listView.setCanLoadMore(false);
-                getInfo(1);
+                getInfo(1,stag);
             }
         });
         listView.setOnLoadListener(new CustomListView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 closePro();
-                getInfo(pageNo + 1);
+                getInfo(pageNo + 1,stag);
+            }
+        });
+
+        editText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                // LogManager.LogShow("--------", "aaaaaaaaaaaaaa",
+                // LogManager.ERROR);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // LogManager
+                // .LogShow("--------", "bbbbbbbbbbbb", LogManager.ERROR);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // LogManager.LogShow("--------", "ccccccccccccc",
+                // LogManager.ERROR);
+                if (checkFlag) {
+                    if (!ToosUtils.isStringEmpty(s.toString())) {
+                        stag = String.valueOf(System.currentTimeMillis());
+                        getInfo(1, stag);
+                    } else {
+                        entities.clear();
+                        adapter.notifyDataSetChanged();
+                    }
+
+                } else {
+                    checkFlag = true;
+                }
+
             }
         });
 
@@ -139,134 +185,139 @@ public class ConstantWithfloorActivity extends BaseActivity implements View.OnCl
     /**
      * 获取同楼列表
      */
-    private void getInfo(final int page) {
+    private void getInfo(final int page,String tag) {
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("sign", ShareDataTool.getToken(this));
         rp.addBodyParameter("pageNo", String.valueOf(page));
+        rp.addBodyParameter("keywords", ToosUtils.getTextContent(editText));
         rp.addBodyParameter("buildingId",
                 ShareDataTool.getBuildingId(this));
-        LogManager.LogShow("----",  ShareDataTool.getBuildingId(this)+"dddd",
+        LogManager.LogShow("----",ToosUtils.getTextContent(editText) + "dddd",
                 LogManager.ERROR);
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
-        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                        + "/v1/user/findOneBuilding", rp,
-                new RequestCallBack<String>() {
-                    @Override
-                    public void onStart() {
-                        if (proShow) {
-                            pro.setVisibility(View.VISIBLE);
-                        } else {
-                            pro.setVisibility(View.GONE);
-                        }
+        RequestCallBack<String> requestCallBack =  new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                if (proShow) {
+                    pro.setVisibility(View.VISIBLE);
+                } else {
+                    pro.setVisibility(View.GONE);
+                }
 
-                        super.onStart();
-                    }
+                super.onStart();
+            }
 
-                    @Override
-                    public void onFailure(HttpException arg0, String arg1) {
-                        pro.setVisibility(View.GONE);
-                        ToastUtils.displayFailureToast(ConstantWithfloorActivity.this);
-                        listView.onRefreshComplete();
-                        listView.onLoadMoreComplete();
-                        listView.setCanLoadMore(false);
-                    }
+            @Override
+            public void onFailure(HttpException arg0, String arg1) {
+                pro.setVisibility(View.GONE);
+                ToastUtils.displayFailureToast(ConstantWithfloorActivity.this);
+                listView.onRefreshComplete();
+                listView.onLoadMoreComplete();
+                listView.setCanLoadMore(false);
+            }
 
-                    @Override
-                    public void onSuccess(ResponseInfo<String> arg0) {
-                        pro.setVisibility(View.GONE);
-                        try {
-                            Gson gson = new Gson();
-                            LogManager.LogShow("----", arg0.result,
-                                    LogManager.ERROR);
-                            ReturnState allState = gson.fromJson(arg0.result,
-                                    ReturnState.class);
-                            if (Constant.RETURN_OK.equals(allState.msg)) {
-                                pageNo = page;
-                                if (page == 1) {
-                                    entities.clear();
-                                    adapter.notifyDataSetChanged();
-                                }
-                                if (allState.result == null
-                                        || ToosUtils.isStringEmpty(String
-                                        .valueOf(allState.result))) {
-                                    listView.onRefreshComplete();
-                                    listView.onLoadMoreComplete();
-                                    listView.setCanLoadMore(false);
-                                    ToastUtils.displayShortToast(ConstantWithfloorActivity.this,
-                                            "无数据");
-                                    if (pageNo == 1) {
-                                        empty.setVisibility(View.VISIBLE);
-//                                        empty_image
-//                                                .setImageDrawable(getResources()
-//                                                        .getDrawable(
-//                                                                R.drawable.empty_floor));
-                                        empty_text.setText("没有同楼");
-                                    } else {
-                                        empty.setVisibility(View.GONE);
-                                    }
-                                    return;
-                                }
-                                ConstantWithfloorState state = gson.fromJson(
-                                        arg0.result, ConstantWithfloorState.class);
-                                if (state.result == null
-                                        || state.result.size() == 0) {
-                                    listView.onRefreshComplete();
-                                    listView.onLoadMoreComplete();
-                                    listView.setCanLoadMore(false);
-                                    // ToastUtils.displayShortToast(getActivity(),
-                                    // "无数据");
-                                    if (pageNo == 1) {
-                                        empty.setVisibility(View.VISIBLE);
-//                                        empty_image
-//                                                .setImageDrawable(getResources()
-//                                                        .getDrawable(
-//                                                                R.drawable.empty_floor));
-                                        empty_text.setText("没有同楼");
-                                    } else {
-                                        empty.setVisibility(View.GONE);
-                                    }
-                                } else {
-                                    for (int i = 0; i < state.result.size(); i++) {
-                                        entities.add(state.result.get(i));
-                                    }
-                                    adapter.notifyDataSetChanged();
-                                    if (pageNo == 1) {
-                                        listView.onRefreshComplete();
-                                    } else {
-                                        listView.onRefreshComplete();
-                                        listView.onLoadMoreComplete();
-                                    }
-                                    listView.setCanLoadMore(true);
-                                }
-
-                            } else {
-                                ReturnState state = gson.fromJson(arg0.result,
-                                        ReturnState.class);
-                                if (Constant.TOKEN_ERR.equals(state.msg)) {
-                                    ToastUtils.displayShortToast(ConstantWithfloorActivity.this,
-                                            "验证错误，请重新登录");
-                                    ToosUtils.goReLogin(ConstantWithfloorActivity.this);
-                                } else {
-                                    ToastUtils.displayShortToast(ConstantWithfloorActivity.this,
-                                            (String) state.result);
-
-                                }
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                try {
+                    if (stag.equals(userTag)) {
+                        Gson gson = new Gson();
+                        LogManager.LogShow("----", arg0.result,
+                                LogManager.ERROR);
+                        ReturnState allState = gson.fromJson(arg0.result,
+                                ReturnState.class);
+                        if (Constant.RETURN_OK.equals(allState.msg)) {
+                            pageNo = page;
+                            if (page == 1) {
+                                entities.clear();
+                                adapter.notifyDataSetChanged();
+                            }
+                            if (allState.result == null
+                                    || ToosUtils.isStringEmpty(String
+                                    .valueOf(allState.result))) {
                                 listView.onRefreshComplete();
                                 listView.onLoadMoreComplete();
                                 listView.setCanLoadMore(false);
+                                ToastUtils.displayShortToast(ConstantWithfloorActivity.this,
+                                        "无数据");
+                                if (pageNo == 1) {
+                                    empty.setVisibility(View.VISIBLE);
+//                                        empty_image
+//                                                .setImageDrawable(getResources()
+//                                                        .getDrawable(
+//                                                                R.drawable.empty_floor));
+                                    empty_text.setText("没有同楼");
+                                } else {
+                                    empty.setVisibility(View.GONE);
+                                }
+                                return;
+                            }
+                            ConstantWithfloorState state = gson.fromJson(
+                                    arg0.result, ConstantWithfloorState.class);
+                            if (state.result == null
+                                    || state.result.size() == 0) {
+                                listView.onRefreshComplete();
+                                listView.onLoadMoreComplete();
+                                listView.setCanLoadMore(false);
+                                // ToastUtils.displayShortToast(getActivity(),
+                                // "无数据");
+                                if (pageNo == 1) {
+                                    empty.setVisibility(View.VISIBLE);
+//                                        empty_image
+//                                                .setImageDrawable(getResources()
+//                                                        .getDrawable(
+//                                                                R.drawable.empty_floor));
+                                    empty_text.setText("没有同楼");
+                                } else {
+                                    empty.setVisibility(View.GONE);
+                                }
+                            } else {
+                                for (int i = 0; i < state.result.size(); i++) {
+                                    entities.add(state.result.get(i));
+                                }
+                                adapter.notifyDataSetChanged();
+                                if (pageNo == 1) {
+                                    listView.onRefreshComplete();
+                                } else {
+                                    listView.onRefreshComplete();
+                                    listView.onLoadMoreComplete();
+                                }
+                                listView.setCanLoadMore(true);
                             }
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } else {
+                            ReturnState state = gson.fromJson(arg0.result,
+                                    ReturnState.class);
+                            if (Constant.TOKEN_ERR.equals(state.msg)) {
+                                ToastUtils.displayShortToast(ConstantWithfloorActivity.this,
+                                        "验证错误，请重新登录");
+                                ToosUtils.goReLogin(ConstantWithfloorActivity.this);
+                            } else {
+                                ToastUtils.displayShortToast(ConstantWithfloorActivity.this,
+                                        (String) state.result);
+
+                            }
                             listView.onRefreshComplete();
                             listView.onLoadMoreComplete();
                             listView.setCanLoadMore(false);
-                            ToastUtils.displaySendFailureToast(ConstantWithfloorActivity.this);
                         }
-
                     }
-                });
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        listView.onRefreshComplete();
+                        listView.onLoadMoreComplete();
+                        listView.setCanLoadMore(false);
+                        ToastUtils.displaySendFailureToast(ConstantWithfloorActivity.this);
+                    }
+
+
+            }
+        };
+        requestCallBack.setUserTag(tag);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
+                + "/v1/user/findOneBuilding", rp, requestCallBack);
+
 
     }
 }

@@ -30,6 +30,7 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.util.ImageUtils;
+import com.lidroid.xutils.BitmapUtils;
 
 public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 	private ImageView iv = null;
@@ -39,6 +40,7 @@ public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 	EMMessage message = null;
 	ChatType chatType;
 	Activity activity;
+	BitmapUtils bitmapUtils;
 
 	@Override
 	protected Bitmap doInBackground(Object... args) {
@@ -49,6 +51,7 @@ public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 		iv = (ImageView) args[4];
 		// if(args[2] != null) {
 		activity = (Activity) args[5];
+		bitmapUtils=new BitmapUtils(activity);
 		// }
 		message = (EMMessage) args[6];
 		File file = new File(thumbnailPath);
@@ -67,8 +70,9 @@ public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 
 	protected void onPostExecute(Bitmap image) {
 		if (image != null) {
-			iv.setImageBitmap(image);
+//			iv.setImageBitmap(image);
 			ImageCache.getInstance().put(thumbnailPath, image);
+			bitmapUtils.display(iv,localFullSizePath);
 			iv.setClickable(true);
 			iv.setTag(thumbnailPath);
 			iv.setOnClickListener(new View.OnClickListener() {

@@ -135,10 +135,9 @@ public class LocationSelActivity extends BaseActivity implements
 
     private void initView() {
         flag = getIntent().getIntExtra("flag", 0);
-//        if (flag == 0) {
-//            info = (PersonInfo) getIntent().getSerializableExtra("info");
-//            path = (String) getIntent().getStringExtra("path");
-//        }
+        if (flag==1){
+            locationEntity= (LocationEntity) getIntent().getSerializableExtra("entity");
+        }
         locationEntities = new ArrayList<LocationEntity>();
         adapter = new LocationAdapter(this, locationEntities);
         root = findViewById(R.id.location_root);
@@ -160,11 +159,15 @@ public class LocationSelActivity extends BaseActivity implements
                     .getColor(R.color.activity_bg));
         }
 
+        if (locationEntity!=null){
+            name.setText(locationEntity.name);
+        }
+
         back.setOnClickListener(this);
         ok.setOnClickListener(this);
         ok.setText("完成");
 //        ok.setVisibility(View.VISIBLE);
-        title.setText("位置定位");
+        title.setText("位置");
         go.setOnClickListener(this);
 
         name.addTextChangedListener(new TextWatcher() {
@@ -548,9 +551,9 @@ public class LocationSelActivity extends BaseActivity implements
 
                         // 进入主页面
                         LogManager.LogShow("-----", "登录成功", LogManager.ERROR);
-
-                        startActivity(new Intent(LocationSelActivity.this,
-                                MainActivity.class));
+                        Intent intent = new Intent(LocationSelActivity.this,MainActivity.class);
+                        intent.putExtra("index",2);
+                        startActivity(intent);
                         finish();
                     }
 

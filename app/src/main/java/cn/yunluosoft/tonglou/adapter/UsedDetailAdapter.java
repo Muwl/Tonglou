@@ -255,6 +255,13 @@ public class UsedDetailAdapter extends BaseAdapter {
                 holder1.icon.setTag(entities.get(position - 1).publishUserIcon);
                 bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
             }
+            if(ShareDataTool.getUserId(context).equals(entities.get(position-1).publishUserId)){
+                entities.get(position-1).publishUserNickname="我";
+            }
+
+            if(ShareDataTool.getUserId(context).equals(entities.get(position-1).targetUserId)){
+                entities.get(position-1).targetUserNickname="我";
+            }
 //            bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
             if (ToosUtils.isStringEmpty(entities.get(position-1).parentId) || entities.get(position-1).parentId.equals(entity.id) ){
                 holder1.name.setText(entities.get(position - 1).publishUserNickname);

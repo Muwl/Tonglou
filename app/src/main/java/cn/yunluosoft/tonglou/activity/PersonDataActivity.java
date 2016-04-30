@@ -239,8 +239,6 @@ public class PersonDataActivity extends BaseActivity implements OnClickListener 
 //        jobView.setOnClickListener(this);
 //        signatureView.setOnClickListener(this);
         rig.setOnClickListener(this);
-
-
     }
 
     @Override

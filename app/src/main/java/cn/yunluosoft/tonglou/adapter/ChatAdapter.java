@@ -1647,7 +1647,8 @@ public class ChatAdapter extends BaseAdapter {
 		Bitmap bitmap = ImageCache.getInstance().get(thumbernailPath);
 		if (bitmap != null) {
 			// thumbnail image is already loaded, reuse the drawable
-			iv.setImageBitmap(bitmap);
+			bitmapUtils.display(iv,localFullSizePath);
+//			iv.setImageBitmap(bitmap);
 			iv.setClickable(true);
 			iv.setOnClickListener(new OnClickListener() {
 				@Override

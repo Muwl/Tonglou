@@ -25,6 +25,7 @@ import cn.yunluosoft.tonglou.model.ConsultDetailEntity;
 import cn.yunluosoft.tonglou.model.ConsultInfoEntity;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
+import cn.yunluosoft.tonglou.utils.ShareDataTool;
 import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
@@ -177,6 +178,14 @@ public class ConsultDetailAdapter extends BaseAdapter {
 
                     }else {
             bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
+            if(ShareDataTool.getUserId(context).equals(entities.get(position-1).publishUserId)){
+                entities.get(position-1).publishUserName="我";
+            }
+
+            if(ShareDataTool.getUserId(context).equals(entities.get(position-1).targetUserId)){
+                entities.get(position-1).targetUserName="我";
+            }
+
             if ("0".equals(entities.get(position - 1).type)){
                 holder1.name.setText(entities.get(position - 1).publishUserName);
             }else{

@@ -65,6 +65,12 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
 
     private List<FloorSpeechEntity> entities;
 
+    private View empty;
+
+    private ImageView empty_image;
+
+    private TextView empty_text;
+
     private int flag=0;//0代表我的关注 1代表我的发布
 
     private Handler handler=new Handler(){
@@ -136,6 +142,9 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
         group= (RadioGroup) findViewById(R.id.myfloorspeech_group);
         atten= (RadioButton) findViewById(R.id.myfloorspeech_atten);
         publish= (RadioButton) findViewById(R.id.myfloorspeech_pub);
+        empty = findViewById(R.id.myfloorspeech_empty);
+        empty_image = (ImageView) findViewById(R.id.empty_image);
+        empty_text = (TextView) findViewById(R.id.empty_text);
         customListView= (CustomListView) findViewById(R.id.myfloorspeech_list);
         pro=findViewById(R.id.myfloorspeech_pro);
         title.setText("同楼信息");
@@ -236,6 +245,22 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
             case R.id.title_back:
                 finish();
                 break;
+        }
+    }
+
+    public void reFushEmpty() {
+        if (entities == null || entities.size() == 0) {
+            empty.setVisibility(View.VISIBLE);
+            empty_image.setImageDrawable(getResources().getDrawable(
+                    R.mipmap.withfloor_empty));
+            if (flag==0){
+                empty_text.setText("没有同楼信息！");
+            }else{
+                empty_text.setText("没有同楼信息！");
+            }
+
+        } else {
+            empty.setVisibility(View.GONE);
         }
     }
 
@@ -488,6 +513,7 @@ public class MyfloorspeekActivity extends BaseActivity implements View.OnClickLi
                                         String.valueOf(state.result));
                                 entities.remove(position);
                                 adapter.notifyDataSetChanged();
+                                reFushEmpty();
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
                                         MyfloorspeekActivity.this, "验证错误，请重新登录");

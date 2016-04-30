@@ -169,10 +169,7 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
                 holder.bluebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         if (ToosUtils.CheckComInfo(context)) {
-
-
                             if ("0".equals(entities.get(position - 1).modelType)) {
                                 if ("0".equals(entities.get(position - 1).isInGroup)) {
                                     Intent intent = new Intent(context,
@@ -233,10 +230,22 @@ public class WithFloorAdapter extends BaseAdapter implements View.OnClickListene
                         holder.blueimage.setImageResource(R.mipmap.add_chat);
                     }
 
+
+
                 } else {
                     holder.bluetext.setText("聊聊");
                     holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
                 }
+
+
+            if (!"0".equals(entities.get(position-1).state)){
+                holder.bluetext.setText("已关闭");
+                holder.blueimage.setImageResource(R.mipmap.end);
+                holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
+                holder.bluebtn.setClickable(false);
+                holder.bluebtn.setEnabled(false);
+            }
+
 //            } else {
 //                holder.bluetext.setText("聊聊");
 //                holder.blueimage.setImageResource(R.mipmap.myfloor_speak);

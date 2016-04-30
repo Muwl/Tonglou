@@ -160,7 +160,7 @@ public class GroupDetailAdapter extends BaseAdapter {
                         holder.join.setEnabled(false);
                         holder.join.setClickable(false);
                     }
-                    if ("2".equals(entity.state)){
+                    if (!"0".equals(entity.state)){
                         holder.join.setText("活动关闭");
                         holder.join.setEnabled(false);
                         holder.join.setClickable(false);
@@ -223,6 +223,14 @@ public class GroupDetailAdapter extends BaseAdapter {
             if(!entities.get(position - 1).publishUserIcon.equals(holder1.icon.getTag())) {
                 holder1.icon.setTag(entities.get(position - 1).publishUserIcon);
                 bitmapUtils.display(holder1.icon, entities.get(position - 1).publishUserIcon);
+            }
+
+            if(ShareDataTool.getUserId(context).equals(entities.get(position-1).publishUserId)){
+                entities.get(position-1).publishUserNickname="我";
+            }
+
+            if(ShareDataTool.getUserId(context).equals(entities.get(position-1).targetUserId)){
+                entities.get(position-1).targetUserNickname="我";
             }
 
             if (ToosUtils.isStringEmpty(entities.get(position-1).parentId) || entities.get(position-1).parentId.equals(entity.id) ){

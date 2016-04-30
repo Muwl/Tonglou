@@ -530,7 +530,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener,
 			}
 
 			MessageInfo info=new MessageInfo(ShareDataTool.getUserId(this), messageInfo.receiverUserId, ShareDataTool.getImUsername(this), messageInfo.receiverImUserName,ShareDataTool.getIcon(this), messageInfo.receiverHeadUrl, ShareDataTool.getNickname(this), messageInfo.receiverNickName);
-			info.groupDynamicID=messageInfo.groupDynamicID;
+
+			info.groupDynamicID=messageInfo.receiverUserId;
 			messageInfo=info;
 			toChatUsername = messageInfo.receiverImUserName;
 			LogManager.LogShow("222222", "----------", LogManager.ERROR);

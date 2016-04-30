@@ -58,6 +58,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none" />
+        <include
+            android:id="@+id/myfloorspeech_empty"
+            layout="@layout/empty"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/myfloorspeech_pro"

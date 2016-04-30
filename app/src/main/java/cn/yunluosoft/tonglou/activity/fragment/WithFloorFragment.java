@@ -30,6 +30,7 @@ import java.util.List;
 
 import cn.yunluosoft.tonglou.R;
 import cn.yunluosoft.tonglou.activity.AssistActivity;
+import cn.yunluosoft.tonglou.activity.ChatActivity;
 import cn.yunluosoft.tonglou.activity.GroupDetailActivity;
 import cn.yunluosoft.tonglou.activity.HelpDetailActivity;
 import cn.yunluosoft.tonglou.activity.HiGroupActivity;
@@ -46,6 +47,7 @@ import cn.yunluosoft.tonglou.dialog.CustomeDialog;
 import cn.yunluosoft.tonglou.dialog.ReportMenuDialog;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.model.FloorSpeechState;
+import cn.yunluosoft.tonglou.model.MessageInfo;
 import cn.yunluosoft.tonglou.model.ReturnState;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
@@ -296,6 +298,19 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
                                 entities.get(position).isInGroup=0+"";
                                 entities.get(position).groupNum=String.valueOf(Integer.valueOf(entities.get(position).groupNum)+1);
                                 adapter.notifyDataSetChanged();
+                                Intent intent = new Intent(context,
+                                        ChatActivity.class);
+                                MessageInfo messageInfo = new MessageInfo();
+                                messageInfo.receiverHeadUrl = entities.get(position).id;
+                                messageInfo.groupDynamicID = entities.get(position ).id;
+                                messageInfo.receiverImUserName = entities.get(position ).imGroupId;
+                                messageInfo.receiverNickName = entities.get(position).groupName;
+                                messageInfo.receiverUserId = entities.get(position).imGroupId;
+                                intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("info", messageInfo);
+                                intent.putExtras(bundle);
+                                context.startActivity(intent);
                             } else if (Constant.TOKEN_ERR.equals(state.msg)) {
                                 ToastUtils.displayShortToast(
                                         context, "验证错误，请重新登录");

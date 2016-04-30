@@ -52,7 +52,10 @@ public class UseddetailheadAdapter extends BaseAdapter {
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-        bitmapUtils.display(holder.imageView,entities.get(position));
+        if(!entities.get(position).equals(holder.imageView.getTag())) {
+            holder.imageView.setTag(entities.get(position));
+            bitmapUtils.display(holder.imageView, entities.get(position));
+        }
         return convertView;
     }
     class ViewHolder{

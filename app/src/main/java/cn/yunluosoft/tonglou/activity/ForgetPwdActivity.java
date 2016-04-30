@@ -63,6 +63,7 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 
     private String sphone;
 
+    private String sname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +73,7 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
     }
 
     private void initView() {
+        sname=getIntent().getStringExtra("phone");
         back = (ImageView) findViewById(R.id.title_back);
         title = (TextView) findViewById(R.id.title_title);
         phone = (EditText) findViewById(R.id.forgetpwd_name);
@@ -87,6 +89,10 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
         ok.setOnClickListener(this);
 
         title.setText("找回密码");
+
+        if (!ToosUtils.isStringEmpty(sname)){
+            phone.setText(sname);
+        }
 
         show.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 

@@ -132,6 +132,7 @@ public class WelcomeActivity extends BaseActivity {
 			finish();
 		} else {
 			Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+			intent.putExtra("index",2);
 			startActivity(intent);
 			finish();
 		}

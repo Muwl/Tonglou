@@ -22,6 +22,7 @@ import cn.yunluosoft.tonglou.activity.ConstactActivity;
 import cn.yunluosoft.tonglou.model.FloorSpeechEntity;
 import cn.yunluosoft.tonglou.utils.Constant;
 import cn.yunluosoft.tonglou.utils.LogManager;
+import cn.yunluosoft.tonglou.utils.ToosUtils;
 import cn.yunluosoft.tonglou.view.CircleImageView;
 
 /**
@@ -73,6 +74,7 @@ public class MyfloorspeekAdapter extends BaseAdapter {
             holder.bluebtn= convertView.findViewById(R.id.myfloorspeech_item_bluebtn);
             holder.blueimage= (ImageView) convertView.findViewById(R.id.myfloorspeech_item_blueimage);
             holder.bluetext= (TextView) convertView.findViewById(R.id.myfloorspeech_item_bluetext);
+            holder.time= (TextView) convertView.findViewById(R.id.myfloorspeech_item_time);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
@@ -81,23 +83,62 @@ public class MyfloorspeekAdapter extends BaseAdapter {
         bitmapUtils.display(holder.icon, entities.get(position).publishUserIcon);
         holder.name.setText(entities.get(position).publishUserNickname);
         holder.tip.setText(entities.get(position).topic);
+        holder.time.setText(entities.get(position).createDate);
         holder.content.setText(entities.get(position).detail);
         holder.bluebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Message message=new Message();
-                message.what=1112;
-                message.arg1=position;
+                Message message = new Message();
+                message.what = 1112;
+                message.arg1 = position;
                 handler.sendMessage(message);
             }
         });
-        if ("0".equals(entities.get(position).modelType)&& "1".equals(entities.get(position).isInGroup)){
-            holder.bluetext.setText("进群聊");
-            holder.blueimage.setImageResource(R.mipmap.add_chat);
-        }else{
+        holder.bluebtn.setBackgroundResource(R.drawable.blue_chat);
+        holder.bluebtn.setClickable(true);
+        if ("1".equals(entities.get(position).isInGroup) && "0".equals(entities.get(position).modelType)) {
+            if (ToosUtils.isStringEmpty(entities.get(position).planPeopleNum)){
+                entities.get(position).planPeopleNum="0";
+            }
+            if (ToosUtils.isStringEmpty(entities.get(position).groupNum)){
+                entities.get(position).groupNum="0";
+            }
+            if ("0".equals(entities.get(position).applyState) && Integer.valueOf(entities.get(position).planPeopleNum) <= Integer.valueOf(entities.get(position).groupNum)) {
+                holder.bluetext.setText("已关闭");
+                holder.blueimage.setImageResource(R.mipmap.end);
+                holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
+                holder.bluebtn.setClickable(false);
+                holder.bluebtn.setEnabled(false);
+            } else {
+                holder.bluetext.setText("加入");
+                holder.blueimage.setImageResource(R.mipmap.add_chat);
+                holder.bluebtn.setClickable(true);
+                holder.bluebtn.setEnabled(true);
+            }
+
+        } else {
             holder.bluetext.setText("聊聊");
             holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
+            holder.bluebtn.setClickable(true);
+            holder.bluebtn.setEnabled(true);
         }
+
+
+        if (!"0".equals(entities.get(position).state)){
+            holder.bluetext.setText("已关闭");
+            holder.blueimage.setImageResource(R.mipmap.end);
+            holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
+            holder.bluebtn.setClickable(false);
+            holder.bluebtn.setEnabled(false);
+        }
+
+//        if ("0".equals(entities.get(position).modelType)&& "1".equals(entities.get(position).isInGroup)){
+//            holder.bluetext.setText("进群聊");
+//            holder.blueimage.setImageResource(R.mipmap.add_chat);
+//        }else{
+//            holder.bluetext.setText("聊聊");
+//            holder.blueimage.setImageResource(R.mipmap.myfloor_speak);
+//        }
 
         holder.icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +166,7 @@ public class MyfloorspeekAdapter extends BaseAdapter {
         public TextView name;
         public TextView tip;
         public TextView content;
+        public TextView time;
         public View bluebtn;
         public ImageView blueimage;
         public TextView bluetext;

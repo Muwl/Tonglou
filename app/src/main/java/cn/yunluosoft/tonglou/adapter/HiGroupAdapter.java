@@ -152,7 +152,17 @@ public class HiGroupAdapter extends BaseAdapter {
                     holder.bluetext.setText("加入");
                     holder.blueimage.setImageResource(R.mipmap.add_chat);
                 }
+
+
             }
+
+        if (!"0".equals(entities.get(position).state)){
+            holder.bluetext.setText("已关闭");
+            holder.blueimage.setImageResource(R.mipmap.end);
+            holder.bluebtn.setBackgroundResource(R.drawable.gray_atten);
+            holder.bluebtn.setClickable(false);
+            holder.bluebtn.setEnabled(false);
+        }
 //        }
 //        else {
 //            holder.bluetext.setText("聊聊");

@@ -170,6 +170,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			Intent intent = new Intent(LoginActivity.this,
 					ForgetPwdActivity.class);
+			if (!ToosUtils.isTextEmpty(name) && ToosUtils.MatchPhone(ToosUtils.getTextContent(name))) {
+				intent.putExtra("phone",ToosUtils.getTextContent(name));
+			}
+
 			startActivity(intent);
 			break;
 		default:
@@ -236,14 +240,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 								// Intent(LoginActivity.this,
 								// MainActivity.class);
 								// startActivity(intent);
-								loginHX(entity.imUsername, entity.imPassword);
+								loginHX(entity.imUsername, entity.imPassword,0);
 							} else if (Constant.USER_NOCOM.equals(state.msg)) {
 								String temp = ToosUtils
 										.getEncryptto((String) state.result);
-								LogManager
-										.LogShow("------206",
-												temp,
-												LogManager.ERROR);
+
 								LoginEntity entity = gson.fromJson(temp,
 										LoginEntity.class);
 								ShareDataTool.SaveInfo(LoginActivity.this,
@@ -253,11 +254,19 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 										LoginActivity.this, "",
 										"",entity.buildingName, entity.buildingId);
 								ShareDataTool.SaveFlag(LoginActivity.this, 0);
-//								ToastUtils.displayShortToast(
-//										LoginActivity.this, "登陆成功，请完善信息");
+								loginHX(entity.imUsername, entity.imPassword,0);
 
-								loginHX(entity.imUsername, entity.imPassword);
+							} else if (Constant.USER_NOINFO.equals(state.msg)) {
+								String temp = ToosUtils
+										.getEncryptto((String) state.result);
 
+								LoginEntity entity = gson.fromJson(temp,
+										LoginEntity.class);
+								ShareDataTool.SaveInfo(LoginActivity.this,
+										entity.token, entity.userId,
+										entity.imUsername, entity.imPassword);
+								ShareDataTool.SaveFlag(LoginActivity.this, 0);
+								loginHX(entity.imUsername, entity.imPassword,1);
 							} else {
 								ToastUtils.displayShortToast(
 										LoginActivity.this,
@@ -302,7 +311,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void loginHX(final String currentUsername,
-			final String currentPassword) {
+			final String currentPassword, final int flag) {
 		pro.setVisibility(View.VISIBLE);
 		EMChatManager.getInstance().login(currentUsername, currentPassword,
 				new EMCallBack() {
@@ -341,16 +350,23 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						// 进入主页面
 						LogManager.LogShow("-----", "登录成功", LogManager.ERROR);
 
-						if (ToosUtils.isStringEmpty(ShareDataTool.getBuildingId(LoginActivity.this))){
+						if (flag==1){
 							Intent intent = new Intent(LoginActivity.this,LocationSelActivity.class);
 							intent.putExtra("flag", 0);
 							startActivity(intent);
-						}else {
-
-							startActivity(new Intent(LoginActivity.this,
-									MainActivity.class));
-
+						}else{
+							Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+							intent.putExtra("index",2);
+							startActivity(intent);
 						}
+
+//						if (ToosUtils.isStringEmpty(ShareDataTool.getBuildingId(LoginActivity.this))){
+//
+//						}else {
+//
+//
+//
+//						}
 						finish();
 					}
 
