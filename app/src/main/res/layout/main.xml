@@ -37,22 +37,6 @@
                 android:orientation="horizontal"
                 android:padding="0dp" >
 
-                <RadioButton
-                    android:id="@+id/main_bottom_floorSpeech"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:clickable="true"
-                    android:drawableTop="@drawable/main_tab1_rb"
-                    android:gravity="center"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="0dp"
-                    android:paddingTop="4dp"
-                    android:text="楼语"
-                    android:textColor="@color/bottom_text_bn"
-                    android:textSize="@dimen/thrid_font" />
 
                 <RadioButton
                     android:id="@+id/main_bottom_withfloor"
@@ -70,6 +54,25 @@
                     android:text="同楼"
                     android:textColor="@color/bottom_text_bn"
                     android:textSize="@dimen/thrid_font" />
+
+                <RadioButton
+                    android:id="@+id/main_bottom_floorSpeech"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:clickable="true"
+                    android:drawableTop="@drawable/main_tab1_rb"
+                    android:gravity="center"
+                    android:paddingBottom="0dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingTop="4dp"
+                    android:text="楼语"
+                    android:textColor="@color/bottom_text_bn"
+                    android:textSize="@dimen/thrid_font" />
+
+
 
                 <RadioButton
                     android:id="@+id/main_bottom_contact"

@@ -173,7 +173,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 
 		width = DensityUtil.getScreenWidth(this);
 		LayoutParams params = (LayoutParams) readNo.getLayoutParams();
-		params.leftMargin = width * 1 / 4- DensityUtil.dip2px(this, 38);
+		params.leftMargin = width * 2 / 4- DensityUtil.dip2px(this, 38);
 		params.topMargin = DensityUtil.dip2px(this, 3);
 		readNo.setLayoutParams(params);
 
