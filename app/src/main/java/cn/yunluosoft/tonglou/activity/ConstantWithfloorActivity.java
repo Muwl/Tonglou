@@ -152,6 +152,7 @@ public class ConstantWithfloorActivity extends BaseActivity implements View.OnCl
                     } else {
                         entities.clear();
                         adapter.notifyDataSetChanged();
+                        getInfo(1, stag);
                     }
 
                 } else {

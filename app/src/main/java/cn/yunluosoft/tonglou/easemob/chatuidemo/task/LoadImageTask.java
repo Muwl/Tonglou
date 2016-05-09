@@ -14,6 +14,7 @@
 package cn.yunluosoft.tonglou.easemob.chatuidemo.task;
 
 import java.io.File;
+import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,12 +26,13 @@ import android.widget.ImageView;
 import cn.yunluosoft.tonglou.activity.ShowBigImage;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.CommonUtils;
 import cn.yunluosoft.tonglou.easemob.chatuidemo.utils.ImageCache;
+import cn.yunluosoft.tonglou.utils.Bimp;
+import cn.yunluosoft.tonglou.utils.LogManager;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.util.ImageUtils;
-import com.lidroid.xutils.BitmapUtils;
 
 public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 	private ImageView iv = null;
@@ -40,7 +42,6 @@ public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 	EMMessage message = null;
 	ChatType chatType;
 	Activity activity;
-	BitmapUtils bitmapUtils;
 
 	@Override
 	protected Bitmap doInBackground(Object... args) {
@@ -51,15 +52,29 @@ public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 		iv = (ImageView) args[4];
 		// if(args[2] != null) {
 		activity = (Activity) args[5];
-		bitmapUtils=new BitmapUtils(activity);
 		// }
 		message = (EMMessage) args[6];
 		File file = new File(thumbnailPath);
 		if (file.exists()) {
-			return ImageUtils.decodeScaleImage(thumbnailPath, 160, 160);
+			try {
+				return Bimp.revitionImageSize(thumbnailPath);
+			} catch (IOException e) {
+				e.printStackTrace();
+				LogManager.LogShow("******************====",e.toString(),LogManager.ERROR);
+				return ImageUtils.decodeScaleImage(thumbnailPath, 160, 160);
+			}
+//			return ImageUtils.decodeScaleImage(thumbnailPath, 160, 160);
+//			return ImageUtils.decodeScaleImage(thumbnailPath, 1000, 1000);
 		} else {
 			if (message.direct == EMMessage.Direct.SEND) {
-				return ImageUtils.decodeScaleImage(localFullSizePath, 160, 160);
+				try {
+					return Bimp.revitionImageSize(localFullSizePath);
+				} catch (IOException e) {
+					e.printStackTrace();
+					LogManager.LogShow("*****************_____", e.toString(), LogManager.ERROR);
+					return ImageUtils.decodeScaleImage(localFullSizePath, 160, 160);
+				}
+//				return ImageUtils.decodeScaleImage(localFullSizePath, 1000, 1000);
 			} else {
 				return null;
 			}
@@ -70,9 +85,8 @@ public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 
 	protected void onPostExecute(Bitmap image) {
 		if (image != null) {
-//			iv.setImageBitmap(image);
+			iv.setImageBitmap(image);
 			ImageCache.getInstance().put(thumbnailPath, image);
-			bitmapUtils.display(iv,localFullSizePath);
 			iv.setClickable(true);
 			iv.setTag(thumbnailPath);
 			iv.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +121,7 @@ public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 					}
 				}
 			});
+
 		} else {
 			if (message.status == EMMessage.Status.FAIL) {
 				if (CommonUtils.isNetWorkConnected(activity)) {

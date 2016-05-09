@@ -192,7 +192,7 @@ public class ToosUtils {
         message.setAttribute("receiverNickName", messageInfo.receiverNickName);
 
         if (message.getChatType().equals(EMMessage.ChatType.GroupChat)) {
-            message.setAttribute("groupDynamicID", messageInfo.receiverUserId);
+            message.setAttribute("groupDynamicID", messageInfo.receiverHeadUrl);
         }
     }
 
@@ -213,7 +213,7 @@ public class ToosUtils {
                         message.getStringAttribute("senderHeadUrl"),
                         message.getStringAttribute("receiverHeadUrl"),
                         message.getStringAttribute("senderNickName"),
-                        message.getStringAttribute("receiverNickName"),message.getStringAttribute("receiverUserId"));
+                        message.getStringAttribute("receiverNickName"),message.getStringAttribute("receiverHeadUrl"));
             }else{
                 return new MessageInfo(message.getStringAttribute("senderUserId"),
                         message.getStringAttribute("receiverUserId"),

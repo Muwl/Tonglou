@@ -365,11 +365,22 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 	 */
 	private void initFragment() {
 //		try {
-			FragmentTransaction ft = fMgr.beginTransaction();
+			final FragmentTransaction ft = fMgr.beginTransaction();
 			FloorSpeechFragment floorSpeechFragment = FloorSpeechFragment.getInstance(MainActivity.this);
 			ft.add(R.id.main_fragment, floorSpeechFragment, "FloorSpeechFragment");
 			ft.addToBackStack("FloorSpeechFragment");
-			ft.commitAllowingStateLoss();
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(200);
+						ft.commitAllowingStateLoss();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+
 //		} catch (Exception e) {
 //			// TODO: handle exception
 //		}

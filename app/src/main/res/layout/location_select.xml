@@ -62,7 +62,7 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:gravity="center_vertical"
-                            android:hint="请输入您所在楼宇"
+                            android:hint="您输入的楼宇"
                             android:singleLine="true"
                             android:textColor="#000"
                             android:textColorHint="#cccccc"

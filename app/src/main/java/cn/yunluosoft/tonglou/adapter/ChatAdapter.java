@@ -886,7 +886,7 @@ public class ChatAdapter extends BaseAdapter {
 				// "!!!! back receive";
 				holder.iv.setImageResource(R.mipmap.default_image);
 				showDownloadImageProgress(message, holder);
-				// downloadImage(message, holder);
+//				 downloadImage(message, holder);
 			} else {
 				// "!!!! not back receive, show image directly");
 				holder.pb.setVisibility(View.GONE);
@@ -1647,8 +1647,8 @@ public class ChatAdapter extends BaseAdapter {
 		Bitmap bitmap = ImageCache.getInstance().get(thumbernailPath);
 		if (bitmap != null) {
 			// thumbnail image is already loaded, reuse the drawable
-			bitmapUtils.display(iv,localFullSizePath);
-//			iv.setImageBitmap(bitmap);
+//			bitmapUtils.display(iv,localFullSizePath);
+			iv.setImageBitmap(bitmap);
 			iv.setClickable(true);
 			iv.setOnClickListener(new OnClickListener() {
 				@Override
@@ -1689,7 +1689,6 @@ public class ChatAdapter extends BaseAdapter {
 			});
 			return true;
 		} else {
-
 			new LoadImageTask().execute(thumbernailPath, localFullSizePath,
 					remote, message.getChatType(), iv, activity, message);
 			return true;

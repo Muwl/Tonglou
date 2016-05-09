@@ -38,10 +38,10 @@
             <ImageView
                 android:id="@+id/iv_sendPicture"
                 android:layout_width="120dp"
-                android:layout_height="wrap_content"
+                android:layout_height="180dp"
                 android:paddingBottom="6dp"
                 android:paddingLeft="10dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:paddingRight="7dp"
                 android:paddingTop="6dp"
                 />
