@@ -317,7 +317,7 @@ public class ConstantWithfloorActivity extends BaseActivity implements View.OnCl
         };
         requestCallBack.setUserTag(tag);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH
-                + "/v1/user/findOneBuilding", rp, requestCallBack);
+                + "/v1/user/search", rp, requestCallBack);
 
 
     }
