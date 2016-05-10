@@ -127,13 +127,13 @@ public class PublishHelpActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId==R.id.title_rb_lef){
-                    name.setHint("吸引的标题（10字之内）");
+                    name.setHint("吸引的标题（12字之内）");
                     delcontent.setText("请求帮助");
-                    detail.setHint("描述需要帮助的内容（100字之内）");
+                    detail.setHint("描述需要帮助的内容（200字之内）");
                 }else{
-                    name.setHint("吸引的标题（10字之内）");
+                    name.setHint("吸引的标题（12字之内）");
                     delcontent.setText("我来帮助");
-                    detail.setHint("描述需要帮助的内容（100字之内）");
+                    detail.setHint("描述需要帮助的内容（200字之内）");
                 }
             }
         });

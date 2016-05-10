@@ -497,6 +497,9 @@ public class WithFloorFragment extends Fragment implements View.OnClickListener 
             empty_text.setText("没有同楼信息！");
         } else {
             empty.setVisibility(View.GONE);
+//            empty_image.setImageDrawable(getResources().getDrawable(
+//                    R.mipmap.withfloor_empty));
+//            empty_text.setText("没有同楼信息！");
         }
     }
 

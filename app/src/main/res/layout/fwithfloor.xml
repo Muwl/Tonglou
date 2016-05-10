@@ -11,12 +11,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/activity_bg">
 
 
             <cn.yunluosoft.tonglou.view.CustomListView
                 android:id="@+id/fwithfloor_list"
                 android:layout_width="match_parent"
+                android:background="@color/white"
                 android:layout_height="wrap_content"
                 android:scrollbars="none" />
 
@@ -28,7 +30,7 @@
 
         <include
             android:id="@+id/fwithfloor_empty"
-            layout="@layout/empty"
+            layout="@layout/empty1"
             android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

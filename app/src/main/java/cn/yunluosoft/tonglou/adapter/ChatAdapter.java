@@ -512,6 +512,10 @@ public class ChatAdapter extends BaseAdapter {
 		if (message.direct == Direct.SEND) {
 			UserUtils.setCurrentUserNick(holder.tv_usernick);
 		}
+
+//		if (chatType == ChatType.GroupChat){
+//			holder.tv_usernick.setVisibility(View.VISIBLE);
+//		}
 		// 如果是发送的消息并且不是群聊消息，显示已读textview
 		if (!(chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom)
 				&& message.direct == Direct.SEND) {

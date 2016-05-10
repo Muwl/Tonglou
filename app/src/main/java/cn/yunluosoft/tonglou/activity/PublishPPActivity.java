@@ -119,13 +119,13 @@ public class PublishPPActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.title_rb_lef) {
-                    name.setHint("吸引的标题（10字之内）");
+                    name.setHint("吸引的标题（12字之内）");
                     delcontent.setText("拼车详情");
-                    detail.setHint("车型+上下班时间+金额+……（100字之内）");
+                    detail.setHint("车型+上下班时间+金额+……（200字之内）");
                 } else {
-                    name.setHint("吸引的标题（10字之内）");
+                    name.setHint("吸引的标题（12字之内）");
                     delcontent.setText("求带详情");
-                    detail.setHint("上下班时间+金额+……（100字之内）");
+                    detail.setHint("上下班时间+金额+……（200字之内）");
                 }
             }
         });
